@@ -148,48 +148,48 @@
 | ARCH-07 | Phase 1 | Pending |
 | ARCH-08 | Phase 1 | Pending |
 | ARCH-09 | Phase 6 | Pending |
-| INTV-01 | Phase 2 | Pending |
-| INTV-02 | Phase 2 | Pending |
-| INTV-03 | Phase 2 | Pending |
-| INTV-04 | Phase 2 | Pending |
-| DESG-01 | Phase 2 | Pending |
-| DESG-02 | Phase 2 | Pending |
-| DESG-03 | Phase 2 | Pending |
-| DESG-04 | Phase 2 | Pending |
-| DESG-05 | Phase 2 | Pending |
-| DESG-06 | Phase 2 | Pending |
-| DESG-07 | Phase 2 | Pending |
-| DESG-08 | Phase 2 | Pending |
-| INTG-01 | Phase 3 | Pending |
-| INTG-02 | Phase 3 | Pending |
-| INTG-03 | Phase 3 | Pending |
-| INTG-04 | Phase 3 | Pending |
-| INTG-05 | Phase 3 | Pending |
-| CONF-01 | Phase 3 | Pending |
-| CONF-02 | Phase 3 | Pending |
-| CONF-03 | Phase 3 | Pending |
-| CONF-04 | Phase 3 | Pending |
-| CONF-05 | Phase 3 | Pending |
-| SECR-01 | Phase 3 | Pending |
-| SECR-02 | Phase 3 | Pending |
-| SECR-03 | Phase 3 | Pending |
-| SECR-04 | Phase 3 | Pending |
-| SECR-05 | Phase 3 | Pending |
-| SECR-06 | Phase 3 | Pending |
-| SECR-07 | Phase 3 | Pending |
-| SECR-08 | Phase 3 | Pending |
-| SECR-09 | Phase 3 | Pending |
-| DEPL-01 | Phase 4 | Pending |
-| DEPL-02 | Phase 4 | Pending |
-| DEPL-03 | Phase 4 | Pending |
-| DEPL-04 | Phase 4 | Pending |
-| DEPL-05 | Phase 4 | Pending |
-| DEPL-06 | Phase 4 | Pending |
-| DEPL-07 | Phase 4 | Pending |
-| DEPL-08 | Phase 4 | Pending |
-| DEPL-09 | Phase 4 | Pending |
-| DEPL-10 | Phase 4 | Pending |
-| DEPL-11 | Phase 4 | Pending |
+| SECR-01 | Phase 2 | Pending |
+| SECR-02 | Phase 2 | Pending |
+| SECR-03 | Phase 2 | Pending |
+| SECR-04 | Phase 2 | Pending |
+| SECR-05 | Phase 2 | Pending |
+| SECR-06 | Phase 2 | Pending |
+| SECR-07 | Phase 2 | Pending |
+| SECR-08 | Phase 2 | Pending |
+| SECR-09 | Phase 2 | Pending |
+| INTV-01 | Phase 3 | Pending |
+| INTV-02 | Phase 3 | Pending |
+| INTV-03 | Phase 3 | Pending |
+| INTV-04 | Phase 3 | Pending |
+| DESG-01 | Phase 3 | Pending |
+| DESG-02 | Phase 3 | Pending |
+| DESG-03 | Phase 3 | Pending |
+| DESG-04 | Phase 3 | Pending |
+| DESG-05 | Phase 3 | Pending |
+| DESG-06 | Phase 3 | Pending |
+| DESG-07 | Phase 3 | Pending |
+| DESG-08 | Phase 3 | Pending |
+| INTG-01 | Phase 4 | Pending |
+| INTG-02 | Phase 4 | Pending |
+| INTG-03 | Phase 4 | Pending |
+| INTG-04 | Phase 4 | Pending |
+| INTG-05 | Phase 4 | Pending |
+| CONF-01 | Phase 4 | Pending |
+| CONF-02 | Phase 4 | Pending |
+| CONF-03 | Phase 4 | Pending |
+| CONF-04 | Phase 4 | Pending |
+| CONF-05 | Phase 4 | Pending |
+| DEPL-01 | Phase 5 | Pending |
+| DEPL-02 | Phase 5 | Pending |
+| DEPL-03 | Phase 5 | Pending |
+| DEPL-04 | Phase 5 | Pending |
+| DEPL-05 | Phase 5 | Pending |
+| DEPL-06 | Phase 5 | Pending |
+| DEPL-07 | Phase 5 | Pending |
+| DEPL-08 | Phase 5 | Pending |
+| DEPL-09 | Phase 5 | Pending |
+| DEPL-10 | Phase 5 | Pending |
+| DEPL-11 | Phase 5 | Pending |
 | EVOL-01 | Phase 5 | Pending |
 | EVOL-02 | Phase 5 | Pending |
 | EVOL-03 | Phase 5 | Pending |
@@ -209,10 +209,10 @@
 | TEST-03 | Phase 7 | Pending |
 
 **Coverage:**
-- v1 requirements: 60 total
-- Mapped to phases: 60
-- Unmapped: 0 ✓
+- v1 requirements: 68 total
+- Mapped to phases: 68
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-13*
-*Last updated: 2026-04-13 after initial definition*
+*Last updated: 2026-04-13 after roadmap revision (Security promoted to Phase 2)*
