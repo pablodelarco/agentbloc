@@ -389,22 +389,19 @@ See [references/data-classification.md](references/data-classification.md)
 | A4 | Stub reference files are acceptable for Phase 1 (not fully fleshed out) | Architecture | Phase 1 creates the skeleton. Detailed content for reference files is Phase 2-5 work. If stubs are too thin, Claude may not follow the progressive disclosure pattern correctly during testing. LOW risk. |
 | A5 | The `blocked` gate state (D-06) is needed in addition to `pending` and `approved` | Pattern 2 | If no real scenario triggers `blocked`, it adds unnecessary complexity. LOW risk -- can be removed later if unused. |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **State line styling vs ARCH-03 format**
    - What we know: ARCH-03 specifies `[AGENTBLOC | PHASE: N | GATE: status | TECH: level]`. D-04 specifies `Phase 1: Deep Interview | Gate: pending | Level: basic` (styled, not bracketed).
-   - What's unclear: Whether ARCH-03 should be updated to match D-04 or whether both formats should coexist.
-   - Recommendation: D-04 is the user's explicit preference. Implement D-04 format. Update ARCH-03 description to match. The intent (visible state in every response) is preserved.
+   - RESOLVED: D-04 is the user's explicit preference. Implement D-04 format. Update ARCH-03 description to match. The intent (visible state in every response) is preserved.
 
 2. **Reference file loading verification**
    - What we know: Claude reads files via Read tool when instructed. No auto-expansion.
-   - What's unclear: How reliably Claude follows "read this file" instructions in SKILL.md across different models (Haiku vs Sonnet vs Opus).
-   - Recommendation: Test with both natural-language instruction + markdown link (hybrid per D-09). If unreliable, add explicit "Confirm: I have read [filename]" acknowledgment step.
+   - RESOLVED: Use hybrid approach per D-09 (natural-language instruction + markdown link). Reliability will be validated empirically during Phase 7 testing.
 
 3. **Compaction behavior with many reference files**
    - What we know: After compaction, first 5,000 tokens of SKILL.md are re-attached. Reference files are NOT re-attached.
-   - What's unclear: After compaction mid-phase, does Claude know to re-read the current phase's reference file?
-   - Recommendation: Include in the state protocol: "After any context compaction, re-read the reference file for the current phase before continuing."
+   - RESOLVED: State protocol includes instruction: "After any context compaction, re-read the reference file for the current phase before continuing." Implemented in Plan 01-01 Task 1.
 
 ## Validation Architecture
 
