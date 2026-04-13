@@ -35,8 +35,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans:** 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md -- Rewrite SKILL.md as lean hub + extract Arco Rooms to examples/
-- [ ] 01-02-PLAN.md -- Create all 19 reference stub files in flat references/ directory
+- [x] 01-01-PLAN.md -- Rewrite SKILL.md as lean hub + extract Arco Rooms to examples/
+- [x] 01-02-PLAN.md -- Create all 19 reference stub files in flat references/ directory
 
 ### Phase 2: Security Cross-Cutting References
 **Goal**: Every security-sensitive decision across all conversational phases is backed by a dedicated reference file with actionable patterns, so that interview, design, integration, and deployment phases can reference a structural security framework rather than improvising
