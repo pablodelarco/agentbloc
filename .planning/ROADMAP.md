@@ -65,12 +65,12 @@ Plans:
   3. Design phase produces agent identification, topology selection, per-agent contracts, schedule definitions, governance specs, and blast-radius scores
   4. A visual agent interaction diagram (ASCII) and agent summary table are generated during design
   5. Best-of-breed framework patterns (CrewAI, LangGraph, n8n) are referenced during design decisions
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 03-01: TBD
-- [ ] 03-02: TBD
-- [ ] 03-03: TBD
+- [ ] 03-01-PLAN.md -- Populate interview protocol (phase-1-interview.md) with 9-category deep interview + adjust SKILL.md unconditional loading
+- [ ] 03-02-PLAN.md -- Populate design protocol (phase-2-design.md) with agent identification, topology, contracts, governance, blast-radius, and visual presentation
+- [ ] 03-03-PLAN.md -- Populate framework patterns reference (frameworks.md) with CrewAI, LangGraph, and n8n pattern mappings
 
 ### Phase 4: Integration and Confirmation Phases
 **Goal**: The skill can analyze integrations with evidence-backed recommendations and execute a mandatory dry run before deployment, filtering by trust-score and enforcing security governance from the security framework
@@ -148,7 +148,7 @@ Foundation -> Security -> Interview/Design -> Integration/Confirmation -> Deploy
 |-------|----------------|--------|-----------|
 | 1. Skill Foundation | 0/2 | Planning complete | - |
 | 2. Security Cross-Cutting References | 0/3 | Planning complete | - |
-| 3. Interview and Design Phases | 0/3 | Not started | - |
+| 3. Interview and Design Phases | 0/3 | Planning complete | - |
 | 4. Integration and Confirmation Phases | 0/3 | Not started | - |
 | 5. Deployment Artifacts and Evolution | 0/3 | Not started | - |
 | 6. Repo Polish and Examples | 0/3 | Not started | - |
