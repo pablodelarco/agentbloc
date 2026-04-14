@@ -113,12 +113,12 @@ Plans:
   2. Three complete example walkthroughs (real estate ops, ecommerce support, freelance pipeline) demonstrate a full 6-phase flow end to end
   3. Bilingual glossary files (English + Spanish) define all technical terms for non-technical users
   4. SECURITY.md, CONTRIBUTING.md, LICENSE, CHANGELOG.md, and version badges are present and accurate
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 06-01: TBD
-- [ ] 06-02: TBD
-- [ ] 06-03: TBD
+- [ ] 06-01-PLAN.md -- Create README.md with hero, badges, quickstart, how-it-works + repo meta-files (LICENSE, CONTRIBUTING, SECURITY, CHANGELOG) + SKILL.md version field
+- [ ] 06-02-PLAN.md -- Write three example walkthroughs (arco-rooms expansion, ecommerce-support, freelance-pipeline) demonstrating full 6-phase flows
+- [ ] 06-03-PLAN.md -- Expand bilingual glossaries (EN + ES) from 8 terms to 35+ terms covering all AgentBloc concepts
 
 ### Phase 7: Testing and CI
 **Goal**: Every example walkthrough has a replayable test scenario that validates the full 6-phase flow, runnable locally and in CI
@@ -150,5 +150,5 @@ Foundation -> Security -> Interview/Design -> Integration/Confirmation -> Deploy
 | 3. Interview and Design Phases | 0/3 | Planning complete | - |
 | 4. Integration and Confirmation Phases | 0/2 | Planning complete | - |
 | 5. Deployment Artifacts and Evolution | 0/3 | Planning complete | - |
-| 6. Repo Polish and Examples | 0/3 | Not started | - |
+| 6. Repo Polish and Examples | 0/3 | Planning complete | - |
 | 7. Testing and CI | 0/2 | Not started | - |
