@@ -88,10 +88,8 @@ Each phase has a gate. The user MUST approve before you proceed to the next phas
 
 Understand the business, the current workflow, and every edge case until you could explain it back better than the user explained it to you. Ask questions ONE AT A TIME. Each answer shapes the next question. Assess technical level and language in the first exchange.
 
-You MUST read the complete interview protocol before asking any questions:
+You MUST read the complete interview protocol AND the data classification reference before asking any questions:
 See [references/phase-1-interview.md](references/phase-1-interview.md)
-
-If the user's data involves PII, PHI, or financial information, also read:
 See [references/data-classification.md](references/data-classification.md)
 
 ### Phase 2: General Design
