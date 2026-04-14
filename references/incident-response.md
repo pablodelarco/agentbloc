@@ -1,18 +1,212 @@
 # Incident Response
 
-> Security reference loaded by SKILL.md. Full content will be added in Phase 2 (Security Cross-Cutting References).
+> Security reference loaded by SKILL.md during Deployment (Phase 5) and Design (Phase 2).
 
-## Purpose
+## Table of Contents
 
-Runbook template for deployed agent teams: escalation contacts, rollback procedure, common failure scenarios and resolutions, post-incident review format. Generated per-deployment during Phase 5.
+- [When This Applies](#when-this-applies)
+- [Kill Switch Specification](#kill-switch-specification)
+- [Severity Classification](#severity-classification)
+- [Incident Response Runbook Template](#incident-response-runbook-template)
+- [Quick Reference](#quick-reference)
 
-## Placeholder
+## When This Applies
 
-This file is a structural stub created in Phase 1 (Skill Foundation). The security framework content will be authored in Phase 2, which must be complete before any user-facing conversational phase can reference it.
+Claude reads this file during Deployment (Phase 5) when generating the per-deployment incident response runbook and kill switch configuration. Also referenced during Design (Phase 2) when designing governance for high blast-radius agents (Level 3-4) that require immediate halt capability.
 
-## Sections (Planned)
+## Kill Switch Specification
 
-- Escalation Contacts
-- Rollback Procedure
-- Common Failures
-- Post-Incident Review
+The kill switch is dual-path: a file-based mechanism (zero-dependency, always available) and a Telegram command (remote-friendly). Both paths converge to the same enforcement point.
+
+### Path 1: File-Based (Zero-Dependency)
+
+- **File:** `.agentbloc/KILL_SWITCH`
+- **Create to halt:** `touch .agentbloc/KILL_SWITCH`
+- **Remove to resume:** `rm .agentbloc/KILL_SWITCH`
+- **Content (optional):** Include reason, who triggered it, and timestamp for audit trail
+  ```
+  Halted by: Pablo
+  Reason: Invoice agent sent duplicate emails
+  Timestamp: 2026-04-14T10:23:00Z
+  ```
+- **Enforcement:** PreToolUse hook checks file existence before allowing Write, Edit, Bash, or any `mcp__*` tool call
+- **Availability:** Works without network, Telegram, or any external service
+
+### Path 2: Telegram /stop Command (Remote-Friendly)
+
+- User sends `/stop` to the AgentBloc operations Telegram thread
+- Telegram bot webhook receives the command and creates `.agentbloc/KILL_SWITCH` file
+- This converges both paths to the same enforcement mechanism
+- **Resume:** User sends `/resume` and bot removes the KILL_SWITCH file
+- **Use case:** Operator is on mobile, away from SSH access
+
+### PreToolUse Hook Template
+
+Add this to `.claude/settings.json` or the hooks configuration for every deployed agent:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|Bash|mcp__*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "test ! -f .agentbloc/KILL_SWITCH || (echo 'KILLED: Agent halted by kill switch' >&2 && exit 2)"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+**Check frequency:** The kill switch is checked before EVERY side-effect tool call, not just at session start. This prevents long-running agents from continuing after a halt is triggered mid-run.
+
+**Exit code 2:** Signals a hard block to Claude Code. The agent session will stop processing and report the halt.
+
+## Severity Classification
+
+| Severity | Description | Example | Response Time | Notification |
+|----------|-------------|---------|---------------|--------------|
+| **P1 Critical** | Agent sending incorrect data externally or data breach detected | Wrong invoices sent to clients, PII exposed in Telegram thread | Immediate | Kill switch + Telegram P1 alert + phone call to primary operator |
+| **P2 High** | Agent malfunction with potential data impact | Agent writing to wrong state files, unexpected API errors on write operations | 1 hour | Telegram alert + pause agent |
+| **P3 Medium** | Agent degraded but functional | Slow performance, partial data retrieval, rate limit warnings | 4 hours | Telegram notification |
+| **P4 Low** | Cosmetic or minor issues | Report formatting issues, non-critical log warnings | Next business day | Logged in audit trail, no alert |
+
+### Severity Decision Tree
+
+1. Did the agent send data externally (email, API, Telegram to client)?
+   - YES and data was incorrect or unauthorized: **P1**
+   - YES and data was correct but unexpected: **P2**
+   - NO: Continue to step 2
+2. Did the agent modify state files or external data?
+   - YES and modifications were incorrect: **P2**
+   - YES and modifications were correct but unplanned: **P3**
+   - NO: Continue to step 3
+3. Is the agent still functional?
+   - NO (crashed, stuck, unresponsive): **P3**
+   - YES but degraded: **P4**
+
+## Incident Response Runbook Template
+
+Claude generates this template during Phase 5 and fills in deployment-specific details. The operator customizes escalation contacts and reviews before go-live.
+
+### Overview
+
+| Field | Value |
+|-------|-------|
+| Team name | `{team_name}` |
+| Agents | `{agent_list}` |
+| Deployment date | `{deploy_date}` |
+| Last updated | `{last_update}` |
+| Primary operator | `{name}` / `{telegram}` / `{phone}` |
+| Backup operator | `{name}` / `{telegram}` / `{phone}` |
+| Technical contact | `{name}` / `{telegram}` / `{phone}` |
+
+### Immediate Actions (Any Severity)
+
+1. **Activate kill switch:**
+   ```bash
+   touch .agentbloc/KILL_SWITCH
+   ```
+   Or send `/stop` in the Telegram operations thread.
+
+2. **Check audit log:**
+   ```bash
+   tail -20 .agentbloc/logs/audit.jsonl | jq .
+   ```
+
+3. **Identify affected agent** from `correlation_id` in logs.
+
+4. **Assess severity** using the decision tree above.
+
+5. **Notify** per severity level notification requirements.
+
+### Rollback Procedure
+
+1. **Stop all agents** (kill switch should already be active from Immediate Actions).
+2. **Identify last known good state** from state file timestamps:
+   ```bash
+   ls -lt .agentbloc/state/*.json
+   ```
+3. **Restore state files from backup:**
+   ```bash
+   cp .agentbloc/state/backup/*.json .agentbloc/state/
+   ```
+4. **Remove kill switch:**
+   ```bash
+   rm .agentbloc/KILL_SWITCH
+   ```
+5. **Restart agents and monitor first run.** Watch audit log for the first full cycle:
+   ```bash
+   tail -f .agentbloc/logs/audit.jsonl | jq .
+   ```
+
+### Common Failure Scenarios
+
+| Scenario | Detection | Response | Severity |
+|----------|-----------|----------|----------|
+| MCP server unreachable | Connection timeout in audit log | Log error, skip provider, continue. If 3+ providers fail in one run, pause agent | P3 |
+| Credential expired | 401/403 in audit log | Telegram alert: "Credential rotation needed for `{service}`". Agent pauses automatically | P2 |
+| Rate limit exceeded | 429 in audit log or governance limit hit | Agent self-halts. Check governance.yaml limits. Adjust if traffic was legitimate | P3 |
+| State file corrupted | JSON parse error in audit log | Restore from last backup. Re-run from last checkpoint | P2 |
+| Agent sends wrong data externally | Recipient reports error or audit log shows unexpected target | Immediate kill switch. Contact affected recipients. Assess data impact | P1 |
+| Telegram bot unresponsive | No notifications received for scheduled run | Check bot token validity. Restart bot. Agents continue without reporting | P3 |
+
+### Post-Incident Review Template
+
+Complete within 48 hours of P1/P2 resolution. Within 1 week for P3.
+
+```markdown
+## Post-Incident Review
+
+**Incident ID:** {incident_id}
+**Correlation ID:** {correlation_id from audit log}
+**Severity:** {P1/P2/P3/P4}
+**Date:** {date}
+
+### Timeline
+
+| Time | Event |
+|------|-------|
+| {time} | Detection: {how was the incident detected} |
+| {time} | Triage: {initial assessment} |
+| {time} | Mitigation: {immediate actions taken} |
+| {time} | Resolution: {fix applied} |
+| {time} | Verification: {confirmed fix works} |
+
+### Root Cause
+
+{What caused the incident. Be specific.}
+
+### Impact
+
+- Records affected: {count}
+- External communications sent: {count and type}
+- Data exposed: {description or "none"}
+
+### Remediation
+
+{What was done to fix the immediate issue.}
+
+### Prevention
+
+{What changes prevent this from happening again.
+Examples: updated governance.yaml limits, added validation step,
+modified agent skill file, added new test to dry run.}
+```
+
+## Quick Reference
+
+| Severity | Response Time | First Action | Notification | Escalation |
+|----------|---------------|--------------|--------------|------------|
+| P1 | Immediate | Kill switch | Telegram + phone | Primary + backup operator |
+| P2 | 1 hour | Pause agent | Telegram alert | Primary operator |
+| P3 | 4 hours | Monitor | Telegram notification | Logged |
+| P4 | Next business day | Log | Audit trail only | None |
+
+**Kill switch paths:** `touch .agentbloc/KILL_SWITCH` (local) or `/stop` in Telegram (remote).
+
+**Resume:** `rm .agentbloc/KILL_SWITCH` (local) or `/resume` in Telegram (remote).
