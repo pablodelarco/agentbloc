@@ -48,12 +48,12 @@ Plans:
   3. GDPR patterns (right to be forgotten, DSAR, 72h breach notification) and HIPAA/PCI-ready patterns activate automatically when data classification warrants
   4. Every deployed agent ships with kill switch capability, rate limiting, audit logging with correlation IDs and PII redaction, and prompt injection defenses
   5. Blast-radius scoring is enforced in design phase; agents with write-unrestricted or send-external scope automatically require human approval
-**Plans**: TBD
+**Plans:** 3 plans
 
 Plans:
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
-- [ ] 02-03: TBD
+- [ ] 02-01-PLAN.md -- Populate credentials.md, data-classification.md, blast-radius.md with classification and scoring patterns
+- [ ] 02-02-PLAN.md -- Populate audit-logging.md (+ rate limiting) and gdpr-patterns.md (+ HIPAA/PCI) with compliance governance patterns
+- [ ] 02-03-PLAN.md -- Populate incident-response.md (+ kill switch), prompt-injection.md, and tenant-isolation.md with defense and response patterns
 
 ### Phase 3: Interview and Design Phases
 **Goal**: The skill can conduct a deep structured interview and produce a complete agent team design with topology, contracts, and governance specs, classifying data against the security framework and assigning blast-radius scores per the security references
@@ -147,7 +147,7 @@ Foundation -> Security -> Interview/Design -> Integration/Confirmation -> Deploy
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Skill Foundation | 0/2 | Planning complete | - |
-| 2. Security Cross-Cutting References | 0/3 | Not started | - |
+| 2. Security Cross-Cutting References | 0/3 | Planning complete | - |
 | 3. Interview and Design Phases | 0/3 | Not started | - |
 | 4. Integration and Confirmation Phases | 0/3 | Not started | - |
 | 5. Deployment Artifacts and Evolution | 0/3 | Not started | - |
