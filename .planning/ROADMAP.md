@@ -12,8 +12,8 @@ AgentBloc transforms from a monolithic 539-line SKILL.md into a production-ready
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Skill Foundation** - Restructure SKILL.md as lean hub with state protocol, gates, bilingual support, and progressive disclosure pointers
-- [ ] **Phase 2: Security Cross-Cutting References** - Build all 9 security reference files that cross-cut the conversational phases (must exist before interview classifies data or design assigns blast-radius)
+- [x] **Phase 1: Skill Foundation** - Restructure SKILL.md as lean hub with state protocol, gates, bilingual support, and progressive disclosure pointers
+- [x] **Phase 2: Security Cross-Cutting References** - Build all 9 security reference files that cross-cut the conversational phases (must exist before interview classifies data or design assigns blast-radius)
 - [ ] **Phase 3: Interview and Design Phases** - Build reference files for the Interview (Phase 1) and Design (Phase 2) conversational phases, referencing security framework for data classification and blast-radius
 - [ ] **Phase 4: Integration and Confirmation Phases** - Build reference files for Integration Analysis (Phase 3) and Confirmation + Dry Run (Phase 4) conversational phases, filtering by trust-score and enforcing security governance
 - [ ] **Phase 5: Deployment Artifacts and Evolution** - Build deployment artifact templates, the Deployment (Phase 5) reference, and the Evolution (Phase 6) self-improvement loop
