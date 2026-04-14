@@ -82,12 +82,11 @@ Plans:
   3. Trust score per dependency evaluates GitHub stars, publisher verification, last commit recency, and known CVEs; low-trust dependencies are flagged
   4. Each agent is presented individually for step-by-step confirmation with actions, integrations, outputs, failure handling, and permissions
   5. A mandatory dry run executes against real records with all side-effect tools stubbed, producing a report of what ran and what would have been sent/written; user must review and approve before proceeding to deployment
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 04-01: TBD
-- [ ] 04-02: TBD
-- [ ] 04-03: TBD
+- [ ] 04-01-PLAN.md -- Populate integration analysis protocol (phase-3-integration.md) with multi-method search, evidence verification, trust scoring, decision matrices, and security cross-references
+- [ ] 04-02-PLAN.md -- Populate confirmation and dry run protocol (phase-4-confirmation.md) with sequential agent approval, dry run dual-layer enforcement, report generation, and final approval gate
 
 ### Phase 5: Deployment Artifacts and Evolution
 **Goal**: The skill generates a complete, immediately runnable .agentbloc/ artifact directory and provides a post-deployment self-improvement loop with human approval
@@ -149,7 +148,7 @@ Foundation -> Security -> Interview/Design -> Integration/Confirmation -> Deploy
 | 1. Skill Foundation | 0/2 | Planning complete | - |
 | 2. Security Cross-Cutting References | 0/3 | Planning complete | - |
 | 3. Interview and Design Phases | 0/3 | Planning complete | - |
-| 4. Integration and Confirmation Phases | 0/3 | Not started | - |
+| 4. Integration and Confirmation Phases | 0/2 | Planning complete | - |
 | 5. Deployment Artifacts and Evolution | 0/3 | Not started | - |
 | 6. Repo Polish and Examples | 0/3 | Not started | - |
 | 7. Testing and CI | 0/2 | Not started | - |
