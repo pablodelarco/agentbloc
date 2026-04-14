@@ -85,8 +85,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 04-01-PLAN.md -- Populate integration analysis protocol (phase-3-integration.md) with multi-method search, evidence verification, trust scoring, decision matrices, and security cross-references
-- [ ] 04-02-PLAN.md -- Populate confirmation and dry run protocol (phase-4-confirmation.md) with sequential agent approval, dry run dual-layer enforcement, report generation, and final approval gate
+- [x] 04-01-PLAN.md -- Populate integration analysis protocol (phase-3-integration.md) with multi-method search, evidence verification, trust scoring, decision matrices, and security cross-references
+- [x] 04-02-PLAN.md -- Populate confirmation and dry run protocol (phase-4-confirmation.md) with sequential agent approval, dry run dual-layer enforcement, report generation, and final approval gate
 
 ### Phase 5: Deployment Artifacts and Evolution
 **Goal**: The skill generates a complete, immediately runnable .agentbloc/ artifact directory and provides a post-deployment self-improvement loop with human approval
