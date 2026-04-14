@@ -116,9 +116,9 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 06-01-PLAN.md -- Create README.md with hero, badges, quickstart, how-it-works + repo meta-files (LICENSE, CONTRIBUTING, SECURITY, CHANGELOG) + SKILL.md version field
-- [ ] 06-02-PLAN.md -- Write three example walkthroughs (arco-rooms expansion, ecommerce-support, freelance-pipeline) demonstrating full 6-phase flows
-- [ ] 06-03-PLAN.md -- Expand bilingual glossaries (EN + ES) from 8 terms to 35+ terms covering all AgentBloc concepts
+- [x] 06-01-PLAN.md -- Create README.md with hero, badges, quickstart, how-it-works + repo meta-files (LICENSE, CONTRIBUTING, SECURITY, CHANGELOG) + SKILL.md version field
+- [x] 06-02-PLAN.md -- Write three example walkthroughs (arco-rooms expansion, ecommerce-support, freelance-pipeline) demonstrating full 6-phase flows
+- [x] 06-03-PLAN.md -- Expand bilingual glossaries (EN + ES) from 8 terms to 35+ terms covering all AgentBloc concepts
 
 ### Phase 7: Testing and CI
 **Goal**: Every example walkthrough has a replayable test scenario that validates the full 6-phase flow, runnable locally and in CI
