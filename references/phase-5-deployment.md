@@ -139,7 +139,7 @@ telegram: telegram.yaml                  # Notification and reporting setup
 - `topology`: use the topology confirmed during Phase 2
 - `timezone`: use the timezone identified during the interview
 - `agents`: list in pipeline/execution order from Phase 2 design
-- `schedule.expression`: use the cron schedule confirmed during Phase 2, validated for DST safety (avoid 01:00-03:00)
+- `schedule.expression`: use the cron schedule confirmed during Phase 2, validated for DST safety (avoid 01:00-03:00). For cron format, DST safety rules, and deployment methods, see [references/scheduling.md](scheduling.md)
 
 ## Step 3: Per-Agent YAML Template
 
@@ -564,7 +564,7 @@ pci:
 
 ## Step 6: telegram.yaml Template
 
-The telegram.yaml file configures Telegram reporting with thread-per-domain organization and notification tiers.
+The telegram.yaml file configures Telegram reporting with thread-per-domain organization and notification tiers. For thread convention, notification tier formatting, and approval-by-reply patterns, see [references/telegram-patterns.md](telegram-patterns.md).
 
 ### Complete Template (Arco Rooms)
 
