@@ -742,7 +742,7 @@ Reply to this message to approve or reject this update.
 
 **All assumed items are LOW risk** because the deployment protocol is a template generator, not a fixed schema. Claude adapts templates to each user's workflow at generation time. The research templates demonstrate the pattern; exact field names are discretionary per CONTEXT.md.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **ClaudeClaw job definition granularity: single pipeline job vs. per-agent jobs?**
    - What we know: The Arco Rooms pattern uses a single daily cron entry running all agents in sequence. CONTEXT.md D-01 specifies `jobs/` directory for cron job definitions (plural).
