@@ -484,19 +484,19 @@ n8n represents workflows as visual DAGs mixing deterministic steps and AI nodes.
 
 **If this table is empty:** Most claims in this research were verified against the project's own CONTEXT.md, REQUIREMENTS.md, security reference files, or web sources.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **SKILL.md Loading Adjustment Scope**
+1. **RESOLVED: SKILL.md Loading Adjustment Scope**
    - What we know: SKILL.md currently loads data-classification.md conditionally ("If the user's data involves PII"). D-08 requires unconditional loading for progressive classification.
    - What's unclear: Whether this edit should be a minor tweak in this phase or deferred. The edit is small (change conditional to unconditional), but it modifies SKILL.md which was established in Phase 1.
    - Recommendation: Include the SKILL.md edit in this phase since it is directly required by D-08 and is a 1-2 line change. The edit makes the loading unconditional.
 
-2. **Framework Reference File Depth**
+2. **RESOLVED: Framework Reference File Depth**
    - What we know: frameworks.md is a stub. The user left framework pattern integration to Claude's discretion.
    - What's unclear: Whether frameworks.md should be a substantial reference (150+ lines) or a lightweight mapping table (~50 lines).
    - Recommendation: Keep it lightweight (~100-150 lines). The patterns are borrowed concepts, not full framework documentation. Three sections (CrewAI patterns, LangGraph patterns, n8n patterns) with a mapping table to AgentBloc concepts.
 
-3. **Interview Question Count Per Category**
+3. **RESOLVED: Interview Question Count Per Category**
    - What we know: D-01 says 2-3 mandatory seed questions per category. D-04 says soft framing of "15-25 questions."
    - What's unclear: With 9 categories x 2-3 seeds = 18-27 seed questions, plus adaptive follow-ups, the total could exceed 25.
    - Recommendation: Target 2 seed questions per category (18 total), leaving room for 7 adaptive follow-ups within the 25-question soft framing. Categories that need 3 seeds (Problem, Workflow, Services) can have them; simpler categories (Budget, Reporting) can have 2.
