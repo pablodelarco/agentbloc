@@ -1,5 +1,6 @@
 ---
 name: agentbloc
+version: 1.0.0
 description: >
   Designs and deploys AI agent teams for businesses through a structured
   6-phase conversational flow: deep interview, agent team design, integration
