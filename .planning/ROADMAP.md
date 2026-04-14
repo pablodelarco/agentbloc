@@ -100,9 +100,9 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 05-01-PLAN.md -- Populate deployment artifact generation protocol (phase-5-deployment.md) with complete YAML/JSON/markdown templates for all .agentbloc/ artifacts
-- [ ] 05-02-PLAN.md -- Populate evolution protocol (phase-6-evolution.md) with scan-detect-propose-approve loop and human approval gate
-- [ ] 05-03-PLAN.md -- Populate scheduling patterns (scheduling.md) and Telegram reporting patterns (telegram-patterns.md) supporting references
+- [x] 05-01-PLAN.md -- Populate deployment artifact generation protocol (phase-5-deployment.md) with complete YAML/JSON/markdown templates for all .agentbloc/ artifacts
+- [x] 05-02-PLAN.md -- Populate evolution protocol (phase-6-evolution.md) with scan-detect-propose-approve loop and human approval gate
+- [x] 05-03-PLAN.md -- Populate scheduling patterns (scheduling.md) and Telegram reporting patterns (telegram-patterns.md) supporting references
 
 ### Phase 6: Repo Polish and Examples
 **Goal**: The GitHub repo sells AgentBloc's vision in 30 seconds and lets a user try it in 5 minutes, with professional documentation and example walkthroughs
