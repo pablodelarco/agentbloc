@@ -132,8 +132,8 @@ Plans:
 **Plans:** 2 plans
 
 Plans:
-- [ ] 07-01-PLAN.md -- Create JSONL scenario format and three canonical test scenarios (arco-rooms, ecommerce-support, freelance-pipeline)
-- [ ] 07-02-PLAN.md -- Create TAP test runner, GitHub Actions CI pipeline (4 parallel jobs), linting configs, and CI badge in README
+- [x] 07-01-PLAN.md -- Create JSONL scenario format and three canonical test scenarios (arco-rooms, ecommerce-support, freelance-pipeline)
+- [x] 07-02-PLAN.md -- Create TAP test runner, GitHub Actions CI pipeline (4 parallel jobs), linting configs, and CI badge in README
 
 ## Progress
 
