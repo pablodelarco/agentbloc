@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: executing
-stopped_at: Phase 7 context gathered
-last_updated: "2026-04-18T13:46:33.587Z"
-last_activity: 2026-04-18
+status: complete
+stopped_at: null
+last_updated: "2026-04-18T18:00:00.000Z"
+last_activity: 2026-04-18 - v1.0 milestone complete, published to GitHub
 progress:
   total_phases: 7
-  completed_phases: 6
+  completed_phases: 7
   total_plans: 18
-  completed_plans: 15
-  percent: 83
+  completed_plans: 18
+  percent: 100
 ---
 
 # Project State
@@ -21,71 +21,68 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-13)
 
 **Core value:** A non-technical business owner can describe their problem and end up with a deployed, secure agent team without writing code and without improvised security scaffolding.
-**Current focus:** Phase 06 - Repo Polish and Examples
+**Status:** v1.0 complete. Published to https://github.com/pablodelarco/agentbloc as a single anonymized orphan commit.
 
 ## Current Position
 
-Phase: 07
-Plan: Not started
-Status: Ready to execute
+Phase: Milestone v1.0 complete
+Plan: All 18 plans executed
+Status: Complete
 Last activity: 2026-04-18
 
-Progress: [████████░░] 43% (3 of 7 phases)
+Progress: [██████████] 100% (7 of 7 phases)
 
-## Phase 03 Deliverables
+## Milestone v1.0 Summary
 
-| Plan | File | Lines | Status |
-|------|------|-------|--------|
-| 03-01 | references/phase-1-interview.md | 350 | Complete |
-| 03-01 | SKILL.md (unconditional loading) | 158 | Complete |
-| 03-02 | references/phase-2-design.md | 313 | Complete |
-| 03-03 | references/frameworks.md | 126 | Complete |
+| Phase | Plans | Summaries | Verification | Deliverable |
+|-------|-------|-----------|--------------|-------------|
+| 01 Skill Foundation | 2/2 | 2/2 | passed (human_needed) | SKILL.md hub + 19 reference stubs + Arco Rooms example |
+| 02 Security Cross-Cutting | 3/3 | 3/3 | passed | 9 security reference files |
+| 03 Interview + Design | 3/3 | 0/3* | passed (retroactive) | Interview (350 lines), Design (313), Frameworks (126) |
+| 04 Integration + Confirmation | 2/2 | 2/2 | passed | Integration (388), Confirmation + dry run (546) |
+| 05 Deployment + Evolution | 3/3 | 3/3 | passed | Deployment (1341), Evolution (414), Scheduling (131), Telegram (164) |
+| 06 Repo Polish | 3/3 | 3/3 | passed | README + 4 meta-files + 3 examples + 2 glossaries |
+| 07 Testing + CI | 2/2 | 2/2 | passed | JSONL scenarios + TAP runner + GitHub Actions CI |
 
-Requirements satisfied: INTV-01, INTV-02, INTV-03, INTV-04, DESG-01 through DESG-08
-Decisions implemented: D-01 through D-10
+*Phase 3 bypassed SUMMARY.md generation; VERIFICATION.md created retroactively on 2026-04-18.
 
-## Performance Metrics
+**Total lines of markdown content produced:** ~4,500+
+**Requirements satisfied:** 68/68
+**Test harness:** 77/77 TAP checks passing
+**CI status:** All 4 jobs green (Check Links, Validate YAML, Lint Markdown, Test Scenarios)
 
-**Velocity:**
+## Published Artifacts
 
-- Total plans completed: 18
-- Phase 03 plans: 3 (executed in parallel)
-
-**By Phase:**
-
-| Phase | Plans | Status |
-|-------|-------|--------|
-| 01 | 2 | Complete |
-| 02 | 3 | Complete |
-| 03 | 3 | Complete |
-| 04 | 2 | Complete |
-| 05 | 3 | Complete |
-| 06 | 0/3 | Planning complete |
+| Location | Content |
+|----------|---------|
+| Local `master` branch | Full phase-by-phase history with original Arco Rooms identifiers (private) |
+| Local `main` branch | Single orphan commit matching remote (anonymized) |
+| Remote `pablodelarco/agentbloc` | Single commit `9c74c9e feat: AgentBloc v1.0` (anonymized) |
 
 ## Accumulated Context
 
 ### Decisions
 
 Decisions are logged in PROJECT.md Key Decisions table.
-Recent decisions affecting current work:
 
 - [Roadmap]: 7-phase structure derived from 68 requirements; testing last due to dependency on examples
-- [Roadmap revision]: Security promoted from Phase 4 to Phase 2. Rationale: Interview must classify PII/PHI/financial (references security), Design must assign blast-radius scores (references security), Integration must filter by trust-score (references security). All user-facing phases depend on the security framework existing first. Security must be structural, not cosmetic.
-- [Phase 6]: 13 locked decisions (D-01 through D-13) covering README structure, examples, glossaries, repo files, and versioning
+- [Roadmap revision]: Security promoted from Phase 4 to Phase 2. Rationale: Interview must classify PII/PHI/financial (references security), Design must assign blast-radius scores (references security), Integration must filter by trust-score (references security). All user-facing phases depend on the security framework existing first.
+- [Phase 6]: 13 locked decisions covering README structure, examples, glossaries, repo files, and versioning
+- [Publish]: Main branch on GitHub is a single orphan commit (anonymized). Master stays local with full history.
 
 ### Pending Todos
 
-None yet.
+None.
 
-### Blockers/Concerns
+### Blockers/Concerns (carry-forward items)
 
-- [Research]: Dry run tool-stubbing mechanism in Claude Code needs investigation during Phase 4 (CONF-03)
-- [Research]: Activation rate benchmarking methodology undefined; needed for Phase 7 testing
-- [Research]: Spanish glossary needs native-speaker review (Phase 6)
-- [Phase 6]: SECURITY.md uses placeholder email security@agentbloc.dev; user must replace with real email
+- [Research]: Activation rate benchmarking methodology undefined; needed if v1.1 adds live-replay testing
+- [Research]: Spanish glossary needs native-speaker review
+- [User action]: SECURITY.md uses placeholder email; replace with real address post-publish
+- [Optional]: Tag v1.0.0 release on GitHub once happy (`gh release create v1.0.0`)
 
 ## Session Continuity
 
-Last session: 2026-04-18T13:11:09.387Z
-Stopped at: Phase 7 context gathered
-Next: Execute Phase 06 plans (3 plans, all Wave 1, fully parallel)
+Last session: 2026-04-18T18:00:00.000Z
+Stopped at: milestone complete
+Next: Choose v1.1 scope (new milestone) or archive v1.0 with `/gsd-complete-milestone v1.0`
