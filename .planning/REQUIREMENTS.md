@@ -105,15 +105,74 @@ Design hooks preserved in v2.0 state schema so these do not require a schema mig
 | Residential / mobile proxy orchestration | Not in v2.0; documented env var hook `AGENTBLOC_DISCOVERY_PROXY` for future extension |
 | Real-time streaming discovery reports (WebSocket) | Discovery emits static files; streaming would duplicate Telegram progress thread |
 
-## Traceability (filled by roadmapper)
+## Traceability
 
-_To be populated by `gsd-roadmapper` in step 10._
+Populated by `gsd-roadmapper` 2026-04-18. Coverage: **46/46** requirements mapped (41 P0 + 5 NICE).
 
-**Coverage targets:**
-- v1 requirements: 40 total (7 LEGAL + 21 DISC + 5 GOV + 6 SECR-EXT + 4 RDSV — P0 baseline) + 5 NICE (P1 optional)
-- Mapped to phases: pending (8 internal dev phases proposed in `research/SUMMARY.md`)
-- Unmapped: 0 (must verify after roadmap)
+| Requirement | Phase | Status |
+|-------------|-------|--------|
+| LEGAL-01 | Phase 8 | Pending |
+| LEGAL-02 | Phase 8 | Pending |
+| LEGAL-03 | Phase 8 | Pending |
+| LEGAL-04 | Phase 8 | Pending |
+| LEGAL-05 | Phase 8 | Pending |
+| LEGAL-06 | Phase 8 | Pending |
+| LEGAL-07 | Phase 8 | Pending |
+| DISC-01 | Phase 12 | Pending |
+| DISC-02 | Phase 11 | Pending |
+| DISC-03 | Phase 11 | Pending |
+| DISC-04 | Phase 10 | Pending |
+| DISC-05 | Phase 10 | Pending |
+| DISC-06 | Phase 11 | Pending |
+| DISC-07 | Phase 11 | Pending |
+| DISC-08 | Phase 11 | Pending |
+| DISC-09 | Phase 11 | Pending |
+| DISC-10 | Phase 10 | Pending |
+| DISC-11 | Phase 10 | Pending |
+| DISC-12 | Phase 10 | Pending |
+| DISC-13 | Phase 8 | Pending |
+| DISC-14 | Phase 8 | Pending |
+| DISC-15 | Phase 13 | Pending |
+| DISC-16 | Phase 13 | Pending |
+| DISC-17 | Phase 13 | Pending |
+| DISC-18 | Phase 12 | Pending |
+| DISC-19 | Phase 10 | Pending |
+| GOV-01 | Phase 12 | Pending |
+| GOV-02 | Phase 12 | Pending |
+| GOV-03 | Phase 9 | Pending |
+| GOV-04 | Phase 12 | Pending |
+| GOV-05 | Phase 12 | Pending |
+| SECR-EXT-01 | Phase 9 | Pending |
+| SECR-EXT-02 | Phase 9 | Pending |
+| SECR-EXT-03 | Phase 9 | Pending |
+| SECR-EXT-04 | Phase 9 | Pending |
+| SECR-EXT-05 | Phase 9 | Pending |
+| SECR-EXT-06 | Phase 9 | Pending |
+| RDSV-01 | Phase 14 | Pending |
+| RDSV-02 | Phase 14 | Pending |
+| RDSV-03 | Phase 8 | Pending |
+| RDSV-04 | Phase 14 | Pending |
+| NICE-01 | Phase 13 | Pending |
+| NICE-02 | Phase 13 | Pending |
+| NICE-03 | Phase 11 | Pending |
+| NICE-04 | Phase 13 | Pending |
+| NICE-05 | Phase 13 | Pending |
+
+**Notes:**
+- DISC-19 (`agentbloc-discovery-runner.sh`) is primarily delivered in Phase 10 (Discovery Toolchain) where the wrapper script is written; Phase 8 success criterion #2 references it only as a schema-compliance checkpoint.
+- RDSV-04 (Builder-handoff healthcheck) is produced in Phase 14 and verified end-to-end in Phase 15 as part of the release gate.
+- All 5 NICE requirements mapped (exceeds the "ship 3+ of 5 is success" bar).
+- Phase 15 (Validation and Release) does not introduce new requirements — it verifies cross-cutting release readiness for every prior phase.
+
+**Coverage check:**
+- LEGAL: 7/7 ✓
+- DISC: 19/19 ✓
+- GOV: 5/5 ✓
+- SECR-EXT: 6/6 ✓
+- RDSV: 4/4 ✓
+- NICE: 5/5 ✓
+- **Total: 46/46 ✓ No orphans.**
 
 ---
 
-*Requirements defined 2026-04-18 after 4-agent research + synthesis (see `research/SUMMARY.md`).*
+*Requirements defined 2026-04-18 after 4-agent research + synthesis (see `research/SUMMARY.md`). Traceability populated 2026-04-18 by `gsd-roadmapper` (step 10).*
