@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
-milestone: v1.0
-milestone_name: initial-release
-status: archived
+milestone: v2.0
+milestone_name: discovery-agent
+status: active
 stopped_at: null
-last_updated: "2026-04-18T19:30:00.000Z"
-last_activity: 2026-04-18 - v1.0 archived, preparing v2.0 (Discovery Agent)
+last_updated: "2026-04-18T19:45:00.000Z"
+last_activity: 2026-04-18 - v2.0 milestone started (defining requirements)
 progress:
-  total_phases: 7
-  completed_phases: 7
-  total_plans: 18
-  completed_plans: 18
-  percent: 100
+  total_phases: 0
+  completed_phases: 0
+  total_plans: 0
+  completed_plans: 0
+  percent: 0
 ---
 
 # Project State
@@ -25,12 +25,12 @@ See: `.planning/PROJECT.md` (updated 2026-04-18 after v1.0 milestone)
 
 ## Current Position
 
-Phase: v1.0 archived, awaiting v2.0 kickoff
+Phase: Not started (defining requirements)
 Plan: —
-Status: Defining v2.0 requirements (run `/gsd-new-milestone v2.0`)
-Last activity: 2026-04-18 — v1.0 milestone archived (tag pending commit)
+Status: v2.0 Discovery Agent milestone started — defining requirements
+Last activity: 2026-04-18 — v1.0 archived (tag v1.0), v2.0 confirmed, entering research/requirements phase
 
-Progress: [——————————] 0% (v2.0 not started)
+Progress: [——————————] 0% (v2.0 requirements in progress)
 
 ## v1.0 Milestone — Shipped Summary
 

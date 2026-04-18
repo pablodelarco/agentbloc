@@ -8,6 +8,24 @@ An open-source Claude Code skill that guides users from "I have a manual busines
 
 v1.0 shipped 2026-04-18. Published to https://github.com/pablodelarco/agentbloc as a single anonymized orphan commit (`9c74c9e`). 68/68 requirements satisfied, 77/77 TAP tests passing, 4/4 CI jobs green. Full audit in `milestones/v1.0-MILESTONE-AUDIT.md`.
 
+## Current Milestone: v2.0 Discovery Agent
+
+**Goal:** Autonomous reverse engineering of web portals and API endpoints when no MCP exists, producing a `DISCOVERY-REPORT.md` per service (endpoints, auth flow, sample calls) as the foundation for v3.0 Builder Agent (auto-MCP generation) and v4.0 Self-Healing Evolution.
+
+**Target features:**
+- Playwright MCP + Chrome DevTools Protocol network interception + `curl`/`jq` validation as the discovery toolkit
+- `DISCOVERY-REPORT.md` schema capturing endpoints, auth flow, sample calls, UI selectors, and rate-limit hints
+- Socratic spec extraction for scoping a discovery target (borrow GStack `/office-hours` + Superpowers methodology)
+- Stateful checkpointing for long-running discovery runs (LangGraph-style, resumable after multi-hour pauses)
+- Legal posture: per-service opt-in + disclaimer gate (reverse-engineering private APIs can violate ToS)
+- Ralph-style retry loop for brittle selectors and anti-bot defenses (oh-my-claudecode pattern)
+
+**Key context:**
+- GSD owns workflow gates (discuss → plan → execute → verify); GStack contributes role reviews inside phases (CEO, eng, design, QA, security, ship)
+- Framework research verified 2026-04-18: OpenClaw (ACP runtime candidate for v3.0+), oh-my-claudecode (Ralph mode + learner system), Superpowers (spec methodology)
+- v2.0 is the foundation; v3.0 Builder Agent generates MCPs from discovery output; v4.0 Self-Healing auto-rediscovers when selectors break and emits new skills
+- Product posture from day one: legal, compliance, and monetization constraints in scope (not a throwaway experiment)
+
 ## Core Value
 
 A non-technical business owner can describe their problem and end up with a deployed, secure agent team without writing code and without improvised security scaffolding.
