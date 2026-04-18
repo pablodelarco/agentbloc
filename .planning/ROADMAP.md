@@ -129,11 +129,11 @@ Plans:
   2. Three canonical test scenarios (one per example walkthrough) replay a full 6-phase flow with artifact snapshot assertions
   3. A test runner executes all scenarios locally and reports pass/fail with artifact validation
   4. GitHub Actions CI pipeline runs markdown lint, YAML schema validation, test scenarios, and link-rot checks; green badge displayed in README
-**Plans**: TBD
+**Plans:** 2 plans
 
 Plans:
-- [ ] 07-01: TBD
-- [ ] 07-02: TBD
+- [ ] 07-01-PLAN.md -- Create JSONL scenario format and three canonical test scenarios (arco-rooms, ecommerce-support, freelance-pipeline)
+- [ ] 07-02-PLAN.md -- Create TAP test runner, GitHub Actions CI pipeline (4 parallel jobs), linting configs, and CI badge in README
 
 ## Progress
 
@@ -151,4 +151,4 @@ Foundation -> Security -> Interview/Design -> Integration/Confirmation -> Deploy
 | 4. Integration and Confirmation Phases | 0/2 | Planning complete | - |
 | 5. Deployment Artifacts and Evolution | 0/3 | Planning complete | - |
 | 6. Repo Polish and Examples | 0/3 | Planning complete | - |
-| 7. Testing and CI | 0/2 | Not started | - |
+| 7. Testing and CI | 0/2 | Planning complete | - |
