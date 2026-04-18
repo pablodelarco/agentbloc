@@ -4,7 +4,7 @@
 
 AgentBloc is a Claude Code skill that turns a business workflow description into a deployed, secure AI agent team. No code required. You describe the problem, AgentBloc interviews you, designs the agents, verifies every integration, runs a dry run, and generates production-ready artifacts.
 
-![version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blue) ![license: MIT](https://img.shields.io/badge/license-MIT-green) ![Claude Code: v2.1+](https://img.shields.io/badge/Claude%20Code-v2.1%2B-blueviolet) [![CI](https://github.com/agentbloc/agentbloc/actions/workflows/ci.yml/badge.svg)](https://github.com/agentbloc/agentbloc/actions/workflows/ci.yml)
+![version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blue) ![license: MIT](https://img.shields.io/badge/license-MIT-green) ![Claude Code: v2.1+](https://img.shields.io/badge/Claude%20Code-v2.1%2B-blueviolet) [![CI](https://github.com/pablodelarco/agentbloc/actions/workflows/ci.yml/badge.svg)](https://github.com/pablodelarco/agentbloc/actions/workflows/ci.yml)
 
 ## What is AgentBloc?
 
@@ -25,7 +25,7 @@ Requires [Claude Code](https://claude.ai/code) v2.1 or later.
 **1. Clone and install the skill:**
 
 ```bash
-git clone https://github.com/agentbloc/agentbloc.git
+git clone https://github.com/pablodelarco/agentbloc.git
 mkdir -p ~/.claude/skills/agentbloc
 cp -r agentbloc/SKILL.md agentbloc/references/ agentbloc/examples/ ~/.claude/skills/agentbloc/
 ```

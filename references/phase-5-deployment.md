@@ -31,6 +31,8 @@ Before generating artifacts, also load:
 - [references/credentials.md](credentials.md) for credential hierarchy and .env.example generation
 - [references/prompt-injection.md](prompt-injection.md) for agent skill.md security directives
 - [references/gdpr-patterns.md](gdpr-patterns.md) for compliance blocks in governance.yaml when EU personal data is classified
+- [references/scheduling.md](scheduling.md) for cron format, DST safety rules, timezone handling, and pipeline spacing
+- [references/telegram-patterns.md](telegram-patterns.md) for thread-per-domain convention, notification tiers, and approval-by-reply patterns
 
 ## Deployment Opening
 

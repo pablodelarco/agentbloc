@@ -26,17 +26,23 @@ When modifying phase protocols (`references/phase-*.md`), test your changes agai
 
 ## Testing
 
-The test harness is under development (Phase 7). For now, contributors should verify that:
-
-1. SKILL.md parses correctly as YAML frontmatter + markdown body.
-2. All reference file links in SKILL.md resolve to existing files.
-3. Modified phase protocols maintain the expected section structure.
-
-Once available, run the full test suite with:
+Run the test suite locally with:
 
 ```bash
-npm run test:agentbloc
+bash tests/run-tests.sh
 ```
+
+This produces TAP (Test Anything Protocol) output and exits 0 on success. No `package.json` or npm dependency is required.
+
+The runner validates:
+
+1. All JSONL scenarios in `tests/scenarios/` are syntactically valid.
+2. Every required field (`role`, `content`, `phase`, `gate`) is present on each turn.
+3. Phase transitions are sequential across each scenario.
+4. Assertion patterns match preceding assistant turns.
+5. Every reference file linked from SKILL.md resolves to an existing file.
+
+CI runs the same script on every push and pull request via `.github/workflows/ci.yml`.
 
 ## Code of Conduct
 
