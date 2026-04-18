@@ -1,11 +1,11 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.0
-milestone_name: milestone
-status: complete
+milestone_name: initial-release
+status: archived
 stopped_at: null
-last_updated: "2026-04-18T18:00:00.000Z"
-last_activity: 2026-04-18 - v1.0 milestone complete, published to GitHub
+last_updated: "2026-04-18T19:30:00.000Z"
+last_activity: 2026-04-18 - v1.0 archived, preparing v2.0 (Discovery Agent)
 progress:
   total_phases: 7
   completed_phases: 7
@@ -18,21 +18,23 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-04-13)
+See: `.planning/PROJECT.md` (updated 2026-04-18 after v1.0 milestone)
 
 **Core value:** A non-technical business owner can describe their problem and end up with a deployed, secure agent team without writing code and without improvised security scaffolding.
-**Status:** v1.0 complete. Published to https://github.com/pablodelarco/agentbloc as a single anonymized orphan commit.
+**Current focus:** Planning v2.0 — Discovery Agent (autonomous reverse engineering of web portals + API endpoints when no MCP exists)
 
 ## Current Position
 
-Phase: Milestone v1.0 complete
-Plan: All 18 plans executed
-Status: Complete
-Last activity: 2026-04-18
+Phase: v1.0 archived, awaiting v2.0 kickoff
+Plan: —
+Status: Defining v2.0 requirements (run `/gsd-new-milestone v2.0`)
+Last activity: 2026-04-18 — v1.0 milestone archived (tag pending commit)
 
-Progress: [██████████] 100% (7 of 7 phases)
+Progress: [——————————] 0% (v2.0 not started)
 
-## Milestone v1.0 Summary
+## v1.0 Milestone — Shipped Summary
+
+See `.planning/MILESTONES.md` and `.planning/milestones/v1.0-ROADMAP.md` for full detail.
 
 | Phase | Plans | Summaries | Verification | Deliverable |
 |-------|-------|-----------|--------------|-------------|
@@ -46,10 +48,7 @@ Progress: [██████████] 100% (7 of 7 phases)
 
 *Phase 3 bypassed SUMMARY.md generation; VERIFICATION.md created retroactively on 2026-04-18.
 
-**Total lines of markdown content produced:** ~4,500+
-**Requirements satisfied:** 68/68
-**Test harness:** 77/77 TAP checks passing
-**CI status:** All 4 jobs green (Check Links, Validate YAML, Lint Markdown, Test Scenarios)
+Requirements satisfied: **68/68** | Test harness: **77/77 TAP** | CI: **4/4 green**
 
 ## Published Artifacts
 
@@ -63,26 +62,32 @@ Progress: [██████████] 100% (7 of 7 phases)
 
 ### Decisions
 
-Decisions are logged in PROJECT.md Key Decisions table.
+Full decision log in `.planning/PROJECT.md` Key Decisions table. Summary of v1.0 outcomes:
+- Security promoted to Phase 2 — all user-facing phases correctly depend on security framework (✓ good)
+- Skill-only v1.0 (no custom runtime) — shipped, awaiting market validation
+- Gate enforcement via `[PHASE: N | GATE: X]` — structural ritual works modulo runtime behaviors requiring live testing
+- Publish strategy (`main` anonymized orphan, `master` private full history) — clean separation holds
 
-- [Roadmap]: 7-phase structure derived from 68 requirements; testing last due to dependency on examples
-- [Roadmap revision]: Security promoted from Phase 4 to Phase 2. Rationale: Interview must classify PII/PHI/financial (references security), Design must assign blast-radius scores (references security), Integration must filter by trust-score (references security). All user-facing phases depend on the security framework existing first.
-- [Phase 6]: 13 locked decisions covering README structure, examples, glossaries, repo files, and versioning
-- [Publish]: Main branch on GitHub is a single orphan commit (anonymized). Master stays local with full history.
+### Deferred Items
 
-### Pending Todos
+Items acknowledged and deferred at v1.0 milestone close on 2026-04-18:
 
-None.
+| Category | Item | Status |
+|----------|------|--------|
+| verification | Phase 01 — 01-VERIFICATION.md | human_needed (3 runtime behaviors: skill activation via description, language auto-detection, technical-level inference — design correct, runtime behavior untestable statically) |
+| verification | Phase 05 — 05-VERIFICATION.md | gaps_found (resolved during audit; informational-only items remain per `v1.0-MILESTONE-AUDIT.md` resolved_during_audit section) |
 
-### Blockers/Concerns (carry-forward items)
+### Blockers / Carry-Forward to v2.0
 
-- [Research]: Activation rate benchmarking methodology undefined; needed if v1.1 adds live-replay testing
+- [Research]: Activation rate benchmarking methodology undefined; needed if future milestone adds live-replay testing of skill activation
 - [Research]: Spanish glossary needs native-speaker review
-- [User action]: SECURITY.md uses placeholder email; replace with real address post-publish
+- [User action]: SECURITY.md uses placeholder email `security@agentbloc.dev` — replace with real address
 - [Optional]: Tag v1.0.0 release on GitHub once happy (`gh release create v1.0.0`)
+- [v2.0 prep]: OpenClaw as runtime substrate — investigate during v2.0 discuss-phase (resolves Open Question #1 from `v2.0-HANDOFF.md`)
+- [v2.0 prep]: oh-my-claudecode learner system — review `.omc/skills/` auto-extraction before designing v4.0 Self-Healing
 
 ## Session Continuity
 
-Last session: 2026-04-18T18:00:00.000Z
-Stopped at: milestone complete
-Next: Choose v1.1 scope (new milestone) or archive v1.0 with `/gsd-complete-milestone v1.0`
+Last session: 2026-04-18T19:30:00.000Z
+Stopped at: v1.0 archived
+Next: `/gsd-new-milestone v2.0` to spawn v2.0 (Discovery Agent) milestone
