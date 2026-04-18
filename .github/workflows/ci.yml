@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-markdown:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v22
+        with:
+          globs: "**/*.md"
+
+  validate-yaml:
+    name: Validate YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run yamllint
+        run: |
+          YAML_FILES=$(find . -name '*.yaml' -o -name '*.yml' \
+            | grep -v node_modules \
+            | grep -v '.git/' \
+            | grep -v '.playwright-mcp' \
+            | grep -v '.planning')
+          if [ -z "$YAML_FILES" ]; then
+            echo "No YAML files found to lint"
+            exit 0
+          fi
+          echo "$YAML_FILES" | xargs yamllint -c .yamllint.yml
+
+  test-scenarios:
+    name: Test Scenarios
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install jq
+        run: sudo apt-get install -y jq
+      - name: Run test scenarios
+        run: bash tests/run-tests.sh
+
+  check-links:
+    name: Check Links
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: "--no-progress --exclude-path .planning --exclude-path .playwright-mcp '**/*.md'"
+          fail: true

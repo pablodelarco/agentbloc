@@ -1,0 +1,9 @@
+# Badge services (rate limited, return 403 for unauthenticated requests)
+https://img.shields.io/.*
+
+# Private service dashboards referenced in documentation
+https://dashboard.stripe.com/.*
+https://admin.shopify.com/.*
+
+# Planning artifacts (internal only)
+.planning/.*

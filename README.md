@@ -4,7 +4,7 @@
 
 AgentBloc is a Claude Code skill that turns a business workflow description into a deployed, secure AI agent team. No code required. You describe the problem, AgentBloc interviews you, designs the agents, verifies every integration, runs a dry run, and generates production-ready artifacts.
 
-![version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blue) ![license: MIT](https://img.shields.io/badge/license-MIT-green) ![Claude Code: v2.1+](https://img.shields.io/badge/Claude%20Code-v2.1%2B-blueviolet)
+![version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blue) ![license: MIT](https://img.shields.io/badge/license-MIT-green) ![Claude Code: v2.1+](https://img.shields.io/badge/Claude%20Code-v2.1%2B-blueviolet) [![CI](https://github.com/agentbloc/agentbloc/actions/workflows/ci.yml/badge.svg)](https://github.com/agentbloc/agentbloc/actions/workflows/ci.yml)
 
 ## What is AgentBloc?
 

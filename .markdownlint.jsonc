@@ -1,0 +1,22 @@
+// .markdownlint.jsonc
+// Configuration for AgentBloc markdown linting.
+// See: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+{
+    "default": true,
+    // MD013: Line length - disabled because skill files and reference
+    // files contain dense tables and long inline code
+    "MD013": false,
+    // MD033: Inline HTML - allowed for badges in README and HTML
+    // comments used as directives in skill files
+    "MD033": false,
+    // MD024: Duplicate headings - allow siblings with the same name
+    // (e.g., "Schedule" appears under multiple agent sections in examples)
+    "MD024": {
+        "siblings_only": true
+    },
+    // MD041: First line should be a top-level heading - disabled
+    // because SKILL.md starts with YAML frontmatter
+    "MD041": false,
+    // MD040: Fenced code blocks should have a language specified
+    "MD040": true
+}
