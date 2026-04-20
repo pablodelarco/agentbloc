@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "business": {
+    "type": "rental-property-management",
+    "size": "~30 rental properties across multiple owners, 1 operator",
+    "owner": "Pablo"
+  },
+  "processes": [
+    {
+      "name": "Invoice Collection",
+      "steps": [
+        "Log into 6 utility provider portals (Endesa, Aguas de Almeria, Naturgy, Movistar, Urbaser, Mapfre)",
+        "Download new invoices as PDF or HTML from each portal",
+        "Scrape invoice emails in Gmail for providers that deliver by email",
+        "Deduplicate collected invoices against the existing state file",
+        "Write newly collected invoices to .agentbloc/state/invoices.json"
+      ],
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 22 * * *"
+      },
+      "tools": [
+        "Endesa portal",
+        "Aguas de Almeria portal",
+        "Naturgy portal",
+        "Movistar portal",
+        "Urbaser portal",
+        "Mapfre API",
+        "Gmail",
+        "Google Sheets"
+      ],
+      "frequency": "daily",
+      "current_actor": "Pablo (manual, ~1 hour/day)",
+      "pain": "Logging into 6 provider portals every evening is tedious and error-prone; missing an invoice means late fees."
+    },
+    {
+      "name": "Payment Matching",
+      "steps": [
+        "Read bank transactions via PSD2 API across 4 banks and 7 accounts",
+        "Load collected invoices from .agentbloc/state/invoices.json",
+        "Match transactions to invoices by regex and tenant metadata with confidence scoring",
+        "Flag low-confidence and unmatched items for human review",
+        "Write match results to .agentbloc/state/matches.json"
+      ],
+      "trigger": {
+        "type": "cron",
+        "schedule": "30 22 * * *"
+      },
+      "tools": [
+        "bank-mcp (PSD2)",
+        "Google Sheets (tenant registry)"
+      ],
+      "frequency": "daily",
+      "current_actor": "Pablo (manual, ~1 hour/day)",
+      "pain": "Bank transaction descriptions vary across 4 banks, making manual matching slow and error-prone; unmatched items cause tenant disputes."
+    },
+    {
+      "name": "Owner Reporting",
+      "steps": [
+        "Consolidate the day's invoice and payment match results per property owner",
+        "Format a per-owner Telegram summary with new invoices, confirmed payments, and unmatched items",
+        "Send the summary via Telegram Bot API to each owner's thread",
+        "Log delivery confirmation to the audit trail"
+      ],
+      "trigger": {
+        "type": "cron",
+        "schedule": "0 23 * * *"
+      },
+      "tools": [
+        "Telegram Bot API"
+      ],
+      "frequency": "daily",
+      "current_actor": "Pablo (manual, evening message drafting)",
+      "pain": "Owners expect daily updates; missing an update creates trust issues, but writing them manually is tedious."
+    }
+  ],
+  "tools_available": [
+    "Google Sheets",
+    "Gmail",
+    "Telegram",
+    "Mapfre API",
+    "Endesa portal",
+    "Aguas de Almeria portal",
+    "Naturgy portal",
+    "Movistar portal",
+    "Urbaser portal",
+    "4 bank accounts (PSD2)"
+  ],
+  "channels": [
+    "telegram",
+    "email"
+  ],
+  "decision_patterns": [
+    "If an invoice is overdue by more than 7 days, send a formal notice to the tenant.",
+    "If a bank transaction has no matching invoice after 48 hours, escalate to Pablo for manual review.",
+    "If a provider portal is unreachable for 3 consecutive days, send a Telegram alert and fall back to Gmail scraping."
+  ],
+  "security_profile": {
+    "data_classes": ["PII", "Financial"],
+    "regimes_activated": ["GDPR"]
+  },
+  "business_context": "Almeria Spain-based property management business serving ~30 rental properties across multiple owners. Jurisdiction: Spain (EU), GDPR applies. Solo operator who is non-technical and manages end-to-end collection, matching, and reporting workflow daily."
+}
