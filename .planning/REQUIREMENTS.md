@@ -21,10 +21,10 @@
 
 Extends the existing v1.0 Phase 1 Interview. The interview already collects the information; v2.0 structures it.
 
-- [ ] **INTV-01**: v1.0 Interview phase emits a Business Graph JSON artifact at `.agentbloc/graph/business-graph.json` in addition to the existing conversational confirmation
-- [ ] **INTV-02**: Interview captures `decision_patterns` as free-text rules the user describes (e.g. "if overdue > 7 days → formal notice") — stored as string array in the Business Graph
-- [ ] **INTV-03**: Interview captures `channels` (Telegram / email / web / other) and `tools_available` (list of existing tools the user already pays for) as distinct Business Graph fields
-- [ ] **INTV-04**: Interview concludes with a structured review: user sees the Business Graph sections rendered in the conversation (business, processes, tools, channels, decision_patterns) and confirms or corrects each before advancing
+- [x] **INTV-01**: v1.0 Interview phase emits a Business Graph JSON artifact at `.agentbloc/graph/business-graph.json` in addition to the existing conversational confirmation — completed 2026-04-21 (Phase 08-02) via Summary-gate Business Graph Emission subsection
+- [x] **INTV-02**: Interview captures `decision_patterns` as free-text rules the user describes (e.g. "if overdue > 7 days → formal notice") — stored as string array in the Business Graph — completed 2026-04-21 (Phase 08-02) via Category 7 seed question #3 + Decision Patterns Summary table
+- [x] **INTV-03**: Interview captures `channels` (Telegram / email / web / other) and `tools_available` (list of existing tools the user already pays for) as distinct Business Graph fields — completed 2026-04-21 (Phase 08-02) via Tools Available + Channels Summary tables extracted from Categories 3 and 8
+- [x] **INTV-04**: Interview concludes with a structured review: user sees the Business Graph sections rendered in the conversation (business, processes, tools, channels, decision_patterns) and confirms or corrects each before advancing — completed 2026-04-21 (Phase 08-02) via rendered-table review per D-14 (silent JSON emission)
 
 ### Business Graph Schema (BGRAPH)
 

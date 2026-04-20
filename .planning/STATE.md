@@ -4,14 +4,14 @@ milestone: v2.0
 milestone_name: designer-deploy
 status: active
 stopped_at: null
-last_updated: "2026-04-21T00:00:00.000Z"
-last_activity: 2026-04-21 - Phase 8 Plan 1 executed. Business Graph schema reference + Arco Rooms fixture committed. Ready for Plan 2.
+last_updated: "2026-04-21T12:00:00.000Z"
+last_activity: 2026-04-21 - Phase 8 Plan 2 executed. Business Graph emission wired into Phase 1 interview + SKILL.md gate. Phase 8 complete pending verification.
 progress:
   total_phases: 9
   completed_phases: 0
   total_plans: 25
-  completed_plans: 1
-  percent: 4
+  completed_plans: 2
+  percent: 8
 ---
 
 # Project State
@@ -26,12 +26,12 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 after v2.0 scope realignment)
 
 ## Current Position
 
-Phase: 8 (Business Graph Foundation) — Plan 1 complete, Plan 2 pending
-Plan: 08-02 (next)
-Status: 08-01 SUMMARY committed. Schema reference (business-graph-schema.md, 137 lines) + Arco Rooms fixture (arco-rooms-business-graph.json, valid JSON) shipped. Ready for Plan 2 to wire emission into phase-1-interview.md + SKILL.md.
-Last activity: 2026-04-21 — Commits cb1ce3a (schema) + 868d18e (fixture). 08-01-SUMMARY.md created.
+Phase: 8 (Business Graph Foundation) — Plans 1 and 2 complete. Phase 8 ready for verification.
+Plan: Phase 9 Plan 01 (next — `/gsd-discuss-phase 9`)
+Status: 08-02 SUMMARY committed. phase-1-interview.md extended (350 -> 388 lines) with Category 7 decision_patterns seed, Summary-gate Business Graph tables, Business Graph Emission subsection. SKILL.md extended (159 -> 163 lines) with unconditional business-graph-schema.md load, business_graph_validated sub-gate in State Transitions, Phase 2 precondition. INTV-01..04 marked complete.
+Last activity: 2026-04-21 — Commits 862241b (phase-1-interview) + 0ffbcda (SKILL.md). Phase 8 plans 1-2 complete; INTV-01..04 + BGRAPH-01..04 all satisfied.
 
-Progress: [#—————————] 4% (1/25 v2.0 plans complete, 0/9 phases complete)
+Progress: [##————————] 8% (2/25 v2.0 plans complete, 0/9 phases complete)
 
 ## v1.0 Milestone — Shipped Summary
 
@@ -123,6 +123,6 @@ Items acknowledged and deferred at v1.0 milestone close on 2026-04-18:
 
 ## Session Continuity
 
-Last session: 2026-04-21T00:00:00.000Z
-Stopped at: Phase 8 Plan 1 complete. Schema reference + Arco Rooms fixture shipped. SUMMARY committed.
-Next: `/gsd-execute-plan 8 2` — wire Business Graph emission into phase-1-interview.md Summary gate, add SKILL.md unconditional load + `business_graph_validated` sub-gate + Phase 2 precondition, per extension points already mapped in 08-PATTERNS.md.
+Last session: 2026-04-21T12:00:00.000Z
+Stopped at: Phase 8 Plan 2 complete. phase-1-interview.md + SKILL.md wired. SUMMARY committed. Phase 8 ready for verification.
+Next: `/gsd-verify-phase 8` to run the ROADMAP Phase 8 success criteria end-to-end. Then `/gsd-discuss-phase 9` to begin Designer Agent planning (consumes the Business Graph emitted by Phase 1, produces agent-profiles.yaml).
