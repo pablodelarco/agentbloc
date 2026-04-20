@@ -28,10 +28,10 @@ Extends the existing v1.0 Phase 1 Interview. The interview already collects the 
 
 ### Business Graph Schema (BGRAPH)
 
-- [ ] **BGRAPH-01**: `references/business-graph-schema.md` defines the canonical Business Graph JSON schema with `business` (type / size / owner), `processes` (name / steps / trigger / tools / pain / frequency / current_actor), `tools_available`, `channels`, `decision_patterns`
-- [ ] **BGRAPH-02**: Business Graph file carries a `schema_version` field so future schema changes are versioned and backward-compatible
-- [ ] **BGRAPH-03**: Each `process` entry carries a `trigger` object with a bounded type set (`cron` / `event` / `manual`) and trigger-type-specific fields (cron schedule / event source + name / manual description)
-- [ ] **BGRAPH-04**: A lightweight validator skill checks a Business Graph JSON file against the schema before Designer Agent consumes it; validation errors surface in the conversation with line numbers
+- [x] **BGRAPH-01**: `references/business-graph-schema.md` defines the canonical Business Graph JSON schema with `business` (type / size / owner), `processes` (name / steps / trigger / tools / pain / frequency / current_actor), `tools_available`, `channels`, `decision_patterns` — completed 2026-04-21 (Phase 08-01)
+- [x] **BGRAPH-02**: Business Graph file carries a `schema_version` field so future schema changes are versioned and backward-compatible — completed 2026-04-21 (Phase 08-01)
+- [x] **BGRAPH-03**: Each `process` entry carries a `trigger` object with a bounded type set (`cron` / `event` / `manual`) and trigger-type-specific fields (cron schedule / event source + name / manual description) — completed 2026-04-21 (Phase 08-01)
+- [x] **BGRAPH-04**: A lightweight validator skill checks a Business Graph JSON file against the schema before Designer Agent consumes it; validation errors surface in the conversation with line numbers — completed 2026-04-21 (Phase 08-01) via prose-checklist validator per D-13
 
 ### Designer Agent (DSGN)
 

@@ -54,7 +54,7 @@ Scope source: `.planning/v2.0-PROMPT.pdf`. 79 requirements across 13 categories.
 **Plans:** 2 plans
 
 Plans:
-- [ ] 08-01-PLAN.md — Create Business Graph schema reference + Arco Rooms test fixture
+- [x] 08-01-PLAN.md — Create Business Graph schema reference + Arco Rooms test fixture (completed 2026-04-20) — [SUMMARY](phases/08-business-graph-foundation/08-01-SUMMARY.md)
 - [ ] 08-02-PLAN.md — Wire Business Graph emission into v1.0 interview flow + SKILL.md gate
 
 ### Phase 9: Designer Agent
@@ -198,7 +198,7 @@ Plans:
 | 5. Deployment Artifacts and Evolution | v1.0 | 3/3 | Complete | 2026 |
 | 6. Repo Polish and Examples | v1.0 | 3/3 | Complete | 2026 |
 | 7. Testing and CI | v1.0 | 2/2 | Complete | 2026-04-18 |
-| 8. Business Graph Foundation | v2.0 | 0/2 | Not started | — |
+| 8. Business Graph Foundation | v2.0 | 1/2 | In progress | — |
 | 9. Designer Agent | v2.0 | 0/3 | Not started | — |
 | 10. Integration Discovery — MCP Path | v2.0 | 0/3 | Not started | — |
 | 11. Integration Discovery — Browser Fallback | v2.0 | 0/3 | Not started | — |
