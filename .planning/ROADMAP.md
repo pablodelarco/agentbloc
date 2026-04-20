@@ -51,7 +51,11 @@ Scope source: `.planning/v2.0-PROMPT.pdf`. 79 requirements across 13 categories.
 3. A reader who opens `references/business-graph-schema.md` can understand the full field set without reading the validator code
 4. The interview conversation remains bilingual (EN/ES), non-technical, and flows as in v1.0 — the graph emission is a side effect the user doesn't have to think about
 
-**Plans:** TBD (estimated 2)
+**Plans:** 2 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — Create Business Graph schema reference + Arco Rooms test fixture
+- [ ] 08-02-PLAN.md — Wire Business Graph emission into v1.0 interview flow + SKILL.md gate
 
 ### Phase 9: Designer Agent
 
