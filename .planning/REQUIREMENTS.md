@@ -1,178 +1,219 @@
-# Requirements: AgentBloc v2.0 Discovery Agent
+# Requirements: AgentBloc v2.0 Designer + Deploy
 
-**Defined:** 2026-04-18
-**Core Value:** A non-technical business owner can describe their problem and end up with a deployed, secure agent team without writing code and without improvised security scaffolding. v2.0 extends this by automatically reverse-engineering services that have no MCP or public API — without the user touching browser tooling or legal boilerplate.
-
----
-
-## Milestone Scope (Locked 2026-04-18)
-
-- **Architecture:** Discovery is a Claude Code subagent (`.claude/agents/discovery-agent.md` with `context: fork`) invoked from Phase 3 Integration Analysis as Priority 5.5, between webhook (5) and manual fallback (6). No new user-facing phases — v1.0's 6-phase brand stays intact.
-- **MVP contract:** 12 P0 table-stakes obligatory, 5 P1 differentiators "ship 3+ of 5 is success", 4 P2 differentiators deferred to v2.5 (design hooks preserved in v2.0 state schema).
-- **Policy triad (hardcoded):** Detect-and-degrade never bypass · Per-service opt-in + `DISCOVERY-LICENSE-NOTICE.md` · Three-tier API classification per endpoint.
-- **Governance UX:** `governance.yaml` ships a `discovery:` block template with safe defaults (`enabled: false`), plus an optional interactive wizard triggered when Phase 3 recommends Discovery and `discovery.enabled` is false.
-- **Open decisions deferred to Phase 8 discuss-phase:** (a) `DISCOVERY-REPORT.md` split threshold at >30 endpoints — v2.0 single-file default; (b) `OPT_IN_LEDGER.json` scope — per-project default.
+**Defined:** 2026-04-20 (realigned from 2026-04-18 Discovery Agent scope after PDF pivot)
+**Source:** `.planning/v2.0-PROMPT.pdf` (authoritative)
+**Core Value:** A non-technical business owner can describe their problem and end up with a deployed, secure, proactive agent team without writing code and without improvised security scaffolding. v2.0 automates the design and deployment pipeline end-to-end and proactively suggests agents the user did not request.
 
 ---
 
-## v1 Requirements
+## Milestone Scope (Locked 2026-04-20)
 
-### Legal & Licensing
+- **Positioning:** AgentBloc is a **proactive AI consultant**, not just an automator. Three intelligence layers: **Understand** (Business Graph from interview) → **Diagnose** (classify each process into automation type) → **Anticipate** (suggest agents the user didn't ask for).
+- **Platform:** AgentBloc runs as a markdown skill INSIDE ClaudeClaw (TypeScript + Bun). ClaudeClaw provides `Agent` / `TeamCreate` / `SendMessage` / Jobs / Telegram / hooks / skills system. n8n provides the event bus. No custom runtime on AgentBloc's side.
+- **Framework pattern inheritance** (from `v2.0-PROMPT.pdf`): CrewAI (role/goal/backstory), AG2 (CaptainAgent dynamic team generation), Google ADK (Sequential/Parallel/Loop primitives), LangGraph (checkpointing schema shape — Git commits on state files), Mastra (Zod-style schema validation between agents — implemented via front-matter validators), Paperclip (control plane UX — approval queue, cost tracking, task locking, status badges).
+- **Canonical test case:** Arco Rooms — 7-property rental management — 5-agent team (3 requested: Gestor Cobros, Recepcionista, Gestor Documental; 2 anticipated: Analista Rentabilidad, Gestor Incidencias).
 
-- [ ] **LEGAL-01**: System refuses to launch browser for any service until user has signed an explicit per-service opt-in; opt-in is logged with timestamp, version hash, and user attestation
-- [ ] **LEGAL-02**: System generates `DISCOVERY-LICENSE-NOTICE.md` per service containing ToS URL, keyword-flagged excerpt, tier classification (TOS-GREEN / TOS-AMBER / TOS-RED), and user attestation wording
-- [ ] **LEGAL-03**: Every endpoint in a DISCOVERY-REPORT.md carries a three-tier API classification: DOCUMENTED (public API key grant exists) / INTERNAL (UI-backing JSON, no anti-automation intent) / INTERNAL-HARDENED (CORS + CSRF + anti-automation intent observed)
-- [ ] **LEGAL-04**: Skill includes a new reference file `references/legal-posture.md` documenting jurisdictional variance (CFAA US, CMA UK, StGB DE, GDPR EU, LGPD BR) so users understand regional constraints
-- [ ] **LEGAL-05**: User can review an append-only `OPT_IN_LEDGER.json` per project listing every opt-in ever granted (service, date, tier, user attestation hash, Discovery run ID)
-- [ ] **LEGAL-06**: `DISCOVERY-LICENSE-NOTICE.md` is committed to the user's repository by default (supports GDPR Article 30 record-of-processing); user can opt out via `governance.yaml` flag for privacy-sensitive deployments
-- [ ] **LEGAL-07**: Project CI lints the codebase against a deny-list of stealth / evasion libraries (`playwright-extra`, `puppeteer-extra-plugin-stealth`, any CAPTCHA solver service, fingerprint-spoofing libraries); violations fail CI
+---
 
-### Discovery Core
+## v2.0 Requirements
 
-- [ ] **DISC-01**: When Phase 3 Integration Analysis exhausts Priorities 1-5 (API → MCP → Playwright → email → webhook) and no path exists, it emits a `TARGET.md` describing the service + target workflow + budget cap
-- [ ] **DISC-02**: A Discovery subagent defined at `.claude/agents/discovery-agent.md` with `context: fork` consumes the TARGET.md, scoped to Playwright MCP tools only
-- [ ] **DISC-03**: Discovery runs through a seven-state lifecycle (pre-login → login → walk → capture → analyze → validate → report), persisting state after every transition
-- [ ] **DISC-04**: Discovery captures network traffic via Playwright's native `recordHar` with in-memory handling; HAR files never persist to disk before PII redaction runs
-- [ ] **DISC-05**: Discovery replays every discovered endpoint via `curl` to verify reachability; each endpoint flagged VERIFIED or UNVERIFIED in the report
-- [ ] **DISC-06**: Discovery classifies the observed auth flow into a bounded set (cookie / OAuth 2.x / JWT / session / magic link / passkey) and documents the classification in the report
-- [ ] **DISC-07**: Discovery fingerprints UI selectors with preference order: `data-testid` > accessibility role > stable CSS class > XPath; brittle selectors are flagged
-- [ ] **DISC-08**: Discovery detects rate limits from 429 + `Retry-After` headers and from 503 patterns; infers hidden quotas and documents a recommended request budget in the report
-- [ ] **DISC-09**: Discovery classifies each failure response into a bounded set (auth-expired / forbidden / rate-limited / server-error / schema-changed / anti-bot-triggered) with per-class retry strategy
-- [ ] **DISC-10**: Discovery state is serialised to `.agentbloc/discovery/<service-slug>/state.json` so a run can pause for up to 4 hours (real-world latency: 2FA email, SMS verification) and resume from last checkpoint
-- [ ] **DISC-11**: Discovery wraps brittle interactions in a Ralph-style retry loop with a capped iteration budget (`max_retry_iterations` from governance), logged reasoning, and exponential backoff — NO fingerprint evasion or stealth adjustment
-- [ ] **DISC-12**: Discovery checks `.agentbloc/KILL_SWITCH` file existence before every major state transition; any existence halts the run immediately and writes a partial report
-- [ ] **DISC-13**: Discovery emits a `DISCOVERY-REPORT.md` at `.agentbloc/discovery/<service-slug>/DISCOVERY-REPORT.md` with YAML front-matter (schema-locked) + structured markdown body (endpoints, auth, rate limits, anti-bot observations, limitations, Builder handoff notes)
-- [ ] **DISC-14**: The DISCOVERY-REPORT.md carries a SHA256 hash in its front-matter; v3.0 Builder Agent verifies the hash before consuming the report
-- [ ] **DISC-15**: Before the report is finalised, an injection detector scans every captured response body for imperative strings, Base64 blobs, and invisible Unicode; findings are isolated inside `untrusted-data` code fences
-- [ ] **DISC-16**: A fresh-context Claude session performs a verification pass on the sanitised report before it is released to downstream consumers; the fresh session has no access to the original HAR files
-- [ ] **DISC-17**: User can halt a running Discovery via the existing Telegram `/stop` command; kill signal propagates to the subagent within one state-transition window
-- [ ] **DISC-18**: Long-running discovery reports progress to a dedicated Telegram thread-per-service (matches v1.0 thread-per-domain pattern)
-- [ ] **DISC-19**: System ships an `agentbloc-discovery-runner.sh` wrapper so discovery runs can be scheduled via system cron + `claude -p` alongside v1.0 deployed agents
+### Interview Extension (INTV)
 
-### Governance & Controls
+Extends the existing v1.0 Phase 1 Interview. The interview already collects the information; v2.0 structures it.
 
-- [ ] **GOV-01**: `governance.yaml` deployment template carries a `discovery:` block with safe defaults: `enabled: false`, `max_runtime_minutes: 240`, `max_retry_iterations: 3`, `max_budget_usd: 50`, `allowed_services: []`, `require_license_notice: true`, `posture_classifier: true`
-- [ ] **GOV-02**: When Phase 3 recommends Discovery and `discovery.enabled` is false, the skill offers an optional interactive wizard that walks the user through enabling Discovery, granting per-service opt-in, and signing the license notice
-- [ ] **GOV-03**: Blast-radius scoring (extended from v1.0) introduces a new Level 2.5 "discovery-probe" that sits between read-only (2) and write-scoped (3); requires opt-in but is bounded by the governance budget
-- [ ] **GOV-04**: Discovery honours three hard budget caps from governance: wall-clock minutes, retry iterations, and USD cost estimate; exceeding any cap halts the run and emits a partial report
-- [ ] **GOV-05**: `telegram.yaml` template gains a `discovery-approvals` thread pattern so human-in-the-loop approvals (posture-C escalation, license-notice review) surface on mobile without leaving AgentBloc's thread-based UX
+- [ ] **INTV-01**: v1.0 Interview phase emits a Business Graph JSON artifact at `.agentbloc/graph/business-graph.json` in addition to the existing conversational confirmation
+- [ ] **INTV-02**: Interview captures `decision_patterns` as free-text rules the user describes (e.g. "if overdue > 7 days → formal notice") — stored as string array in the Business Graph
+- [ ] **INTV-03**: Interview captures `channels` (Telegram / email / web / other) and `tools_available` (list of existing tools the user already pays for) as distinct Business Graph fields
+- [ ] **INTV-04**: Interview concludes with a structured review: user sees the Business Graph sections rendered in the conversation (business, processes, tools, channels, decision_patterns) and confirms or corrects each before advancing
 
-### Security Extensions (to v1.0 references)
+### Business Graph Schema (BGRAPH)
 
-- [ ] **SECR-EXT-01**: `credentials.md` extended with a session-handoff pattern — Discovery never captures MFA seeds or passkey secrets; user logs in on their own device, Discovery captures only the resulting session cookie, stored in the OS keychain, auto-purged on run completion
-- [ ] **SECR-EXT-02**: `blast-radius.md` documents the new Level 2.5 discovery-probe tier with examples and approval requirements
-- [ ] **SECR-EXT-03**: `audit-logging.md` extended with eight discovery-specific event types (`session.started`, `endpoint.discovered`, `tier.classified`, `anti_bot.detected`, `posture.classified`, `report.signed`, `kill.triggered`, `session.completed`); all events carry the correlation ID pattern from v1.0
-- [ ] **SECR-EXT-04**: `prompt-injection.md` extended with Layer 5 "HTML / response-body isolation" — every captured body is framed as untrusted data and cannot be interpreted as instructions by the main session
-- [ ] **SECR-EXT-05**: `tenant-isolation.md` extended with per-service directory segregation under `.agentbloc/discovery/<service-slug>/`; cross-service reads require explicit opt-in
-- [ ] **SECR-EXT-06**: PII redaction pipeline runs on every captured HAR and every response body, with patterns for EU IBAN, US SSN, credit-card Luhn, E.164 phone, and common email formats; a verification scan re-runs on the report before emit and fails the run on any residual match
+- [ ] **BGRAPH-01**: `references/business-graph-schema.md` defines the canonical Business Graph JSON schema with `business` (type / size / owner), `processes` (name / steps / trigger / tools / pain / frequency / current_actor), `tools_available`, `channels`, `decision_patterns`
+- [ ] **BGRAPH-02**: Business Graph file carries a `schema_version` field so future schema changes are versioned and backward-compatible
+- [ ] **BGRAPH-03**: Each `process` entry carries a `trigger` object with a bounded type set (`cron` / `event` / `manual`) and trigger-type-specific fields (cron schedule / event source + name / manual description)
+- [ ] **BGRAPH-04**: A lightweight validator skill checks a Business Graph JSON file against the schema before Designer Agent consumes it; validation errors surface in the conversation with line numbers
 
-### Rediscovery / Self-Healing Forward Compatibility (for v4.0)
+### Designer Agent (DSGN)
 
-- [ ] **RDSV-01**: `references/phase-6-evolution.md` declares a `REDISCOVER-REQUEST` proposal type with a locked schema (service, observed symptom, trigger event, requested scope); v2.0 emits but does not consume — v4.0 will implement the consumer
-- [ ] **RDSV-02**: `references/phase-6-evolution.md` defines four self-healing trigger event types (`discovery.schema_mismatch`, `discovery.selector_drift`, `discovery.auth_change`, `discovery.rate_limit_tightened`) with examples and producer contracts
-- [ ] **RDSV-03**: Every DISCOVERY-REPORT.md front-matter carries an `expires_at` field (conservative 90-day default); downstream consumers (v3.0 Builder, v4.0 Self-Healing) honour this as a staleness signal
-- [ ] **RDSV-04**: Discovery embeds a healthcheck recipe in the report's "Builder handoff" section so v3.0 Builder-generated MCPs can include a lightweight `/__discovery_healthcheck` operation for v4.0 drift detection
+The core new capability. AG2 CaptainAgent pattern adapted to AgentBloc.
 
-### P1 Differentiators (Ship 3+ of 5 is success)
+- [ ] **DSGN-01**: Designer Agent lives at `.claude/agents/designer-agent.md` (Claude Code subagent definition) with `context: fork` and scoped tool access
+- [ ] **DSGN-02**: Designer Agent consumes the Business Graph JSON and emits an `agent-profiles.yaml` artifact containing `team` (name + topology) and `agents` (list of full profiles)
+- [ ] **DSGN-03**: Each generated agent profile includes `id`, `role`, `goal`, `backstory` (CrewAI pattern), `tools` (list of MCP references), `triggers` (cron / event / inter-agent), `autonomy` (`full` / `semi` / `supervised`), `outputs` (type + schema), `escalation` (target like `telegram:pablo`), `dependencies` (other agents referenced)
+- [ ] **DSGN-04**: Designer Agent selects a team `topology` from `{pipeline, mesh, hierarchy, swarm}` with documented rationale based on process interdependencies observed in the Business Graph
+- [ ] **DSGN-05**: Designer Agent groups processes by role (one role = one agent) rather than one-process-per-agent, so a single agent can own multiple related steps
+- [ ] **DSGN-06**: Designer Agent presents the proposed team to the user conversationally with an ASCII interaction diagram (from v1.0 Design phase DESG-08) before the deploy pipeline runs
+- [ ] **DSGN-07**: User can edit the generated profiles (rename agents, merge roles, drop an anticipated agent) and Designer regenerates `agent-profiles.yaml` with the edits applied
 
-- [ ] **NICE-01** (Schema inference): Discovery infers JSON response shapes (types, required vs optional fields, enum values when observed ≥3 times) and documents them in the report
-- [ ] **NICE-02** (Anti-bot posture classifier): Discovery classifies the observed anti-bot posture as A (none), B (basic: User-Agent / rate limit / Cloudflare-lite), or C (hardened: DataDome / PerimeterX / CAPTCHA); Posture C halts the run and emits a `DISCOVERY-BLOCKED-REPORT.md`
-- [ ] **NICE-03** (Socratic scoping): Discovery pre-flight runs a short Socratic skill (borrowed pattern from GStack `/office-hours`) to scope the target workflow, required endpoints, and budget before any browser launches
-- [ ] **NICE-04** (Cost observability): Discovery tallies token usage, wall-clock minutes, and browser-minutes per run and writes them to the report's "Run stats" section
-- [ ] **NICE-05** (DISCOVERY-LICENSE-NOTICE automation): Discovery fetches the service's ToS URL, extracts keyword-flagged excerpts, and drafts the TOS-tier classification — user reviews and edits rather than authoring from scratch
+### Orchestration Classifier (ORCH)
 
-## v2.5+ Requirements (Deferred)
+Part of the Designer Agent's output. Separated because it maps to a known pattern set.
 
-Design hooks preserved in v2.0 state schema so these do not require a schema migration:
+- [ ] **ORCH-01**: Designer Agent classifies each workflow into one of five orchestration patterns from `v2.0-PROMPT.pdf`: **Graph / Conversational / Role-delegation / Handoff-chain / Event-bus**, or their simpler ADK-equivalent `Sequential / Parallel / Loop / Event-driven`
+- [ ] **ORCH-02**: `references/orchestration-patterns.md` documents the five patterns, when each applies, and example workflow shapes — Designer Agent cites this reference when picking
+- [ ] **ORCH-03**: The `agent-profiles.yaml` `orchestration.workflows` section lists each workflow with `type`, `agents`, `trigger`, and either `steps` (sequential/loop) or `flow` (event-driven narrative)
+- [ ] **ORCH-04**: Workflows reference agents by `id` only — cross-references must resolve to agents listed in the same file (validator check)
 
-- **DIFF-01**: Cross-run DISCOVERY-REPORT diff (semantic, not textual) surfacing endpoint additions/removals/changes between runs (v2.5)
-- **LEARN-01**: Learner system that auto-extracts reusable selector / auth patterns into `.omc/skills/`-style reusable skill files from Discovery debug sessions (v2.5)
-- **TIER-01**: Multi-account tier-shape detection — run Discovery twice with different account tiers to detect endpoint shape differences (Free vs Pro) (v2.5)
-- **CONTRACT-01**: Contract-test export format for downstream CI (Pact / OpenAPI examples / bespoke) (v2.5)
+### Integration Discovery (INTEG) — Steps 1-3 MCP path
+
+Four-step search per required tool. Steps 1-3 cover the MCP path; step 4 (browser fallback) is scoped separately under BROWSER.
+
+- [ ] **INTEG-01**: Step 1 — Discovery Pipeline checks `.mcp.json` for an existing server matching the tool name; if present, skips to verification
+- [ ] **INTEG-02**: Step 2 — Discovery Pipeline queries a curated ecosystem MCP registry (referenced in `references/mcp-ecosystem.md`, seeded from v1.0 technology stack); if a match exists, proposes `npx -y @mcp/xxx` installation
+- [ ] **INTEG-03**: Step 3 — If no MCP exists but a public API does, a `mcp-builder` skill generates a minimal wrapper MCP at `.mcp/generated/<tool-id>/` and registers it in `.mcp.json`
+- [ ] **INTEG-04**: Each integration is **verified** before deploy: the MCP responds to a ping/health call, has the credential scopes the agent needs, and returns a sample shape matching the agent's expected input
+- [ ] **INTEG-05**: Verification failures surface in the conversation with the specific scope or credential missing, and the pipeline halts until the user provides or approves the missing piece
+- [ ] **INTEG-06**: Evidence protocol from v1.0 INTG-03 carries forward — every integration claim includes URL + package version + last-commit date; missing evidence is flagged `[UNVERIFIED]`
+
+### Browser Automation Fallback (BROWSER) — INTEG Step 4
+
+The earlier "Discovery Agent" scope (pre-2026-04-20) becomes this subset. Reuses the 2026-04-18 research in `research/{STACK,FEATURES,ARCHITECTURE,PITFALLS,SUMMARY}.md`.
+
+- [ ] **BROWSER-01**: Step 4 — When Steps 1-3 all fail, Discovery Pipeline invokes a browser-fallback subagent at `.claude/agents/browser-discovery.md` (context:fork, Playwright MCP only) with a `TARGET.md` describing the service + target workflow + budget
+- [ ] **BROWSER-02**: Browser discovery produces a `DISCOVERY-REPORT.md` per service at `.agentbloc/discovery/<service-slug>/` with YAML front-matter (schema-locked, SHA256 signed, `expires_at` field) + structured body (endpoints, auth flow, sample calls, UI selectors, rate limits, anti-bot observations)
+- [ ] **BROWSER-03**: Per-service legal opt-in is mandatory before any browser launches; generates `DISCOVERY-LICENSE-NOTICE.md` with ToS URL + keyword excerpt + tier classification (TOS-GREEN / TOS-AMBER / TOS-RED); append-only `OPT_IN_LEDGER.json` per project
+- [ ] **BROWSER-04**: Every discovered endpoint carries a three-tier API classification (DOCUMENTED / INTERNAL / INTERNAL-HARDENED)
+- [ ] **BROWSER-05**: Anti-bot policy: **detect-and-degrade, never bypass**. CI deny-list lint rejects `playwright-extra`, `puppeteer-extra-plugin-stealth`, CAPTCHA solvers, fingerprint-spoofing libraries
+- [ ] **BROWSER-06**: Browser discovery uses Patchright (version-locked to Playwright 1.59.x) for legitimate CDP-leak patches only; fingerprint spoofing remains explicitly disallowed
+- [ ] **BROWSER-07**: Stack pins captured in `references/browser-stack.md`: `playwright@^1.59.1`, `patchright@^1.59.4`, `curlconverter@^4.12.0`, `@har-sdk/validator@^2.6.1`, `fetch-har@^12.0.1`
+- [ ] **BROWSER-08**: Checkpointed multi-turn workflow: Browser discovery resumable after up to 4-hour pauses (real-world 2FA / SMS latency) via `.agentbloc/discovery/<service-slug>/state.json`
+- [ ] **BROWSER-09**: Ralph-style retry loop with capped iteration budget (from governance), logged reasoning, exponential backoff — NO fingerprint adjustment on retry
+- [ ] **BROWSER-10**: Output firewall — injection detector scans captured response bodies for imperative strings, Base64 blobs, invisible Unicode; findings isolated inside `untrusted-data` fences; fresh-context verification pass before release to the Deploy Pipeline
+- [ ] **BROWSER-11**: PII redaction pipeline runs on every HAR + response body (EU IBAN, US SSN, credit-card Luhn, E.164 phones, email addresses) with verification scan before emit
+- [ ] **BROWSER-12**: `references/legal-posture.md` documents jurisdictional variance (CFAA US, CMA UK, StGB DE, GDPR EU, LGPD BR) so users understand regional constraints
+
+### Deploy Pipeline (DEPLOY)
+
+Materializes the `agent-profiles.yaml` into a running ClaudeClaw-compatible deployment.
+
+- [ ] **DEPLOY-01**: For each agent in `agent-profiles.yaml`, generate `skills/{agent-id}/SKILL.md` containing the full prompt (role + goal + backstory + tool list + autonomy rules + escalation)
+- [ ] **DEPLOY-02**: For each agent trigger, generate a ClaudeClaw job config (cron entry or webhook subscription pointing to n8n route)
+- [ ] **DEPLOY-03**: Merge required MCP server entries into `.mcp.json` (newly generated wrappers from INTEG-03 + ecosystem installs from INTEG-02)
+- [ ] **DEPLOY-04**: Generate per-agent memory directory `.claude/agents/{agent-id}/` with stub `memory.md`, empty `state.json`, and `last-run.json: null`
+- [ ] **DEPLOY-05**: Generate `.claude/agents/registry.yaml` listing the team (lead, agents, reporting hierarchy, dashboard_agent)
+- [ ] **DEPLOY-06**: Deploy Pipeline is idempotent — re-running with the same `agent-profiles.yaml` does not duplicate or corrupt existing artifacts; differences present a diff for user approval before overwrite
+- [ ] **DEPLOY-07**: Deploy Pipeline emits a `DEPLOY-REPORT.md` summarizing what was created, what was updated, what was skipped, and any pending user actions (credentials missing, ToS opt-in needed, etc.)
+- [ ] **DEPLOY-08**: Deploy Pipeline runs a post-deploy verification: every generated SKILL.md loads cleanly, every MCP server responds, every cron job is registered with ClaudeClaw
+
+### Agent Memory System (MEM)
+
+- [ ] **MEM-01**: Each deployed agent has a directory `.claude/agents/{agent-id}/` with three canonical files: `memory.md`, `state.json`, `last-run.json`
+- [ ] **MEM-02**: `memory.md` holds durable domain knowledge (tenants, contracts, account numbers — scoped to the agent's domain) in agent-editable Markdown
+- [ ] **MEM-03**: `state.json` holds machine-written working state (current month's payments processed, locked resources, retry counts) with `schema_version` field
+- [ ] **MEM-04**: `last-run.json` holds the most recent execution log entry (action, result, timestamp, `status: active|idle|error`)
+- [ ] **MEM-05**: On every wake, the agent reads `memory.md` and `state.json` first; on every completion, it updates both before emitting log entries
+- [ ] **MEM-06**: Memory directories are version-controllable (plain text) and debuggable (human-editable) per v1.0's file-based-state decision
+
+### Multi-Agent Runtime (RUNTIME)
+
+Triggers, coordination primitives, team lifecycle. Thin layer on top of ClaudeClaw primitives — we do not reimplement them.
+
+- [ ] **RUNTIME-01**: Cron triggers fire via system cron + `claude -p` wrapper (ClaudeClaw standard). AgentBloc generates the crontab entries during DEPLOY-02.
+- [ ] **RUNTIME-02**: Event triggers fire via n8n webhooks (Gmail / Plaid / BBVA / Google Calendar / custom form). n8n route calls ClaudeClaw's job endpoint, which wakes the agent.
+- [ ] **RUNTIME-03**: `references/n8n-integration.md` documents the webhook-to-agent mapping pattern (event source → n8n node → ClaudeClaw job payload) with examples
+- [ ] **RUNTIME-04**: Inter-agent coordination uses ClaudeClaw's `SendMessage` (one-to-one) and `TeamCreate` (transient team assembly). Agent A spawns Team T when it detects a multi-agent task; team dissolves when done.
+- [ ] **RUNTIME-05**: Single-agent tasks run without `TeamCreate` overhead — Designer Agent's workflow classification determines which path applies
+- [ ] **RUNTIME-06**: Every trigger records a correlation ID propagated through SendMessage into all downstream agent log entries so a multi-agent run can be traced end-to-end
+- [ ] **RUNTIME-07**: Kill switch from v1.0 SECR-05 carries forward — `.agentbloc/KILL_SWITCH` checked on every agent wake; Telegram `/stop` command honored team-wide
+
+### Autonomy Controller (AUTON)
+
+- [ ] **AUTON-01**: Every agent profile declares `autonomy: full | semi | supervised`; the generated SKILL.md injects autonomy-appropriate language (full = no prompt, semi = confirm before external side-effects, supervised = propose + wait for approval)
+- [ ] **AUTON-02**: External side-effect actions (send email, post message, modify record, spend money) route through an autonomy check before execution; `semi` sends a Telegram approval request with context (what the agent intends, why, reversibility); `supervised` always waits
+- [ ] **AUTON-03**: Approval round-trip is append-only logged with (agent, action, proposal timestamp, approval timestamp, approver, outcome)
+- [ ] **AUTON-04**: Escalation path on any agent failure: the agent writes an escalation entry to its log (`priority: critical`), triggers a Telegram message to the configured escalation target, and halts until human acknowledges
+- [ ] **AUTON-05**: Escalation messages include: what the agent tried, why it failed, what options exist, and a one-line recommended next action. Not just an error stack.
+
+### Monitoring + Hierarchical Reporting (MONITOR)
+
+- [ ] **MONITOR-01**: Every agent emits structured log entries in JSONL format matching the canonical log schema (agent_id, team, action, result, details, timestamp, requires_human, priority, token_count, cost_usd, locked_by)
+- [ ] **MONITOR-02**: Logs land at `.claude/agents/logs/<YYYY-MM-DD>/<agent-id>.jsonl` — append-only, one JSON per line, Git-versionable
+- [ ] **MONITOR-03**: `.claude/agents/registry.yaml` declares the team structure: `lead`, `agents[]`, `reporting_hierarchy` (parent → children map), `dashboard_agent`
+- [ ] **MONITOR-04**: A `briefing-agent` (generated by Designer as a default anticipated agent for every team) runs daily and produces a consolidated Telegram briefing: what each agent did, what escalations are pending, cost + token totals, health status
+- [ ] **MONITOR-05**: Hierarchical reporting pattern documented in `references/reporting-hierarchy.md`: individual agents → team leads → briefing agent → human. Individual agents never send directly to Telegram EXCEPT critical escalations.
+- [ ] **MONITOR-06**: Briefing agent consumes the JSONL logs + registry, not each agent's state directly — presentation layer is pluggable (Telegram in v2.0, web dashboard in v2.5, management UI in v3.0)
+
+### Control Plane UX (CTRL) — Paperclip-inspired patterns
+
+- [ ] **CTRL-01**: Approval queue — every `requires_human: true` log entry surfaces in a separate Telegram thread (not the main briefing thread) so human decisions aren't lost in noise
+- [ ] **CTRL-02**: Cost tracking — `token_count` + `cost_usd` recorded per log entry; briefing agent surfaces per-agent and per-team totals; tracker references the active billing mode (Max subscription vs API key)
+- [ ] **CTRL-03**: Task locking — when an agent starts work on a shared resource (e.g., bank account reconciliation), it writes `locked_by: <agent-id>` into a shared lock file; other agents checking that resource see the lock and defer
+- [ ] **CTRL-04**: Status badges — every agent's `last-run.json` includes `status: active | idle | error`; briefing agent surfaces the team health glance (e.g., "5 active, 0 idle, 0 error")
+- [ ] **CTRL-05**: Activity feed — chronological merge of all agents' JSONL logs into a single per-day `activity-feed.jsonl` for operational debugging
+
+### Anticipation Engine (ANTIC)
+
+The differentiator. Core of the "proactive AI consultant" positioning.
+
+- [ ] **ANTIC-01**: Designer Agent runs an anticipation pass after producing the user-requested agents: analyzes the Business Graph for business-type patterns (e.g., "rental management" ⇒ "you probably need profitability analyst + incident tracker")
+- [ ] **ANTIC-02**: `references/anticipation-heuristics.md` documents the mapping from business type → commonly-needed-but-often-forgotten agents, with rationale per mapping (why real estate needs incident tracking, why ecommerce needs returns analyst, etc.)
+- [ ] **ANTIC-03**: Anticipated agents are clearly marked in the proposed team presentation (DSGN-06) with an `ANTICIPATED` tag and the rationale so the user can accept / reject / defer each
+- [ ] **ANTIC-04**: Rejected anticipated agents are remembered in a `.agentbloc/graph/declined.json` so re-running Designer doesn't re-propose them
+- [ ] **ANTIC-05**: Anticipation heuristics are evidence-backed (at least three independent sources per mapping) — consulting-product integrity matters
+
+### Inherited from v1.0 (extensions / touchpoints)
+
+These are not new requirements — they are v1.0 requirements that v2.0 work must respect or extend:
+
+- v1.0 interview (INTV-01 through INTV-04 from v1.0 REQUIREMENTS) remains the input surface — v2.0 adds the Business Graph emission on top
+- v1.0 security framework (credentials, blast-radius, audit logging, kill switch, rate limiting, GDPR, prompt injection, tenant isolation, prompt-injection defense) applies to every generated agent via DEPLOY-01's SKILL.md generation
+- v1.0 Phase 4 dry run applies to every team before production deploy — DEPLOY-08 explicitly triggers it
+- v1.0 Phase 6 Evolution (weekly capability + vulnerability scans) applies to every deployed team
+
+---
+
+## Deferred to v2.5+
+
+- Web dashboard (Bun + Hono) with real-time activity feed, per-agent drill-down, cost trending
+- SQLite event storage (migration from JSONL)
+- Cross-run diff of DISCOVERY-REPORT.md (browser discovery delta detection → self-healing signal for v4.0)
+- Learner system that auto-extracts reusable skills from debug sessions (inspired by oh-my-claudecode `.omc/skills/`)
+- Multi-account tier-shape detection during browser discovery (Free vs Pro endpoint differences)
+- Contract-test export from Business Graph / DISCOVERY-REPORT.md (Pact / OpenAPI examples)
+
+## Deferred to v3.0+
+
+- Builder Agent — consumes DISCOVERY-REPORT.md (from BROWSER path) and generates a production TypeScript MCP (tested, CI'd, publishable to npm)
+- OpenClaw as runtime substrate evaluation (ACP + Docker sandboxing + multi-channel messaging)
+
+## Deferred to v4.0+
+
+- Self-Healing Evolution — auto-triggers re-discovery when a deployed MCP starts failing, regenerates + human-approves patches
+- Drift detection via `expires_at` + healthcheck recipe (contract surfaces emitted in v2.0, consumer in v4.0)
+
+---
 
 ## Out of Scope (v2.0 and beyond unless noted)
 
 | Feature | Reason |
 |---------|--------|
-| Fingerprint evasion / stealth plugins (`playwright-extra`, `puppeteer-extra-plugin-stealth`) | Violates target-vendor ToS and creates CFAA exposure; destroys AgentBloc's compliance-first brand |
-| CAPTCHA solving services | ToS violation for solver vendor + target vendor; explicit anti-feature |
-| TLS fingerprint (JA3 / JA4) spoofing | Same legal reasoning as fingerprint evasion |
-| Brute-force credential discovery | Out of scope at the charter level |
-| Writing to third-party services during Discovery | Discovery is read-only; any endpoint observed to be a write is documented but never called |
-| MFA seed / passkey extraction | Permanent anti-feature — registering a persistent backdoor against a third party is not something AgentBloc ever does |
-| Mobile app reverse engineering (Frida, iOS SSL pinning bypass) | Defer to v3.5+; out of scope for v2.0 |
-| Browser extension reverse engineering | Defer; v2.0 targets web portals only |
-| Residential / mobile proxy orchestration | Not in v2.0; documented env var hook `AGENTBLOC_DISCOVERY_PROXY` for future extension |
-| Real-time streaming discovery reports (WebSocket) | Discovery emits static files; streaming would duplicate Telegram progress thread |
-
-## Traceability
-
-Populated by `gsd-roadmapper` 2026-04-18. Coverage: **46/46** requirements mapped (41 P0 + 5 NICE).
-
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| LEGAL-01 | Phase 8 | Pending |
-| LEGAL-02 | Phase 8 | Pending |
-| LEGAL-03 | Phase 8 | Pending |
-| LEGAL-04 | Phase 8 | Pending |
-| LEGAL-05 | Phase 8 | Pending |
-| LEGAL-06 | Phase 8 | Pending |
-| LEGAL-07 | Phase 8 | Pending |
-| DISC-01 | Phase 12 | Pending |
-| DISC-02 | Phase 11 | Pending |
-| DISC-03 | Phase 11 | Pending |
-| DISC-04 | Phase 10 | Pending |
-| DISC-05 | Phase 10 | Pending |
-| DISC-06 | Phase 11 | Pending |
-| DISC-07 | Phase 11 | Pending |
-| DISC-08 | Phase 11 | Pending |
-| DISC-09 | Phase 11 | Pending |
-| DISC-10 | Phase 10 | Pending |
-| DISC-11 | Phase 10 | Pending |
-| DISC-12 | Phase 10 | Pending |
-| DISC-13 | Phase 8 | Pending |
-| DISC-14 | Phase 8 | Pending |
-| DISC-15 | Phase 13 | Pending |
-| DISC-16 | Phase 13 | Pending |
-| DISC-17 | Phase 13 | Pending |
-| DISC-18 | Phase 12 | Pending |
-| DISC-19 | Phase 10 | Pending |
-| GOV-01 | Phase 12 | Pending |
-| GOV-02 | Phase 12 | Pending |
-| GOV-03 | Phase 9 | Pending |
-| GOV-04 | Phase 12 | Pending |
-| GOV-05 | Phase 12 | Pending |
-| SECR-EXT-01 | Phase 9 | Pending |
-| SECR-EXT-02 | Phase 9 | Pending |
-| SECR-EXT-03 | Phase 9 | Pending |
-| SECR-EXT-04 | Phase 9 | Pending |
-| SECR-EXT-05 | Phase 9 | Pending |
-| SECR-EXT-06 | Phase 9 | Pending |
-| RDSV-01 | Phase 14 | Pending |
-| RDSV-02 | Phase 14 | Pending |
-| RDSV-03 | Phase 8 | Pending |
-| RDSV-04 | Phase 14 | Pending |
-| NICE-01 | Phase 13 | Pending |
-| NICE-02 | Phase 13 | Pending |
-| NICE-03 | Phase 11 | Pending |
-| NICE-04 | Phase 13 | Pending |
-| NICE-05 | Phase 13 | Pending |
-
-**Notes:**
-- DISC-19 (`agentbloc-discovery-runner.sh`) is primarily delivered in Phase 10 (Discovery Toolchain) where the wrapper script is written; Phase 8 success criterion #2 references it only as a schema-compliance checkpoint.
-- RDSV-04 (Builder-handoff healthcheck) is produced in Phase 14 and verified end-to-end in Phase 15 as part of the release gate.
-- All 5 NICE requirements mapped (exceeds the "ship 3+ of 5 is success" bar).
-- Phase 15 (Validation and Release) does not introduce new requirements — it verifies cross-cutting release readiness for every prior phase.
-
-**Coverage check:**
-- LEGAL: 7/7 ✓
-- DISC: 19/19 ✓
-- GOV: 5/5 ✓
-- SECR-EXT: 6/6 ✓
-- RDSV: 4/4 ✓
-- NICE: 5/5 ✓
-- **Total: 46/46 ✓ No orphans.**
+| Fingerprint evasion / stealth plugins in browser fallback | Violates target-vendor ToS + CFAA exposure. Enforced by CI deny-list lint (BROWSER-05). |
+| CAPTCHA solving services | ToS violation for both solver vendor and target. Explicit anti-feature. |
+| TLS fingerprint (JA3/JA4) spoofing | Same legal reasoning as fingerprint evasion. |
+| Writing to third-party services during browser discovery | Discovery is read-only. Observed writes are documented, never called. |
+| MFA seed / passkey extraction | Permanent anti-feature — registers a persistent backdoor. |
+| Mobile app reverse engineering (Frida, iOS SSL pinning bypass) | Defer to v3.5+. |
+| Browser extension reverse engineering | Defer. v2.0 targets web portals only via browser fallback. |
+| Custom Python / Node.js server for orchestration | Claude Code + ClaudeClaw IS the runtime. No new services. |
+| Filesystem as primary inter-agent bus | `SendMessage` is faster and cleaner than Paperclip's file-based pattern. |
+| LLM-routed dynamic agent selection (AG2 SelectorGroupChat) | Too much latency. Flows hardcoded per team after Designer emits the plan. |
+| Manual agent definition by user | Designer auto-generates from the interview; user approves or tweaks. |
+| Web UI / visual workflow builder | Out of scope for v2.0. Telegram → dashboard (v2.5) → management UI (v3.0). |
+| Database in v2.0 | Files-first. SQLite arrives with v2.5 web dashboard. |
+| Agent processes running 24/7 | Agents sleep between triggers. Cron + n8n webhooks wake them. |
+| AutoGen as primary framework reference | In maintenance mode. Use AG2 CaptainAgent specifically, not AutoGen broadly. |
 
 ---
 
-*Requirements defined 2026-04-18 after 4-agent research + synthesis (see `research/SUMMARY.md`). Traceability populated 2026-04-18 by `gsd-roadmapper` (step 10).*
+## Traceability
+
+_Populated by `gsd-roadmapper` when rewriting `ROADMAP.md`._
+
+**Coverage target:**
+- New v2.0 requirements: ~60 (4 INTV + 4 BGRAPH + 7 DSGN + 4 ORCH + 6 INTEG + 12 BROWSER + 8 DEPLOY + 6 MEM + 7 RUNTIME + 5 AUTON + 6 MONITOR + 5 CTRL + 5 ANTIC)
+- Mapped to phases: pending (9-phase structure proposed in ROADMAP.md)
+- Unmapped: 0 (must verify after roadmap)
+
+---
+
+*Requirements defined 2026-04-20 after PDF scope pivot. Supersedes the 2026-04-18 Discovery-centric requirements (46 reqs, commit `c32d27d`). Research artifacts in `.planning/research/` remain valid for BROWSER-xx requirements.*
