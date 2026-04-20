@@ -5,7 +5,7 @@ milestone_name: designer-deploy
 status: active
 stopped_at: null
 last_updated: "2026-04-20T23:15:00.000Z"
-last_activity: 2026-04-20 - v2.0 scope realigned to PDF prompt (Designer + Deploy, not Discovery Agent). Phases 8-16, 79 requirements across 13 categories.
+last_activity: 2026-04-20 - Phase 8 context captured (autonomous mode). Decisions D-11..D-20 committed in 08-CONTEXT.md. Ready for plan-phase.
 progress:
   total_phases: 9
   completed_phases: 0
@@ -26,10 +26,10 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 after v2.0 scope realignment)
 
 ## Current Position
 
-Phase: 8 (Business Graph Foundation) — Not started
+Phase: 8 (Business Graph Foundation) — Context captured, ready for planning
 Plan: —
-Status: v2.0 scope realigned. 79 requirements across 13 categories. 9 phases (8-16) drafted and committed.
-Last activity: 2026-04-20 — PROJECT.md / REQUIREMENTS.md / ROADMAP.md / STATE.md rewritten to reflect PDF pivot.
+Status: Phase 8 discuss complete. Decisions D-11..D-20 locked (autonomous). Launching plan-phase.
+Last activity: 2026-04-20 — 08-CONTEXT.md and 08-DISCUSSION-LOG.md committed.
 
 Progress: [——————————] 0% (0/9 v2.0 phases complete)
 
@@ -125,4 +125,4 @@ Items acknowledged and deferred at v1.0 milestone close on 2026-04-18:
 
 Last session: 2026-04-20T23:15:00.000Z
 Stopped at: v2.0 scope realigned to PDF. PROJECT.md / REQUIREMENTS.md / ROADMAP.md / STATE.md committed.
-Next: `/gsd-discuss-phase 8` to begin Phase 8 (Business Graph Foundation). gstack skills (`/office-hours`, `/plan-eng-review`) available to use inside discuss-phase.
+Next: `/gsd-plan-phase 8 --auto` (auto-advanced from discuss-phase; PLAN.md generation and wave-based execution follow autonomously per autonomous_mode memo).
