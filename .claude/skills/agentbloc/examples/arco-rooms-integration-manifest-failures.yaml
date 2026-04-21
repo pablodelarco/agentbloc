@@ -1,0 +1,66 @@
+# Failure-path companion to arco-rooms-integration-manifest.yaml
+# Demonstrates the Halt-and-Name protocol (D-35) across the three D-34 verification checks.
+# Phase 16 TAP replays this fixture to validate failure-path coverage (plan-eng-review finding T-2).
+# Each entry would trigger a VERIFICATION-FAILED.md artifact at .agentbloc/integrations/<tool-id>/
+# and block the Phase 3 gate until the user resolves the specific gap named in failure_reason.
+
+schema_version: 1
+generated_at: "2026-04-21T18:00:00Z"
+modified_at: "2026-04-21T18:00:00Z"
+tools:
+  # Check 1 (Ping) failure: MCP server does not respond to tools/list
+  - tool_id: "stripe-mcp"
+    resolution_method: "ecosystem"
+    mcp_server:
+      package: "stripe-mcp"
+      version: "0.2.0"
+      installed_via: "npx -y stripe-mcp"
+    evidence:
+      url: "https://github.com/community/stripe-mcp"
+      last_commit: "2026-03-10"
+      publisher: "community"
+      trust_tier: "MEDIUM"
+      tools_declared: []
+      required_scopes: ["STRIPE_SECRET_KEY"]
+      healthcheck_at: null
+    used_by: ["gestor-cobros"]
+    status: "failed"
+    failure_reason: "Check 1 (Ping): server does not respond to tools/list after 30s timeout; package installed via npx but binary does not start cleanly"
+
+  # Check 2 (Scope match) failure: required scope missing from credentials
+  - tool_id: "gmail-modify-mcp"
+    resolution_method: "ecosystem"
+    mcp_server:
+      package: "@smithery-ai/gmail-mcp"
+      version: "0.3.1"
+      installed_via: "npx -y @smithery-ai/gmail-mcp"
+    evidence:
+      url: "https://github.com/smithery-ai/gmail-mcp"
+      last_commit: "2026-03-20"
+      publisher: "smithery-ai"
+      trust_tier: "MEDIUM"
+      tools_declared: ["list_unread", "send_message"]
+      required_scopes: ["gmail.modify"]
+      healthcheck_at: null
+    used_by: ["recepcionista"]
+    status: "failed"
+    failure_reason: "Check 2 (Scope match): GOOGLE_OAUTH_TOKEN in .env is present but lacks gmail.modify scope; agent recepcionista needs send_message which requires gmail.modify. Resolution options per D-38: add scope to OAuth consent OR reduce agent to read-only by removing send_message from tools[]. .env.example auto-appended."
+
+  # Check 3 (Shape probe) failure: response shape diverges from agent outputs.schema
+  - tool_id: "bank-mcp-experimental"
+    resolution_method: "wrapper"
+    mcp_server:
+      package: ".mcp/generated/bank-mcp-experimental/"
+      version: "0.1.0-experimental"
+      installed_via: "wrapper"
+    evidence:
+      url: "local wrapper (mcp-builder generated)"
+      last_commit: null
+      publisher: "agentbloc-wrapper-generator"
+      trust_tier: "LOW"
+      tools_declared: ["list_transactions"]
+      required_scopes: ["BBVA_PSD2_CLIENT_ID", "BBVA_PSD2_CLIENT_SECRET"]
+      healthcheck_at: null
+    used_by: ["gestor-cobros"]
+    status: "failed"
+    failure_reason: "Check 3 (Shape probe): tool list_transactions returned {txns: [...], cursor: string} but agent gestor-cobros outputs.schema expects {transactions: [...], next_page: string}. Surface both shapes to user; resolution options: regenerate wrapper with corrected mapping OR update agent outputs.schema to match wrapper."
