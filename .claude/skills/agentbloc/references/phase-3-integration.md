@@ -26,6 +26,9 @@ Claude reads this file when the user confirms the agent team design (Phase 2 gat
 At Phase 3 entry, also load:
 - [references/credentials.md](credentials.md) for the credential decision tree (used in Step 6)
 - [references/prompt-injection.md](prompt-injection.md) for the defense layer pipeline (used in Step 6)
+- [references/mcp-integration-protocol.md](mcp-integration-protocol.md) for the 4-step MCP search flow (used in Step 2 Priority 1)
+- [references/mcp-ecosystem-registry.md](mcp-ecosystem-registry.md) for the curated MCP registry (used in Step 2 Priority 1 Step 2)
+- [references/integration-manifest-schema.md](integration-manifest-schema.md) for the integration manifest output contract (used at Integration Gate)
 
 ## Integration Opening
 
@@ -63,28 +66,35 @@ Confirm with the user: "These are the services I'll research. Should I add any s
 
 ## Step 2: Multi-Method Search Protocol
 
-For each service in the inventory, search integration methods in this strict priority order. This follows decision D-01: official API (best) > MCP server (native) > Playwright browser automation > email scraping > webhook interception > manual notification (last resort).
+For each service in the inventory, search integration methods in this strict priority order. This follows v2.0 decision D-40 (MCP-first positioning from PROJECT.md): MCP server (four-step search) > official API (fallback when no MCP) > Playwright browser automation [Phase 11 scope] > email scraping > webhook interception > manual notification (last resort). See [mcp-integration-protocol.md](mcp-integration-protocol.md) for the full MCP search flow.
 
-### Priority 1: Official API
+### Priority 1: MCP Server (Four-Step Search)
 
-WebSearch for `{service_name} API documentation`. If found, record:
+See [mcp-integration-protocol.md](mcp-integration-protocol.md) for the canonical 4-step flow: existing `.mcp.json` -> ecosystem registry lookup (via [mcp-ecosystem-registry.md](mcp-ecosystem-registry.md)) -> wrapper generation via `.claude/skills/mcp-builder/SKILL.md` -> browser-fallback (Phase 11 scope).
+
+**Summary for quick reference** (full detail in the protocol file):
+- Package name (npm or GitHub) from mcp-ecosystem-registry.md or `.mcp/generated/<tool-id>/`
+- GitHub stars count (trust_tier criterion per v1.0 INTG-04)
+- Last commit date (trust_tier criterion)
+- Publisher (individual or organization)
+- Available tools/capabilities (populated by D-34 `tools/list` probe during Verification Loop)
+
+After the 4-step search resolves, the D-34 three-check Verification Loop (Ping / Scope match / Shape probe) runs. Any FAIL triggers the Halt-and-Name Protocol per D-35 - no silent degradation. Output lands in `.agentbloc/integrations/integration-manifest.yaml` per [integration-manifest-schema.md](integration-manifest-schema.md).
+
+### Priority 2: Official API
+
+Fallback when no MCP exists or can be generated. WebSearch for `{service_name} API documentation`. If found, record:
 - API endpoint base URL
 - Authentication method (OAuth, API key, basic auth)
 - Rate limits and quotas
 - SDK availability (npm, Python, etc.)
 
-### Priority 2: MCP Server
+### Priority 3: Playwright Browser Automation [Phase 11 scope]
 
-Search for existing MCP servers. Use PulseMCP (`list_servers` tool if available) or WebSearch for `{service_name} MCP server site:pulsemcp.com OR site:github.com`. If found, record:
-- Package name (npm or GitHub)
-- GitHub stars count
-- Last commit date
-- Publisher (individual or organization)
-- Available tools/capabilities
+See forthcoming [references/browser-fallback.md](browser-fallback.md) (Phase 11 BROWSER-01..12) for the full Patchright + HAR capture + injection detector + PII redaction protocol. Phase 10 stubs this priority; Phase 11 wires it in.
 
-### Priority 3: Playwright Browser Automation
-
-If no API or MCP server exists, WebSearch for `{service_name} login portal` or `{service_name} web dashboard`. Note:
+**Summary (v1.0, preserved):**
+- If no API or MCP server exists, WebSearch for `{service_name} login portal` or `{service_name} web dashboard`
 - Whether the portal uses standard web forms (automatable)
 - Whether 2FA/CAPTCHA is required (complicates automation)
 - Playwright MCP (microsoft/playwright-mcp) is the automation tool -- HIGH trust, Microsoft-maintained
