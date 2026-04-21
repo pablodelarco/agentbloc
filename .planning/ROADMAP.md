@@ -71,7 +71,12 @@ Plans:
 4. Designer Agent cites `references/orchestration-patterns.md` when selecting Sequential / Parallel / Loop / Event-driven / Conversational for each workflow
 5. User can conversationally rename, merge, or drop agents and Designer regenerates the YAML with the edits applied (not starting from scratch)
 
-**Plans:** TBD (estimated 3)
+**Plans:** 3 plans
+
+Plans:
+- [ ] 09-01-PLAN.md — Create orchestration-patterns.md + agent-profile-schema.md references + arco-rooms-agent-profiles.yaml fixture
+- [ ] 09-02-PLAN.md — Create Designer subagent at .claude/agents/designer-agent.md (context: fork, scoped tools, no Bash)
+- [ ] 09-03-PLAN.md — Wire Designer into phase-2-design.md (Step 8 + Conversational Editing) + SKILL.md (agent_profiles_validated sub-gate + Phase 2 Summary wiring + Phase 3 precondition)
 
 ### Phase 10: Integration Discovery — MCP Path
 
