@@ -58,12 +58,12 @@ Part of the Designer Agent's output. Separated because it maps to a known patter
 
 Four-step search per required tool. Steps 1-3 cover the MCP path; step 4 (browser fallback) is scoped separately under BROWSER.
 
-- [ ] **INTEG-01**: Step 1 — Discovery Pipeline checks `.mcp.json` for an existing server matching the tool name; if present, skips to verification
-- [ ] **INTEG-02**: Step 2 — Discovery Pipeline queries a curated ecosystem MCP registry (referenced in `references/mcp-ecosystem.md`, seeded from v1.0 technology stack); if a match exists, proposes `npx -y @mcp/xxx` installation
-- [ ] **INTEG-03**: Step 3 — If no MCP exists but a public API does, a `mcp-builder` skill generates a minimal wrapper MCP at `.mcp/generated/<tool-id>/` and registers it in `.mcp.json`
-- [ ] **INTEG-04**: Each integration is **verified** before deploy: the MCP responds to a ping/health call, has the credential scopes the agent needs, and returns a sample shape matching the agent's expected input
-- [ ] **INTEG-05**: Verification failures surface in the conversation with the specific scope or credential missing, and the pipeline halts until the user provides or approves the missing piece
-- [ ] **INTEG-06**: Evidence protocol from v1.0 INTG-03 carries forward — every integration claim includes URL + package version + last-commit date; missing evidence is flagged `[UNVERIFIED]`
+- [x] **INTEG-01**: Step 1 — Discovery Pipeline checks `.mcp.json` for an existing server matching the tool name; if present, skips to verification
+- [x] **INTEG-02**: Step 2 — Discovery Pipeline queries a curated ecosystem MCP registry (referenced in `references/mcp-ecosystem.md`, seeded from v1.0 technology stack); if a match exists, proposes `npx -y @mcp/xxx` installation
+- [x] **INTEG-03**: Step 3 — If no MCP exists but a public API does, a `mcp-builder` skill generates a minimal wrapper MCP at `.mcp/generated/<tool-id>/` and registers it in `.mcp.json`
+- [x] **INTEG-04**: Each integration is **verified** before deploy: the MCP responds to a ping/health call, has the credential scopes the agent needs, and returns a sample shape matching the agent's expected input
+- [x] **INTEG-05**: Verification failures surface in the conversation with the specific scope or credential missing, and the pipeline halts until the user provides or approves the missing piece
+- [x] **INTEG-06**: Evidence protocol from v1.0 INTG-03 carries forward — every integration claim includes URL + package version + last-commit date; missing evidence is flagged `[UNVERIFIED]`
 
 ### Browser Automation Fallback (BROWSER) — INTEG Step 4
 

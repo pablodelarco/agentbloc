@@ -1,17 +1,17 @@
 ---
 gsd_state_version: 1.0
 milestone: v2.0
-milestone_name: designer-deploy
+milestone_name: Designer + Deploy
 status: active
 stopped_at: null
-last_updated: "2026-04-21T17:30:00.000Z"
-last_activity: 2026-04-21 - Phase 10 CONTEXT.md + DISCUSSION-LOG.md written (autonomous mode). 12 gray areas resolved, 12 new decisions (D-31..D-42) captured. 3-plan structure projected (contracts + mcp-builder + wiring). Ready for /gsd-plan-phase 10.
+last_updated: "2026-04-21T09:45:00.000Z"
+last_activity: 2026-04-21 - Phase 10 VERIFIED (5/5 ROADMAP success criteria, 6/6 INTEG REQ-IDs). Ready for Phase 11 (Browser Fallback).
 progress:
   total_phases: 9
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 25
-  completed_plans: 5
-  percent: 22
+  completed_plans: 8
+  percent: 32
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-04-20 after v2.0 scope realignment)
 
 **Core value:** A non-technical business owner can describe their problem and end up with a deployed, secure, proactive agent team without writing code and without improvised security scaffolding.
-**Current focus:** v2.0 Designer + Deploy — roadmap locked (Phases 8-16). Ready for `/gsd-discuss-phase 8` once planning cycle resumes.
+**Current focus:** Phase 11 — Integration Discovery Browser Fallback (next). Phase 10 shipped 2026-04-21.
 **Scope source:** `.planning/v2.0-PROMPT.pdf` (authoritative).
 
 ## Current Position
 
-Phase: 9 (Designer Agent). Plan 3 of 3 complete. Phase 9 structurally complete; ready for verification.
-Plan: Next is Phase 10 Plan 01 (Integration Discovery — MCP Path).
-Status: 09-03 SUMMARY committed. Designer subagent wiring landed in two files: phase-2-design.md grew from 313 to 376 lines (+63) with new Step 8 Designer Subagent Invocation H2 (Invocation / Output Contract / Gate Check H3s), new Conversational Editing Flow H2 (Surgical Patch Protocol / Never Regenerate / Gate Re-entry H3s), Design Opening companion-load extended with orchestration-patterns.md + agent-profile-schema.md, Quick Reference extended with Designer Subagent Invocation + Conversational Editing Flow rows. SKILL.md grew 163 to 170 lines (+7, well under 250 v1.0 budget) with new Phase 2 specific State Transitions bullet naming agent_profiles_validated sub-gate, new Phase 2 Summary Gate paragraph spawning Designer subagent (context=fork), Phase 2 load-list extended with orchestration-patterns.md + agent-profile-schema.md See-lines, new Phase 3 Precondition paragraph gating on .agentbloc/team/agent-profiles.yaml existence + validation. All 5 ROADMAP Phase 9 success criteria now wired end-to-end across Plans 09-01 / 09-02 / 09-03. DSGN-06, DSGN-07, ORCH-02 marked complete in this plan.
-Last activity: 2026-04-21. Commits 3b312ba (phase-2-design.md) + 783b538 (SKILL.md).
+Phase: 11 (next — Integration Discovery Browser Fallback, BROWSER-01..12)
+Plan: Not started
+Status: Phase 10 complete and verified; awaiting `/gsd-discuss-phase 11`
+Last activity: 2026-04-21 - Phase 10 shipped (11 commits across 3 plans, 8 files created/modified, 8/8 verification dimensions pass)
 
-Progress: [##________] 20% (5/25 v2.0 plans complete, 1/9 v2.0 phases complete; Phase 9 awaits verification)
+Progress: [###_______] 32% (8/25 v2.0 plans complete, 3/9 v2.0 phases complete; Phases 8 + 9 + 10 all verified)
 
 ## v1.0 Milestone — Shipped Summary
 
@@ -85,12 +85,14 @@ Coverage: **79/79 requirements** mapped across 13 categories. Dependency chain l
 ### Decisions
 
 Full decision log in `.planning/PROJECT.md` Key Decisions table. Summary of v1.0 outcomes:
+
 - Security promoted to Phase 2 — all user-facing phases correctly depend on security framework (✓ good)
 - Skill-only v1.0 (no custom runtime) — shipped, awaiting market validation
 - Gate enforcement via `[PHASE: N | GATE: X]` — structural ritual works modulo runtime behaviors requiring live testing
 - Publish strategy (`main` anonymized orphan, `master` private full history) — clean separation holds
 
 v2.0 scope decisions (2026-04-20):
+
 - Authoritative scope = `.planning/v2.0-PROMPT.pdf`. PROJECT.md / REQUIREMENTS.md / ROADMAP.md rewritten to match.
 - Stack pivot: AgentBloc remains markdown skill but runs INSIDE ClaudeClaw (TypeScript + Bun platform). No custom runtime added to AgentBloc itself.
 - Event bus: n8n for real-time webhooks (existing infrastructure). Cron for scheduled work.
@@ -99,6 +101,7 @@ v2.0 scope decisions (2026-04-20):
 - Prior "Discovery Agent" scope subordinated to BROWSER-xx category (Phase 11). 2026-04-18 research still applies.
 
 Phase 9 decisions (2026-04-21):
+
 - D-21: Designer subagent lives at .claude/agents/designer-agent.md with context=fork + scoped tools (Read/Grep/Glob/Write, NO Bash). First project-local Claude Code subagent in AgentBloc. Fork-context isolation keeps YAML generation clean of main-session conversation noise; scoped tools minimize blast radius (writes only to .agentbloc/team/*).
 - D-22: agent-profiles.yaml uses three-tier schema (REQUIRED / RECOMMENDED / OPTIONAL) mirroring Business Graph; schema_version is integer 1.
 - D-23: team.topology default on ambiguity is mesh. Matches ClaudeClaw SendMessage and degrades to pipeline if only 1 agent is generated.
