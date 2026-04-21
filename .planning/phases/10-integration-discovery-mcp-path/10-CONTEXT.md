@@ -318,6 +318,7 @@ Matches the Phase 8/9 "contract-first, wiring-second" rhythm precisely. Planner 
 - **Per-tool rate-limit enforcement:** interesting but belongs to Phase 14 CTRL (cost tracking + rate limiting live together). Phase 10 captures rate-limit info in `mcp-ecosystem-registry.md` descriptions but doesn't enforce.
 - **MCP server sandboxing / OS-level isolation:** deferred to OpenClaw substrate evaluation (explicit in REQUIREMENTS.md § Deferred to v3.0+).
 - **Localized registry (ES-speaking MCP servers):** the registry is English-only (tool names + descriptions). Bilingual role / goal in agent profiles is Phase 9 work; registry descriptions stay English for now. Reconsider at v3.0.
+- **Lazy-load pattern for Phase 3 companion refs (plan-eng-review P-1, forward-looking):** Phase 3 unconditional load after Phase 10 ships is ~966 lines (phase-3-integration.md 406 + mcp-integration-protocol.md 180 + mcp-ecosystem-registry.md 180 + integration-manifest-schema.md 200). This is a 58% growth over Phase 2's ~612-line unconditional load and consistent with the Phase 8/9 pattern. `mcp-ecosystem-registry.md` is a lookup table Claude consults only at Step 2, and `integration-manifest-schema.md` is read primarily at the Summary Gate. Either could be lazy-loaded on demand instead of at Phase 3 entry. Phase 10 preserves unconditional-load for consistency with prior phases; Phase 11 planning should revisit this if Phase 3's total context load exceeds a budget threshold (suggested: 1,200 lines). Not a blocker; recorded for pattern evolution.
 
 </deferred>
 
