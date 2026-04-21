@@ -1,0 +1,96 @@
+schema_version: 1
+team:
+  name: arco-rooms-team
+  topology: mesh
+  topology_rationale: "3 agents peer-call each other (Recepcionista queries Gestor Cobros for payment status before sending owner reports; Gestor Cobros depends on Gestor Documental invoice output); mesh matches ClaudeClaw SendMessage pattern."
+  briefing_agent_id: null
+
+agents:
+  - id: gestor-documental
+    role: "Invoice Collection Specialist"
+    goal: "Fetch, deduplicate, and persist utility invoices from 6 providers every night"
+    backstory: "Owns the daily invoice-collection pipeline. Has credentials for Endesa, Aguas de Almeria, Naturgy, Movistar, Urbaser, and Mapfre. Knows which providers deliver by email and which require portal login."
+    tools:
+      - playwright-mcp
+      - google-workspace-mcp
+      - mapfre-api
+    triggers:
+      - type: cron
+        schedule: "0 22 * * *"
+    autonomy: full
+    outputs:
+      - type: state-file
+        schema: ".agentbloc/state/invoices.json"
+    escalation: "telegram:pablo"
+    dependencies: []
+    blast_radius: 2
+    model: sonnet
+
+  - id: gestor-cobros
+    role: "Payment Reconciliation Engine"
+    goal: "Match bank transactions to invoices with confidence scoring and enforce the overdue-7-day rule"
+    backstory: "Owns the daily payment-matching pipeline. Knows the tenant registry and confidence-score regex patterns. Applies the decision rule: if an invoice is overdue by more than 7 days, send a formal notice to the tenant."
+    tools:
+      - bank-mcp
+      - google-sheets-mcp
+    triggers:
+      - type: cron
+        schedule: "30 22 * * *"
+      - type: inter-agent
+        caller: recepcionista
+        message: payment-status-query
+    autonomy: semi
+    outputs:
+      - type: state-file
+        schema: ".agentbloc/state/matches.json"
+    escalation: "telegram:pablo"
+    dependencies:
+      - gestor-documental
+    blast_radius: 2
+    model: opus
+
+  - id: recepcionista
+    role: "Daily Operations Reporter"
+    goal: "Send per-owner Telegram summary of invoices, payments, and unmatched items; query Gestor Cobros for payment status before composing messages"
+    backstory: "Owner-facing agent. Queries Gestor Cobros for payment status before composing messages. Sends to each owner's dedicated Telegram thread."
+    tools:
+      - telegram-mcp
+    triggers:
+      - type: cron
+        schedule: "0 23 * * *"
+    autonomy: semi
+    outputs:
+      - type: telegram-message
+        schema: per-owner-daily-summary
+    escalation: "telegram:pablo"
+    dependencies:
+      - gestor-cobros
+    blast_radius: 4
+    model: sonnet
+
+orchestration:
+  workflows:
+    - id: cobro-diario
+      type: sequential
+      agents:
+        - gestor-documental
+        - gestor-cobros
+        - recepcionista
+      trigger:
+        type: cron
+        schedule: "0 22 * * *"
+      why: "Sequential per orchestration-patterns.md: each agent's output feeds the next (invoices -> matches -> report)."
+      steps:
+        - "gestor-documental collects invoices from 6 utility providers"
+        - "gestor-cobros matches bank transactions to invoices with confidence scoring"
+        - "recepcionista sends per-owner Telegram summary"
+
+    - id: unmatched-payment-alert
+      type: event-driven
+      agents:
+        - recepcionista
+      trigger:
+        type: manual
+        description: "Invoked when gestor-cobros detects 3+ unmatched items"
+      why: "Event-driven per orchestration-patterns.md: Gestor Cobros wakes Recepcionista via inter-agent SendMessage when unmatched items exceed the 3-item threshold."
+      flow: "gestor-cobros detects unmatched >= 3 items; sends inter-agent message to recepcionista; recepcionista composes Telegram alert to Pablo; returns."
