@@ -4,14 +4,14 @@ milestone: v2.0
 milestone_name: designer-deploy
 status: active
 stopped_at: null
-last_updated: "2026-04-21T14:38:00.000Z"
-last_activity: 2026-04-21 - Phase 9 Plan 2 complete. Designer Agent subagent landed at .claude/agents/designer-agent.md (first project-local Claude Code subagent in AgentBloc). Frontmatter per D-21 (tools=Read/Grep/Glob/Write, no Bash, context=fork, color=purple). 10 XML body blocks covering D-25 role grouping (split-first bias), D-26 surgical-patch conversational edits, D-30 scope exclusion (Phase 15 anticipation excluded). 145 lines, zero em-dashes.
+last_updated: "2026-04-21T15:00:00.000Z"
+last_activity: 2026-04-21 - Phase 9 Plan 3 complete (Phase 9 structurally complete, ready for verification). Designer subagent wired into phase-2-design.md (Step 8 Designer Subagent Invocation + Conversational Editing Flow + 2 new Quick Reference rows) and SKILL.md (agent_profiles_validated sub-gate bullet + Phase 2 Summary Gate paragraph spawning Designer + Phase 2 load-list extended with orchestration-patterns.md + agent-profile-schema.md + Phase 3 precondition). phase-2-design.md 313->376 lines; SKILL.md 163->170 lines (under 250 budget). Zero em-dashes in either file. DSGN-06, DSGN-07, ORCH-02 completed.
 progress:
   total_phases: 9
   completed_phases: 1
   total_plans: 25
-  completed_plans: 4
-  percent: 16
+  completed_plans: 5
+  percent: 20
 ---
 
 # Project State
@@ -26,12 +26,12 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 after v2.0 scope realignment)
 
 ## Current Position
 
-Phase: 9 (Designer Agent). Plan 2 of 3 complete.
-Plan: Phase 9 Plan 03 (next). Wire Designer subagent into references/phase-2-design.md (Step 8 + Conversational Editing Flow) and SKILL.md (agent_profiles_validated sub-gate + Phase 2 Summary wiring + Phase 3 precondition + Phase 2 unconditional-load list extension).
-Status: 09-02 SUMMARY committed. Designer Agent subagent landed at .claude/agents/designer-agent.md (145 lines). First project-local Claude Code subagent in AgentBloc. D-21 frontmatter: tools=Read/Grep/Glob/Write (no Bash), color=purple, context=fork. 10 XML body blocks (role + write_constraint + process_to_role_grouping + topology_selection + orchestration_classification + blast_radius_scoring + validation_and_emission + conversational_edits + output_contract + scope_exclusion). D-25 split-first bias, D-26 surgical patches, D-30 Phase 15 exclusion. DSGN-01, DSGN-05, DSGN-06, DSGN-07 marked complete.
-Last activity: 2026-04-21. Commit caaccdd (designer-agent.md subagent definition).
+Phase: 9 (Designer Agent). Plan 3 of 3 complete. Phase 9 structurally complete; ready for verification.
+Plan: Next is Phase 10 Plan 01 (Integration Discovery — MCP Path).
+Status: 09-03 SUMMARY committed. Designer subagent wiring landed in two files: phase-2-design.md grew from 313 to 376 lines (+63) with new Step 8 Designer Subagent Invocation H2 (Invocation / Output Contract / Gate Check H3s), new Conversational Editing Flow H2 (Surgical Patch Protocol / Never Regenerate / Gate Re-entry H3s), Design Opening companion-load extended with orchestration-patterns.md + agent-profile-schema.md, Quick Reference extended with Designer Subagent Invocation + Conversational Editing Flow rows. SKILL.md grew 163 to 170 lines (+7, well under 250 v1.0 budget) with new Phase 2 specific State Transitions bullet naming agent_profiles_validated sub-gate, new Phase 2 Summary Gate paragraph spawning Designer subagent (context=fork), Phase 2 load-list extended with orchestration-patterns.md + agent-profile-schema.md See-lines, new Phase 3 Precondition paragraph gating on .agentbloc/team/agent-profiles.yaml existence + validation. All 5 ROADMAP Phase 9 success criteria now wired end-to-end across Plans 09-01 / 09-02 / 09-03. DSGN-06, DSGN-07, ORCH-02 marked complete in this plan.
+Last activity: 2026-04-21. Commits 3b312ba (phase-2-design.md) + 783b538 (SKILL.md).
 
-Progress: [##________] 16% (4/25 v2.0 plans complete, 1/9 v2.0 phases complete)
+Progress: [##________] 20% (5/25 v2.0 plans complete, 1/9 v2.0 phases complete; Phase 9 awaits verification)
 
 ## v1.0 Milestone — Shipped Summary
 
@@ -107,6 +107,8 @@ Phase 9 decisions (2026-04-21):
 - D-26: conversational edits use surgical patches (never regenerate from Business Graph). Regeneration would re-insert rejected / renamed agents and fight user intent.
 - D-27 / D-28: new references are structural twins of existing ones. orchestration-patterns.md inherits frameworks.md spine; agent-profile-schema.md inherits business-graph-schema.md spine.
 - D-30: Phase 9 fixture + Designer scope ships 3 requested agents only (gestor-documental, gestor-cobros, recepcionista). The 2 anticipated agents (Analista Rentabilidad, Gestor Incidencias) are strictly Phase 15 scope. Designer's scope_exclusion block enforces this lock.
+- D-29 (Plan 09-03): SKILL.md extended with three surgical edits mirroring Phase 8 Task 2 one phase later. State Transitions gains a Phase-2-specific bullet; Phase 2 section gains a Summary Gate paragraph + 2 See-lines; Phase 3 section gains a Precondition paragraph. SKILL.md stays at 170 lines (80 lines of headroom under 250 budget).
+- Plan 09-03 wiring: phase-2-design.md extended surgically with 4 edits (Design Opening companion-load + Step 8 Designer Subagent Invocation H2 + Conversational Editing Flow H2 + Quick Reference 2 new rows). Final 376 lines with zero em-dashes. Steps 1-7 and Design Gate preserved verbatim.
 
 ### Deferred Items
 
@@ -133,6 +135,6 @@ Items acknowledged and deferred at v1.0 milestone close on 2026-04-18:
 
 ## Session Continuity
 
-Last session: 2026-04-21T14:38:00.000Z
-Stopped at: Phase 9 Plan 2 complete. Designer Agent subagent at .claude/agents/designer-agent.md (145 lines, commit caaccdd). First project-local Claude Code subagent in AgentBloc. D-21 frontmatter locked (tools=Read/Grep/Glob/Write, no Bash, context=fork). 10 XML body blocks encoding D-25/D-26/D-30 worldview. DSGN-01/05/06/07 marked complete in REQUIREMENTS.md. SUMMARY committed.
-Next: `/gsd-execute-phase 9` for Plan 3 (wire Designer into references/phase-2-design.md Step 8 + Conversational Editing Flow + SKILL.md agent_profiles_validated sub-gate + Phase 2 Summary wiring + Phase 3 precondition + Phase 2 load-list extension). Completes Phase 9.
+Last session: 2026-04-21T15:00:00.000Z
+Stopped at: Phase 9 Plan 3 complete. Phase 9 (Designer Agent) structurally complete (3/3 plans shipped). SKILL.md + phase-2-design.md now wire the Designer subagent end-to-end: Phase 2 Summary Gate spawns Designer (context=fork), Phase 3 precondition gates on .agentbloc/team/agent-profiles.yaml existence + validation, agent_profiles_validated sub-gate vocabulary locked in State Transitions. Commits 3b312ba + 783b538. All 5 ROADMAP Phase 9 success criteria wired across Plans 09-01/02/03. Phase 9 SUMMARY trilogy complete (09-01, 09-02, 09-03).
+Next: `/gsd-verify-phase 9` to run the phase verification. After Phase 9 is certified, proceed to `/gsd-discuss-phase 10` (Integration Discovery — MCP Path, INTEG-01..06). Phase 10 reads agent-profiles.yaml tools[] arrays as input for the four-step integration search.

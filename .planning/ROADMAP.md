@@ -76,7 +76,7 @@ Plans:
 Plans:
 - [x] 09-01-PLAN.md: Create orchestration-patterns.md + agent-profile-schema.md references + arco-rooms-agent-profiles.yaml fixture (completed 2026-04-21). [SUMMARY](phases/09-designer-agent/09-01-SUMMARY.md)
 - [x] 09-02-PLAN.md: Create Designer subagent at .claude/agents/designer-agent.md (context: fork, scoped tools, no Bash) (completed 2026-04-21). [SUMMARY](phases/09-designer-agent/09-02-SUMMARY.md)
-- [ ] 09-03-PLAN.md — Wire Designer into phase-2-design.md (Step 8 + Conversational Editing) + SKILL.md (agent_profiles_validated sub-gate + Phase 2 Summary wiring + Phase 3 precondition)
+- [x] 09-03-PLAN.md — Wire Designer into phase-2-design.md (Step 8 + Conversational Editing) + SKILL.md (agent_profiles_validated sub-gate + Phase 2 Summary wiring + Phase 3 precondition) (completed 2026-04-21). [SUMMARY](phases/09-designer-agent/09-03-SUMMARY.md)
 
 ### Phase 10: Integration Discovery — MCP Path
 
