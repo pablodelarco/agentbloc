@@ -92,7 +92,12 @@ Plans:
 4. Verification failure (scope missing, credential absent, shape mismatch) surfaces in the conversation with the specific gap named, and the pipeline halts rather than silently deploying a broken integration
 5. Every integration claim in the resulting `DEPLOY-REPORT.md` carries URL + package version + last-commit date per the v1.0 evidence protocol
 
-**Plans:** TBD (estimated 3)
+**Plans:** 3 plans
+
+Plans:
+- [ ] 10-01-PLAN.md — Create 3 Phase 10 references (mcp-integration-protocol + mcp-ecosystem-registry + integration-manifest-schema) + Arco Rooms integration manifest fixture (INTEG-01, INTEG-02, INTEG-04, INTEG-06)
+- [ ] 10-02-PLAN.md — Create top-level mcp-builder skill at .claude/skills/mcp-builder/SKILL.md for TypeScript MCP wrapper generation (INTEG-03)
+- [ ] 10-03-PLAN.md — Surgical edits to phase-3-integration.md (MCP promoted to Priority 1 + Phase 11 stub) + SKILL.md (mcp_integrations_verified sub-gate + Phase 3 Summary Gate + Phase 4 precondition) (INTEG-02, INTEG-05)
 
 ### Phase 11: Integration Discovery — Browser Fallback
 
