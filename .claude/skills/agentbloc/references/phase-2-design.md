@@ -22,7 +22,7 @@ Claude reads this file when the user confirms the interview summary (Phase 1 gat
 
 ## Design Opening
 
-You have the confirmed interview summary. Before starting design, also load [references/blast-radius.md](blast-radius.md) and [references/frameworks.md](frameworks.md). The Security Profile from the interview summary tells you which compliance regimes are active.
+You have the confirmed Business Graph. Before starting design, also load [references/blast-radius.md](blast-radius.md), [references/frameworks.md](frameworks.md), [references/orchestration-patterns.md](orchestration-patterns.md), and [references/agent-profile-schema.md](agent-profile-schema.md). The Security Profile from the Business Graph tells you which compliance regimes are active.
 
 The running data classification tally from the interview informs blast-radius scoring and governance constraints throughout design. If the interview identified PII, PHI, or financial data, those classifications carry forward into every agent contract and governance decision in this phase.
 
@@ -292,6 +292,40 @@ Color key:
 
 Full detail using the template from Step 3. Present each card sequentially. For non-technical users, precede each card with a plain-language summary: "This agent collects your utility invoices every night at 10 PM. It reads from provider portals and saves what it finds. It cannot send messages or modify anything outside its designated files."
 
+## Step 8: Designer Subagent Invocation (DSGN-01..06, ORCH-01..04)
+
+Once Steps 1-7 above are complete and the draft team is in your working memory, spawn the Designer Agent subagent to materialize the structured artifact.
+
+### Invocation
+
+Spawn the subagent defined at `.claude/agents/designer-agent.md` (`context: fork`). The subagent inherits no main-session conversation noise; its world is the Business Graph plus the schema references. Pass the following as the subagent's initial prompt context:
+
+1. Path to Business Graph: `.agentbloc/graph/business-graph.json`
+2. Required reading: [references/agent-profile-schema.md](agent-profile-schema.md), [references/orchestration-patterns.md](orchestration-patterns.md), [references/blast-radius.md](blast-radius.md), [references/frameworks.md](frameworks.md)
+3. Output target: `.agentbloc/team/agent-profiles.yaml` (create `.agentbloc/team/` if missing)
+4. Optional companion: `.agentbloc/team/team-topology.md` (Mermaid diagram per v1.0 Design Phase Step 7.3)
+5. Scope note: Designer emits REQUESTED agents only. Anticipated agents are Phase 15 (Anticipation Engine) and excluded here.
+
+### Output Contract
+
+Designer returns to the main session:
+
+- Confirmation string: "agent-profiles.yaml saved at .agentbloc/team/agent-profiles.yaml"
+- A rendered markdown TABLE of the team plus per-agent Contract Cards (same templates as Step 3 and Step 7.1)
+- An ASCII topology diagram (see Step 7.2 templates)
+
+The YAML is NEVER shown to the user. The rendered table + cards + diagram ARE the user-facing review.
+
+### Gate Check
+
+After Designer returns, verify:
+
+1. `.agentbloc/team/agent-profiles.yaml` exists on disk.
+2. Every REQUIRED check (Checks 1-7) in [references/agent-profile-schema.md](agent-profile-schema.md) Validation Checklist passed during Designer's emission.
+3. The rendered table + cards + ASCII diagram are presented to the user for confirmation.
+
+Only after the user confirms the rendered team do you transition the Phase 2 `agent_profiles_validated` sub-gate (see SKILL.md State Transitions) to `approved`.
+
 ## Design Gate
 
 After presenting all seven steps, ask the user:
@@ -299,6 +333,33 @@ After presenting all seven steps, ask the user:
 "Does this agent team design look right? Should I adjust any agents, change the topology, or modify any blast-radius scores?"
 
 The user must confirm before Phase 3 begins. Acceptable confirmations: "yes", "approved", "looks good", "adelante", "ok". Any modification request loops back to the relevant step. Once confirmed, update the state bar to `Phase 2: General Design | Gate: approved` and prepare to transition to Phase 3.
+
+## Conversational Editing Flow (DSGN-07)
+
+After the user reviews the rendered team, they may request edits:
+
+- "Rename gestor-cobros to Maria's agent."
+- "Drop the recepcionista for now."
+- "Give gestor-documental bash access."
+- "Change topology from mesh to pipeline."
+
+### Surgical Patch Protocol
+
+For each user edit:
+
+1. Parse the intent into a structured patch: `{rename, delete, add-tool, remove-tool, change-autonomy, change-topology, change-blast-radius}`.
+2. Re-invoke Designer Agent with the patch payload AND the existing `.agentbloc/team/agent-profiles.yaml` as input. Designer NEVER regenerates from the Business Graph; regeneration would re-insert rejected or renamed agents, fighting user intent.
+3. Designer applies the patch in-place, bumps `team.modified_at` to the current ISO-8601 timestamp, and re-runs the Validation Checklist from [references/agent-profile-schema.md](agent-profile-schema.md).
+4. Designer returns ONLY the new rendered TABLE (not the full YAML, not all cards) for the user's next confirmation turn.
+5. User confirms the new table.
+
+### Never Regenerate
+
+If the user says "redo the whole team from scratch", prompt once for clarification: "Starting from scratch will discard your edits (renames, drops, tool changes). Keep edits or reset?" Default to keep.
+
+### Gate Re-entry
+
+After every edit round, the Phase 2 `agent_profiles_validated` sub-gate returns to `pending` until the user confirms the re-rendered table. Multiple edit rounds are fine; each completes its own confirmation turn before the gate flips back to `approved`.
 
 ## Quick Reference
 
@@ -311,3 +372,5 @@ The user must confirm before Phase 3 begins. Acceptable confirmations: "yes", "a
 | Governance | DESG-05 | 7-area governance specification | [blast-radius.md](blast-radius.md), [credentials.md](credentials.md), [audit-logging.md](audit-logging.md), [incident-response.md](incident-response.md), [gdpr-patterns.md](gdpr-patterns.md) |
 | Blast-Radius Scoring | DESG-06 | Level per agent + minimization | [blast-radius.md](blast-radius.md) |
 | Visual Presentation | DESG-08 | Summary table, ASCII diagram, Mermaid diagram, contract cards | [blast-radius.md](blast-radius.md) |
+| Designer Subagent Invocation | DSGN-01..06, ORCH-01..04 | .agentbloc/team/agent-profiles.yaml + rendered team table + ASCII diagram | [agent-profile-schema.md](agent-profile-schema.md), [orchestration-patterns.md](orchestration-patterns.md), .claude/agents/designer-agent.md |
+| Conversational Editing Flow | DSGN-07 | Surgical-patched YAML + re-rendered table | [agent-profile-schema.md](agent-profile-schema.md), .claude/agents/designer-agent.md |
