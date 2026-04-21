@@ -1,0 +1,189 @@
+schema_version: 1
+generated_at: "2026-04-21T17:42:00Z"
+modified_at: "2026-04-21T17:42:00Z"
+
+tools:
+  - tool_id: playwright-mcp
+    resolution_method: existing
+    mcp_server:
+      package: "@playwright/mcp"
+      version: "0.0.28"
+      installed_via: ".mcp.json existing"
+    evidence:
+      url: "https://github.com/microsoft/playwright-mcp"
+      last_commit: "2026-04-02"
+      publisher: "microsoft"
+      trust_tier: HIGH
+      tools_declared:
+        - browser_navigate
+        - browser_snapshot
+        - browser_click
+        - browser_type
+      required_scopes: []
+      healthcheck_at: "2026-04-21T17:42:00Z"
+    used_by:
+      - gestor-documental
+    status: verified
+    failure_reason: null
+
+  - tool_id: google-workspace-mcp
+    resolution_method: existing
+    mcp_server:
+      package: "google_workspace_mcp"
+      version: "1.4.2"
+      installed_via: ".mcp.json existing"
+    evidence:
+      url: "https://github.com/taylorwilsdon/google_workspace_mcp"
+      last_commit: "2026-03-14"
+      publisher: "taylorwilsdon"
+      trust_tier: MEDIUM
+      tools_declared:
+        - gmail_list_messages
+        - gmail_get_message
+        - drive_list_files
+        - drive_download_file
+      required_scopes:
+        - "gmail.readonly"
+        - "drive.file"
+      healthcheck_at: "2026-04-21T17:42:00Z"
+    used_by:
+      - gestor-documental
+    status: verified
+    failure_reason: null
+
+  - tool_id: telegram-mcp
+    resolution_method: existing
+    mcp_server:
+      package: "telegram-mcp"
+      version: "0.3.8"
+      installed_via: ".mcp.json existing"
+    evidence:
+      url: "https://github.com/guangxiangdebizi/telegram-mcp"
+      last_commit: "2026-01-20"
+      publisher: "guangxiangdebizi"
+      trust_tier: MEDIUM
+      tools_declared:
+        - send_message
+        - send_voice
+        - create_thread
+      required_scopes:
+        - "TELEGRAM_BOT_TOKEN"
+      healthcheck_at: "2026-04-21T17:42:00Z"
+    used_by:
+      - recepcionista
+    status: verified
+    failure_reason: null
+
+  - tool_id: gmail-mcp
+    resolution_method: ecosystem
+    mcp_server:
+      package: "@smithery-ai/gmail-mcp"
+      version: "0.2.5"
+      installed_via: "npx -y @smithery-ai/gmail-mcp"
+    evidence:
+      url: "https://github.com/smithery-ai/gmail-mcp"
+      last_commit: "2026-02-18"
+      publisher: "smithery-ai"
+      trust_tier: MEDIUM
+      tools_declared:
+        - list_unread
+        - get_message
+        - mark_read
+      required_scopes:
+        - "gmail.readonly"
+      healthcheck_at: "2026-04-21T17:42:00Z"
+    used_by:
+      - gestor-documental
+    status: verified
+    failure_reason: null
+
+  - tool_id: google-sheets-mcp
+    resolution_method: ecosystem
+    mcp_server:
+      package: "mcp-google-sheets"
+      version: "0.4.1"
+      installed_via: "npx -y mcp-google-sheets"
+    evidence:
+      url: "https://github.com/xing5/mcp-google-sheets"
+      last_commit: "2026-01-30"
+      publisher: "xing5"
+      trust_tier: MEDIUM
+      tools_declared:
+        - read_range
+        - write_range
+        - append_row
+      required_scopes:
+        - "spreadsheets"
+      healthcheck_at: "2026-04-21T17:42:00Z"
+    used_by:
+      - gestor-cobros
+    status: verified
+    failure_reason: null
+
+  - tool_id: notion-mcp
+    resolution_method: ecosystem
+    mcp_server:
+      package: "notion-mcp"
+      version: "0.5.3"
+      installed_via: "npx -y notion-mcp"
+    evidence:
+      url: "https://github.com/community/notion-mcp"
+      last_commit: "2026-03-05"
+      publisher: "community"
+      trust_tier: MEDIUM
+      tools_declared:
+        - create_page
+        - update_page
+        - search
+      required_scopes:
+        - "NOTION_API_TOKEN"
+      healthcheck_at: "2026-04-21T17:42:00Z"
+    used_by:
+      - recepcionista
+    status: verified
+    failure_reason: null
+
+  - tool_id: bank-mcp
+    resolution_method: wrapper
+    mcp_server:
+      package: ".mcp/generated/bank-mcp/"
+      version: "commit:a3f2b19"
+      installed_via: "wrapper"
+    evidence:
+      url: "https://www.bbva.es/clientes/particulares/banca-electronica/api-de-datos.html"
+      last_commit: "2026-04-20"
+      publisher: "agentbloc-wrapper"
+      trust_tier: MEDIUM
+      tools_declared:
+        - list_transactions
+        - get_balance
+      required_scopes:
+        - "BBVA_PSD2_CLIENT_ID"
+        - "BBVA_PSD2_CLIENT_SECRET"
+      healthcheck_at: "2026-04-21T17:42:00Z"
+    used_by:
+      - gestor-cobros
+    status: verified
+    failure_reason: null
+
+  - tool_id: mapfre-api
+    resolution_method: wrapper
+    mcp_server:
+      package: ".mcp/generated/mapfre-api/"
+      version: "commit:b1c4d82"
+      installed_via: "wrapper"
+    evidence:
+      url: "https://www.mapfre.es/empresas/oficina-directa/api/"
+      last_commit: "2026-04-20"
+      publisher: "agentbloc-wrapper"
+      trust_tier: MEDIUM
+      tools_declared:
+        - get_policy
+        - list_claims
+      required_scopes:
+        - "MAPFRE_API_KEY"
+      healthcheck_at: "2026-04-21T17:42:00Z"
+    used_by:
+      - gestor-documental
+    status: verified
+    failure_reason: null
