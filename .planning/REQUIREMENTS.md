@@ -37,13 +37,13 @@ Extends the existing v1.0 Phase 1 Interview. The interview already collects the 
 
 The core new capability. AG2 CaptainAgent pattern adapted to AgentBloc.
 
-- [ ] **DSGN-01**: Designer Agent lives at `.claude/agents/designer-agent.md` (Claude Code subagent definition) with `context: fork` and scoped tool access
+- [x] **DSGN-01**: Designer Agent lives at `.claude/agents/designer-agent.md` (Claude Code subagent definition) with `context: fork` and scoped tool access. Completed 2026-04-21 (Phase 09-02) via `.claude/agents/designer-agent.md` (145 lines, tools=Read/Grep/Glob/Write no Bash, context=fork).
 - [x] **DSGN-02**: Designer Agent consumes the Business Graph JSON and emits an `agent-profiles.yaml` artifact containing `team` (name + topology) and `agents` (list of full profiles). Completed 2026-04-21 (Phase 09-01) via agent-profile-schema.md Schema Definition + fixture.
 - [x] **DSGN-03**: Each generated agent profile includes `id`, `role`, `goal`, `backstory` (CrewAI pattern), `tools` (list of MCP references), `triggers` (cron / event / inter-agent), `autonomy` (`full` / `semi` / `supervised`), `outputs` (type + schema), `escalation` (target like `telegram:pablo`), `dependencies` (other agents referenced). Completed 2026-04-21 (Phase 09-01) via agent-profile-schema.md Schema Definition block with all CrewAI-shaped fields.
 - [x] **DSGN-04**: Designer Agent selects a team `topology` from `{pipeline, mesh, hierarchy, swarm}` with documented rationale based on process interdependencies observed in the Business Graph. Completed 2026-04-21 (Phase 09-01) via orchestration-patterns.md Topology Decision Table + agent-profile-schema.md Topology Bounded Enum (mesh default on ambiguity per D-23).
-- [ ] **DSGN-05**: Designer Agent groups processes by role (one role = one agent) rather than one-process-per-agent, so a single agent can own multiple related steps
-- [ ] **DSGN-06**: Designer Agent presents the proposed team to the user conversationally with an ASCII interaction diagram (from v1.0 Design phase DESG-08) before the deploy pipeline runs
-- [ ] **DSGN-07**: User can edit the generated profiles (rename agents, merge roles, drop an anticipated agent) and Designer regenerates `agent-profiles.yaml` with the edits applied
+- [x] **DSGN-05**: Designer Agent groups processes by role (one role = one agent) rather than one-process-per-agent, so a single agent can own multiple related steps. Completed 2026-04-21 (Phase 09-02) via `<process_to_role_grouping>` block in designer-agent.md: 3 D-25 guardrails (tool overlap >=50%, same trigger+cadence, natural job-title fit) + split-first bias.
+- [x] **DSGN-06**: Designer Agent presents the proposed team to the user conversationally with an ASCII interaction diagram (from v1.0 Design phase DESG-08) before the deploy pipeline runs. Completed 2026-04-21 (Phase 09-02) via `<output_contract>` + `<validation_and_emission>` blocks in designer-agent.md: returns rendered TABLE + per-agent Contract Cards + ASCII topology diagram; YAML emitted silently.
+- [x] **DSGN-07**: User can edit the generated profiles (rename agents, merge roles, drop an anticipated agent) and Designer regenerates `agent-profiles.yaml` with the edits applied. Completed 2026-04-21 (Phase 09-02) via `<conversational_edits>` block in designer-agent.md: D-26 6-step surgical-patch protocol (parse intent -> read existing YAML -> patch in-place -> bump modified_at -> re-validate -> re-render table); NEVER regenerates from Business Graph.
 
 ### Orchestration Classifier (ORCH)
 
