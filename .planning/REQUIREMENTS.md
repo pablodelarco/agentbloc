@@ -38,9 +38,9 @@ Extends the existing v1.0 Phase 1 Interview. The interview already collects the 
 The core new capability. AG2 CaptainAgent pattern adapted to AgentBloc.
 
 - [ ] **DSGN-01**: Designer Agent lives at `.claude/agents/designer-agent.md` (Claude Code subagent definition) with `context: fork` and scoped tool access
-- [ ] **DSGN-02**: Designer Agent consumes the Business Graph JSON and emits an `agent-profiles.yaml` artifact containing `team` (name + topology) and `agents` (list of full profiles)
-- [ ] **DSGN-03**: Each generated agent profile includes `id`, `role`, `goal`, `backstory` (CrewAI pattern), `tools` (list of MCP references), `triggers` (cron / event / inter-agent), `autonomy` (`full` / `semi` / `supervised`), `outputs` (type + schema), `escalation` (target like `telegram:pablo`), `dependencies` (other agents referenced)
-- [ ] **DSGN-04**: Designer Agent selects a team `topology` from `{pipeline, mesh, hierarchy, swarm}` with documented rationale based on process interdependencies observed in the Business Graph
+- [x] **DSGN-02**: Designer Agent consumes the Business Graph JSON and emits an `agent-profiles.yaml` artifact containing `team` (name + topology) and `agents` (list of full profiles). Completed 2026-04-21 (Phase 09-01) via agent-profile-schema.md Schema Definition + fixture.
+- [x] **DSGN-03**: Each generated agent profile includes `id`, `role`, `goal`, `backstory` (CrewAI pattern), `tools` (list of MCP references), `triggers` (cron / event / inter-agent), `autonomy` (`full` / `semi` / `supervised`), `outputs` (type + schema), `escalation` (target like `telegram:pablo`), `dependencies` (other agents referenced). Completed 2026-04-21 (Phase 09-01) via agent-profile-schema.md Schema Definition block with all CrewAI-shaped fields.
+- [x] **DSGN-04**: Designer Agent selects a team `topology` from `{pipeline, mesh, hierarchy, swarm}` with documented rationale based on process interdependencies observed in the Business Graph. Completed 2026-04-21 (Phase 09-01) via orchestration-patterns.md Topology Decision Table + agent-profile-schema.md Topology Bounded Enum (mesh default on ambiguity per D-23).
 - [ ] **DSGN-05**: Designer Agent groups processes by role (one role = one agent) rather than one-process-per-agent, so a single agent can own multiple related steps
 - [ ] **DSGN-06**: Designer Agent presents the proposed team to the user conversationally with an ASCII interaction diagram (from v1.0 Design phase DESG-08) before the deploy pipeline runs
 - [ ] **DSGN-07**: User can edit the generated profiles (rename agents, merge roles, drop an anticipated agent) and Designer regenerates `agent-profiles.yaml` with the edits applied
@@ -49,10 +49,10 @@ The core new capability. AG2 CaptainAgent pattern adapted to AgentBloc.
 
 Part of the Designer Agent's output. Separated because it maps to a known pattern set.
 
-- [ ] **ORCH-01**: Designer Agent classifies each workflow into one of five orchestration patterns from `v2.0-PROMPT.pdf`: **Graph / Conversational / Role-delegation / Handoff-chain / Event-bus**, or their simpler ADK-equivalent `Sequential / Parallel / Loop / Event-driven`
-- [ ] **ORCH-02**: `references/orchestration-patterns.md` documents the five patterns, when each applies, and example workflow shapes — Designer Agent cites this reference when picking
-- [ ] **ORCH-03**: The `agent-profiles.yaml` `orchestration.workflows` section lists each workflow with `type`, `agents`, `trigger`, and either `steps` (sequential/loop) or `flow` (event-driven narrative)
-- [ ] **ORCH-04**: Workflows reference agents by `id` only — cross-references must resolve to agents listed in the same file (validator check)
+- [x] **ORCH-01**: Designer Agent classifies each workflow into one of five orchestration patterns from `v2.0-PROMPT.pdf`: **Graph / Conversational / Role-delegation / Handoff-chain / Event-bus**, or their simpler ADK-equivalent `Sequential / Parallel / Loop / Event-driven`. Completed 2026-04-21 (Phase 09-01) via orchestration-patterns.md 5-pattern table (ADK-naming normalized per D-24).
+- [x] **ORCH-02**: `references/orchestration-patterns.md` documents the five patterns, when each applies, and example workflow shapes. Designer Agent cites this reference when picking. Completed 2026-04-21 (Phase 09-01) via 121-line reference with 5-pattern table + Pattern Selection Heuristics + Quick Reference.
+- [x] **ORCH-03**: The `agent-profiles.yaml` `orchestration.workflows` section lists each workflow with `type`, `agents`, `trigger`, and either `steps` (sequential/loop) or `flow` (event-driven narrative). Completed 2026-04-21 (Phase 09-01) via agent-profile-schema.md Schema Definition workflows[] block + fixture demonstrates both steps (sequential) and flow (event-driven).
+- [x] **ORCH-04**: Workflows reference agents by `id` only. Cross-references must resolve to agents listed in the same file (validator check). Completed 2026-04-21 (Phase 09-01) via agent-profile-schema.md Validation Checklist Check 7 + fixture verified clean via python3 resolves-IDs assertion.
 
 ### Integration Discovery (INTEG) — Steps 1-3 MCP path
 

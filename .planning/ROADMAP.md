@@ -74,7 +74,7 @@ Plans:
 **Plans:** 3 plans
 
 Plans:
-- [ ] 09-01-PLAN.md — Create orchestration-patterns.md + agent-profile-schema.md references + arco-rooms-agent-profiles.yaml fixture
+- [x] 09-01-PLAN.md: Create orchestration-patterns.md + agent-profile-schema.md references + arco-rooms-agent-profiles.yaml fixture (completed 2026-04-21). [SUMMARY](phases/09-designer-agent/09-01-SUMMARY.md)
 - [ ] 09-02-PLAN.md — Create Designer subagent at .claude/agents/designer-agent.md (context: fork, scoped tools, no Bash)
 - [ ] 09-03-PLAN.md — Wire Designer into phase-2-design.md (Step 8 + Conversational Editing) + SKILL.md (agent_profiles_validated sub-gate + Phase 2 Summary wiring + Phase 3 precondition)
 
@@ -204,7 +204,7 @@ Plans:
 | 6. Repo Polish and Examples | v1.0 | 3/3 | Complete | 2026 |
 | 7. Testing and CI | v1.0 | 2/2 | Complete | 2026-04-18 |
 | 8. Business Graph Foundation | v2.0 | 2/2 | Complete | 2026-04-21 |
-| 9. Designer Agent | v2.0 | 0/3 | Not started | — |
+| 9. Designer Agent | v2.0 | 1/3 | In Progress | — |
 | 10. Integration Discovery — MCP Path | v2.0 | 0/3 | Not started | — |
 | 11. Integration Discovery — Browser Fallback | v2.0 | 0/3 | Not started | — |
 | 12. Deploy Pipeline + Agent Memory | v2.0 | 0/3 | Not started | — |

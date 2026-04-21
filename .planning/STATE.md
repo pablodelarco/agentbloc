@@ -4,14 +4,14 @@ milestone: v2.0
 milestone_name: designer-deploy
 status: active
 stopped_at: null
-last_updated: "2026-04-21T13:00:00.000Z"
-last_activity: 2026-04-21 - Phase 8 VERIFIED + skill migrated to .claude/skills/agentbloc canonical path. Ready for Phase 9 (Designer Agent).
+last_updated: "2026-04-21T14:22:00.000Z"
+last_activity: 2026-04-21 - Phase 9 Plan 1 complete. Designer Agent contract files locked: orchestration-patterns.md (5-pattern catalog + 4-topology table + 6-framework inheritance), agent-profile-schema.md (3-tier YAML schema + 3 bounded enums + 8-check validation checklist), arco-rooms-agent-profiles.yaml (3-agent canonical fixture).
 progress:
   total_phases: 9
   completed_phases: 1
   total_plans: 25
-  completed_plans: 2
-  percent: 11
+  completed_plans: 3
+  percent: 12
 ---
 
 # Project State
@@ -26,12 +26,12 @@ See: `.planning/PROJECT.md` (updated 2026-04-20 after v2.0 scope realignment)
 
 ## Current Position
 
-Phase: 8 (Business Graph Foundation) — Plans 1 and 2 complete. Phase 8 ready for verification.
-Plan: Phase 9 Plan 01 (next — `/gsd-discuss-phase 9`)
-Status: 08-02 SUMMARY committed. phase-1-interview.md extended (350 -> 388 lines) with Category 7 decision_patterns seed, Summary-gate Business Graph tables, Business Graph Emission subsection. SKILL.md extended (159 -> 163 lines) with unconditional business-graph-schema.md load, business_graph_validated sub-gate in State Transitions, Phase 2 precondition. INTV-01..04 marked complete.
-Last activity: 2026-04-21 — Commits 862241b (phase-1-interview) + 0ffbcda (SKILL.md). Phase 8 plans 1-2 complete; INTV-01..04 + BGRAPH-01..04 all satisfied.
+Phase: 9 (Designer Agent). Plan 1 of 3 complete.
+Plan: Phase 9 Plan 02 (next). Designer subagent at .claude/agents/designer-agent.md with context: fork + scoped tools.
+Status: 09-01 SUMMARY committed. Three new contract files landed: orchestration-patterns.md (121 lines, 5-pattern catalog + 4-topology table + 6-framework inheritance per D-23/D-24/D-27), agent-profile-schema.md (178 lines, 3-tier schema + 3 bounded enums + 8-check validation checklist per D-13/D-22/D-28), arco-rooms-agent-profiles.yaml (96 lines, 3 canonical agents per D-30). DSGN-02..04 + ORCH-01..04 marked complete.
+Last activity: 2026-04-21. Commits 1f745a8 (orchestration-patterns.md) + 4bae6eb (agent-profile-schema.md) + fd59a0f (arco-rooms-agent-profiles.yaml).
 
-Progress: [##————————] 8% (2/25 v2.0 plans complete, 0/9 phases complete)
+Progress: [##________] 12% (3/25 v2.0 plans complete, 1/9 v2.0 phases complete)
 
 ## v1.0 Milestone — Shipped Summary
 
@@ -95,8 +95,16 @@ v2.0 scope decisions (2026-04-20):
 - Stack pivot: AgentBloc remains markdown skill but runs INSIDE ClaudeClaw (TypeScript + Bun platform). No custom runtime added to AgentBloc itself.
 - Event bus: n8n for real-time webhooks (existing infrastructure). Cron for scheduled work.
 - Framework pattern inheritance (not dependency adoption): CrewAI / AG2 / ADK / LangGraph / Mastra / Paperclip. Each pattern cited with rationale in `v2.0-PROMPT.pdf`.
-- Anticipation Engine is the differentiator — no other framework analyzed (CrewAI / LangGraph / AG2 / ADK / Paperclip) suggests unrequested agents.
+- Anticipation Engine is the differentiator. No other framework analyzed (CrewAI / LangGraph / AG2 / ADK / Paperclip) suggests unrequested agents.
 - Prior "Discovery Agent" scope subordinated to BROWSER-xx category (Phase 11). 2026-04-18 research still applies.
+
+Phase 9 decisions (2026-04-21):
+- D-22: agent-profiles.yaml uses three-tier schema (REQUIRED / RECOMMENDED / OPTIONAL) mirroring Business Graph; schema_version is integer 1.
+- D-23: team.topology default on ambiguity is mesh. Matches ClaudeClaw SendMessage and degrades to pipeline if only 1 agent is generated.
+- D-24: 5 orchestration patterns use ADK vocabulary (Sequential / Parallel / Loop / Event-driven / Conversational), NOT PDF's verbose Graph / Negotiation / Role-delegation / Handoff / Bus naming.
+- D-26: conversational edits use surgical patches (never regenerate from Business Graph). Regeneration would re-insert rejected / renamed agents and fight user intent.
+- D-27 / D-28: new references are structural twins of existing ones. orchestration-patterns.md inherits frameworks.md spine; agent-profile-schema.md inherits business-graph-schema.md spine.
+- D-30: Phase 9 fixture ships 3 requested agents only (gestor-documental, gestor-cobros, recepcionista). The 2 anticipated agents (Analista Rentabilidad, Gestor Incidencias) are strictly Phase 15 scope.
 
 ### Deferred Items
 
@@ -123,6 +131,6 @@ Items acknowledged and deferred at v1.0 milestone close on 2026-04-18:
 
 ## Session Continuity
 
-Last session: 2026-04-21T12:00:00.000Z
-Stopped at: Phase 8 Plan 2 complete. phase-1-interview.md + SKILL.md wired. SUMMARY committed. Phase 8 ready for verification.
-Next: `/gsd-verify-phase 8` to run the ROADMAP Phase 8 success criteria end-to-end. Then `/gsd-discuss-phase 9` to begin Designer Agent planning (consumes the Business Graph emitted by Phase 1, produces agent-profiles.yaml).
+Last session: 2026-04-21T14:22:00.000Z
+Stopped at: Phase 9 Plan 1 complete. Three contract files committed: orchestration-patterns.md (121 lines, 1f745a8), agent-profile-schema.md (178 lines, 4bae6eb), arco-rooms-agent-profiles.yaml (96 lines, fd59a0f). SUMMARY committed.
+Next: `/gsd-execute-phase 9` for Plan 2 (Designer subagent at .claude/agents/designer-agent.md with context: fork and scoped tools). Plan 3 wires the subagent into SKILL.md + phase-2-design.md afterward.
