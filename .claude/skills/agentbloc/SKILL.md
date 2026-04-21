@@ -39,6 +39,7 @@ The state bar contains three fields: Phase (1-6 + name), Gate (`pending` / `appr
 - Phase loopback: If new information invalidates a prior approved gate, reset that phase to `pending`. Announce: "New information affects Phase N. Returning to re-validate."
 - Phase 1 specific: Gate transition to `approved` requires BOTH user confirmation of the rendered Business Graph tables AND the `business_graph_validated` sub-gate (all REQUIRED checks from [references/business-graph-schema.md](references/business-graph-schema.md) Validation Checklist have passed and the file at `.agentbloc/graph/business-graph.json` has been written).
 - Phase 2 specific: Gate transition to `approved` requires BOTH user confirmation of the rendered team table and per-agent cards AND the `agent_profiles_validated` sub-gate (all REQUIRED checks from [references/agent-profile-schema.md](references/agent-profile-schema.md) Validation Checklist have passed and the file at `.agentbloc/team/agent-profiles.yaml` has been written by the Designer subagent).
+- Phase 3 specific: Gate transition to `approved` requires BOTH user confirmation of the rendered integrations table AND the `mcp_integrations_verified` sub-gate (all REQUIRED checks from [references/integration-manifest-schema.md](references/integration-manifest-schema.md) Validation Checklist have passed, every tool entry has `status: verified` with a `healthcheck_at` timestamp, and the file at `.agentbloc/integrations/integration-manifest.yaml` has been written).
 
 ### Compaction Recovery
 
@@ -115,12 +116,19 @@ For each agent action, find the BEST integration method. Research APIs, MCP serv
 
 **Precondition:** Verify `.agentbloc/team/agent-profiles.yaml` exists and validates against the Validation Checklist in [references/agent-profile-schema.md](references/agent-profile-schema.md). If the file is missing or fails any REQUIRED check, return the state bar to Phase 2 with gate `pending` and re-run the Summary gate before attempting Phase 3 again.
 
-You MUST read the complete integration analysis protocol before starting this phase:
+**Summary Gate:** After walking the 4-step MCP search + three-check Verification Loop, write `.agentbloc/integrations/integration-manifest.yaml` silently. The rendered integrations table + per-tool evidence rows are what the user reviews and confirms (D-14 mirror). See [references/mcp-integration-protocol.md](references/mcp-integration-protocol.md) Verification Loop for the D-34 three-check protocol and Halt-and-Name Protocol for D-35 failure handling.
+
+You MUST read the complete integration analysis protocol AND the MCP integration protocol AND the ecosystem registry AND the integration manifest schema before starting this phase:
 See [references/phase-3-integration.md](references/phase-3-integration.md)
+See [references/mcp-integration-protocol.md](references/mcp-integration-protocol.md)
+See [references/mcp-ecosystem-registry.md](references/mcp-ecosystem-registry.md)
+See [references/integration-manifest-schema.md](references/integration-manifest-schema.md)
 
 ### Phase 4: Step-by-Step Confirmation + Dry Run
 
 Get explicit approval for every single step each agent will perform. Then execute a mandatory dry run: agents run against real data with all side-effect tools stubbed. Validate outputs before going live.
+
+**Precondition:** Verify `.agentbloc/integrations/integration-manifest.yaml` exists AND every tool entry has `status: verified` with a `healthcheck_at` timestamp (per [references/integration-manifest-schema.md](references/integration-manifest-schema.md) Validation Checklist). If the file is missing, any entry is `status: failed`, or any REQUIRED check fails, return the state bar to Phase 3 with gate `pending` and re-run the Summary gate before attempting Phase 4 again.
 
 You MUST read the complete confirmation and dry run protocol before starting this phase:
 See [references/phase-4-confirmation.md](references/phase-4-confirmation.md)
