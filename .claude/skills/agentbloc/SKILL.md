@@ -38,6 +38,7 @@ The state bar contains three fields: Phase (1-6 + name), Gate (`pending` / `appr
 - Phase number increments ONLY after current gate is `approved` AND user explicitly confirms
 - Phase loopback: If new information invalidates a prior approved gate, reset that phase to `pending`. Announce: "New information affects Phase N. Returning to re-validate."
 - Phase 1 specific: Gate transition to `approved` requires BOTH user confirmation of the rendered Business Graph tables AND the `business_graph_validated` sub-gate (all REQUIRED checks from [references/business-graph-schema.md](references/business-graph-schema.md) Validation Checklist have passed and the file at `.agentbloc/graph/business-graph.json` has been written).
+- Phase 2 specific: Gate transition to `approved` requires BOTH user confirmation of the rendered team table and per-agent cards AND the `agent_profiles_validated` sub-gate (all REQUIRED checks from [references/agent-profile-schema.md](references/agent-profile-schema.md) Validation Checklist have passed and the file at `.agentbloc/team/agent-profiles.yaml` has been written by the Designer subagent).
 
 ### Compaction Recovery
 
@@ -101,12 +102,18 @@ Translate the interview into a high-level agent team design. Identify agents (on
 
 **Precondition:** Verify `.agentbloc/graph/business-graph.json` exists and validates against the Validation Checklist in [references/business-graph-schema.md](references/business-graph-schema.md). If the file is missing or fails any REQUIRED check, return the state bar to Phase 1 with gate `pending` and re-run the Summary gate before attempting Phase 2 again.
 
-You MUST read the complete design protocol before starting this phase:
+**Summary Gate:** After walking the design protocol, spawn the Designer Agent subagent at `.claude/agents/designer-agent.md` (`context: fork`) to emit `.agentbloc/team/agent-profiles.yaml`. The subagent writes silently; the rendered team table + per-agent cards + ASCII topology diagram are what the user reviews and confirms. See [references/phase-2-design.md](references/phase-2-design.md) Step 8 for the invocation protocol.
+
+You MUST read the complete design protocol AND the orchestration patterns reference AND the agent profile schema before starting this phase:
 See [references/phase-2-design.md](references/phase-2-design.md)
+See [references/orchestration-patterns.md](references/orchestration-patterns.md)
+See [references/agent-profile-schema.md](references/agent-profile-schema.md)
 
 ### Phase 3: Deep Integration Analysis
 
 For each agent action, find the BEST integration method. Research APIs, MCP servers, npm packages, Playwright paths, email scraping, webhooks. Present options with pros/cons/setup for every service.
+
+**Precondition:** Verify `.agentbloc/team/agent-profiles.yaml` exists and validates against the Validation Checklist in [references/agent-profile-schema.md](references/agent-profile-schema.md). If the file is missing or fails any REQUIRED check, return the state bar to Phase 2 with gate `pending` and re-run the Summary gate before attempting Phase 3 again.
 
 You MUST read the complete integration analysis protocol before starting this phase:
 See [references/phase-3-integration.md](references/phase-3-integration.md)
