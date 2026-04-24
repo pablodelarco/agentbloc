@@ -1,27 +1,27 @@
-# Phase 11: Integration Discovery — Browser Fallback - Context
+# Phase 11: Integration Discovery , Browser Fallback - Context
 
 **Gathered:** 2026-04-21
 **Status:** Ready for planning
-**Decision mode:** Autonomous (per `autonomous_mode` memo — Pablo authorized expert-judgment decisions on implementation gray areas derivable from PDF + REQUIREMENTS + prior research + prior phases)
+**Decision mode:** Autonomous (per `autonomous_mode` memo , Pablo authorized expert-judgment decisions on implementation gray areas derivable from PDF + REQUIREMENTS + prior research + prior phases)
 
 <domain>
 ## Phase Boundary
 
 When Phase 10's 4-step MCP search exhausts Steps 1-3 (existing .mcp.json, ecosystem registry, wrapper generation) and falls through to Step 4 (browser fallback), Phase 11's `browser-discovery` subagent reverse-engineers the target service with full legal, anti-bot, and output-poisoning safeguards. Output is a schema-locked, SHA256-signed `DISCOVERY-REPORT.md` per service that the Phase 12 Deploy Pipeline can consume as a `[DISCOVERED]`-tier integration. Resolves the forward See-line that Phase 10 stubbed at `phase-3-integration.md` Priority 3 by creating `browser-fallback.md` and unmarking the `[Phase 11 scope]` tag.
 
-Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the subagent emits a static `DISCOVERY-REPORT.md` that downstream phases consume. Phase 11 does NOT ship runtime selector-drift detection (v4.0 Self-Healing) or auto-generation of production-grade TypeScript MCP wrappers from the report (v3.0 Builder Agent).
+Scope note: Phase 11 ships the browser-fallback **design-time** pipeline , the subagent emits a static `DISCOVERY-REPORT.md` that downstream phases consume. Phase 11 does NOT ship runtime selector-drift detection (v4.0 Self-Healing) or auto-generation of production-grade TypeScript MCP wrappers from the report (v3.0 Builder Agent).
 
 **In scope:**
-- `.claude/skills/agentbloc/references/browser-fallback.md` (new) — imperative Step 4 protocol (invocation contract + per-service opt-in gate + posture classification + checkpoint state + Ralph retry + handoff to output firewall + report emission)
-- `.claude/skills/agentbloc/references/browser-stack.md` (new) — pinned stack (playwright@^1.59.1, patchright@^1.59.4, curlconverter@^4.12.0, @har-sdk/validator@^2.6.1, fetch-har@^12.0.1) + anti-bot deny-list (playwright-extra, puppeteer-extra-plugin-stealth, CAPTCHA solvers, fingerprint-spoofing libs)
-- `.claude/skills/agentbloc/references/discovery-report-schema.md` (new) — `DISCOVERY-REPORT.md` contract: schema-locked YAML frontmatter (SHA256 hash, `expires_at`, `service_slug`, posture, tos_tier) + structured body (endpoints with three-tier API classification, auth flow, sample calls, UI selectors, rate limits, anti-bot observations). Prose-checklist validator per D-13.
-- `.claude/skills/agentbloc/references/output-firewall.md` (new) — injection detector regex set + PII redaction regex set (IBAN / SSN / Luhn / E.164 / email) + fresh-context verification pass protocol. Loaded by the subagent at run-time, NOT unconditionally at Phase 3 entry (context-budget discipline per plan-eng-review P-1 observation from Phase 10).
-- `.claude/skills/agentbloc/references/legal-posture.md` (new) — jurisdictional variance matrix (CFAA US / CMA UK / StGB DE / GDPR EU / LGPD BR) + `DISCOVERY-LICENSE-NOTICE.md` template + `OPT_IN_LEDGER.jsonl` format + user-attestation protocol. Loaded by the subagent + available for user audit.
-- `.claude/agents/browser-discovery.md` (new) — Claude Code subagent definition, `context: fork`, tools = Read/Grep/Glob/Write + Playwright MCP tools (browser_navigate / browser_snapshot / browser_evaluate / browser_network_requests / browser_take_screenshot / browser_click / browser_type / browser_wait_for), NO Bash, NO WebFetch (browser IS the fetch surface)
-- `.claude/skills/agentbloc/examples/mapfre-discovery-report.md` (new fixture) — canonical DISCOVERY-REPORT.md for a Mapfre-style insurance portal that falls through Step 4 (no public MCP, no public API, only web portal); referenced by Arco Rooms agent-profiles.yaml
-- `scripts/anti-bot-lint.sh` (new, executable) + `.github/workflows/ci.yml` extension — CI deny-list lint enforcing BROWSER-05
-- Surgical edit to `references/phase-3-integration.md` Priority 3 — unmark `[Phase 11 scope]`, replace See-line to `browser-fallback.md`
-- Surgical edits to `SKILL.md` Phase 3 — extend load-list with `browser-fallback.md` + `browser-stack.md` (NOT the others; loaded by subagent only per context-budget discipline)
+- `.claude/skills/agentbloc/references/browser-fallback.md` (new) , imperative Step 4 protocol (invocation contract + per-service opt-in gate + posture classification + checkpoint state + Ralph retry + handoff to output firewall + report emission)
+- `.claude/skills/agentbloc/references/browser-stack.md` (new) , pinned stack (playwright@^1.59.1, patchright@^1.59.4, curlconverter@^4.12.0, @har-sdk/validator@^2.6.1, fetch-har@^12.0.1) + anti-bot deny-list (playwright-extra, puppeteer-extra-plugin-stealth, CAPTCHA solvers, fingerprint-spoofing libs)
+- `.claude/skills/agentbloc/references/discovery-report-schema.md` (new) , `DISCOVERY-REPORT.md` contract: schema-locked YAML frontmatter (SHA256 hash, `expires_at`, `service_slug`, posture, tos_tier) + structured body (endpoints with three-tier API classification, auth flow, sample calls, UI selectors, rate limits, anti-bot observations). Prose-checklist validator per D-13.
+- `.claude/skills/agentbloc/references/output-firewall.md` (new) , injection detector regex set + PII redaction regex set (IBAN / SSN / Luhn / E.164 / email) + fresh-context verification pass protocol. Loaded by the subagent at run-time, NOT unconditionally at Phase 3 entry (context-budget discipline per plan-eng-review P-1 observation from Phase 10).
+- `.claude/skills/agentbloc/references/legal-posture.md` (new) , jurisdictional variance matrix (CFAA US / CMA UK / StGB DE / GDPR EU / LGPD BR) + `DISCOVERY-LICENSE-NOTICE.md` template + `OPT_IN_LEDGER.jsonl` format + user-attestation protocol. Loaded by the subagent + available for user audit.
+- `.claude/agents/browser-discovery.md` (new) , Claude Code subagent definition, `context: fork`, tools = Read/Grep/Glob/Write + Playwright MCP tools (browser_navigate / browser_snapshot / browser_evaluate / browser_network_requests / browser_take_screenshot / browser_click / browser_type / browser_wait_for), NO Bash, NO WebFetch (browser IS the fetch surface)
+- `.claude/skills/agentbloc/examples/mapfre-discovery-report.md` (new fixture) , canonical DISCOVERY-REPORT.md for a Mapfre-style insurance portal that falls through Step 4 (no public MCP, no public API, only web portal); referenced by Arco Rooms agent-profiles.yaml
+- `scripts/anti-bot-lint.sh` (new, executable) + `.github/workflows/ci.yml` extension , CI deny-list lint enforcing BROWSER-05
+- Surgical edit to `references/phase-3-integration.md` Priority 3 , unmark `[Phase 11 scope]`, replace See-line to `browser-fallback.md`
+- Surgical edits to `SKILL.md` Phase 3 , extend load-list with `browser-fallback.md` + `browser-stack.md` (NOT the others; loaded by subagent only per context-budget discipline)
 
 **Out of scope (belongs to later phases):**
 - Production-grade TypeScript MCP generation from DISCOVERY-REPORT.md → v3.0 Builder Agent (explicit in REQUIREMENTS.md § Deferred to v3.0+)
@@ -37,9 +37,9 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
 <decisions>
 ## Implementation Decisions
 
-### Inherited from Phase 8 / 9 / 10 / v1.0 (carry forward — do not re-decide)
+### Inherited from Phase 8 / 9 / 10 / v1.0 (carry forward , do not re-decide)
 
-- **Inherited D-11 (Phase 8):** Artifact emission lives in a gate, not a separate invocation flow. Browser discovery emits DISCOVERY-REPORT.md as the gate output of Phase 3 Step 4 — same pattern as Business Graph / agent-profiles / integration-manifest.
+- **Inherited D-11 (Phase 8):** Artifact emission lives in a gate, not a separate invocation flow. Browser discovery emits DISCOVERY-REPORT.md as the gate output of Phase 3 Step 4 , same pattern as Business Graph / agent-profiles / integration-manifest.
 - **Inherited D-13 (Phase 8):** Validators are prose-checklists inside the schema reference file. `discovery-report-schema.md` uses the same structure. No `ajv`, no external YAML linter as a hard dep.
 - **Inherited D-14 (Phase 8):** Rendered table review for the human + silent machine-written artifact. User confirms the rendered discovery summary (posture, ToS tier, endpoint count by classification); the DISCOVERY-REPORT.md is written silently.
 - **Inherited D-15 (Phase 8 + PDF):** Artifacts live under `.agentbloc/`. Discovery state at `.agentbloc/discovery/<service-slug>/{DISCOVERY-REPORT.md, DISCOVERY-LICENSE-NOTICE.md, state.json, har/*.har}`. Opt-in ledger at `.agentbloc/discovery/OPT_IN_LEDGER.jsonl` (project-level).
@@ -47,12 +47,12 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
 - **Inherited D-21 (Phase 9):** Subagent with `context: fork`, scoped tools, NO Bash is the default. `browser-discovery` follows the posture.
 - **Inherited D-22 (Phase 9):** Three-tier field obligation (REQUIRED / RECOMMENDED / OPTIONAL) with `schema_version: 1` integer.
 - **Inherited D-29 (Phase 9):** SKILL.md extensions are surgical, budget ≤250 lines total. Phase 11 adds 2 See-lines + no new sub-gate (browser fallback is a sub-path of the existing `mcp_integrations_verified` Phase 3 gate, not a separate gate).
-- **Inherited D-31 (Phase 10):** Split references per concern: imperative flow vs declarative lookup vs output contract. Phase 11 extends the split — protocol (browser-fallback.md) + stack (browser-stack.md) + schema (discovery-report-schema.md) + runtime firewall (output-firewall.md) + legal reference (legal-posture.md).
+- **Inherited D-31 (Phase 10):** Split references per concern: imperative flow vs declarative lookup vs output contract. Phase 11 extends the split , protocol (browser-fallback.md) + stack (browser-stack.md) + schema (discovery-report-schema.md) + runtime firewall (output-firewall.md) + legal reference (legal-posture.md).
 - **Inherited D-34 (Phase 10):** Three-check verification protocol as prose checklist. `discovery-report-schema.md` Validation Checklist has its own checks (schema validity + SHA256 hash match + expires_at future + every endpoint classified + PII redaction verified + injection detector passed).
 - **Inherited D-35 (Phase 10):** Halt-and-name on failure with specific gap surfaced in conversation. Phase 11 extends: posture C hardened-anti-bot = halt + emit `DISCOVERY-BLOCKED-REPORT.md`; PII residual match = halt + emit with specific regex match quoted; injection detector trigger = halt + emit with quoted suspicious payload.
 - **Inherited D-37 (Phase 10):** Approval-gated execution for anything with blast radius. Phase 11 applies this to per-service legal opt-in: Claude NEVER launches the browser before the user signs `DISCOVERY-LICENSE-NOTICE.md` and the attestation line appends to `OPT_IN_LEDGER.jsonl`.
-- **Inherited D-38 (Phase 10):** `.env.example` auto-append for credential gaps — applied here to Playwright login credentials per-service (e.g., `MAPFRE_USERNAME`, `MAPFRE_PASSWORD`).
-- **Inherited D-39 (Phase 10):** Extended evidence record + `[UNVERIFIED]` flag carry-forward. A `DISCOVERY-REPORT.md` may be marked `[DISCOVERED]` (the v2.0-ship quality tier) which is subordinate to v1.0's `[VERIFIED]` — downstream Deploy Pipeline surfaces this in DEPLOY-REPORT.md.
+- **Inherited D-38 (Phase 10):** `.env.example` auto-append for credential gaps , applied here to Playwright login credentials per-service (e.g., `MAPFRE_USERNAME`, `MAPFRE_PASSWORD`).
+- **Inherited D-39 (Phase 10):** Extended evidence record + `[UNVERIFIED]` flag carry-forward. A `DISCOVERY-REPORT.md` may be marked `[DISCOVERED]` (the v2.0-ship quality tier) which is subordinate to v1.0's `[VERIFIED]` , downstream Deploy Pipeline surfaces this in DEPLOY-REPORT.md.
 - **Inherited D-40 (Phase 10):** Surgical edits to existing references. Plan 11-04's Priority 3 unmark is exactly this pattern.
 - **Inherited v1.0 INTG-03/04/06:** Evidence protocol + trust scoring + UNVERIFIED flag carry forward into the DISCOVERY-REPORT.md evidence section.
 - **Inherited research (2026-04-18):** All 2,603 lines of `.planning/research/*.md` remain authoritative for Phase 11 stack + pitfalls + architecture. Specifically: the policy triad (legal / anti-bot / output-poisoning), the 7-state lifecycle, the prior-art gap matrix vs `kalil0321/reverse-api-engineer`, the stack pin table.
@@ -66,9 +66,9 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
   - `Grep` / `Glob` (scan existing discovery artifacts + references)
   - `Write` (restricted by `<write_constraint>` XML block to `.agentbloc/discovery/<service-slug>/*` only)
   - Playwright MCP tools: `mcp__playwright__browser_navigate`, `browser_snapshot`, `browser_evaluate`, `browser_network_requests`, `browser_take_screenshot`, `browser_click`, `browser_type`, `browser_wait_for`, `browser_handle_dialog`, `browser_file_upload`, `browser_press_key`, `browser_select_option`, `browser_tabs`
-  - **NO Bash** (no shell execution — browser IS the side-effect surface)
-  - **NO WebFetch** (no separate HTTP calls — the browser session is the only network surface so all traffic is captured in HAR)
-  - **NO other MCPs** (no Google Workspace, no Telegram, no Xero — this is an isolated investigator)
+  - **NO Bash** (no shell execution , browser IS the side-effect surface)
+  - **NO WebFetch** (no separate HTTP calls , the browser session is the only network surface so all traffic is captured in HAR)
+  - **NO other MCPs** (no Google Workspace, no Telegram, no Xero , this is an isolated investigator)
 
   **Rationale:** Research is explicit "Playwright MCP only" for BROWSER-01. Fork context isolates the captured-content processing from the main session's context (avoids prompt injection leaking back into main agent). Scoped writes prevent the subagent from mutating anything outside its own discovery directory. No WebFetch eliminates the possibility of the subagent bypassing the Playwright session's HAR capture (every HTTP call the subagent cares about goes through the browser).
 
@@ -84,12 +84,12 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
   | `output-firewall.md` | Runtime firewall (injection + PII + fresh-context verify) | Subagent only (fork context) | On invocation |
   | `legal-posture.md` | Jurisdictional variance + opt-in ledger + attestation protocol | Subagent only + available for user audit | On invocation + any time for audit |
 
-  **Rationale:** Only 2 refs load unconditionally at Phase 3 entry (`browser-fallback.md` imperative + `browser-stack.md` declarative stack). The other 3 load lazily inside the subagent's forked context — this protects the main Phase 3 context budget (per Phase 10 plan-eng-review P-1 observation). Phase 3 grows by ~300 lines instead of ~900 if all 5 loaded unconditionally.
+  **Rationale:** Only 2 refs load unconditionally at Phase 3 entry (`browser-fallback.md` imperative + `browser-stack.md` declarative stack). The other 3 load lazily inside the subagent's forked context , this protects the main Phase 3 context budget (per Phase 10 plan-eng-review P-1 observation). Phase 3 grows by ~300 lines instead of ~900 if all 5 loaded unconditionally.
 
 - **D-44b (`browser-fallback.md` structure):** Dual structural twin of `mcp-integration-protocol.md` (Phase 10, imperative step grammar) and `orchestration-patterns.md` (Phase 9, decision-table shape). Sections:
   - H1 + blockquote + TOC
   - When This Applies (Step 4 of 4-step search triggered when Steps 1-3 fail)
-  - ASCII flow diagram (per Phase 10 A-1 pattern — box-drawing chars, not em-dashes)
+  - ASCII flow diagram (per Phase 10 A-1 pattern , box-drawing chars, not em-dashes)
   - Step 1: Per-service Legal Opt-In Gate (D-37 applied + `DISCOVERY-LICENSE-NOTICE.md` emission + `OPT_IN_LEDGER.jsonl` append + user attestation)
   - Step 2: Subagent Invocation (TARGET.md + budget + fork context)
   - Step 3: HAR Capture + Checkpoint State (4-hour resume)
@@ -173,11 +173,11 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
 
   | Posture | Signal | Action |
   |---|---|---|
-  | **A — Friendly** | OAuth login, public API docs, no WAF challenge page, ToS-GREEN | Proceed with stock Playwright + MCP. Patchright NOT invoked. |
-  | **B — Detected-but-navigable** | Cloudflare UAM (simple JS challenge), rate-limit cooldowns, session cookies required, ToS-AMBER | Switch to Patchright for CDP-leak patch. Rate-limit with exponential backoff. NO fingerprint adjustment. |
-  | **C — Hardened** | DataDome / PerimeterX / Kasada / Akamai Bot Manager / CAPTCHA challenge / behavioral fingerprinting / TOS-RED | **HALT immediately.** Emit `DISCOVERY-BLOCKED-REPORT.md` naming the detected anti-bot vendor + the trigger. Do NOT switch tools. Do NOT retry. Update manifest entry to `status: failed`, `failure_reason: "Posture C hardened anti-bot detected: <vendor>"`. |
+  | **A , Friendly** | OAuth login, public API docs, no WAF challenge page, ToS-GREEN | Proceed with stock Playwright + MCP. Patchright NOT invoked. |
+  | **B , Detected-but-navigable** | Cloudflare UAM (simple JS challenge), rate-limit cooldowns, session cookies required, ToS-AMBER | Switch to Patchright for CDP-leak patch. Rate-limit with exponential backoff. NO fingerprint adjustment. |
+  | **C , Hardened** | DataDome / PerimeterX / Kasada / Akamai Bot Manager / CAPTCHA challenge / behavioral fingerprinting / TOS-RED | **HALT immediately.** Emit `DISCOVERY-BLOCKED-REPORT.md` naming the detected anti-bot vendor + the trigger. Do NOT switch tools. Do NOT retry. Update manifest entry to `status: failed`, `failure_reason: "Posture C hardened anti-bot detected: <vendor>"`. |
 
-  **Rationale:** Resolves research Open Decision #5. Posture C is always `HALT + blocked report`. There is no v2.0 fallback past Posture C — the user escalates to manual session-cookie handoff (v2.5+) or accepts the integration cannot be automated.
+  **Rationale:** Resolves research Open Decision #5. Posture C is always `HALT + blocked report`. There is no v2.0 fallback past Posture C , the user escalates to manual session-cookie handoff (v2.5+) or accepts the integration cannot be automated.
 
 - **D-55 (Ralph-style retry loop with caps):** BROWSER-09. Retry budget from `governance.yaml` (default 3 attempts). Each retry: logged rationale, exponential backoff (1s, 4s, 16s), different timing NOT different fingerprint. State recorded in `.agentbloc/discovery/<service-slug>/state.json` under `retries[]`. Hard cap: 5 attempts regardless of governance.yaml value (prevents runaway loops).
 
@@ -210,9 +210,9 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
 
 - **D-51 (Injection detector + fresh-context verification):** In `output-firewall.md`. Three-layer detector, run on every captured response body BEFORE it enters the DISCOVERY-REPORT.md:
 
-  1. **Imperative string regex:** `(?i)\b(ignore|disregard|forget|new instruction|override|system:|you are now|act as|pretend|roleplay)\b` — flags, does NOT block.
-  2. **Base64 blob regex:** `[A-Za-z0-9+/]{40,}={0,2}` — flags any base64-ish string >=40 chars (avoids false positives on short hashes/tokens). Claude decodes and re-scans the decoded payload with layers 1+3.
-  3. **Invisible Unicode regex:** `[\u200B-\u200F\u2028-\u202F\u2060-\u206F\uFEFF]` — zero-width space, LTR/RTL marks, word joiner, BOM. Flags any occurrence.
+  1. **Imperative string regex:** `(?i)\b(ignore|disregard|forget|new instruction|override|system:|you are now|act as|pretend|roleplay)\b` , flags, does NOT block.
+  2. **Base64 blob regex:** `[A-Za-z0-9+/]{40,}={0,2}` , flags any base64-ish string >=40 chars (avoids false positives on short hashes/tokens). Claude decodes and re-scans the decoded payload with layers 1+3.
+  3. **Invisible Unicode regex:** `[\u200B-\u200F\u2028-\u202F\u2060-\u206F\uFEFF]` , zero-width space, LTR/RTL marks, word joiner, BOM. Flags any occurrence.
 
   On ANY flag: wrap the suspicious body in ` ```untrusted-data ... ``` ` code fences. Proceed to fresh-context verification.
 
@@ -228,7 +228,7 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
   | E.164 phone | `\+\d{1,3}[ -]?\d{4,14}` | `[REDACTED-PHONE]` |
   | Email | `\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b` | `[REDACTED-EMAIL]` |
 
-  Applied to: HAR response bodies, HAR request bodies (except headers — handled separately), any captured text shown in DISCOVERY-REPORT.md body.
+  Applied to: HAR response bodies, HAR request bodies (except headers , handled separately), any captured text shown in DISCOVERY-REPORT.md body.
 
   **Verification scan:** AFTER redaction, run the regex set AGAIN on the redacted output. Any match = fail the entire discovery run. Emit DISCOVERY-BLOCKED-REPORT.md citing the specific regex that matched and the 20-char context window around the match (enough to debug, not enough to leak the full PII).
 
@@ -236,9 +236,9 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
 
 - **D-53 (DOCUMENTED / INTERNAL / INTERNAL-HARDENED enum):** Every endpoint in DISCOVERY-REPORT.md carries `api_classification`:
 
-  - `DOCUMENTED` — the endpoint path matches a fetched `/docs`, `/developers`, OpenAPI spec, or Postman collection URL. `documented_at` field populated with the exact URL.
-  - `INTERNAL` — no doc match, backs a first-party UI. Flags `session_cookie` or `csrf_header` auth.
-  - `INTERNAL-HARDENED` — same as INTERNAL PLUS: requires `x-requested-with: XMLHttpRequest`, a custom `x-csrf-token`, non-browser `origin` check, or `x-internal: true` header. Vendor expressed intent that only their UI talks to it — elevated legal + ToS risk.
+  - `DOCUMENTED` , the endpoint path matches a fetched `/docs`, `/developers`, OpenAPI spec, or Postman collection URL. `documented_at` field populated with the exact URL.
+  - `INTERNAL` , no doc match, backs a first-party UI. Flags `session_cookie` or `csrf_header` auth.
+  - `INTERNAL-HARDENED` , same as INTERNAL PLUS: requires `x-requested-with: XMLHttpRequest`, a custom `x-csrf-token`, non-browser `origin` check, or `x-internal: true` header. Vendor expressed intent that only their UI talks to it , elevated legal + ToS risk.
 
   **Rationale:** Research Pitfall 2 (private-vs-public API) explicitly calls out this distinction. `INTERNAL-HARDENED` endpoints require a second user attestation in the DISCOVERY-LICENSE-NOTICE.md addendum because they signal "vendor does not want external automation here even if the user has account access."
 
@@ -258,7 +258,7 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
 
 #### CI anti-bot deny-list lint (BROWSER-05)
 
-- **D-56 (Bash script at `scripts/anti-bot-lint.sh` + `.github/workflows/ci.yml` extension):** First crack in the "markdown-only skill" v1.0 constraint — the lint is executable code. Justified by BROWSER-05 explicitly calling for CI enforcement (prose-only can't enforce "don't install stealth-plugin").
+- **D-56 (Bash script at `scripts/anti-bot-lint.sh` + `.github/workflows/ci.yml` extension):** First crack in the "markdown-only skill" v1.0 constraint , the lint is executable code. Justified by BROWSER-05 explicitly calling for CI enforcement (prose-only can't enforce "don't install stealth-plugin").
 
   Script logic (bash, POSIX-ish):
   ```bash
@@ -301,9 +301,9 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
   - Playwright MCP (microsoft/playwright-mcp) is the automation tool -- HIGH trust, Microsoft-maintained
   ```
 
-- **D-58 (SKILL.md Phase 3 load-list extension — context-budget conscious):** Add TWO See-lines, not five. Phase 3 entry currently loads 4 refs (phase-3-integration + mcp-integration-protocol + mcp-ecosystem-registry + integration-manifest-schema). Phase 11 adds:
-  - `browser-fallback.md` — imperative protocol for Step 4
-  - `browser-stack.md` — stack pins + deny-list
+- **D-58 (SKILL.md Phase 3 load-list extension , context-budget conscious):** Add TWO See-lines, not five. Phase 3 entry currently loads 4 refs (phase-3-integration + mcp-integration-protocol + mcp-ecosystem-registry + integration-manifest-schema). Phase 11 adds:
+  - `browser-fallback.md` , imperative protocol for Step 4
+  - `browser-stack.md` , stack pins + deny-list
 
   NOT loaded unconditionally: `discovery-report-schema.md`, `output-firewall.md`, `legal-posture.md`. These three are loaded by the `browser-discovery` subagent in its forked context on invocation.
 
@@ -311,7 +311,7 @@ Scope note: Phase 11 ships the browser-fallback **design-time** pipeline — the
 
   SKILL.md Phase 3 total load after Phase 11: ~1,230 lines. Still under the 1,500-line soft ceiling that feels like the real comfort budget. STILL well under compaction threshold.
 
-  NO new sub-gate added to Phase 3 State Transitions — browser fallback is a sub-path of the existing `mcp_integrations_verified` sub-gate (the manifest entry's `resolution_method: browser-fallback` is a valid verified-tier when the DISCOVERY-REPORT.md exists + validates + SHA256 matches).
+  NO new sub-gate added to Phase 3 State Transitions , browser fallback is a sub-path of the existing `mcp_integrations_verified` sub-gate (the manifest entry's `resolution_method: browser-fallback` is a valid verified-tier when the DISCOVERY-REPORT.md exists + validates + SHA256 matches).
 
 ### Plan shape projection (4 plans)
 
@@ -342,52 +342,52 @@ Matches Phase 10's "contract-first, wiring-second" rhythm. Planner should confir
 **Downstream agents MUST read these before planning or implementing.**
 
 ### Scope Authority
-- `.planning/v2.0-PROMPT.pdf` — v2.0 ground truth; browser fallback is INTEG step 4 per page 1
-- `.planning/REQUIREMENTS.md` § Browser Automation Fallback (BROWSER-01..12) — 12 requirements this phase satisfies
-- `.planning/PROJECT.md` § Constraints + § Out of Scope — no fingerprint evasion, no CAPTCHA solving, no TLS spoofing; detect-and-degrade only
+- `.planning/v2.0-PROMPT.pdf` , v2.0 ground truth; browser fallback is INTEG step 4 per page 1
+- `.planning/REQUIREMENTS.md` § Browser Automation Fallback (BROWSER-01..12) , 12 requirements this phase satisfies
+- `.planning/PROJECT.md` § Constraints + § Out of Scope , no fingerprint evasion, no CAPTCHA solving, no TLS spoofing; detect-and-degrade only
 
 ### Research Basis (Pre-Pivot 2026-04-18)
-- `.planning/research/SUMMARY.md` — executive summary, policy triad, prior-art gap analysis (consume in full)
-- `.planning/research/STACK.md` — 423 lines, detailed stack + pinned versions + integration touchpoints
-- `.planning/research/FEATURES.md` — P0/P1/P2 feature matrix vs kalil0321/reverse-api-engineer prior art
-- `.planning/research/ARCHITECTURE.md` — 970 lines, subagent architecture + state schemas + 7-state lifecycle
-- `.planning/research/PITFALLS.md` — 561 lines, 14 critical pitfalls with case law citations (legal + anti-bot + output-poisoning + PII)
+- `.planning/research/SUMMARY.md` , executive summary, policy triad, prior-art gap analysis (consume in full)
+- `.planning/research/STACK.md` , 423 lines, detailed stack + pinned versions + integration touchpoints
+- `.planning/research/FEATURES.md` , P0/P1/P2 feature matrix vs kalil0321/reverse-api-engineer prior art
+- `.planning/research/ARCHITECTURE.md` , 970 lines, subagent architecture + state schemas + 7-state lifecycle
+- `.planning/research/PITFALLS.md` , 561 lines, 14 critical pitfalls with case law citations (legal + anti-bot + output-poisoning + PII)
 
 ### v2.0 Artifacts This Phase Consumes (from Phase 10)
-- `.claude/skills/agentbloc/references/mcp-integration-protocol.md` — browser-fallback.md is Step 4 of the 4-step search defined here; structural-twin pattern carries over
-- `.claude/skills/agentbloc/references/integration-manifest-schema.md` — DISCOVERY-REPORT.md populates manifest entries with `resolution_method: browser-fallback`
-- `.claude/skills/agentbloc/examples/arco-rooms-integration-manifest.yaml` — mapfre-insurance-portal might be a browser-fallback entry (referenced by gestor-documental agent's tools[])
+- `.claude/skills/agentbloc/references/mcp-integration-protocol.md` , browser-fallback.md is Step 4 of the 4-step search defined here; structural-twin pattern carries over
+- `.claude/skills/agentbloc/references/integration-manifest-schema.md` , DISCOVERY-REPORT.md populates manifest entries with `resolution_method: browser-fallback`
+- `.claude/skills/agentbloc/examples/arco-rooms-integration-manifest.yaml` , mapfre-insurance-portal might be a browser-fallback entry (referenced by gestor-documental agent's tools[])
 
 ### v1.0 Artifacts Being Extended
-- `.claude/skills/agentbloc/references/phase-3-integration.md` — Priority 3 `[Phase 11 scope]` marker unmarked by Plan 11-04
-- `.claude/skills/agentbloc/references/prompt-injection.md` (178 lines) — `output-firewall.md` extends, does not replace
-- `.claude/skills/agentbloc/references/credentials.md` (117 lines) — referenced by `legal-posture.md` for per-service credential handling
-- `.claude/skills/agentbloc/SKILL.md` — Phase 3 See-line load-list extension (Plan 11-04)
-- `.github/workflows/ci.yml` — new CI step for anti-bot deny-list lint
+- `.claude/skills/agentbloc/references/phase-3-integration.md` , Priority 3 `[Phase 11 scope]` marker unmarked by Plan 11-04
+- `.claude/skills/agentbloc/references/prompt-injection.md` (178 lines) , `output-firewall.md` extends, does not replace
+- `.claude/skills/agentbloc/references/credentials.md` (117 lines) , referenced by `legal-posture.md` for per-service credential handling
+- `.claude/skills/agentbloc/SKILL.md` , Phase 3 See-line load-list extension (Plan 11-04)
+- `.github/workflows/ci.yml` , new CI step for anti-bot deny-list lint
 
 ### Prior Phase Context (carry-forward decisions)
-- `.planning/phases/08-business-graph-foundation/08-CONTEXT.md` — D-11, D-13, D-14, D-15, D-18 apply structurally
-- `.planning/phases/09-designer-agent/09-CONTEXT.md` — D-21 (subagent scoped tools, no Bash), D-22 (three-tier obligation), D-29 (surgical SKILL.md edits)
-- `.planning/phases/10-integration-discovery-mcp-path/10-CONTEXT.md` — D-31 (reference split), D-34 (verification prose), D-35 (halt-and-name), D-37 (approval gate), D-39 (evidence + UNVERIFIED), D-40 (surgical edits). Plus P-1 in Deferred (context-budget discipline for Phase 3 loads).
+- `.planning/phases/08-business-graph-foundation/08-CONTEXT.md` , D-11, D-13, D-14, D-15, D-18 apply structurally
+- `.planning/phases/09-designer-agent/09-CONTEXT.md` , D-21 (subagent scoped tools, no Bash), D-22 (three-tier obligation), D-29 (surgical SKILL.md edits)
+- `.planning/phases/10-integration-discovery-mcp-path/10-CONTEXT.md` , D-31 (reference split), D-34 (verification prose), D-35 (halt-and-name), D-37 (approval gate), D-39 (evidence + UNVERIFIED), D-40 (surgical edits). Plus P-1 in Deferred (context-budget discipline for Phase 3 loads).
 
 ### New Files To Be Created (plan-phase will materialize)
-- `.claude/skills/agentbloc/references/browser-fallback.md` — imperative Step 4 protocol
-- `.claude/skills/agentbloc/references/browser-stack.md` — pinned stack + deny-list
-- `.claude/skills/agentbloc/references/discovery-report-schema.md` — DISCOVERY-REPORT.md schema
-- `.claude/skills/agentbloc/references/output-firewall.md` — injection + PII + fresh-context
-- `.claude/skills/agentbloc/references/legal-posture.md` — 5-jurisdiction matrix
-- `.claude/agents/browser-discovery.md` — Claude Code subagent
-- `.claude/skills/agentbloc/examples/mapfre-discovery-report.md` — canonical fixture
-- `scripts/anti-bot-lint.sh` — CI enforcement script (first executable code in the skill)
-- `.github/workflows/ci.yml` — new Anti-bot deny-list lint step
+- `.claude/skills/agentbloc/references/browser-fallback.md` , imperative Step 4 protocol
+- `.claude/skills/agentbloc/references/browser-stack.md` , pinned stack + deny-list
+- `.claude/skills/agentbloc/references/discovery-report-schema.md` , DISCOVERY-REPORT.md schema
+- `.claude/skills/agentbloc/references/output-firewall.md` , injection + PII + fresh-context
+- `.claude/skills/agentbloc/references/legal-posture.md` , 5-jurisdiction matrix
+- `.claude/agents/browser-discovery.md` , Claude Code subagent
+- `.claude/skills/agentbloc/examples/mapfre-discovery-report.md` , canonical fixture
+- `scripts/anti-bot-lint.sh` , CI enforcement script (first executable code in the skill)
+- `.github/workflows/ci.yml` , new Anti-bot deny-list lint step
 
 ### External Documentation Pointers (for research loops if needed)
-- Playwright docs (`playwright.dev`) — `recordHar`, `CDPSession`, `context.route()`
-- Patchright README (`github.com/Vinyzu/patchright-nodejs`) — CDP-leak patches, version matrix
-- Microsoft Playwright MCP (`github.com/microsoft/playwright-mcp`) — tool surface
-- `curlconverter` README — HAR → curl conversion for replay
-- Van Buren v. United States (2021 US Supreme Court) — CFAA narrow-reading precedent
-- hiQ Labs v. LinkedIn (2022 9th Cir.) — CFAA + ToS interaction precedent
+- Playwright docs (`playwright.dev`) , `recordHar`, `CDPSession`, `context.route()`
+- Patchright README (`github.com/Vinyzu/patchright-nodejs`) , CDP-leak patches, version matrix
+- Microsoft Playwright MCP (`github.com/microsoft/playwright-mcp`) , tool surface
+- `curlconverter` README , HAR → curl conversion for replay
+- Van Buren v. United States (2021 US Supreme Court) , CFAA narrow-reading precedent
+- hiQ Labs v. LinkedIn (2022 9th Cir.) , CFAA + ToS interaction precedent
 
 </canonical_refs>
 
@@ -395,18 +395,18 @@ Matches Phase 10's "contract-first, wiring-second" rhythm. Planner should confir
 ## Existing Code Insights
 
 ### Reusable Assets
-- `references/mcp-integration-protocol.md` (231 lines, Phase 10) — structural twin for `browser-fallback.md` (imperative step grammar, ASCII flow diagram, Verification Loop section)
-- `references/orchestration-patterns.md` (121 lines, Phase 9) — structural twin for `browser-stack.md` (declarative reference with tables)
-- `references/integration-manifest-schema.md` (168 lines, Phase 10) — structural twin for `discovery-report-schema.md` (schema + field obligation matrix + bounded enums + validation checklist + emission protocol)
-- `references/agent-profile-schema.md` (178 lines, Phase 9) — secondary twin for `discovery-report-schema.md`
-- `references/frameworks.md` (126 lines, v1.0) — structural twin for `legal-posture.md` (curated-table-with-rationale shape)
-- `references/prompt-injection.md` (178 lines, v1.0) — `output-firewall.md` extends (the injection-defense-layers vocabulary carries forward)
-- `.claude/agents/designer-agent.md` (145 lines, Phase 9) — structural twin for `browser-discovery.md` (frontmatter + role + Mandatory Initial Read + Core Responsibilities + `<write_constraint>` + `<output_contract>`)
-- `.claude/skills/mcp-builder/SKILL.md` (150 lines, Phase 10) — structural twin for reviewing the scoped-tool + no-Bash posture applied to a generator-style agent
-- `examples/arco-rooms-integration-manifest.yaml` + `arco-rooms-agent-profiles.yaml` (Phases 9/10) — Mapfre entries in those fixtures reference what Phase 11's fixture (`mapfre-discovery-report.md`) fully describes
-- `references/phase-3-integration.md` Priority 3 section (lines 85-99 of current post-Phase-10 state) — unmark target for Plan 11-04
-- `SKILL.md` (178 lines post-Phase-10) — Phase 3 See-line load-list + Summary Gate are the extension targets for Plan 11-04
-- `.github/workflows/ci.yml` (exists from v1.0 Phase 7 Testing+CI) — extension target for the anti-bot deny-list lint
+- `references/mcp-integration-protocol.md` (231 lines, Phase 10) , structural twin for `browser-fallback.md` (imperative step grammar, ASCII flow diagram, Verification Loop section)
+- `references/orchestration-patterns.md` (121 lines, Phase 9) , structural twin for `browser-stack.md` (declarative reference with tables)
+- `references/integration-manifest-schema.md` (168 lines, Phase 10) , structural twin for `discovery-report-schema.md` (schema + field obligation matrix + bounded enums + validation checklist + emission protocol)
+- `references/agent-profile-schema.md` (178 lines, Phase 9) , secondary twin for `discovery-report-schema.md`
+- `references/frameworks.md` (126 lines, v1.0) , structural twin for `legal-posture.md` (curated-table-with-rationale shape)
+- `references/prompt-injection.md` (178 lines, v1.0) , `output-firewall.md` extends (the injection-defense-layers vocabulary carries forward)
+- `.claude/agents/designer-agent.md` (145 lines, Phase 9) , structural twin for `browser-discovery.md` (frontmatter + role + Mandatory Initial Read + Core Responsibilities + `<write_constraint>` + `<output_contract>`)
+- `.claude/skills/mcp-builder/SKILL.md` (150 lines, Phase 10) , structural twin for reviewing the scoped-tool + no-Bash posture applied to a generator-style agent
+- `examples/arco-rooms-integration-manifest.yaml` + `arco-rooms-agent-profiles.yaml` (Phases 9/10) , Mapfre entries in those fixtures reference what Phase 11's fixture (`mapfre-discovery-report.md`) fully describes
+- `references/phase-3-integration.md` Priority 3 section (lines 85-99 of current post-Phase-10 state) , unmark target for Plan 11-04
+- `SKILL.md` (178 lines post-Phase-10) , Phase 3 See-line load-list + Summary Gate are the extension targets for Plan 11-04
+- `.github/workflows/ci.yml` (exists from v1.0 Phase 7 Testing+CI) , extension target for the anti-bot deny-list lint
 
 ### Established Patterns
 - **Subagent with `context: fork`, scoped tools, NO Bash (Phase 9 D-21 + Phase 10 D-32):** applied to `browser-discovery.md`
@@ -439,7 +439,7 @@ Matches Phase 10's "contract-first, wiring-second" rhythm. Planner should confir
 - **OPT_IN_LEDGER.jsonl supports GDPR Article 30.** Per-project append-only. The committed record proves the user acknowledged legal exposure before Claude launched the browser. This is a liability firewall for both the user (proves their consent) and AgentBloc maintainers (proves the tool enforced the gate).
 - **First executable code in the skill.** `scripts/anti-bot-lint.sh` is the first crack in the "markdown-only" v1.0 constraint. Justified because BROWSER-05 explicitly requires CI enforcement. The script is ~40 lines of bash with zero deps. If future phases need to add more executable enforcement, we have a precedent; but the pattern stays: scripts for policy enforcement, markdown for everything else.
 - **Phase 11 resolves the forward See-line Phase 10 stubbed.** This is the one physical coupling between consecutive phases. Plan 11-04 is the atomic unit that closes the contract.
-- **Checkpoint resume (BROWSER-08) is the most novel contract.** Research flags this as "MEDIUM confidence — no live v1.0 precedent." Phase 11 ships the schema; first real discovery run validates it; iterate after. The 4-hour `expires_at` is the defensible upper bound on user patience for 2FA/SMS pause.
+- **Checkpoint resume (BROWSER-08) is the most novel contract.** Research flags this as "MEDIUM confidence , no live v1.0 precedent." Phase 11 ships the schema; first real discovery run validates it; iterate after. The 4-hour `expires_at` is the defensible upper bound on user patience for 2FA/SMS pause.
 
 </specifics>
 
@@ -447,20 +447,20 @@ Matches Phase 10's "contract-first, wiring-second" rhythm. Planner should confir
 ## Deferred Ideas
 
 ### Deferred to v2.5+
-- DISCOVERY-REPORT.md split threshold >30 endpoints — single-file default holds
+- DISCOVERY-REPORT.md split threshold >30 endpoints , single-file default holds
 - Cross-run DISCOVERY-REPORT.md diff for drift detection
 - Multi-account tier-shape detection (Free vs Pro endpoint differences)
 - Contract-test export (Pact / OpenAPI examples) from DISCOVERY-REPORT.md
 - Manual session-cookie handoff path (escape valve past Posture C)
-- Mobile app reverse engineering (Frida, iOS SSL pinning bypass) — explicit deferral in REQUIREMENTS.md
+- Mobile app reverse engineering (Frida, iOS SSL pinning bypass) , explicit deferral in REQUIREMENTS.md
 - Browser extension reverse engineering
 
 ### Deferred to v3.0+
-- Builder Agent — production TypeScript MCP generation from DISCOVERY-REPORT.md with tests + CI + npm publishing
+- Builder Agent , production TypeScript MCP generation from DISCOVERY-REPORT.md with tests + CI + npm publishing
 - OpenClaw substrate evaluation (ACP + Docker sandboxing per REQUIREMENTS.md)
 
 ### Deferred to v4.0+
-- Self-Healing Evolution — auto-trigger re-discovery on schema_mismatch or selector_drift
+- Self-Healing Evolution , auto-trigger re-discovery on schema_mismatch or selector_drift
 - Drift detection via `expires_at` + healthcheck recipe (Phase 11 emits the contract surface; v4.0 consumer)
 
 ### Explicitly rejected (anti-features per REQUIREMENTS.md)
@@ -479,4 +479,4 @@ Matches Phase 10's "contract-first, wiring-second" rhythm. Planner should confir
 
 *Phase: 11-integration-discovery-browser-fallback*
 *Context gathered: 2026-04-21*
-*Decision mode: autonomous (Pablo-authorized). All decisions above are mine to defend; Pablo retains veto on any he disagrees with — raise early if so.*
+*Decision mode: autonomous (Pablo-authorized). All decisions above are mine to defend; Pablo retains veto on any he disagrees with , raise early if so.*
