@@ -39,7 +39,7 @@ Total net addition: 783 lines across 4 files.
 
 All plan `<verify>` `<automated>` bundles returned PASS:
 - Line-count budgets met (each file >= 180 lines, <= upper bound)
-- Zero em-dashes across all 4 files (`grep -c "—"` returns 0)
+- Zero em-dashes across all 4 files (U+2014 count via grep returns 0)
 - All TOC sections present per plan spec
 - All bounded enums present with verbatim enum values
 - All 5 PII redaction tokens present (REDACTED-IBAN, REDACTED-SSN, REDACTED-CC, REDACTED-PHONE, REDACTED-EMAIL)
