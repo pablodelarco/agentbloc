@@ -533,27 +533,33 @@ AGENTBLOC_CORRELATION_ID="$CHILD_ID" \
 
 **Note on ASSUMED tags:** All 7 assumptions above are LOW or LOW-MEDIUM risk. None gate Phase 13 planning. A1 and A4 are worth a ~5-minute verification step at the top of Plan 13-01 (check n8n's UUID source; decide on ClaudeClaw payload wrapping convention).
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **JSON vs YAML for n8n route stubs (D-82 + D-78)**
+> All 4 questions resolved during planning. Each `Recommendation:` line was adopted verbatim in Plans 13-01 / 13-02 / 13-03. Retained here as an audit trail of the research decision path.
+
+1. **JSON vs YAML for n8n route stubs (D-82 + D-78)** , **RESOLVED: `.json`**
    - What we know: n8n's native export format is JSON. CONTEXT D-82 names the files as `.yaml`.
    - What's unclear: Does the user import the route by copy-paste UI + hand-translate YAML→JSON, or does a helper script convert?
    - Recommendation: **Change the extension to `.json`** in D-82 + D-78, OR add a conversion step. The JSON route matches n8n's native format and eliminates the user-side translation. If readability of YAML is the draw, keep YAML and document the conversion command (`ubie-oss/n8n-cli convert -d .agentbloc/runtime/n8n-routes --format json`) in runtime-engine's RUNTIME-REPORT.md. **Plan 13-01 should resolve this one-bit choice before writing n8n-integration.md.**
+   - **Resolution:** Plans 13-01 + 13-02 + 13-03 all adopt `.json` extension; negative grep for `.yaml` in n8n-routes context included in acceptance_criteria.
 
-2. **ClaudeClaw payload wrapping (A4 above)**
+2. **ClaudeClaw payload wrapping (A4 above)** , **RESOLVED: document both paths**
    - What we know: ClaudeClaw's documented webhook payload is `{"prompt": "..."}`.
    - What's unclear: Does n8n's HTTP Request node POST `{"prompt": JSON.stringify(envelope)}` or the bare envelope?
    - Recommendation: Adopt the wrapping pattern; wake-webhook.md section 4 parses `$json.prompt` then JSON-parses the inner envelope. Alternative: document both paths in n8n-integration.md and let the user pick based on their ClaudeClaw configuration.
+   - **Resolution:** Plan 13-01 Task 1 n8n-integration.md documents both paths (ClaudeClaw-wrapped + bare envelope for runtime-agnostic local HTTP listener); user picks based on their deployment.
 
-3. **TeamCreate/SendMessage programmatic invocation (focus area 1)**
+3. **TeamCreate/SendMessage programmatic invocation (focus area 1)** , **RESOLVED: writeStateHandoff primary for non-interactive**
    - What we know: TeamCreate is available to standalone subagents per issue #32723 but produces empty team shells without an Agent-spawning context.
    - What's unclear: Is there a supported programmatic path for non-interactive multi-agent coordination on Claude Code v2.1.32+?
    - Recommendation: **Treat writeStateHandoff as the primary non-interactive path.** Do not block Phase 13 on external verification. If Claude Code releases a documented non-interactive TeamCreate path in v2.2+, runtime-coordination.md can invert the preference at that time (additive change).
+   - **Resolution:** Plan 13-01 Task 2 runtime-coordination.md §5 encodes writeStateHandoff as PRIMARY for non-interactive wakes (cron, webhook); TeamCreate/SendMessage retained as PRIMARY only for interactive leads. Plan 13-02 runtime-engine frontmatter documents the invert-at-v2.2+ path as additive.
 
-4. **Helpers.sh portability**
+4. **Helpers.sh portability** , **RESOLVED: POSIX-shell compatible**
    - What we know: D-75 + D-80 reference a `.agentbloc/runtime/helpers.sh` emitting `agentbloc-gen-correlation <trigger-source>`.
    - What's unclear: POSIX-shell compatible (dash-safe) or bash-only?
    - Recommendation: POSIX-shell compatible. cron invokes `/bin/sh` by default on many systems; requiring bash creates silent-failure surface. Use `printf`, not `echo -e`; use `od -An -N3 -tx1 /dev/urandom | tr -d ' \n'` for nonce generation.
+   - **Resolution:** Plan 13-02 runtime-engine emits helpers.sh with POSIX-shell shebang (`#!/bin/sh`); uses `printf` + `od -An -N3 -tx1 /dev/urandom | tr -d ' \n'` for nonce generation per D-75 format.
 
 ## Environment Availability
 
