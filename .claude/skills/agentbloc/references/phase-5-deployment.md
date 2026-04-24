@@ -47,6 +47,21 @@ Explain the deployment phase to the user at their technical level.
 **Developer:**
 > "Generating `.agentbloc/` deployment artifacts from confirmed Phase 4 contract cards. Output: team.yaml, per-agent YAML + skill.md, governance.yaml, telegram.yaml, JSON state schemas, ClaudeClaw job definitions, hooks, .env.example, SUMMARY.md, and incident-response.md. Target: Claude Code subagents via `claude -p` + system cron + MCP."
 
+## Priority 1: ClaudeClaw-Native Deploy (Canonical 8-Step Flow)
+
+See [references/deploy-protocol.md](deploy-protocol.md) for the canonical Step 4 execution protocol: input validation, SHA256 fingerprint with RFC 8785 JSON canonicalization per D-60, unified-diff presentation for changed artifacts per D-61, template substitution via the three autonomy-level templates per D-62, atomic write to the three-namespace split (`.claude/skills/<agent-id>/SKILL.md` for stable contracts per D-59a, `.agentbloc/agents/<agent-id>/` for mutable memory+state+last-run per D-59b, `.agentbloc/agents/registry.yaml` per D-59c), keep-existing-with-conflict-warning merge into `.mcp.json` per D-66, post-deploy verification via canonical `tools/list` MCP health-check per D-69, and DEPLOY-REPORT.md or DEPLOY-FAILED-REPORT.md terminal emission per D-70.
+
+See [.claude/agents/deploy-engine.md](../../agents/deploy-engine.md) for the subagent definition that orchestrates the protocol. The subagent uses a narrow Bash allow-list (shasum, crontab -l, claude agents list, claude mcp list) per D-67; it has NO WebFetch and does NOT spawn sub-subagents.
+
+**Three-namespace model (verbatim citation of D-59a/b/c triple-override):**
+- `.claude/skills/<agent-id>/SKILL.md` is the stable contract: prompts, tool lists, autonomy rules. Versioned, reviewed, audited. Claude Code native skill discovery path; deployed agents are peer skills to agentbloc and mcp-builder.
+- `.agentbloc/agents/<agent-id>/{memory.md, state.json, last-run.json}` is customer mutable runtime state: machine-written, accretive, outside Claude Code reserved namespace.
+- `.claude/agents/` remains reserved for Claude Code native subagent definitions (designer-agent, browser-discovery, deploy-engine) exclusively; customer-deployed agents NEVER live there.
+
+**Runtime-agnostic:** The three-namespace layout works with any Claude Code-based runtime (plain Claude Code + system cron, OpenClaw/ClaudeClaw per native convention, LangGraph invoking `claude -p`, n8n orchestrators). REQUIREMENTS.md literal `skills/{agent-id}/` (project root, no leading dot) was OVERRIDDEN on architectural grounds: project-root `skills/` is not Claude Code native; `.claude/skills/<agent-id>/` is. See 12-CONTEXT.md D-59a for the full rationale.
+
+The Priority 1 protocol replaces the free-form v1.0 artifact-generation Steps below when the deploy-engine subagent is invoked; the v1.0 Steps (Step 1 through Step 11 and the Deployment Gate) remain authoritative for interactive/manual deployments and for the user-facing walkthrough the main session conducts before handing off to deploy-engine.
+
 ## Step 1: Directory Structure Generation
 
 Present the `.agentbloc/` directory tree to the user before generating any files. This gives them the complete picture.
