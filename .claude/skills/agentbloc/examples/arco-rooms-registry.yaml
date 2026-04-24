@@ -1,0 +1,55 @@
+schema_version: 1
+
+team:
+  name: arco-rooms
+  lead: gestor-cobros
+  topology: hierarchy
+  briefing_agent_id: null              # Phase 15 Anticipation not yet run for this team
+  deployed_at: "2026-04-24T18:30:00Z"
+  last_deploy_id: "3a4b5c6d-7e8f-4a0b-9c1d-2e3f4a5b6c7d"
+
+agents:
+  - id: gestor-documental
+    role: "Invoice Collection Specialist"
+    skill_path: .claude/skills/gestor-documental/SKILL.md
+    memory_dir: .agentbloc/agents/gestor-documental/
+    autonomy: full
+    blast_radius: 2
+    triggers:
+      - type: cron
+        schedule: "0 22 * * *"
+    dependencies: []
+
+  - id: recepcionista
+    role: "Daily Operations Reporter"
+    skill_path: .claude/skills/recepcionista/SKILL.md
+    memory_dir: .agentbloc/agents/recepcionista/
+    autonomy: semi
+    blast_radius: 4
+    triggers:
+      - type: cron
+        schedule: "0 23 * * *"
+    dependencies:
+      - gestor-cobros
+
+  - id: gestor-cobros
+    role: "Payment Reconciliation Engine (team lead)"
+    skill_path: .claude/skills/gestor-cobros/SKILL.md
+    memory_dir: .agentbloc/agents/gestor-cobros/
+    autonomy: semi
+    blast_radius: 2
+    triggers:
+      - type: cron
+        schedule: "30 22 * * *"
+      - type: inter-agent
+        caller: recepcionista
+        message: payment-status-query
+    dependencies:
+      - gestor-documental
+
+reporting_hierarchy:
+  gestor-cobros:
+    - recepcionista
+    - gestor-documental
+
+dashboard_agent: null                  # populated in v2.5 when the web dashboard lands
