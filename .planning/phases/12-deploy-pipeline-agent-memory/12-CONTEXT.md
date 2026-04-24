@@ -15,7 +15,7 @@ Phase 12 closes the Design-to-Deploy loop that Phases 8-11 set up. Everything be
 **In scope:**
 - `.claude/skills/agentbloc/references/deploy-protocol.md` (new) , imperative 7-step deploy flow (load manifests, resolve idempotency fingerprint, generate SKILL.md per agent from template, merge `.mcp.json`, bootstrap memory directories, write registry, emit DEPLOY-REPORT.md, run post-deploy verification)
 - `.claude/skills/agentbloc/references/deployed-agent-skill-schema.md` (new) , contract for the per-agent `SKILL.md` that Phase 12 generates (frontmatter shape, mandatory body sections, autonomy-language injection points, prose-checklist validator per D-13)
-- `.claude/skills/agentbloc/references/agent-memory-schema.md` (new) , canonical shape for `.claude/agents/<agent-id>/{memory.md, state.json, last-run.json}` including section-headed memory.md template, flat state.json schema with role-specific `working_state` namespace, and last-run.json log-entry shape. Prose-checklist validator.
+- `.claude/skills/agentbloc/references/agent-memory-schema.md` (new) , canonical shape for `.agentbloc/agents/<agent-id>/{memory.md, state.json, last-run.json}` (per D-59b) including section-headed memory.md template, flat state.json schema with role-specific `working_state` namespace, and last-run.json log-entry shape. Prose-checklist validator.
 - `.claude/skills/agentbloc/references/deploy-report-schema.md` (new) , contract for DEPLOY-REPORT.md (frontmatter with deployment_id + timestamp + idempotent_hash; body sections: created / updated / skipped / pending-actions / verification). Also defines DEPLOY-FAILED-REPORT.md for halt-and-name failures (inherits D-35 pattern).
 - `.claude/skills/agentbloc/templates/deployed-agent-skill.md.tmpl` (new) , Jinja-lite template with fixed anchor points consumed by the deploy engine (role / goal / backstory / tools / autonomy language / escalation / memory refs). Template-based generation chosen over LLM-assembled per D-62.
 - `.claude/agents/deploy-engine.md` (new) , Claude Code subagent that orchestrates the deploy flow (`context: fork`, scoped tools Read/Grep/Glob/Write + Edit for `.mcp.json` merges + Bash narrowly scoped to running `claude mcp list` / `claude agents list` for post-deploy verification only; NO WebFetch, NO other MCPs)
@@ -48,7 +48,7 @@ Phase 12 closes the Design-to-Deploy loop that Phases 8-11 set up. Everything be
 - **Inherited D-11 (Phase 8):** Artifact emission lives in a gate, not a separate subagent flow. Deploy emission is the Phase 5 Summary gate output , same pattern as Business Graph / agent-profiles / integration-manifest / DISCOVERY-REPORT.md.
 - **Inherited D-13 (Phase 8):** Validators are prose-checklists inside the schema reference file. `deployed-agent-skill-schema.md`, `agent-memory-schema.md`, and `deploy-report-schema.md` all use prose checklists. No `ajv`, no `yamllint`, no external linter as a hard dep.
 - **Inherited D-14 (Phase 8):** User confirms a rendered table (deploy summary); the DEPLOY-REPORT.md is written silently at `.agentbloc/deploy/DEPLOY-REPORT.md`. SKILL.md files per agent are written silently; the user reviews the rendered team deployment table, not individual SKILL.md files.
-- **Inherited D-15 (Phase 8 + PDF):** Deployment artifacts live under `.agentbloc/`. Deploy state at `.agentbloc/deploy/`. Generated skill files live at `.claude/agents/<agent-id>/SKILL.md` per D-63 directory convention below (NOT at project root `skills/` despite REQUIREMENTS.md literal phrasing; rationale in D-63).
+- **Inherited D-15 (Phase 8 + PDF):** Deployment artifacts live under `.agentbloc/` for customer-mutable state. Deploy reports at `.agentbloc/deploy/`. Stable agent contracts (SKILL.md) ship at project root `skills/<agent-id>/SKILL.md` per D-59a (DEPLOY-01 literal honored); mutable per-agent runtime files (memory.md, state.json, last-run.json, registry.yaml) ship at `.agentbloc/agents/<agent-id>/` per D-59b and D-59c (MEM-01 and DEPLOY-05 literals overridden for namespace hygiene; full rationale below).
 - **Inherited D-18 (Phase 8):** Bounded enums for discriminated unions. `deploy.status` ∈ `{created, updated, skipped, failed}`; `idempotency_action` ∈ `{create, update-approved, skip-identical, halt-conflict-unapproved}`; `verification_status` ∈ `{PASSED, PARTIAL, FAILED}`; `mcp_merge_action` ∈ `{add-new, keep-existing-conflict-warn, replace-approved}`.
 - **Inherited D-21 (Phase 9):** Subagent with `context: fork`, scoped tools, NO Bash by default. Phase 12 narrows this: the deploy-engine subagent needs Bash for the Read-only post-deploy verification probes (`claude mcp list`, `claude agents list`, `crontab -l`) per DEPLOY-08, but NO Bash for writes. See D-68 for the exact Bash allow-list.
 - **Inherited D-22 (Phase 9):** Three-tier field obligation (REQUIRED / RECOMMENDED / OPTIONAL) with `schema_version: 1` integer. Applied to all three Phase 12 schemas.
@@ -68,26 +68,57 @@ Phase 12 closes the Design-to-Deploy loop that Phases 8-11 set up. Everything be
 
 ### New decisions (autonomous, per PDF + REQUIREMENTS + prior phases)
 
-#### Output directory convention (resolves REQUIREMENTS.md literal phrasing)
+#### Output directory convention (resolves DEPLOY-01 literal, MEM-01 namespace collision, DEPLOY-05 co-location)
 
-- **D-59 (Generated agent skill files at `.claude/agents/<agent-id>/SKILL.md`, NOT at project root `skills/<agent-id>/SKILL.md`):** REQUIREMENTS.md DEPLOY-01 writes literal `skills/{agent-id}/SKILL.md` with no leading dot. Three candidate locations were considered:
+**Architectural summary.** REQUIREMENTS.md has an internal inconsistency that cannot be honored verbatim without structural cost: DEPLOY-01 writes `skills/{agent-id}/SKILL.md` (project root), MEM-01 writes `.claude/agents/{agent-id}/{memory.md, state.json, last-run.json}`, DEPLOY-05 writes `.claude/agents/registry.yaml`. Three independent tensions: (a) `skills/` at root vs `.claude/agents/` would create two directories per deployed agent; (b) putting customer-deployed-agent files inside `.claude/agents/` collides with Claude Code's RESERVED namespace for native subagent definitions (designer-agent.md, browser-discovery.md, deploy-engine.md); (c) the separation of stable contracts (SKILL.md, versioned, audited) from mutable state (state.json rewritten on every wake) is a core AI-agent-system invariant that a mono-directory structure violates. Phase 12 commits to a split path design with one literal honored and two literal overrides, each justified on architectural grounds.
 
-  | Location | Rationale | Selected |
-  |---|---|---|
-  | Project root `skills/<agent-id>/SKILL.md` | Matches REQUIREMENTS.md literal phrasing (ClaudeClaw convention) | |
-  | `.claude/skills/<agent-id>/SKILL.md` | Collides with AgentBloc's own SKILL.md directory conventions | |
-  | `.claude/agents/<agent-id>/SKILL.md` | Sibling of existing `.claude/agents/{designer,browser-discovery,deploy-engine}.md`; Claude Code native agents dir; no collision | ✓ |
+- **D-59a (SKILL.md at `skills/<agent-id>/SKILL.md`, DEPLOY-01 literal HONORED):** Deployed agent skill files ship at project root `skills/<agent-id>/SKILL.md` verbatim. This is the ClaudeClaw runtime-discovery path (REQUIREMENTS.md mentions ClaudeClaw six times; DEPLOY-08 pings what ClaudeClaw finds). Matching the literal text preserves ClaudeClaw compatibility and keeps the stable contract separate from mutable state.
 
-  **Rationale:** REQUIREMENTS.md literal `skills/` would ship deployed agents OUTSIDE the standard Claude Code `.claude/agents/` dir and OUTSIDE `.claude/skills/` (where AgentBloc and mcp-builder live). That creates a third top-level directory (`skills/`) whose purpose overlaps with the other two, causing user confusion about "which one do I edit?". MEM-01 writes the SAME agent-id directory for `.claude/agents/<agent-id>/` (memory.md + state.json + last-run.json) , co-locating the SKILL.md as a fourth file inside that same directory makes the deploy shape atomic ("everything about agent X lives in `.claude/agents/x/`"). The root-level `.claude/agents/<agent-id>.md` file pattern (as designer-agent.md and browser-discovery.md use) is RESERVED for Claude Code-native subagent definitions authored by AgentBloc developers (Phases 9 + 11). Deployed AgentBloc agents (Phase 12 outputs) go in SUBDIRECTORIES to avoid collision. This is the D-59 literal-reading override: REQUIREMENTS.md is corrected at the phase-context layer because the literal path violates the co-location invariant.
+- **D-59b (Per-agent memory files at `.agentbloc/agents/<agent-id>/{memory.md, state.json, last-run.json}`, MEM-01 literal OVERRIDDEN):** Customer-deployed-agent runtime state is moved out of `.claude/agents/` into the project's existing `.agentbloc/` customer-state namespace. `.claude/agents/` is reserved by Claude Code for native subagent definitions (AgentBloc developer-authored subagents); mixing customer runtime with developer tooling is a namespace-hygiene violation. `.agentbloc/discovery/` was established in Phase 11 as the customer-state convention; `.agentbloc/agents/` extends the same pattern. The deploy flow now writes mutable files (state.json rewritten on every wake, memory.md accretes over time, last-run.json rotates per tick) into a directory whose entire purpose is customer mutable state, keeping `.claude/` git history immutable for developer contracts.
 
-  **Directory shape per deployed agent:**
-  ```
-  .claude/agents/<agent-id>/
-  ├── SKILL.md         # Phase 12 output per DEPLOY-01 (agent prompt + role/goal/autonomy/tools)
-  ├── memory.md        # Phase 12 output per MEM-01, MEM-02 (domain knowledge, editable markdown)
-  ├── state.json       # Phase 12 output per MEM-01, MEM-03 (machine-written working state)
-  └── last-run.json    # Phase 12 output per MEM-01, MEM-04 (most recent execution entry)
-  ```
+- **D-59c (Registry at `.agentbloc/agents/registry.yaml`, DEPLOY-05 literal OVERRIDDEN):** Follows D-59b namespace hygiene. The registry is co-located with the per-agent memory directories it indexes, which makes the `.agentbloc/agents/` directory the single source of truth for "what deployed agents exist + what is their runtime state". DEPLOY-05 said `.claude/agents/registry.yaml`; the override applies the same namespace argument as D-59b.
+
+**Stable-vs-mutable split (the core architectural reason for the double override):**
+- `skills/<agent-id>/SKILL.md` holds the immutable-per-deploy contract: prompts, tool lists, autonomy rules, escalation protocol. Version-controlled, code-reviewed, audited. Git history stays clean because content changes only on explicit re-deploy.
+- `.agentbloc/agents/<agent-id>/*` holds mutable runtime state: memory.md accretes over time (agent-editable markdown), state.json changes on every wake (machine-written), last-run.json is rewritten per tick (JSON log). Co-locating these with the stable contract would contaminate git history with state churn and block the "is anything different in the deploy?" diff from being meaningful.
+- `.claude/` stays UNTOUCHED as Claude Code meta-tooling namespace: AgentBloc skill + three native subagents (designer-agent, browser-discovery, deploy-engine). Phase 16 audit readers see a clean three-namespace separation: developer tooling (`.claude/`), stable deployed contracts (`skills/`), customer mutable state (`.agentbloc/`).
+
+**Alternatives considered:**
+
+| Option | Paths | Verdict |
+|---|---|---|
+| A. REQUIREMENTS literal both | `skills/<id>/SKILL.md` + `.claude/agents/<id>/{memory,state,last-run}` | Rejected. Two directories per agent; MEM-01 collides with native-subagent namespace; mixing developer tooling with customer runtime. |
+| B. Original D-59 override (DEPLOY-01 only) | `.claude/agents/<id>/{SKILL,memory,state,last-run}` | Rejected post-review. Co-locating customer runtime in Claude Code reserved namespace; conflates AgentBloc-native-subagents with customer-deployed-agents into the same directory. Breaks the stable-vs-mutable invariant (SKILL.md gets contaminated by state churn). |
+| C. Double override with namespace hygiene | `skills/<id>/SKILL.md` + `.agentbloc/agents/<id>/{memory,state,last-run,registry}` | **Selected (D-59a + D-59b + D-59c).** Honors ClaudeClaw runtime expectation verbatim; respects Claude Code reserved namespace; consistent with Phase 11 `.agentbloc/` precedent; separates stable contract from mutable state; scales to multi-tenant. |
+| D. Symlink hybrid | `.claude/agents/<id>/SKILL.md` + `skills/<id>/SKILL.md` symlink | Rejected. Complexity premium not justified; git symlink handling is uneven across platforms; VPS/Docker deploys without git would break. |
+
+**Directory shape per deployed agent (canonical):**
+```
+skills/                                  # ClaudeClaw-discovered stable contracts (D-59a)
+└── <agent-id>/
+    └── SKILL.md                         # DEPLOY-01 literal: prompt + role + goal + autonomy + tools + escalation
+
+.agentbloc/                              # customer-state namespace (Phase 11 convention extended)
+├── agents/                              # D-59b + D-59c
+│   ├── registry.yaml                    # DEPLOY-05 override: team shape + agent roster + reporting hierarchy
+│   └── <agent-id>/
+│       ├── memory.md                    # MEM-01 override: domain knowledge, agent-editable markdown
+│       ├── state.json                   # MEM-03: machine-written working state with schema_version
+│       └── last-run.json                # MEM-04: last execution entry with status
+├── deploy/
+│   ├── DEPLOY_HISTORY.jsonl             # D-64 append-only ledger (cross-run audit)
+│   └── DEPLOY-REPORT.md                 # DEPLOY-07 per-run artifact
+└── discovery/                           # Phase 11 artifacts (unchanged)
+
+.claude/                                 # UNTOUCHED: Claude Code meta-tooling namespace
+├── agents/
+│   ├── designer-agent.md                # Phase 9 native subagent (flat .md file, Claude Code convention)
+│   ├── browser-discovery.md             # Phase 11 native subagent
+│   └── deploy-engine.md                 # Phase 12 native subagent (new)
+└── skills/agentbloc/                    # AgentBloc skill itself (unchanged)
+```
+
+**Plan-phase responsibility:** Plan 12-01 (contracts) header MUST document both overrides explicitly, citing the stable-vs-mutable split as the architectural principle. Plan 12-02 (deploy-engine) MUST use these paths verbatim in its `<write_constraint>` XML block. Phase 16 audit readers will see "REQUIREMENTS literal says X, code does Y" for MEM-01 and DEPLOY-05 , the D-59b/c justification must be surfaced in both the plan and the eventual DEPLOY-REPORT.md template.
 
 #### Idempotency fingerprint mechanism (resolves REQUIREMENTS.md DEPLOY-06)
 
@@ -145,7 +176,7 @@ Phase 12 closes the Design-to-Deploy loop that Phases 8-11 set up. Everything be
 
 #### Registry format (resolves REQUIREMENTS.md DEPLOY-05)
 
-- **D-63 (`.claude/agents/registry.yaml` as YAML, per prior convention):** team.yaml + agent-profiles.yaml + integration-manifest.yaml are all YAML. REQUIREMENTS.md DEPLOY-05 is format-neutral ("Generate `.claude/agents/registry.yaml`") so YAML per prior convention holds. Schema:
+- **D-63 (Registry at `.agentbloc/agents/registry.yaml` per D-59c, YAML per prior convention):** team.yaml + agent-profiles.yaml + integration-manifest.yaml are all YAML. REQUIREMENTS.md DEPLOY-05 literal path (`.claude/agents/registry.yaml`) is overridden by D-59c for namespace hygiene; the registry now sits with the per-agent runtime state it indexes. Format stays YAML per prior convention. Schema:
 
   ```yaml
   schema_version: 1
@@ -159,8 +190,8 @@ Phase 12 closes the Design-to-Deploy loop that Phases 8-11 set up. Everything be
   agents:
     - id: "<agent-id>"
       role: "<role>"
-      skill_path: ".claude/agents/<agent-id>/SKILL.md"
-      memory_dir: ".claude/agents/<agent-id>/"
+      skill_path: "skills/<agent-id>/SKILL.md"
+      memory_dir: ".agentbloc/agents/<agent-id>/"
       autonomy: "full | semi | supervised"
       blast_radius: <integer 1-4>
       triggers: [...]                   # denormalized from agent-profiles.yaml for quick registry scan
@@ -472,8 +503,9 @@ Phase 12 closes the Design-to-Deploy loop that Phases 8-11 set up. Everything be
 - `SKILL.md` Phase 6 entry: add precondition "verify `.agentbloc/deploy/DEPLOY-REPORT.md` exists AND `verification_status: PASSED | PARTIAL`" (PARTIAL allowed because optional MCP soft-fails shouldn't block Evolution phase)
 - `phase-5-deployment.md`: Priority 1 promotion for ClaudeClaw + delegate detail to `deploy-protocol.md` via See-line; preserve v1.0 Summary block
 - `.agentbloc/deploy/` directory: new, created on first Phase 12 run
-- `.claude/agents/<agent-id>/` directories: new per deployed agent, co-locate SKILL.md + memory.md + state.json + last-run.json per D-59
-- `.claude/agents/registry.yaml`: new, co-located with the deployed agent subdirs
+- `skills/<agent-id>/SKILL.md`: new project-root files, one per deployed agent (stable contract per D-59a, DEPLOY-01 literal honored)
+- `.agentbloc/agents/<agent-id>/` directories: new per deployed agent, co-locate memory.md + state.json + last-run.json (mutable runtime state per D-59b, MEM-01 literal overridden)
+- `.agentbloc/agents/registry.yaml`: new, co-located with the per-agent state subdirs (per D-59c, DEPLOY-05 literal overridden)
 
 ### Tech Stack Additions (none)
 No new deps. Template substitution + YAML parsing + JSON writing + markdown rendering + Bash allow-list are all Claude-in-context operations. The template file is pure markdown with Jinja-lite placeholders (no runtime engine). Phase 12 stays within the "markdown-only skill" constraint; the only executable code is the inherited `scripts/anti-bot-lint.sh` from Phase 11 (unchanged).
@@ -485,7 +517,7 @@ No new deps. Template substitution + YAML parsing + JSON writing + markdown rend
 
 - **Phase 12 closes the Design-to-Deploy contract.** Everything Phase 8-11 designed becomes runnable. The deploy-engine subagent is the atomic unit , one invocation, one deployment, one report. No long-running state; every re-run is deterministic given inputs (D-60 fingerprint + D-62 template-based generation enforce this).
 - **The template at `.claude/skills/agentbloc/templates/deployed-agent-skill.md.tmpl` is the single most load-bearing file in Phase 12.** Every deployed agent's SKILL.md inherits from this template. Its prose sets the baseline autonomy / escalation / memory / kill-switch posture for the entire v2.0 runtime. Phase 14 AUTON / MONITOR / CTRL all consume agents whose behavior is shaped by this template.
-- **D-59 is a literal-reading override; document it explicitly.** REQUIREMENTS.md DEPLOY-01 says `skills/{agent-id}/SKILL.md`. Phase 12 ships `.claude/agents/<agent-id>/SKILL.md`. Plan-phase must justify this in the plan header (so a reviewer sees the REQUIREMENTS-literal tension and the co-location rationale). The argument: co-locating the 4 per-agent files (SKILL + memory + state + last-run) is worth the literal-reading departure.
+- **D-59 splits into 59a/59b/59c with one literal honored and two literal overrides; document all three explicitly.** D-59a HONORS DEPLOY-01 (`skills/<agent-id>/SKILL.md` at project root, ClaudeClaw runtime expectation). D-59b OVERRIDES MEM-01 (per-agent state moves from `.claude/agents/<agent-id>/` to `.agentbloc/agents/<agent-id>/` for namespace hygiene and stable-vs-mutable split). D-59c OVERRIDES DEPLOY-05 (registry.yaml moves from `.claude/agents/` to `.agentbloc/agents/` for co-location with the data it indexes). Plan 12-01 header MUST document the two overrides with rationale so Phase 16 audit readers see the REQUIREMENTS-literal tension AND the architectural principle (separating stable contracts from mutable runtime state, respecting Claude Code's reserved `.claude/agents/` namespace for native subagent definitions only). The argument: namespace hygiene and stable-vs-mutable split are worth the double literal-text departure because the structure teaches AI-agent-system architecture patterns to readers of this open-source skill.
 - **Idempotency is the entire ballgame for DEPLOY-06 success.** Phase 16 success criterion 2 ("re-running with same profiles does not duplicate or corrupt") is pass / fail on D-60 fingerprint correctness. Every phase-12 artifact MUST be deterministic given inputs. Template-based generation (D-62) is the only defensible path; LLM-assembled would fail this bar.
 - **Post-deploy verification is the bridge to Phase 13.** D-69 check 3 (cron registered) soft-fails in Phase 12-only execution because Phase 13 writes the actual crontab entries. When Phase 13 ships, this check becomes hard-enforcing. Phase 12's DEPLOY-REPORT.md should clearly mark "Phase 13 not yet executed; cron verification skipped" so a reader doesn't mistake the PARTIAL status for a real problem.
 - **DEPLOY_HISTORY.jsonl supports regulated-deployment audit trails.** The append-only deploy ledger is the GDPR Article 30 record-of-processing for agent-lifecycle events. A deployed team's history from first deploy to Nth re-deploy is one file, grep-able. Per-entry fields (deployment_id, verification_status, agent_count) enable Phase 6 Evolution weekly scans to compute trend metrics without crawling individual reports.
@@ -557,7 +589,7 @@ Matches Phase 10 / Phase 11 "contract-first, wiring-second" rhythm. Planner shou
 
 Phase 12 introduces new attack surfaces that future phases (Phase 14 MONITOR + CSO review) will audit. Surfaces:
 
-1. **Credentials leaking into generated SKILL.md:** The template substitution reads agent-profiles.yaml fields. If a future extension adds a `{{agent.api_key}}` anchor, credentials could leak into `.claude/agents/<agent-id>/SKILL.md` which gets committed. Mitigation: the D-62 anchor-point allow-list is explicit and locked in `deployed-agent-skill-schema.md`. No credential-bearing fields in the allow-list; env-var references only.
+1. **Credentials leaking into generated SKILL.md:** The template substitution reads agent-profiles.yaml fields. If a future extension adds a `{{agent.api_key}}` anchor, credentials could leak into `skills/<agent-id>/SKILL.md` which gets committed. Mitigation: the D-62 anchor-point allow-list is explicit and locked in `deployed-agent-skill-schema.md`. No credential-bearing fields in the allow-list; env-var references only.
 2. **Memory.md exfiltration via agent prompt:** memory.md is read by the agent every wake. If it contains PII the agent has no reason to process (e.g., tenant SSN accidentally pasted by a user), a prompt-injection attack could read and forward it. Mitigation: v1.0 prompt-injection defense (`prompt-injection.md` cited in every generated SKILL.md per template); Phase 12 warns in the generated memory.md header "Domain knowledge only; DO NOT paste PII unless the agent needs it."
 3. **Registry poisoning:** A malicious user could edit `.claude/agents/registry.yaml` to point a skill_path at an attacker-controlled SKILL.md. Phase 13 reads registry.yaml to route agent wakes; Phase 12 is the emission point. Mitigation: DEPLOY-REPORT.md idempotent_hash covers registry.yaml; re-deploy detects the tamper. Phase 14 CSO review should audit this explicitly.
 4. **`.mcp.json` merge conflicts used to inject malicious entries:** If an attacker social-engineers a user into approving a "replace" decision in D-66's conflict prompt, a malicious MCP entry could land. Mitigation: approval prompts show the full diff per D-61; user sees the malicious entry before approving. Rate-limit to one approval-prompt per .mcp.json run to prevent prompt fatigue.

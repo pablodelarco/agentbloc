@@ -7,27 +7,33 @@
 **Phase:** 12-deploy-pipeline-agent-memory
 **Decision mode:** Autonomous (per `autonomous_mode` memo , Pablo authorized expert-judgment decisions on implementation gray areas derivable from PDF + REQUIREMENTS + prior phases D-1..D-58). No interactive AskUserQuestion calls; each area shows options considered and rationale.
 **Areas discussed:** 13 gray areas + threat-model sweep , output directory convention · idempotency fingerprint · diff presentation · SKILL.md generation approach · registry format · memory.md structure · state.json schema · .mcp.json merge semantics · deploy-engine subagent tool scope · DEPLOY-REPORT.md format · post-deploy verification · halt-and-name for failures · cron config approach + n8n stubs
-**New decisions:** D-59 through D-73 (15 new decisions locked)
-**Auto-decisions-count:** 15
+**New decisions:** D-59 through D-73 (15 slots; D-59 splits into sub-decisions D-59a, D-59b, D-59c after user-review revision on 2026-04-24)
+**Auto-decisions-count:** 15 (one revised post-user-review: D-59 → D-59a/b/c split)
 
 ---
 
-## Output Directory Convention (→ D-59)
+## Output Directory Convention (→ D-59a + D-59b + D-59c)
 
-| Option | Description | Selected |
-|--------|-------------|----------|
-| Project-root `skills/<agent-id>/SKILL.md` | Literal REQUIREMENTS.md phrasing, matches ClaudeClaw convention | |
-| `.claude/skills/<agent-id>/SKILL.md` | Collides with AgentBloc + mcp-builder skill hub dirs | |
-| `.agentbloc/deploy/skills/<agent-id>/SKILL.md` | Artifacts under `.agentbloc/` hierarchy but divorced from the memory dir | |
-| `.claude/agents/<agent-id>/SKILL.md` (co-located with memory dir) | MEM-01 already writes to `.claude/agents/<agent-id>/`; co-locate the 4 per-agent files | ✓ |
+**User-review revision note (2026-04-24):** Original auto-decision put all 4 per-agent files under `.claude/agents/<agent-id>/` as a single co-located directory. Pablo flagged the REQUIREMENTS-literal tension and asked for an architect-grade recommendation. Revised decision splits into three sub-decisions with namespace hygiene as the organizing principle.
 
-**Auto-selected:** `.claude/agents/<agent-id>/SKILL.md`, co-located with `memory.md + state.json + last-run.json`.
+| Option | SKILL.md path | Memory files path | Registry path | Verdict |
+|--------|---------------|---------------------|---------------|---------|
+| A. REQUIREMENTS literal both | `skills/<id>/SKILL.md` | `.claude/agents/<id>/` | `.claude/agents/registry.yaml` | Rejected. MEM-01 literal collides with Claude Code's reserved native-subagent namespace; two directories per agent. |
+| B. Original D-59 (DEPLOY-01 override only) | `.claude/agents/<id>/SKILL.md` | `.claude/agents/<id>/` | `.claude/agents/registry.yaml` | Rejected post-review. Everything inside Claude Code reserved namespace; mixes developer tooling with customer runtime; violates stable-vs-mutable split. |
+| C. Double override with namespace hygiene | `skills/<id>/SKILL.md` | `.agentbloc/agents/<id>/` | `.agentbloc/agents/registry.yaml` | **Selected (D-59a + D-59b + D-59c).** |
+| D. Symlink hybrid | Both `.claude/agents/<id>/` and `skills/<id>/` via symlink | `.claude/agents/<id>/` | `.claude/agents/registry.yaml` | Rejected. Symlink complexity; git handling uneven; VPS/Docker without git would break. |
 
-**Notes:** REQUIREMENTS.md DEPLOY-01 literal says `skills/{agent-id}/SKILL.md`. D-59 is a documented literal-reading override: co-locating all 4 per-agent files (SKILL + memory + state + last-run) in a single subdirectory is a strictly-better shape because (a) it's atomic ("everything about agent X lives in `.claude/agents/x/`"), (b) it doesn't create a third top-level directory colliding with the existing `.claude/skills/` and `.claude/agents/`, (c) it matches MEM-01's explicit path `.claude/agents/{agent-id}/` , which is the same literal in REQUIREMENTS.md, so DEPLOY-01's `skills/` literal is effectively an outdated or inconsistent reference. Plan-phase header MUST explicitly justify this override so reviewers see the REQUIREMENTS tension. Root-level `.claude/agents/<id>.md` (file-not-directory) is reserved for developer-authored Claude Code subagents like designer-agent.md and browser-discovery.md (Phases 9 + 11); deployed AgentBloc agents use subdirectories.
+**Auto-selected (revised):** Option C , split-path design.
 
-**Files consulted:** REQUIREMENTS.md DEPLOY-01, MEM-01, existing `.claude/agents/designer-agent.md` and `browser-discovery.md` shape.
+- **D-59a:** Deployed agent SKILL.md at `skills/<agent-id>/SKILL.md` (DEPLOY-01 literal HONORED; ClaudeClaw runtime expectation).
+- **D-59b:** Per-agent memory files at `.agentbloc/agents/<agent-id>/{memory.md, state.json, last-run.json}` (MEM-01 literal OVERRIDDEN for namespace hygiene; `.claude/agents/` stays reserved for native subagents).
+- **D-59c:** Registry at `.agentbloc/agents/registry.yaml` (DEPLOY-05 literal OVERRIDDEN to co-locate with the state it indexes).
 
-**Prior decisions applied:** Phase 8 D-15 (artifacts under `.agentbloc/` for deploy state but not source-code artifacts which live under `.claude/`).
+**Notes:** The revision shifts from "conveniently co-locate all 4 files" to "separate stable contracts (SKILL.md) from mutable runtime state (memory, state, last-run)". The stable-vs-mutable split is a core AI-agent-system invariant: SKILL.md gets versioned, reviewed, audited; state.json gets machine-written on every wake. Co-locating them contaminates git history with state churn. REQUIREMENTS.md is internally inconsistent (DEPLOY-01 says `skills/`, MEM-01 says `.claude/agents/`) so at least one literal must be overridden. The architect-grade choice is D-59a HONOR for ClaudeClaw compatibility (DEPLOY-08 pings what ClaudeClaw finds), D-59b OVERRIDE to move customer runtime OUT of Claude Code's reserved namespace, D-59c OVERRIDE for co-location with the memory dir it indexes. Plan 12-01 header MUST document both overrides with the stable-vs-mutable rationale; Phase 16 audit readers will see "REQUIREMENTS-literal says X, code does Y" for MEM-01 and DEPLOY-05 and the override must be defensible.
+
+**Files consulted:** REQUIREMENTS.md DEPLOY-01 + MEM-01 + DEPLOY-05, existing `.claude/agents/designer-agent.md` and `browser-discovery.md` shape, Phase 11 `.agentbloc/discovery/` convention for customer-state namespace.
+
+**Prior decisions applied:** Phase 8 D-15 (`.agentbloc/` for customer-mutable state, `.claude/` for AgentBloc tooling). Phase 11 `.agentbloc/discovery/` convention extends to `.agentbloc/agents/` and `.agentbloc/deploy/`.
 
 ---
 
@@ -332,9 +338,11 @@ These gray areas left to Claude's implementation-time judgment , they don't mate
 
 ## Unresolved
 
-No items flagged for user follow-up. Autonomous mode per `autonomous_mode` memo resolved all 13 gray areas using REQUIREMENTS.md + PROJECT.md + ROADMAP.md + prior-phase decisions D-1..D-58 as ground truth. One item worth surfacing at plan-phase as a "proceed unless veto":
+No items flagged for user follow-up after the D-59 revision (2026-04-24). Autonomous mode per `autonomous_mode` memo resolved all 13 gray areas; D-59 went through an additional user-review cycle when Pablo asked for the architect-grade recommendation and confirmed the resulting split.
 
-- **D-59 (output directory override):** REQUIREMENTS.md DEPLOY-01 literal path is `skills/{agent-id}/SKILL.md`; Phase 12 ships `.claude/agents/<agent-id>/SKILL.md` instead. Rationale documented in 12-CONTEXT.md (co-location with memory dir). Plan-phase header must re-state the override so Pablo can veto before implementation. This is the highest-risk "autonomous decision against literal REQUIREMENTS.md phrasing" in the Phase 12 set.
+**Resolved post-review:**
+
+- **D-59 split into D-59a / D-59b / D-59c:** REQUIREMENTS.md is internally inconsistent (DEPLOY-01 literal `skills/{agent-id}/` vs MEM-01 literal `.claude/agents/{agent-id}/` vs DEPLOY-05 literal `.claude/agents/registry.yaml`). User-approved resolution on 2026-04-24: honor DEPLOY-01 (skills/ at root, ClaudeClaw compatibility), override MEM-01 and DEPLOY-05 (move customer runtime to `.agentbloc/agents/` for Claude Code namespace hygiene and stable-vs-mutable split). Plan 12-01 header MUST surface both overrides with the stable-vs-mutable rationale so Phase 16 audit readers see the departure from REQUIREMENTS-literal phrasing.
 
 ## Deferred Ideas
 
