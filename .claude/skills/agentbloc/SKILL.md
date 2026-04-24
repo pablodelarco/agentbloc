@@ -40,6 +40,7 @@ The state bar contains three fields: Phase (1-6 + name), Gate (`pending` / `appr
 - Phase 1 specific: Gate transition to `approved` requires BOTH user confirmation of the rendered Business Graph tables AND the `business_graph_validated` sub-gate (all REQUIRED checks from [references/business-graph-schema.md](references/business-graph-schema.md) Validation Checklist have passed and the file at `.agentbloc/graph/business-graph.json` has been written).
 - Phase 2 specific: Gate transition to `approved` requires BOTH user confirmation of the rendered team table and per-agent cards AND the `agent_profiles_validated` sub-gate (all REQUIRED checks from [references/agent-profile-schema.md](references/agent-profile-schema.md) Validation Checklist have passed and the file at `.agentbloc/team/agent-profiles.yaml` has been written by the Designer subagent).
 - Phase 3 specific: Gate transition to `approved` requires BOTH user confirmation of the rendered integrations table AND the `mcp_integrations_verified` sub-gate (all REQUIRED checks from [references/integration-manifest-schema.md](references/integration-manifest-schema.md) Validation Checklist have passed, every tool entry has `status: verified` with a `healthcheck_at` timestamp, and the file at `.agentbloc/integrations/integration-manifest.yaml` has been written).
+- Phase 5 specific: Gate transition to `approved` requires the `deployment_artifacts_emitted` sub-gate (DEPLOY-REPORT.md successfully written by the deploy-engine subagent per [references/deploy-protocol.md](references/deploy-protocol.md)). If DEPLOY-FAILED-REPORT.md is emitted instead, `deployment_artifacts_emitted` is false; Phase 6 entry halts and surfaces the DEPLOY-FAILED-REPORT.md for user resolution.
 
 ### Compaction Recovery
 
@@ -139,8 +140,9 @@ See [references/phase-4-confirmation.md](references/phase-4-confirmation.md)
 
 Generate all artifacts needed to run the agent team: team.yaml, agent configs, skill files, integration docs, governance, telegram config, state schemas, and cron jobs. Present the complete deployment summary for final approval.
 
-You MUST read the complete deployment protocol before generating any artifacts:
+You MUST read the complete deployment protocol AND the canonical deploy 8-step flow before generating any artifacts:
 See [references/phase-5-deployment.md](references/phase-5-deployment.md)
+See [references/deploy-protocol.md](references/deploy-protocol.md)
 
 ### Phase 6: Evolution
 
