@@ -153,7 +153,12 @@ Plans:
 4. Correlation ID propagates through the full chain: a single user message appears in multiple agents' logs under the same ID
 5. Touching `.agentbloc/KILL_SWITCH` or sending Telegram `/stop` halts the entire active team at the next state transition
 
-**Plans:** TBD (estimated 2-3)
+**Plans:** 3 plans
+
+Plans:
+- [ ] 13-01-PLAN.md , Contracts + fixtures: n8n-integration.md + runtime-coordination.md + correlation-id.md + 3 wake-job templates + 2 Arco Rooms fixtures (RUNTIME-02, RUNTIME-03, RUNTIME-04, RUNTIME-05, RUNTIME-06, RUNTIME-07)
+- [ ] 13-02-PLAN.md , runtime-engine subagent at .claude/agents/runtime-engine.md with narrow Bash allow-list per D-80 + 6 XML blocks (RUNTIME-01, RUNTIME-02, RUNTIME-04, RUNTIME-05, RUNTIME-06, RUNTIME-07)
+- [ ] 13-03-PLAN.md , Surgical wiring: deploy-protocol.md Step 7 + phase-5-deployment.md Step 7.5 + incident-response.md Runtime Kill-Switch Semantics + SKILL.md Phase 5 See-lines + runtime_wired sub-gate per D-81 (RUNTIME-01..07)
 
 ### Phase 14: Autonomy + Monitoring + Control Plane
 
