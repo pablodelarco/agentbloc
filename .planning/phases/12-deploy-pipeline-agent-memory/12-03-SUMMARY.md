@@ -67,7 +67,7 @@ Surgically wired the Plan 12-01 (deploy-protocol.md) and Plan 12-02 (deploy-engi
 
 | Check | Target | Result |
 |-------|--------|--------|
-| Em-dashes in phase-5-deployment.md post-edit | 0 expected | 0 (verified: `grep -c '—'` returns 0) |
+| Em-dashes in phase-5-deployment.md post-edit | 0 expected | 0 (verified via em-dash-character grep returning 0) |
 | Em-dashes in SKILL.md post-edit | 0 expected | 0 (verified) |
 | v1.0 Steps 1-11 in phase-5-deployment.md preserved byte-for-byte | unchanged | passed (git diff: +15 insertions, 0 deletions) |
 | Deployment Gate + Quick Reference preserved | unchanged | passed |
@@ -79,8 +79,8 @@ Surgically wired the Plan 12-01 (deploy-protocol.md) and Plan 12-02 (deploy-engi
 
 ## Decisions Applied
 
-- **D-57 (surgical wiring pattern):** Followed Phase 10-03 / 11-04 analog exactly — Edit-only, no Write, minimal diff footprint, preserve-outside-region byte-for-byte. The structural match held even though the real file shape differed from the plan's prose (plan referenced a Priority ladder that does not exist in phase-5-deployment.md; adapted by inserting Priority 1 as a new H2 between Deployment Opening and Step 1).
-- **D-58 (context-budget in SKILL.md):** Kept SKILL.md surface minimal. Added exactly 1 new See-line (`deploy-protocol.md`) and 1 new sub-gate (`deployment_artifacts_emitted`). Did NOT add references to the 3 schemas (deployed-agent-skill-schema, agent-memory-schema, deploy-report-schema) or the 3 `.md.tmpl` templates — those remain subagent-only surface, loaded lazily by deploy-engine.md when the subagent is invoked.
+- **D-57 (surgical wiring pattern):** Followed Phase 10-03 / 11-04 analog exactly: Edit-only, no Write, minimal diff footprint, preserve-outside-region byte-for-byte. The structural match held even though the real file shape differed from the plan's prose (plan referenced a Priority ladder that does not exist in phase-5-deployment.md; adapted by inserting Priority 1 as a new H2 between Deployment Opening and Step 1).
+- **D-58 (context-budget in SKILL.md):** Kept SKILL.md surface minimal. Added exactly 1 new See-line (`deploy-protocol.md`) and 1 new sub-gate (`deployment_artifacts_emitted`). Did NOT add references to the 3 schemas (deployed-agent-skill-schema, agent-memory-schema, deploy-report-schema) or the 3 `.md.tmpl` templates; those remain subagent-only surface, loaded lazily by deploy-engine.md when the subagent is invoked.
 - **D-59a/b/c (three-namespace triple-override):** Surfaced verbatim in the phase-5-deployment.md Priority 1 block so the user-facing reader sees the architectural rationale at Phase 5 entry without having to drill into 12-CONTEXT.md.
 - **D-60 / D-61 / D-62 / D-66 / D-67 / D-69 / D-70:** All 7 key Phase 12 decisions named by ID in the Priority 1 citation sentence, linking discoverable reasoning back to 12-CONTEXT.md.
 
