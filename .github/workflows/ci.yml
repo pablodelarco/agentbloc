@@ -53,3 +53,11 @@ jobs:
         with:
           args: "--no-progress --exclude-path .planning --exclude-path .playwright-mcp '**/*.md'"
           fail: true
+
+  anti-bot-lint:
+    name: Anti-bot Deny-list Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Anti-bot deny-list lint
+        run: bash scripts/anti-bot-lint.sh
