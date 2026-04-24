@@ -66,7 +66,7 @@ Confirm with the user: "These are the services I'll research. Should I add any s
 
 ## Step 2: Multi-Method Search Protocol
 
-For each service in the inventory, search integration methods in this strict priority order. This follows v2.0 decision D-40 (MCP-first positioning from PROJECT.md): MCP server (four-step search) > official API (fallback when no MCP) > Playwright browser automation [Phase 11 scope] > email scraping > webhook interception > manual notification (last resort). See [mcp-integration-protocol.md](mcp-integration-protocol.md) for the full MCP search flow.
+For each service in the inventory, search integration methods in this strict priority order. This follows v2.0 decision D-40 (MCP-first positioning from PROJECT.md): MCP server (four-step search) > official API (fallback when no MCP) > Playwright browser automation (four-step fallback) > email scraping > webhook interception > manual notification (last resort). See [mcp-integration-protocol.md](mcp-integration-protocol.md) for the full MCP search flow.
 
 ### Priority 1: MCP Server (Four-Step Search)
 
@@ -89,9 +89,9 @@ Fallback when no MCP exists or can be generated. WebSearch for `{service_name} A
 - Rate limits and quotas
 - SDK availability (npm, Python, etc.)
 
-### Priority 3: Playwright Browser Automation [Phase 11 scope]
+### Priority 3: Playwright Browser Automation (Four-Step Fallback)
 
-See forthcoming [references/browser-fallback.md](browser-fallback.md) (Phase 11 BROWSER-01..12) for the full Patchright + HAR capture + injection detector + PII redaction protocol. Phase 10 stubs this priority; Phase 11 wires it in.
+See [references/browser-fallback.md](browser-fallback.md) for the canonical Step 4 protocol: per-service legal opt-in → subagent invocation → HAR capture with checkpoint → endpoint classification → output firewall → DISCOVERY-REPORT.md emission. See [references/browser-stack.md](browser-stack.md) for pinned versions (playwright@^1.59.1 + patchright@^1.59.4 for Posture B CDP-leak patches only) + anti-bot deny-list (9 forbidden packages including playwright-extra, CAPTCHA solvers, fingerprint spoofers; all enforced by CI via `scripts/anti-bot-lint.sh`). Posture C (hardened anti-bot: DataDome / PerimeterX / CAPTCHA challenge) always halts cleanly via DISCOVERY-BLOCKED-REPORT.md per BROWSER-09; no bypass attempts are made.
 
 **Summary (v1.0, preserved):**
 - If no API or MCP server exists, WebSearch for `{service_name} login portal` or `{service_name} web dashboard`
