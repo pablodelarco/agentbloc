@@ -30,7 +30,7 @@ Scope source: `.planning/v2.0-PROMPT.pdf`. 79 requirements across 13 categories.
 - [x] **Phase 9: Designer Agent** — AG2 CaptainAgent-pattern subagent that consumes Business Graph, emits `agent-profiles.yaml` with role / goal / backstory / tools / triggers / autonomy / outputs / escalation / dependencies, plus workflow orchestration classification into the 5 patterns. (DSGN-01..07, ORCH-01..04 = 11 reqs) — completed 2026-04-21
 - [x] **Phase 10: Integration Discovery — MCP Path** — Four-step search, steps 1-3 only: existing `.mcp.json` → ecosystem MCP install → wrapper MCP generation via `mcp-builder` skill + verification loop + evidence protocol. (INTEG-01..06 = 6 reqs) (completed 2026-04-21)
 - [x] **Phase 11: Integration Discovery — Browser Fallback** — Step 4 of the four-step search. Playwright + Patchright browser subagent, HAR capture, curl replay, per-service ToS opt-in + license notice, three-tier API classification, output firewall (injection detector + fresh-context verify), PII redaction, detect-and-degrade anti-bot policy. Subsumes the 2026-04-18 "Discovery Agent" research. (BROWSER-01..12 = 12 reqs) [Complete 2026-04-24]
-- [ ] **Phase 12: Deploy Pipeline + Agent Memory** — Materialize `agent-profiles.yaml` into `skills/{id}/SKILL.md` + ClaudeClaw job configs + `.mcp.json` merges + per-agent memory directories. Idempotent re-runs with diff presentation. (DEPLOY-01..08, MEM-01..06 = 14 reqs)
+- [x] **Phase 12: Deploy Pipeline + Agent Memory** — Materialize `agent-profiles.yaml` into `.claude/skills/<agent-id>/SKILL.md` (D-59a Claude Code native path) + `.agentbloc/agents/<agent-id>/` memory+state (D-59b) + `.agentbloc/agents/registry.yaml` (D-59c) + `.mcp.json` merges. Idempotent re-runs via SHA256 + RFC 8785 canonicalization. (DEPLOY-01..08, MEM-01..06 = 14 reqs) [Complete 2026-04-24]
 - [ ] **Phase 13: Multi-Agent Runtime** — Cron + n8n webhook trigger plumbing. Inter-agent coordination via ClaudeClaw `SendMessage` / `TeamCreate`. Correlation IDs. Kill switch + Telegram `/stop`. (RUNTIME-01..07 = 7 reqs)
 - [ ] **Phase 14: Autonomy + Monitor + Control Plane** — Per-agent autonomy levels with approval round-trip + escalation, JSONL structured logging + registry.yaml + briefing agent + hierarchical reporting, Paperclip-inspired control plane (approval queue, cost tracking, task locking, status badges, activity feed). (AUTON-01..05, MONITOR-01..06, CTRL-01..05 = 16 reqs)
 - [ ] **Phase 15: Anticipation Engine** — Designer Agent anticipation pass: reads Business Graph, proposes unrequested-but-needed agents from evidence-backed business-type heuristics, `ANTICIPATED` tag in proposal, decline-memory. The consulting-product differentiator. (ANTIC-01..05 = 5 reqs)
@@ -218,7 +218,7 @@ Plans:
 | 9. Designer Agent | v2.0 | 1/3 | In Progress | — |
 | 10. Integration Discovery — MCP Path | v2.0 | 3/3 | Complete    | 2026-04-21 |
 | 11. Integration Discovery — Browser Fallback | v2.0 | 4/4 | Complete | 2026-04-24 |
-| 12. Deploy Pipeline + Agent Memory | v2.0 | 0/3 | Not started | — |
+| 12. Deploy Pipeline + Agent Memory | v2.0 | 3/3 | Complete | 2026-04-24 |
 | 13. Multi-Agent Runtime | v2.0 | 0/3 | Not started | — |
 | 14. Autonomy + Monitor + Control Plane | v2.0 | 0/4 | Not started | — |
 | 15. Anticipation Engine | v2.0 | 0/2 | Not started | — |

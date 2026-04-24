@@ -86,23 +86,23 @@ The earlier "Discovery Agent" scope (pre-2026-04-20) becomes this subset. Reuses
 
 Materializes the `agent-profiles.yaml` into a running ClaudeClaw-compatible deployment.
 
-- [ ] **DEPLOY-01**: For each agent in `agent-profiles.yaml`, generate `skills/{agent-id}/SKILL.md` containing the full prompt (role + goal + backstory + tool list + autonomy rules + escalation)
-- [ ] **DEPLOY-02**: For each agent trigger, generate a ClaudeClaw job config (cron entry or webhook subscription pointing to n8n route)
-- [ ] **DEPLOY-03**: Merge required MCP server entries into `.mcp.json` (newly generated wrappers from INTEG-03 + ecosystem installs from INTEG-02)
-- [ ] **DEPLOY-04**: Generate per-agent memory directory `.claude/agents/{agent-id}/` with stub `memory.md`, empty `state.json`, and `last-run.json: null`
-- [ ] **DEPLOY-05**: Generate `.claude/agents/registry.yaml` listing the team (lead, agents, reporting hierarchy, dashboard_agent)
-- [ ] **DEPLOY-06**: Deploy Pipeline is idempotent — re-running with the same `agent-profiles.yaml` does not duplicate or corrupt existing artifacts; differences present a diff for user approval before overwrite
-- [ ] **DEPLOY-07**: Deploy Pipeline emits a `DEPLOY-REPORT.md` summarizing what was created, what was updated, what was skipped, and any pending user actions (credentials missing, ToS opt-in needed, etc.)
-- [ ] **DEPLOY-08**: Deploy Pipeline runs a post-deploy verification: every generated SKILL.md loads cleanly, every MCP server responds, every cron job is registered with ClaudeClaw
+- [x] **DEPLOY-01**: For each agent in `agent-profiles.yaml`, generate `skills/{agent-id}/SKILL.md` containing the full prompt (role + goal + backstory + tool list + autonomy rules + escalation)
+- [x] **DEPLOY-02**: For each agent trigger, generate a ClaudeClaw job config (cron entry or webhook subscription pointing to n8n route)
+- [x] **DEPLOY-03**: Merge required MCP server entries into `.mcp.json` (newly generated wrappers from INTEG-03 + ecosystem installs from INTEG-02)
+- [x] **DEPLOY-04**: Generate per-agent memory directory `.claude/agents/{agent-id}/` with stub `memory.md`, empty `state.json`, and `last-run.json: null`
+- [x] **DEPLOY-05**: Generate `.claude/agents/registry.yaml` listing the team (lead, agents, reporting hierarchy, dashboard_agent)
+- [x] **DEPLOY-06**: Deploy Pipeline is idempotent — re-running with the same `agent-profiles.yaml` does not duplicate or corrupt existing artifacts; differences present a diff for user approval before overwrite
+- [x] **DEPLOY-07**: Deploy Pipeline emits a `DEPLOY-REPORT.md` summarizing what was created, what was updated, what was skipped, and any pending user actions (credentials missing, ToS opt-in needed, etc.)
+- [x] **DEPLOY-08**: Deploy Pipeline runs a post-deploy verification: every generated SKILL.md loads cleanly, every MCP server responds, every cron job is registered with ClaudeClaw
 
 ### Agent Memory System (MEM)
 
-- [ ] **MEM-01**: Each deployed agent has a directory `.claude/agents/{agent-id}/` with three canonical files: `memory.md`, `state.json`, `last-run.json`
-- [ ] **MEM-02**: `memory.md` holds durable domain knowledge (tenants, contracts, account numbers — scoped to the agent's domain) in agent-editable Markdown
-- [ ] **MEM-03**: `state.json` holds machine-written working state (current month's payments processed, locked resources, retry counts) with `schema_version` field
-- [ ] **MEM-04**: `last-run.json` holds the most recent execution log entry (action, result, timestamp, `status: active|idle|error`)
-- [ ] **MEM-05**: On every wake, the agent reads `memory.md` and `state.json` first; on every completion, it updates both before emitting log entries
-- [ ] **MEM-06**: Memory directories are version-controllable (plain text) and debuggable (human-editable) per v1.0's file-based-state decision
+- [x] **MEM-01**: Each deployed agent has a directory `.claude/agents/{agent-id}/` with three canonical files: `memory.md`, `state.json`, `last-run.json`
+- [x] **MEM-02**: `memory.md` holds durable domain knowledge (tenants, contracts, account numbers — scoped to the agent's domain) in agent-editable Markdown
+- [x] **MEM-03**: `state.json` holds machine-written working state (current month's payments processed, locked resources, retry counts) with `schema_version` field
+- [x] **MEM-04**: `last-run.json` holds the most recent execution log entry (action, result, timestamp, `status: active|idle|error`)
+- [x] **MEM-05**: On every wake, the agent reads `memory.md` and `state.json` first; on every completion, it updates both before emitting log entries
+- [x] **MEM-06**: Memory directories are version-controllable (plain text) and debuggable (human-editable) per v1.0's file-based-state decision
 
 ### Multi-Agent Runtime (RUNTIME)
 
