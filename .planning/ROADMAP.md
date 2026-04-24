@@ -29,7 +29,7 @@ Scope source: `.planning/v2.0-PROMPT.pdf`. 79 requirements across 13 categories.
 - [x] **Phase 8: Business Graph Foundation** — Extend v1.0 interview to emit Business Graph JSON. Freeze schema with validator. (INTV-01..04, BGRAPH-01..04 = 8 reqs) — completed 2026-04-21
 - [x] **Phase 9: Designer Agent** — AG2 CaptainAgent-pattern subagent that consumes Business Graph, emits `agent-profiles.yaml` with role / goal / backstory / tools / triggers / autonomy / outputs / escalation / dependencies, plus workflow orchestration classification into the 5 patterns. (DSGN-01..07, ORCH-01..04 = 11 reqs) — completed 2026-04-21
 - [x] **Phase 10: Integration Discovery — MCP Path** — Four-step search, steps 1-3 only: existing `.mcp.json` → ecosystem MCP install → wrapper MCP generation via `mcp-builder` skill + verification loop + evidence protocol. (INTEG-01..06 = 6 reqs) (completed 2026-04-21)
-- [ ] **Phase 11: Integration Discovery — Browser Fallback** — Step 4 of the four-step search. Playwright + Patchright browser subagent, HAR capture, curl replay, per-service ToS opt-in + license notice, three-tier API classification, output firewall (injection detector + fresh-context verify), PII redaction, detect-and-degrade anti-bot policy. Subsumes the 2026-04-18 "Discovery Agent" research. (BROWSER-01..12 = 12 reqs)
+- [x] **Phase 11: Integration Discovery — Browser Fallback** — Step 4 of the four-step search. Playwright + Patchright browser subagent, HAR capture, curl replay, per-service ToS opt-in + license notice, three-tier API classification, output firewall (injection detector + fresh-context verify), PII redaction, detect-and-degrade anti-bot policy. Subsumes the 2026-04-18 "Discovery Agent" research. (BROWSER-01..12 = 12 reqs) [Complete 2026-04-24]
 - [ ] **Phase 12: Deploy Pipeline + Agent Memory** — Materialize `agent-profiles.yaml` into `skills/{id}/SKILL.md` + ClaudeClaw job configs + `.mcp.json` merges + per-agent memory directories. Idempotent re-runs with diff presentation. (DEPLOY-01..08, MEM-01..06 = 14 reqs)
 - [ ] **Phase 13: Multi-Agent Runtime** — Cron + n8n webhook trigger plumbing. Inter-agent coordination via ClaudeClaw `SendMessage` / `TeamCreate`. Correlation IDs. Kill switch + Telegram `/stop`. (RUNTIME-01..07 = 7 reqs)
 - [ ] **Phase 14: Autonomy + Monitor + Control Plane** — Per-agent autonomy levels with approval round-trip + escalation, JSONL structured logging + registry.yaml + briefing agent + hierarchical reporting, Paperclip-inspired control plane (approval queue, cost tracking, task locking, status badges, activity feed). (AUTON-01..05, MONITOR-01..06, CTRL-01..05 = 16 reqs)
@@ -115,7 +115,13 @@ Plans:
 6. Posture-C detection (hardened anti-bot: DataDome / PerimeterX / CAPTCHA challenge) halts the run and emits `DISCOVERY-BLOCKED-REPORT.md` rather than attempting any bypass
 7. The fresh-context verification pass successfully detects an injection payload planted in a synthetic response body and isolates it in `untrusted-data` fences
 
-**Plans:** TBD (estimated 3-4)
+**Plans:** 4/4 complete
+
+Plans:
+- [x] 11-01-PLAN.md (4 tasks) , core contracts and fixture: browser-fallback.md (231L) + discovery-report-schema.md (216L) + output-firewall.md (180L with per-action enforcement + uncovered PII disclaimer) + mapfre-discovery-report.md fixture (156L) (BROWSER-02, BROWSER-04, BROWSER-08 refs, BROWSER-10, BROWSER-11)
+- [x] 11-02-PLAN.md (3 tasks) , stack and legal and CI anti-bot lint: browser-stack.md (152L with Patchright pins and deny-list) + legal-posture.md (180L with 5-jurisdiction matrix, DISCOVERY-LICENSE-NOTICE template, OPT_IN_LEDGER.jsonl schema) + scripts/anti-bot-lint.sh (54L, chmod +x) + .github/workflows/ci.yml anti-bot-lint job (BROWSER-05, BROWSER-06, BROWSER-07, BROWSER-09, BROWSER-12)
+- [x] 11-03-PLAN.md (1 task) , browser-discovery subagent at .claude/agents/browser-discovery.md (171L) with 6 XML blocks and hardened checkpoint_resume (JSON validity guard, 5-min concurrent-invocation heartbeat, mid-op expiry GDPR Article 30, UTC Z-suffix discipline) (BROWSER-01, BROWSER-03, BROWSER-08)
+- [x] 11-04-PLAN.md (2 tasks) , surgical wiring: phase-3-integration.md Priority 3 unmark and 3-sentence concrete paragraph + SKILL.md Phase 3 See-line block +2 refs (browser-fallback + browser-stack) per D-58 context budget (BROWSER-01 closure)
 
 ### Phase 12: Deploy Pipeline + Agent Memory System
 
@@ -211,7 +217,7 @@ Plans:
 | 8. Business Graph Foundation | v2.0 | 2/2 | Complete | 2026-04-21 |
 | 9. Designer Agent | v2.0 | 1/3 | In Progress | — |
 | 10. Integration Discovery — MCP Path | v2.0 | 3/3 | Complete    | 2026-04-21 |
-| 11. Integration Discovery — Browser Fallback | v2.0 | 0/3 | Not started | — |
+| 11. Integration Discovery — Browser Fallback | v2.0 | 4/4 | Complete | 2026-04-24 |
 | 12. Deploy Pipeline + Agent Memory | v2.0 | 0/3 | Not started | — |
 | 13. Multi-Agent Runtime | v2.0 | 0/3 | Not started | — |
 | 14. Autonomy + Monitor + Control Plane | v2.0 | 0/4 | Not started | — |

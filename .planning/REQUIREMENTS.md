@@ -69,18 +69,18 @@ Four-step search per required tool. Steps 1-3 cover the MCP path; step 4 (browse
 
 The earlier "Discovery Agent" scope (pre-2026-04-20) becomes this subset. Reuses the 2026-04-18 research in `research/{STACK,FEATURES,ARCHITECTURE,PITFALLS,SUMMARY}.md`.
 
-- [ ] **BROWSER-01**: Step 4 — When Steps 1-3 all fail, Discovery Pipeline invokes a browser-fallback subagent at `.claude/agents/browser-discovery.md` (context:fork, Playwright MCP only) with a `TARGET.md` describing the service + target workflow + budget
-- [ ] **BROWSER-02**: Browser discovery produces a `DISCOVERY-REPORT.md` per service at `.agentbloc/discovery/<service-slug>/` with YAML front-matter (schema-locked, SHA256 signed, `expires_at` field) + structured body (endpoints, auth flow, sample calls, UI selectors, rate limits, anti-bot observations)
-- [ ] **BROWSER-03**: Per-service legal opt-in is mandatory before any browser launches; generates `DISCOVERY-LICENSE-NOTICE.md` with ToS URL + keyword excerpt + tier classification (TOS-GREEN / TOS-AMBER / TOS-RED); append-only `OPT_IN_LEDGER.json` per project
-- [ ] **BROWSER-04**: Every discovered endpoint carries a three-tier API classification (DOCUMENTED / INTERNAL / INTERNAL-HARDENED)
-- [ ] **BROWSER-05**: Anti-bot policy: **detect-and-degrade, never bypass**. CI deny-list lint rejects `playwright-extra`, `puppeteer-extra-plugin-stealth`, CAPTCHA solvers, fingerprint-spoofing libraries
-- [ ] **BROWSER-06**: Browser discovery uses Patchright (version-locked to Playwright 1.59.x) for legitimate CDP-leak patches only; fingerprint spoofing remains explicitly disallowed
-- [ ] **BROWSER-07**: Stack pins captured in `references/browser-stack.md`: `playwright@^1.59.1`, `patchright@^1.59.4`, `curlconverter@^4.12.0`, `@har-sdk/validator@^2.6.1`, `fetch-har@^12.0.1`
-- [ ] **BROWSER-08**: Checkpointed multi-turn workflow: Browser discovery resumable after up to 4-hour pauses (real-world 2FA / SMS latency) via `.agentbloc/discovery/<service-slug>/state.json`
-- [ ] **BROWSER-09**: Ralph-style retry loop with capped iteration budget (from governance), logged reasoning, exponential backoff — NO fingerprint adjustment on retry
-- [ ] **BROWSER-10**: Output firewall — injection detector scans captured response bodies for imperative strings, Base64 blobs, invisible Unicode; findings isolated inside `untrusted-data` fences; fresh-context verification pass before release to the Deploy Pipeline
-- [ ] **BROWSER-11**: PII redaction pipeline runs on every HAR + response body (EU IBAN, US SSN, credit-card Luhn, E.164 phones, email addresses) with verification scan before emit
-- [ ] **BROWSER-12**: `references/legal-posture.md` documents jurisdictional variance (CFAA US, CMA UK, StGB DE, GDPR EU, LGPD BR) so users understand regional constraints
+- [x] **BROWSER-01**: Step 4 — When Steps 1-3 all fail, Discovery Pipeline invokes a browser-fallback subagent at `.claude/agents/browser-discovery.md` (context:fork, Playwright MCP only) with a `TARGET.md` describing the service + target workflow + budget
+- [x] **BROWSER-02**: Browser discovery produces a `DISCOVERY-REPORT.md` per service at `.agentbloc/discovery/<service-slug>/` with YAML front-matter (schema-locked, SHA256 signed, `expires_at` field) + structured body (endpoints, auth flow, sample calls, UI selectors, rate limits, anti-bot observations)
+- [x] **BROWSER-03**: Per-service legal opt-in is mandatory before any browser launches; generates `DISCOVERY-LICENSE-NOTICE.md` with ToS URL + keyword excerpt + tier classification (TOS-GREEN / TOS-AMBER / TOS-RED); append-only `OPT_IN_LEDGER.json` per project
+- [x] **BROWSER-04**: Every discovered endpoint carries a three-tier API classification (DOCUMENTED / INTERNAL / INTERNAL-HARDENED)
+- [x] **BROWSER-05**: Anti-bot policy: **detect-and-degrade, never bypass**. CI deny-list lint rejects `playwright-extra`, `puppeteer-extra-plugin-stealth`, CAPTCHA solvers, fingerprint-spoofing libraries
+- [x] **BROWSER-06**: Browser discovery uses Patchright (version-locked to Playwright 1.59.x) for legitimate CDP-leak patches only; fingerprint spoofing remains explicitly disallowed
+- [x] **BROWSER-07**: Stack pins captured in `references/browser-stack.md`: `playwright@^1.59.1`, `patchright@^1.59.4`, `curlconverter@^4.12.0`, `@har-sdk/validator@^2.6.1`, `fetch-har@^12.0.1`
+- [x] **BROWSER-08**: Checkpointed multi-turn workflow: Browser discovery resumable after up to 4-hour pauses (real-world 2FA / SMS latency) via `.agentbloc/discovery/<service-slug>/state.json`
+- [x] **BROWSER-09**: Ralph-style retry loop with capped iteration budget (from governance), logged reasoning, exponential backoff — NO fingerprint adjustment on retry
+- [x] **BROWSER-10**: Output firewall — injection detector scans captured response bodies for imperative strings, Base64 blobs, invisible Unicode; findings isolated inside `untrusted-data` fences; fresh-context verification pass before release to the Deploy Pipeline
+- [x] **BROWSER-11**: PII redaction pipeline runs on every HAR + response body (EU IBAN, US SSN, credit-card Luhn, E.164 phones, email addresses) with verification scan before emit
+- [x] **BROWSER-12**: `references/legal-posture.md` documents jurisdictional variance (CFAA US, CMA UK, StGB DE, GDPR EU, LGPD BR) so users understand regional constraints
 
 ### Deploy Pipeline (DEPLOY)
 
