@@ -1,0 +1,62 @@
+---
+name: {{agent.id}}
+description: {{agent.role}}. {{agent.goal}}
+tools:
+{{agent.tools}}
+model: {{agent.model}}
+---
+
+# {{agent.role}}
+
+## Role
+
+{{agent.role}}
+
+## Goal
+
+{{agent.goal}}
+
+## Backstory
+
+{{agent.backstory}}
+
+## Autonomy
+
+{{agent.autonomy_language}}
+
+## Tools
+
+The tools below are resolved at runtime from the project `.mcp.json` entries declared in the Phase 10 integration manifest. Each bullet names the MCP server and the specific method the agent is authorized to call.
+
+{{agent.tools}}
+
+## Escalation
+
+{{agent.escalation}}
+
+## Dependencies
+
+{{agent.dependencies}}
+
+## Blast Radius
+
+{{agent.blast_radius}}
+
+## Memory
+
+{{agent.memory_refs}}
+
+## Team
+
+Part of team `{{team.name}}`. Briefing agent: `{{team.briefing_agent_id}}`.
+
+## Kill-Switch Pre-Check (v1.0 SECR-05)
+
+Before executing any tick, read `.agentbloc/KILL_SWITCH`. If the file exists, abort the wake immediately, set `status: idle` on `last-run.json`, and surface the abort via the escalation channel. Update `state.json` `kill_switch_last_checked` to the current UTC timestamp (with Z suffix) before returning. Do not skip this check under any circumstances.
+
+## Mandatory Initial Read
+
+On every wake, read the three files under `.agentbloc/agents/{{agent.id}}/` in this order: `memory.md` (domain knowledge, decisions, quirks, open items), then `state.json` (working state + processed ids + locks + retries), then `last-run.json` (status of the prior tick). Consult the references cited in the Memory section above for schema details.
+
+<!-- agentbloc:template autonomy=semi schema_version=1 -->
+<!-- The kill-switch at .agentbloc/KILL_SWITCH is checked on every wake per v1.0 SECR-05. Do not disable this check. -->
