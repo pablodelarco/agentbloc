@@ -118,11 +118,13 @@ For each agent action, find the BEST integration method. Research APIs, MCP serv
 
 **Summary Gate:** After walking the 4-step MCP search + three-check Verification Loop, write `.agentbloc/integrations/integration-manifest.yaml` silently. The rendered integrations table + per-tool evidence rows are what the user reviews and confirms (D-14 mirror). See [references/mcp-integration-protocol.md](references/mcp-integration-protocol.md) Verification Loop for the D-34 three-check protocol and Halt-and-Name Protocol for D-35 failure handling.
 
-You MUST read the complete integration analysis protocol AND the MCP integration protocol AND the ecosystem registry AND the integration manifest schema before starting this phase:
+You MUST read the complete integration analysis protocol AND the MCP integration protocol AND the ecosystem registry AND the integration manifest schema AND the browser-fallback protocol AND the browser stack reference before starting this phase:
 See [references/phase-3-integration.md](references/phase-3-integration.md)
 See [references/mcp-integration-protocol.md](references/mcp-integration-protocol.md)
 See [references/mcp-ecosystem-registry.md](references/mcp-ecosystem-registry.md)
 See [references/integration-manifest-schema.md](references/integration-manifest-schema.md)
+See [references/browser-fallback.md](references/browser-fallback.md)
+See [references/browser-stack.md](references/browser-stack.md)
 
 ### Phase 4: Step-by-Step Confirmation + Dry Run
 
