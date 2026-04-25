@@ -247,6 +247,32 @@ Roll up `verification_status` per D-69:
 
 **Rationale (D-69):** `tools/list` is the canonical MCP liveness probe per the 2026 MCP spec; `ping` / `resources/list` / generic-hit were rejected in 12-RESEARCH.md topic 5. Soft-fail for optional MCPs prevents a transient "Mapfre is down today" event from failing an otherwise-healthy deploy. 10-second timeout is defensible (longer and the user's feedback loop degrades; shorter and flaky networks trigger false FAILs).
 
+## Step 9: Runtime Wiring
+
+**Action:** Invoke the runtime-engine subagent as the final step of the deploy protocol. runtime-engine materializes wake.md per (agent, trigger) tuple, emits n8n route .json stubs per webhook trigger, installs the crontab via stdin form (NEVER `crontab -e`), and extends `.agentbloc/agents/registry.yaml` with the D-78 runtime block.
+
+**Input:** `.agentbloc/agents/registry.yaml` (Phase 12 deploy-engine output) + `.agentbloc/team/agent-profiles.yaml` (Phase 9 Designer output) + `.agentbloc/deploy/crontab.proposed` (Phase 12 deploy-engine output). All three are hard preconditions.
+
+**Reference loads (runtime-engine forked context):**
+- [n8n-integration.md](n8n-integration.md) , D-74 envelope schema + 5 worked examples + .json route file format
+- [runtime-coordination.md](runtime-coordination.md) , D-76 TeamCreate/SendMessage contract + writeStateHandoff fallback + topology-to-primitive mapping + crontab stdin install discipline
+- [correlation-id.md](correlation-id.md) , D-75 format spec + 3 propagation channels + helpers.sh generator
+
+**Subagent:** `.claude/agents/runtime-engine.md` per D-80 (narrow Bash allow-list: `crontab -` (stdin install), `crontab -l`, `shasum -a 256`, `claude agents list`, `claude mcp list`; `crontab -e` EXPLICITLY DISALLOWED).
+
+**Dispatch (per D-73 Option D):**
+- agent-profile trigger.type = cron -> `.claude/skills/agentbloc/templates/wake-job-cron.md.tmpl`
+- agent-profile trigger.type = event (webhook) -> `.claude/skills/agentbloc/templates/wake-job-webhook.md.tmpl` (one per (agent, source, event-slug) tuple)
+- agent-profile trigger.type = inter-agent -> `.claude/skills/agentbloc/templates/wake-job-inter.md.tmpl` (one per agent; internally dispatches by message.type)
+
+**If success:** runtime-engine emits `.agentbloc/runtime/RUNTIME-REPORT.md` + extends registry.yaml with the `runtime` block + closes the `runtime_wired` sub-gate per D-81. Phase 5 -> Phase 6 transition unblocks.
+
+**If halt:** runtime-engine emits `.agentbloc/runtime/RUNTIME-FAILED-REPORT.md` per D-35/D-71 halt-and-name discipline with halt_reason enum value (`missing-input` | `template-load-failure` | `yaml-parse-error` | `crontab-install-failure` | `registry-edit-failure` | `user-rejected-crontab-diff` | `permission-denied`). The runtime_wired sub-gate remains false; Phase 6 Evolution entry halts until the user resolves and re-runs.
+
+**Arco Rooms example:** For the 3-agent Arco Rooms team (Gestor Cobros + Recepcionista + Gestor Documental), runtime-engine materializes 6 wake.md files (2 per agent), emits 3 n8n route .json stubs (plaid + telegram + gmail) plus agentbloc-stop.json for remote kill-switch, installs 2 crontab entries (monthly + weekly), and extends registry.yaml with the runtime block containing 5 workflows + 3 webhook_endpoints. See [examples/arco-rooms-correlation-flow.md](../examples/arco-rooms-correlation-flow.md) and [examples/arco-rooms-runtime-artifacts.md](../examples/arco-rooms-runtime-artifacts.md) for literal shapes.
+
+**Rationale:** Phase 13 is a thin wiring layer on top of ClaudeClaw primitives. Step 9 (this step) is intentionally the terminal step: after deploy-engine emits artifacts (Steps 1-8), runtime-engine wires them to triggers. Splitting into two subagents preserves D-31 concern-separation and lets each fork stay within context budget.
+
 ## Halt Protocol
 
 Any hard-fail during Steps 1 through 8 emits `.agentbloc/deploy/DEPLOY-FAILED-REPORT.md` per [deploy-report-schema.md](deploy-report-schema.md) Section 6 and stops. No retry, no partial-write commits, no DEPLOY-REPORT.md.
