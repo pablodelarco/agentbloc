@@ -837,6 +837,23 @@ Do NOT apply any changes. Only propose. The operator reviews proposals in Telegr
 and replies to approve or reject each one. This gate is non-negotiable.
 ```
 
+### Step 7.5: Runtime Wiring Hand-off (Phase 13)
+
+After deploy-engine emits DEPLOY-REPORT.md with `verification_status: PASSED` or `PARTIAL`, control hands to runtime-engine (Phase 13 subagent at `.claude/agents/runtime-engine.md`). runtime-engine materializes the wake.md templates per (agent, trigger) tuple, installs the crontab via the stdin form (NEVER `crontab -e`), emits n8n route .json stubs for webhook triggers, and extends `.agentbloc/agents/registry.yaml` with the D-78 runtime block.
+
+The hand-off is enforced by the Phase 5 `runtime_wired` sub-gate per D-81: Phase 5 -> Phase 6 transition requires BOTH `deployment_artifacts_emitted` (Phase 12) AND `runtime_wired` (Phase 13). If runtime-engine halts with RUNTIME-FAILED-REPORT.md, the `runtime_wired` sub-gate remains false and Phase 6 Evolution entry halts until the user resolves.
+
+(This step slots between the Phase 12 ClaudeClaw-Native Deploy templates above and the SUMMARY.md generation below; it is conceptually Step 7.5 of the runtime hand-off chain even though it appears here after the Job Definition Template by file position.)
+
+See:
+- [references/deploy-protocol.md](deploy-protocol.md) for the canonical 8-step flow; Step 9 (Runtime Wiring) is the terminal step delegating to runtime-engine.
+- [references/n8n-integration.md](n8n-integration.md) for the D-74 4-field webhook envelope + 5 worked examples + .json route file format.
+- [references/runtime-coordination.md](runtime-coordination.md) for the D-76 TeamCreate/SendMessage contract + writeStateHandoff fallback + single-agent bypass per RUNTIME-05 + crontab stdin install discipline.
+- [references/correlation-id.md](correlation-id.md) for the D-75 format spec + 3 propagation channels (env var + JSON payload + SendMessage metadata) + grep recipes for mobile-first debugging.
+- [.claude/agents/runtime-engine.md](../../agents/runtime-engine.md) for the subagent definition orchestrating the runtime wiring step.
+
+**Closes requirements:** RUNTIME-01 (cron registration), RUNTIME-02 (n8n route emission), RUNTIME-03 (webhook-to-agent mapping), RUNTIME-04 (TeamCreate/SendMessage), RUNTIME-05 (single-agent bypass), RUNTIME-06 (correlation-ID propagation), RUNTIME-07 (kill-switch three-point enforcement).
+
 ## Step 9: SUMMARY.md Deployment Guide Template
 
 The SUMMARY.md is the user's complete instruction manual. Write it at the user's technical level (detected during Phase 1 interview).
