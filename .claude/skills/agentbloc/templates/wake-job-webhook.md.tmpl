@@ -1,0 +1,78 @@
+<!-- agentbloc wake-job template: webhook trigger -->
+<!-- schema_version: 1 -->
+<!-- pattern: D-73 6-section structure; pure {{var}} substitution; no Jinja conditionals -->
+<!-- anchor points: {{agent.id}}, {{agent.role}}, {{agent.autonomy}}, {{agent.skill_path}}, {{agent.memory_dir}}, {{trigger.source}}, {{trigger.event_name}}, {{payload.schema}} -->
+<!-- consumed by: claude -p invoked from ClaudeClaw job endpoint OR local HTTP listener (runtime-agnostic fallback per n8n-integration.md) -->
+<!-- companion templates: wake-job-cron.md.tmpl (cron triggers), wake-job-inter.md.tmpl (inter-agent SendMessage) -->
+
+# Wake Job: {{agent.id}} (webhook: {{trigger.source}}/{{trigger.event_name}})
+
+You are waking to execute {{agent.role}} per the n8n webhook for `{{trigger.source}}` event `{{trigger.event_name}}`. This wake.md is the literal prompt the webhook-launched `claude -p` process receives, with the D-74 envelope JSON-decoded into the payload field. Each section below has a fixed contract; do not reorder, skip, or merge sections.
+
+## 1. Kill-switch pre-check
+
+Check if `.agentbloc/KILL_SWITCH` exists.
+
+- If YES: Append this entry to `.agentbloc/logs/audit.jsonl`:
+  `{"correlation_id":"<ID>","event":"halted-kill-switch","agent_id":"{{agent.id}}","wake_at":"<now UTC Z>","trigger":"webhook-{{trigger.source}}"}`
+  EXIT IMMEDIATELY. Do not read state, do not call tools, do not emit Telegram.
+- If NO: Continue to section 2.
+
+## 2. Correlation-ID ingest
+
+Read `correlation_id` from the D-74 envelope (top-level field; see `references/n8n-integration.md` Section 2 for the envelope schema).
+
+- If present: use it as `<ID>` for this wake. n8n's Set node seeded the ID before invoking the webhook per `references/correlation-id.md` Channel 2.
+- If missing: generate via the D-75 format `webhook-{{trigger.source}}-<UTC-Z-compact>-<nonce6>` using `.agentbloc/runtime/helpers.sh agentbloc-gen-correlation webhook-{{trigger.source}}`. Tag with `correlation_id_source: self-generated` in the log entry (indicates orphan envelope worth investigating).
+
+The correlation_id is also propagated via the `AGENTBLOC_CORRELATION_ID` env var when ClaudeClaw forwards the envelope; either source is canonical.
+
+## 3. Memory + state read
+
+BEFORE any other work, load:
+
+- `{{agent.memory_dir}}/memory.md` (section-headed Domain Knowledge + Decisions + Integration Quirks + Open Items; agent-editable markdown)
+- `{{agent.memory_dir}}/state.json` (schema_version + working_state + processed_ids[] + locks[] + retries[])
+
+These two files are the authoritative state for {{agent.id}}. Do not proceed without loading both.
+
+## 4. Input parse (D-74 envelope payload)
+
+The D-74 envelope arrived with `payload` as the event-source-specific body. Parse it per the declared schema for `{{trigger.source}}`/`{{trigger.event_name}}`:
+
+```
+payload schema: {{payload.schema}}
+```
+
+- Validate every REQUIRED field is present; if any field is missing, log `event: malformed-envelope` to audit.jsonl with the offending field name and EXIT.
+- Check `processed_ids[]` in state.json for the payload's natural-key (e.g., `message_id`, `transaction_id`, `event_id`). If already processed, log `event: duplicate-skip` and EXIT.
+- Otherwise, append the natural-key to `processed_ids[]` in memory; the new ID is committed in section 6 only on successful execution.
+
+This idempotency guard prevents double-processing if n8n retries or if the user manually re-triggers a webhook. See `references/n8n-integration.md` for canonical envelope shapes per source.
+
+## 5. Execute
+
+Load `{{agent.skill_path}}` and proceed per the agent's prompt. Include the correlation ID `<ID>` in every log call AND in every tool invocation that propagates it (e.g., Telegram messages sent by this agent carry the correlation ID in the message header for human grep).
+
+Autonomy: `{{agent.autonomy}}`. The SKILL.md template already encodes autonomy-appropriate language per Phase 12 D-62. No autonomy branching at this layer.
+
+## 6. State + log write
+
+After execution:
+
+- Update `{{agent.memory_dir}}/state.json`: commit the natural-key to `processed_ids[]`, advance `working_state` cursors, record any new `retries`.
+- Update `{{agent.memory_dir}}/last-run.json`: `{action, result, timestamp, status}` per agent-memory-schema.md.
+- Append one JSONL line to `.agentbloc/logs/audit.jsonl`: `{correlation_id, agent_id: {{agent.id}}, event: wake-completed, wake_outcome, timing_ms, trigger: webhook-{{trigger.source}}, event_name: {{trigger.event_name}}}`.
+
+`wake_outcome` enum (per D-18 bounded discipline): `completed | failed | halted-kill-switch | halted-upstream-failure | duplicate-skip`.
+
+End of wake.
+
+## Notes for runtime-engine + future maintainers
+
+- Section order is FIXED. Do not reorder. Kill-switch must be section 1.
+- Pure `{{var}}` substitution. Trigger-source variance lives in `{{trigger.source}}` + `{{trigger.event_name}}` + `{{payload.schema}}` anchor points; runtime-engine materializes one wake-webhook-<source>-<event>.md per (agent, source, event) triple per D-73 naming convention.
+- For multi-agent workflows where this agent is the lead per registry.runtime.workflows[<id>].agents[0], runtime-engine appends a TeamCreate invocation block AFTER section 4 and BEFORE section 5. The base 6-section structure remains.
+- For runtime-agnostic fallback (no ClaudeClaw): the local HTTP listener writes envelope to `.agentbloc/runtime/inbox/<agent-id>/<correlation-id>.json`; `claude -p --payload-file <path>` invokes this template with payload pre-loaded. See `references/n8n-integration.md` Section 9.
+- Em-dashes are explicitly disallowed in this template's emitted output. Use commas, periods, or "..." instead.
+- Cross-references: `references/n8n-integration.md` (D-74 envelope schema), `references/correlation-id.md` (D-75 format), `references/runtime-coordination.md` (TeamCreate semantics), `references/incident-response.md` (kill-switch dual-path).
