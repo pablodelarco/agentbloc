@@ -1,0 +1,80 @@
+<!-- agentbloc wake-job template: cron trigger -->
+<!-- schema_version: 1 -->
+<!-- pattern: D-73 6-section structure; pure {{var}} substitution; no Jinja conditionals -->
+<!-- anchor points: {{agent.id}}, {{agent.role}}, {{agent.autonomy}}, {{agent.skill_path}}, {{agent.memory_dir}}, {{team.correlation_prefix}}, {{cron.schedule}} -->
+<!-- consumed by: claude -p invoked from system cron entry; runtime-engine materializes one wake-cron.md per cron-triggered agent -->
+<!-- companion templates: wake-job-webhook.md.tmpl (event triggers), wake-job-inter.md.tmpl (inter-agent SendMessage) -->
+
+# Wake Job: {{agent.id}} (cron)
+
+You are waking to execute {{agent.role}} per the cron schedule `{{cron.schedule}}`. This wake.md is the literal prompt the cron-launched `claude -p` process receives. Each section below has a fixed contract; do not reorder, skip, or merge sections.
+
+## 1. Kill-switch pre-check
+
+Check if `.agentbloc/KILL_SWITCH` exists.
+
+- If YES: Append this entry to `.agentbloc/logs/audit.jsonl`:
+  `{"correlation_id":"<ID>","event":"halted-kill-switch","agent_id":"{{agent.id}}","wake_at":"<now UTC Z>","trigger":"cron"}`
+  EXIT IMMEDIATELY. Do not read state, do not call tools, do not emit Telegram.
+- If NO: Continue to section 2.
+
+## 2. Correlation-ID ingest
+
+Read the `AGENTBLOC_CORRELATION_ID` environment variable set by the cron entry.
+
+- If present: use it as `<ID>` for this wake.
+- If missing: generate via the D-75 format `cron-<UTC-Z-compact>-<nonce6>` using `.agentbloc/runtime/helpers.sh agentbloc-gen-correlation cron`. Tag with `correlation_id_source: self-generated` in the log entry (indicates orphan wake worth investigating).
+
+See `.claude/skills/agentbloc/references/correlation-id.md` for the full format + propagation spec.
+
+## 3. Memory + state read
+
+BEFORE any other work, load:
+
+- `{{agent.memory_dir}}/memory.md` (section-headed Domain Knowledge + Decisions + Integration Quirks + Open Items; agent-editable markdown)
+- `{{agent.memory_dir}}/state.json` (schema_version + working_state + processed_ids[] + locks[] + retries[])
+
+These two files are the authoritative state for {{agent.id}}. Do not proceed without loading both.
+
+## 4. Input parse
+
+For cron triggers, derive input from `state.working_state`. Typical fields (examples; actual shape is agent-specific):
+
+- `month_to_process` (e.g., "2026-04")
+- `last_processed_id` (cursor for incremental processing)
+- `pending_retries[]` (carry-over from prior wake's retries)
+
+NO payload is provided on cron wake; everything is state-derived.
+
+## 5. Execute
+
+Load `{{agent.skill_path}}` and proceed per the agent's prompt. Include the correlation ID `<ID>` in every log call AND in every tool invocation that propagates it (e.g., Telegram messages sent by this agent carry the correlation ID in the message header for human grep).
+
+Autonomy: `{{agent.autonomy}}`. The SKILL.md template already encodes autonomy-appropriate language per Phase 12 D-62. No autonomy branching at this layer.
+
+## 6. State + log write
+
+After execution:
+
+- Update `{{agent.memory_dir}}/state.json`: advance `working_state` cursors, append any new `processed_ids`, record any new `retries`.
+- Update `{{agent.memory_dir}}/last-run.json`: `{action, result, timestamp, status}` per agent-memory-schema.md.
+- Append one JSONL line to `.agentbloc/logs/audit.jsonl`: `{correlation_id, agent_id: {{agent.id}}, event: wake-completed, wake_outcome, timing_ms, trigger: cron}`.
+
+`wake_outcome` enum (per D-18 bounded discipline): `completed | failed | halted-kill-switch | halted-upstream-failure`.
+
+End of wake.
+
+## Notes for runtime-engine + future maintainers
+
+- Section order is FIXED. Do not reorder. The kill-switch must be section 1 so a halted run produces zero state side effects.
+- Pure `{{var}}` substitution. Do not introduce Jinja conditionals; trigger-type variance lives in the three sibling templates (cron / webhook / inter), not in conditional blocks.
+- The materialized output of this template lives at `.agentbloc/agents/<agent-id>/wake-cron.md` per D-73. One agent has at most one cron wake.md (single cron schedule per agent per PDF page 3).
+- For multi-agent workflows where this agent is the lead per registry.runtime.workflows[<id>].agents[0], runtime-engine appends a TeamCreate invocation block AFTER section 4 (Input parse) and BEFORE section 5 (Execute). The base 6-section structure remains; the TeamCreate block is an inline expansion, not a new section.
+- DRY_RUN_ACTIVE inheritance (v1.0 Phase 4 dry run): the agent's SKILL.md (loaded in section 5) already encodes the DRY_RUN_ACTIVE check at every side-effect tool call. No duplication needed at the wake-template layer.
+- Cross-references: see `.claude/skills/agentbloc/references/correlation-id.md` for D-75 format, `runtime-coordination.md` for TeamCreate semantics, `incident-response.md` for kill-switch dual-path.
+- Phase 14 (AUTON-01..05) will inject autonomy-gate side-effect checks at the SKILL.md layer; this template's section 5 stays unchanged.
+- Phase 14 (CTRL-02) will append `token_count` and `cost_usd` fields to the section 6 audit-log entry; the JSONL line stays append-only and additive.
+- Em-dashes are explicitly disallowed in this template's emitted output. Use commas, periods, or "..." instead.
+- The template substitution engine is Claude-in-context string replacement at runtime-engine materialize time; no external Jinja runtime is invoked. Substitution is deterministic for byte-identical inputs.
+- For testing: the materialized wake-cron.md SHOULD be byte-identical across re-runs of runtime-engine when the agent profile + registry runtime block + cron schedule are unchanged.
+- For golden-file fixtures: see `.claude/skills/agentbloc/examples/arco-rooms-runtime-artifacts.md` for a literal materialization example using the gestor-cobros agent.
