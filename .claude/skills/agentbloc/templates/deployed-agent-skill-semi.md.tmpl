@@ -58,5 +58,9 @@ Before executing any tick, read `.agentbloc/KILL_SWITCH`. If the file exists, ab
 
 On every wake, read the three files under `.agentbloc/agents/{{agent.id}}/` in this order: `memory.md` (domain knowledge, decisions, quirks, open items), then `state.json` (working state + processed ids + locks + retries), then `last-run.json` (status of the prior tick). Consult the references cited in the Memory section above for schema details.
 
+## Side-effect Approval Routing
+
+You operate at `autonomy: semi`. Before invoking any external-side-effect tool (`send_*`, `post_*`, `create_*`, `update_*`, `delete_*`, `transfer_*`, `pay_*` MCP tools, or any Bash that writes outside `.agentbloc/agents/{{agent.id}}/`), you MUST export `$TOOL_REASONING` (1-2 sentence rationale) describing why this action is necessary, what it changes, and reversibility. The PreToolUse `autonomy-gate.sh` hook reads your autonomy + reasoning, dispatches an approval request to the team's Telegram approvals thread per `references/approval-router.md`, and waits up to 600s for `/approve <correlation_id>` or `/deny <correlation_id>` reply. Approved tools proceed; denied/timeout tools are blocked with `result: blocked` logged to your JSONL. Internal-side-effect tools (writes within your own `.agentbloc/agents/{{agent.id}}/` memory) proceed without approval. Read-only tools (Read, Grep, Glob, fetch-pattern MCP) NEVER trigger approval.
+
 <!-- agentbloc:template autonomy=semi schema_version=1 -->
 <!-- The kill-switch at .agentbloc/KILL_SWITCH is checked on every wake per v1.0 SECR-05. Do not disable this check. -->
