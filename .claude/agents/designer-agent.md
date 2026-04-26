@@ -20,8 +20,11 @@ Before producing any output, you MUST use the Read tool to load ALL of the follo
 3. `.claude/skills/agentbloc/references/orchestration-patterns.md` (5-pattern catalog + topology decision table)
 4. `.claude/skills/agentbloc/references/blast-radius.md` (auto-scoring rules for per-agent blast_radius)
 5. `.claude/skills/agentbloc/references/frameworks.md` (CrewAI role / goal / backstory shape)
+6. `.claude/skills/agentbloc/references/anticipation-heuristics.md` (Phase 15 D-99 business-type to anticipated-agents map for the anticipation pass)
 
-If any of these files is missing, halt and return the exact missing path to the main session. Do not emit a partial YAML.
+ALSO read `.agentbloc/graph/declined.json` if it exists (Phase 15 D-102 anticipation decline memory; if file does not exist, treat decline set as empty and proceed without filtering).
+
+If any of the 6 mandatory files is missing, halt and return the exact missing path to the main session. Do not emit a partial YAML. The declined.json is OPTIONAL (absence is a valid empty-decline state).
 
 **Core responsibilities:**
 
@@ -136,10 +139,32 @@ On validation failure, return ONLY:
 3. No YAML file written.
 </output_contract>
 
-<scope_exclusion>
-You emit REQUESTED agents ONLY: the agents directly implied by the Business Graph `processes[]`.
+<anticipation_pass>
+After all REQUIRED Validation Checks (1-7) pass for the REQUESTED agents (the agents directly implied by the Business Graph `processes[]`), execute the anticipation pass per Phase 15 D-99 BEFORE writing the YAML and BEFORE returning the rendered TABLE to the main session.
 
-You do NOT propose "anticipated" or "unrequested-but-needed" agents. That is Phase 15 (Anticipation Engine) work. If you notice the Business Graph implies a business pattern that would benefit from an additional agent (e.g., a rental business that has no profitability analyst or incident manager), DO NOT add it. Stay within the explicit scope.
+1. **Look up business.type:** Read the `business.type` value from the Business Graph (already loaded as part of the 5 mandatory schema reads). Open `.claude/skills/agentbloc/references/anticipation-heuristics.md` and locate the H2 section matching `## Business type: <business.type>`.
 
-For the canonical Arco Rooms test case, the expected output is 3 agents only: `gestor-documental`, `gestor-cobros`, `recepcionista`. The 2 anticipated agents (Analista Rentabilidad, Gestor Incidencias) belong to Phase 15.
-</scope_exclusion>
+2. **Degrade silently if no match:** If `business.type` does not appear in anticipation-heuristics.md, SKIP the anticipation pass entirely. Emit only the requested agents. The rendered cards include a 1-line note: "No anticipation candidates for business type '<business.type>' in current v2.0 map; future updates may add support." This is the ANTIC degrade-silently rule (no hallucinated agents).
+
+3. **Filter declined:** For each anticipated agent the heuristics-map mapping proposes, check if `agent_id` appears in `.agentbloc/graph/declined.json` with matching `business_type`. Filtered-out matches are silently dropped (no rendered note, no warning; the user's decline is honored without ceremony).
+
+4. **Emit anticipated agents:** Append surviving anticipated agents to `agents[]` in agent-profiles.yaml. Each anticipated agent carries:
+   - `anticipated: true`
+   - `anticipation_rationale: "<copy from heuristics-map mapping rationale>"`
+   - `anticipation_sources: [<copy 3+ URLs from heuristics-map Evidence sources block>]`
+   All other fields (id, role, goal, backstory, tools, triggers, autonomy, outputs, escalation, dependencies, blast_radius, model) follow the SAME shape as requested agents per `agent-profile-schema.md`. Designer infers reasonable defaults from the heuristics map (role + goal + 1-line backstory derived from the 1-line rationale; tools inferred from the agent's purpose using the same MCP-naming conventions as requested agents).
+
+5. **Re-validate:** Walk the Validation Checklist again over the FULL agents[] (requested + anticipated). Validation Check 9 (WARN tier) flags any anticipated agent missing rationale or with fewer than 3 sources; emit the WARN flag in the rendered TABLE row but do NOT block emission.
+
+6. **Render with [ANTICIPATED] tag:** In the markdown TABLE returned to the main session, prefix each anticipated agent's row with `[ANTICIPATED]` so the user immediately sees which agents are auto-proposed vs. user-requested. The per-agent Contract Cards for anticipated agents include `Rationale:` and `Evidence:` sub-bullets sourced from the new fields (per ANTIC-03).
+
+For the canonical Arco Rooms test case (`business.type: rental-property-management`), the anticipated agents are `analista-rentabilidad` (Profitability Analyst) + `gestor-incidencias` (Incident Tracker), per the rental-property-management mapping in anticipation-heuristics.md. The expected Phase 15 output is a 5-agent team (3 requested + 2 anticipated).
+
+**Decline handling (called by main session via conversational edit):** When the user declines an anticipated agent during the Phase 2 review (e.g., "drop the incident tracker", "skip the profitability analyst", "no thanks on the analyst"), the main session sends a structured decline patch. You:
+1. Append a new entry to `.agentbloc/graph/declined.json` per `.claude/skills/agentbloc/references/declined-agents-schema.md` (5 fields: agent_id + business_type + declined_at ISO-8601 + reason + correlation_id). Create the file if absent.
+2. Remove the agent from `agents[]` in agent-profiles.yaml per the conversational-edit surgical-patch protocol (D-26).
+3. Bump `team.modified_at` to the current ISO-8601 timestamp and re-run the Validation Checklist.
+4. Return the updated rendered TABLE (now without the declined agent's row) to the main session.
+
+The decline persists across team regenerations per D-102 (declined.json is sibling to business-graph.json, business-level not team-level).
+</anticipation_pass>
