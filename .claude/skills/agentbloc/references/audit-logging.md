@@ -45,13 +45,15 @@ One line in the JSONL file:
 
 ## Correlation ID Pattern
 
+> **Phase 14 alignment (D-97):** v2.0+ correlation-IDs follow the D-75 format documented in `references/correlation-id.md`. The legacy `sess-{agent_name}-{NNN}` examples below remain valid for v1.0 deployments and are the historical lineage for the child-ID `-sub-NNN` convention preserved verbatim in v2.0.
+
 Correlation IDs link all log entries from a single agent execution into a traceable chain.
 
 **Generation rules:**
 
-1. Generated at session start: `sess-{agent_name}-{NNN}` where NNN is a zero-padded sequential number (e.g., `sess-invoice-collector-001`)
+1. v2.0 generation: `<source>-<UTC-Z-compact>-<nonce6>` per `references/correlation-id.md` (D-75); v1.0 legacy: `sess-{agent_name}-{NNN}` where NNN is a zero-padded sequential number (e.g., `sess-invoice-collector-001`)
 2. All log entries within a single agent run share the same correlation_id
-3. If an agent delegates to a sub-agent, the sub-agent's correlation_id is `{parent_correlation_id}-sub-{NNN}` (e.g., `sess-invoice-collector-001-sub-001`)
+3. If an agent delegates to a sub-agent, the sub-agent's correlation_id is `{parent_correlation_id}-sub-{NNN}` (e.g., `sess-invoice-collector-001-sub-001` or `cron-20260501T080000Z-a3f21b-sub-001`)
 4. This allows tracing a complete execution chain across multiple agents by searching for the parent prefix
 
 **Example chain:**
