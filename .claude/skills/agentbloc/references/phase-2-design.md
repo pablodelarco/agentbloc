@@ -304,7 +304,7 @@ Spawn the subagent defined at `.claude/agents/designer-agent.md` (`context: fork
 2. Required reading: [references/agent-profile-schema.md](agent-profile-schema.md), [references/orchestration-patterns.md](orchestration-patterns.md), [references/blast-radius.md](blast-radius.md), [references/frameworks.md](frameworks.md)
 3. Output target: `.agentbloc/team/agent-profiles.yaml` (create `.agentbloc/team/` if missing)
 4. Optional companion: `.agentbloc/team/team-topology.md` (Mermaid diagram per v1.0 Design Phase Step 7.3)
-5. Scope note: Designer emits REQUESTED agents only. Anticipated agents are Phase 15 (Anticipation Engine) and excluded here.
+5. Scope note: Designer emits REQUESTED agents in Step 8, then runs the Anticipation Pass (Step 8.5 below) to add ANTICIPATED-tagged agents per the heuristics map. The user reviews both classes in a single rendered TABLE.
 
 ### Output Contract
 
@@ -325,6 +325,22 @@ After Designer returns, verify:
 3. The rendered table + cards + ASCII diagram are presented to the user for confirmation.
 
 Only after the user confirms the rendered team do you transition the Phase 2 `agent_profiles_validated` sub-gate (see SKILL.md State Transitions) to `approved`.
+
+## Step 8.5: Anticipation Pass (ANTIC-01..05)
+
+After Designer's Step 8 invocation completes the requested-agent emission, Designer's `<anticipation_pass>` block runs in the same forked context per Phase 15 D-99. Designer reads `.agentbloc/graph/declined.json` (or treats it as empty if absent), looks up `business.type` in [references/anticipation-heuristics.md](anticipation-heuristics.md), and emits any unrequested-but-needed agents tagged `ANTICIPATED` into the same agent-profiles.yaml.
+
+Anticipated agents appear in the rendered TABLE prefixed with `[ANTICIPATED]`. Per-agent Contract Cards for those rows include `Rationale:` (1-2 sentence narrative) plus `Evidence:` (3+ URLs) sourced from the heuristics map.
+
+If `business.type` is not in the heuristics map, Designer skips the anticipation pass entirely and the cards include a 1-line "No anticipation candidates" note. No hallucinated agents (the ANTIC degrade-silently rule).
+
+The user accepts each anticipated agent by default (no action needed) or declines by saying "drop the <agent>" / "skip the <agent>" / "no thanks on the <agent>". Declines append to `.agentbloc/graph/declined.json` per [references/declined-agents-schema.md](declined-agents-schema.md) (business-level state per D-102) and re-running Designer never re-proposes them. The user can also defer ("not now, maybe later") which behaves identically to decline for v2.0; the user can manually edit declined.json to un-decline.
+
+For the canonical Arco Rooms test case (`business.type: rental-property-management`), the anticipated agents are `analista-rentabilidad` (Profitability Analyst) and `gestor-incidencias` (Incident Tracker). The full expected team is 5 agents (3 requested + 2 anticipated). See [examples/arco-rooms-anticipated-profiles.yaml](../examples/arco-rooms-anticipated-profiles.yaml) for the canonical fixture.
+
+**Closes:** ANTIC-01 (anticipation pass), ANTIC-03 (ANTICIPATED tag in proposal), ANTIC-04 (declined.json memory).
+
+**See also:** [anticipation-heuristics.md](anticipation-heuristics.md), [declined-agents-schema.md](declined-agents-schema.md), [agent-profile-schema.md](agent-profile-schema.md) Anticipation Fields section.
 
 ## Design Gate
 
@@ -374,3 +390,4 @@ After every edit round, the Phase 2 `agent_profiles_validated` sub-gate returns 
 | Visual Presentation | DESG-08 | Summary table, ASCII diagram, Mermaid diagram, contract cards | [blast-radius.md](blast-radius.md) |
 | Designer Subagent Invocation | DSGN-01..06, ORCH-01..04 | .agentbloc/team/agent-profiles.yaml + rendered team table + ASCII diagram | [agent-profile-schema.md](agent-profile-schema.md), [orchestration-patterns.md](orchestration-patterns.md), .claude/agents/designer-agent.md |
 | Conversational Editing Flow | DSGN-07 | Surgical-patched YAML + re-rendered table | [agent-profile-schema.md](agent-profile-schema.md), .claude/agents/designer-agent.md |
+| Anticipation Pass | ANTIC-01..05 | agent-profiles.yaml with ANTICIPATED-tagged agents + .agentbloc/graph/declined.json | [anticipation-heuristics.md](anticipation-heuristics.md), [declined-agents-schema.md](declined-agents-schema.md), [agent-profile-schema.md](agent-profile-schema.md) Anticipation Fields, .claude/agents/designer-agent.md `<anticipation_pass>` block |
