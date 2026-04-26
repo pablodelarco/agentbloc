@@ -1,3 +1,6 @@
 
 # Private scope documents (consulting blueprints, not for public publish)
 .planning/*-PROMPT.pdf
+
+# Internal planning artifacts (CONTEXT, PLAN, SUMMARY, VERIFICATION per phase, milestone archives)
+.planning/

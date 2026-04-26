@@ -1,0 +1,938 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - link "Skip to Content" [ref=e3] [cursor=pointer]:
+      - /url: "#startcontent"
+    - generic [ref=e6]:
+      - generic [ref=e7]:
+        - img "U.S. flag" [ref=e8]
+        - paragraph [ref=e9]:
+          - text: An official website of the United States government
+          - button "Here is how you know" [ref=e10] [cursor=pointer]: Here is how you know
+      - link "Department of Labor Logo United States Department of Labor" [ref=e11] [cursor=pointer]:
+        - /url: https://www.dol.gov/
+        - img "Department of Labor Logo" [ref=e12]
+        - text: United States Department of Labor
+    - generic [ref=e16]:
+      - link "U.S. Bureau of Labor Statistics" [ref=e18] [cursor=pointer]:
+        - /url: https://www.bls.gov/
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - link "Release Calendar" [ref=e21] [cursor=pointer]:
+            - /url: /schedule/news_release/
+          - text: "|"
+          - link "Subscribe to BLS E-mail Updates" [ref=e22] [cursor=pointer]:
+            - /url: javascript:window.open('https://public.govdelivery.com/accounts/USDOLBLS/subscriber/new ','Popup','width=800,height=500,toolbar=no,scrollbars=yes,resizable=yes'); void('');
+            - text: Subscribe
+        - generic [ref=e24]:
+          - button "Search button" [ref=e25] [cursor=pointer]
+          - textbox "Search:" [ref=e26]: Search BLS.gov
+  - navigation "top-level navigation menu" [ref=e31]:
+    - list [ref=e33]:
+      - listitem [ref=e34]:
+        - button "Home" [ref=e35] [cursor=pointer]: Home
+        - text: ">> >> >>"
+      - listitem [ref=e36]:
+        - button "Subjects" [ref=e37] [cursor=pointer]: Subjects
+        - text: ">> >> >> >> >> >> >> >> >> >>"
+      - listitem [ref=e38]:
+        - button "Data Tools" [ref=e39] [cursor=pointer]: Data Tools
+        - text: ">> >> >> >>"
+      - listitem [ref=e40]:
+        - button "Publications" [ref=e41] [cursor=pointer]: Publications
+        - text: ">>"
+      - listitem [ref=e42]:
+        - button "Economic Releases" [ref=e43] [cursor=pointer]: Economic Releases
+        - text: ">> >> >> >> >> >> >> >> >> >>"
+      - listitem [ref=e44]:
+        - button "Classroom" [ref=e45] [cursor=pointer]: Classroom
+        - text: ">>"
+      - listitem [ref=e46]:
+        - button "Beta" [ref=e47] [cursor=pointer]: Beta
+        - text: ">>"
+  - main [ref=e48]:
+    - list [ref=e50]:
+      - listitem [ref=e51]:
+        - link "Bureau of Labor Statistics" [ref=e52] [cursor=pointer]:
+          - /url: /
+      - listitem [ref=e53]:
+        - link "Occupational Employment and Wage Statistics" [ref=e54] [cursor=pointer]:
+          - /url: /oes/
+    - generic [ref=e57]:
+      - generic [ref=e58]:
+        - heading "Occupational Employment and Wage Statistics" [level=1] [ref=e59]
+        - generic [ref=e61]:
+          - generic: Search Occupational Employment and Wage Statistics
+          - textbox "Search Occupational Employment and Wage Statistics" [ref=e62]
+          - button "Go" [ref=e63] [cursor=pointer]
+        - navigation "secondary-nav" [ref=e65]:
+          - menu [ref=e66]:
+            - menuitem "OEWS Home" [ref=e67] [cursor=pointer]
+            - link "OEWS Publications" [ref=e68] [cursor=pointer]:
+              - /url: "javascript:"
+            - text: ">>"
+            - link "OEWS Data" [ref=e69] [cursor=pointer]:
+              - /url: "javascript:"
+            - text: ">>"
+            - link "OEWS Methods" [ref=e70] [cursor=pointer]:
+              - /url: "javascript:"
+            - text: ">>"
+            - link "About OEWS" [ref=e71] [cursor=pointer]:
+              - /url: "javascript:"
+            - text: ">>"
+            - menuitem "Contact OEWS" [ref=e72] [cursor=pointer]
+      - heading "OEWS Research Estimates by State and Industry" [level=1] [ref=e73]
+      - paragraph [ref=e74]: The OEWS program provides wage and employment estimates by state and industry beginning with the May 2012 reference period. These estimates are intended for research purposes, and users should be aware of the limitations of the data.
+      - heading "Reliability of the Estimates" [level=2] [ref=e75]
+      - paragraph [ref=e76]: As with all data derived from sample surveys, OEWS research estimates are subject to sampling and non-sampling error. Sampling error occurs as a result of sampling from a population rather than recording the population's true value; this is what sets a survey apart from a census. The variation that results from sampling procedures is given by a standard error. OEWS research estimates give the standard error of the estimate divided by the estimate itself, then multiplied by 100; this is known as the percent relative standard error (PRSE). For example, if the estimate of occupation A in state B is 50 and the standard error is 5, the PRSE of the estimate is (5/50)*100, or 10 percent.
+      - paragraph [ref=e77]: OEWS research estimates are also subject to non-sampling error. Non-sampling error can occur for many reasons, including the failure to include a segment of the population, the inability to obtain data from all units in the sample, the inability or unwillingness of respondents to provide data on a timely basis, mistakes made by respondents, errors made in the collection or processing of the data, and errors from the employment benchmark data used in estimation.
+      - heading "Important Features of the OEWS Research Estimates" [level=3] [ref=e78]
+      - list [ref=e79]:
+        - listitem [ref=e80]:
+          - strong [ref=e81]: Estimates prior to May 2012 are not available.
+        - listitem [ref=e82]:
+          - text: Estimates are only available for states;
+          - strong [ref=e83]: industry-specific estimates for metropolitan areas are not available.
+        - listitem [ref=e84]:
+          - text: Estimates are only available for detail and major occupation groups;
+          - strong [ref=e85]: industry-specific estimates for broad and minor occupation groups are not available.
+      - paragraph [ref=e86]:
+        - text: Additional information may be available from the State Workforce Agency (SWA) in each state. Format and medium of the data vary by state. To determine whether additional estimates are available for a particular State, please contact the appropriate office on the
+        - link "State Contact List" [ref=e87] [cursor=pointer]:
+          - /url: /bls/ofolist.htm
+        - text: .
+      - heading "How to Obtain OEWS Research Estimates" [level=2] [ref=e88]
+      - paragraph [ref=e89]: Estimates are available for download in XLS format at the links below. The files are organized by year and similar groups of industry sectors according to the North American Industrial Classification System (NAICS).
+      - heading "May 2024" [level=3] [ref=e90]
+      - paragraph [ref=e91]:
+        - text: May 2024 OEWS data for Colorado and its areas are now available. For more information, see the
+        - link "Notice Regarding Publication of Colorado Occupational Employment and Wage Statistics" [ref=e92] [cursor=pointer]:
+          - /url: /oes/notices/2025/colorado-may-2024-oews-estimates.htm
+        - text: .
+      - list [ref=e93]:
+        - listitem [ref=e94]:
+          - link "All Sectors May 2024 OEWS Research Estimates for All Sectors XLSX Format" [ref=e95] [cursor=pointer]:
+            - /url: /oes/special-requests/oes_research_2024_allsectors.xlsx
+            - text: All Sectors
+        - listitem [ref=e96]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2024 OEWS Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e97] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e98]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2024 OEWS Research Estimates for Manufacturing XLSX Format" [ref=e99] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e100]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2024 OEWS Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e101] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e102]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2024 OEWS Research Estimates for Transportation and Warehousing XLSX Format" [ref=e103] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e104]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2024 OEWS Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e105] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e106]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2024 OEWS Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e107] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e108]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2024 OEWS Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e109] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e110]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2024 OEWS Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e111] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e112]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2024 OEWS Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e113] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e114]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2024 OEWS Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e115] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e116]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2024 OEWS Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e117] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e118]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation) May 2024 OEWS Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation) XLSX Format" [ref=e119] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2024_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation)"
+      - heading "May 2023" [level=3] [ref=e120]
+      - list [ref=e121]:
+        - listitem [ref=e122]:
+          - link "All Sectors May 2023 OEWS Research Estimates for All Sectors XLSX Format" [ref=e123] [cursor=pointer]:
+            - /url: /oes/special-requests/oes_research_2023_allsectors.xlsx
+            - text: All Sectors
+        - listitem [ref=e124]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2023 OEWS Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e125] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e126]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2023 OEWS Research Estimates for Manufacturing XLSX Format" [ref=e127] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e128]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2023 OEWS Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e129] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e130]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2023 OEWS Research Estimates for Transportation and Warehousing XLSX Format" [ref=e131] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e132]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2023 OEWS Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e133] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e134]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2023 OEWS Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e135] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e136]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2023 OEWS Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e137] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e138]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2023 OEWS Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e139] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e140]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2023 OEWS Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e141] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e142]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2023 OEWS Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e143] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e144]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2023 OEWS Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e145] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e146]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation) May 2023 OEWS Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation) XLSX Format" [ref=e147] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2023_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation)"
+      - heading "May 2022" [level=3] [ref=e148]
+      - list [ref=e149]:
+        - listitem [ref=e150]:
+          - link "All Sectors May 2022 OEWS Research Estimates for All Sectors XLSX Format" [ref=e151] [cursor=pointer]:
+            - /url: /oes/special-requests/oes_research_2022_allsectors.xlsx
+            - text: All Sectors
+        - listitem [ref=e152]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2022 OEWS Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e153] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e154]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2022 OEWS Research Estimates for Manufacturing XLSX Format" [ref=e155] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e156]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2022 OEWS Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e157] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e158]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2022 OEWS Research Estimates for Transportation and Warehousing XLSX Format" [ref=e159] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e160]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2022 OEWS Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e161] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e162]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2022 OEWS Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e163] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e164]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2022 OEWS Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e165] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e166]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2022 OEWS Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e167] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e168]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2022 OEWS Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e169] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e170]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2022 OEWS Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e171] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e172]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2022 OEWS Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e173] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e174]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation) May 2022 OEWS Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation) XLSX Format" [ref=e175] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2022_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation)"
+      - heading "May 2021" [level=3] [ref=e176]
+      - list [ref=e177]:
+        - listitem [ref=e178]:
+          - link "All Sectors May 2021 OEWS Research Estimates for All Sectors XLSX Format" [ref=e179] [cursor=pointer]:
+            - /url: /oes/special-requests/oes_research_2021_allsectors.xlsx
+            - text: All Sectors
+        - listitem [ref=e180]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2021 OEWS Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e181] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e182]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2021 OEWS Research Estimates for Manufacturing XLSX Format" [ref=e183] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e184]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2021 OEWS Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e185] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e186]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2021 OEWS Research Estimates for Transportation and Warehousing XLSX Format" [ref=e187] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e188]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2021 OEWS Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e189] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e190]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2021 OEWS Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e191] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e192]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2021 OEWS Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e193] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e194]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2021 OEWS Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e195] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e196]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2021 OEWS Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e197] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e198]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2021 OEWS Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e199] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e200]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2021 OEWS Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e201] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e202]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation) May 2021 OEWS Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation) XLSX Format" [ref=e203] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2021_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OEWS Designation)"
+      - heading "May 2020" [level=3] [ref=e204]
+      - list [ref=e205]:
+        - listitem [ref=e206]:
+          - link "All Sectors May 2020 OES Research Estimates for All Sectors XLSX Format" [ref=e207] [cursor=pointer]:
+            - /url: /oes/special-requests/oes_research_2020_allsectors.xlsx
+            - text: All Sectors
+        - listitem [ref=e208]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2020 OES Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e209] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e210]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2020 OES Research Estimates for Manufacturing XLSX Format" [ref=e211] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e212]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2020 OES Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e213] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e214]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2020 OES Research Estimates for Transportation and Warehousing XLSX Format" [ref=e215] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e216]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2020 OES Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e217] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e218]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2020 OES Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e219] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e220]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2020 OES Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e221] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e222]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2020 OES Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e223] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e224]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2020 OES Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e225] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e226]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2020 OES Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e227] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e228]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2020 OES Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e229] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e230]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) May 2020 OES Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) XLSX Format" [ref=e231] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2020_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation)"
+      - heading "May 2019" [level=3] [ref=e232]
+      - list [ref=e233]:
+        - listitem [ref=e234]:
+          - link "All Sectors May 2019 OES Research Estimates for All Sectors XLSX Format" [ref=e235] [cursor=pointer]:
+            - /url: /oes/special-requests/oes_research_2019_allsectors.xlsx
+            - text: All Sectors
+        - listitem [ref=e236]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2019 OES Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e237] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e238]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2019 OES Research Estimates for Manufacturing XLSX Format" [ref=e239] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e240]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2019 OES Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e241] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e242]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2019 OES Research Estimates for Transportation and Warehousing XLSX Format" [ref=e243] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e244]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2019 OES Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e245] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e246]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2019 OES Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e247] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e248]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2019 OES Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e249] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e250]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2019 OES Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e251] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e252]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2019 OES Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e253] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e254]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2019 OES Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e255] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e256]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2019 OES Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e257] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e258]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) May 2019 OES Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) XLSX Format" [ref=e259] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2019_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation)"
+      - heading "May 2018" [level=3] [ref=e260]
+      - list [ref=e261]:
+        - listitem [ref=e262]:
+          - link "All Sectors May 2018 OES Research Estimates for All Sectors XLSX Format" [ref=e263] [cursor=pointer]:
+            - /url: /oes/special-requests/oes_research_2018_allsectors.xlsx
+            - text: All Sectors
+        - listitem [ref=e264]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2018 OES Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e265] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e266]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2018 OES Research Estimates for Manufacturing XLSX Format" [ref=e267] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e268]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2018 OES Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e269] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e270]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2018 OES Research Estimates for Transportation and Warehousing XLSX Format" [ref=e271] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e272]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2018 OES Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e273] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e274]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2018 OES Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e275] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e276]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2018 OES Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e277] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e278]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2018 OES Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e279] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e280]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2018 OES Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e281] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e282]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2018 OES Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e283] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e284]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2018 OES Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e285] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e286]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) May 2018 OES Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) XLSX Format" [ref=e287] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2018_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation)"
+      - heading "May 2017" [level=3] [ref=e288]
+      - list [ref=e289]:
+        - listitem [ref=e290]:
+          - link "All Sectors May 2017 OES Research Estimates for All Sectors XLSX Format" [ref=e291] [cursor=pointer]:
+            - /url: /oes/special-requests/oes_research_2017_allsectors.xlsx
+            - text: All Sectors
+        - listitem [ref=e292]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2017 OES Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e293] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e294]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2017 OES Research Estimates for Manufacturing XLSX Format" [ref=e295] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e296]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2017 OES Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e297] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e298]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2017 OES Research Estimates for Transportation and Warehousing XLSX Format" [ref=e299] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e300]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2017 OES Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e301] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e302]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2017 OES Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e303] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e304]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2017 OES Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e305] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e306]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2017 OES Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e307] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e308]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2017 OES Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e309] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e310]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2017 OES Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e311] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e312]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2017 OES Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e313] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e314]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) May 2017 OES Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) XLSX Format" [ref=e315] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2017_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation)"
+      - heading "May 2016" [level=3] [ref=e316]
+      - list [ref=e317]:
+        - listitem [ref=e318]:
+          - link "All Sectors May 2016 OES Research Estimates for All Sectors XLSX Format" [ref=e319] [cursor=pointer]:
+            - /url: /oes/special-requests/oes_research_2016_allsectors.xlsx
+            - text: All Sectors
+        - listitem [ref=e320]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2016 OES Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e321] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e322]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2016 OES Research Estimates for Manufacturing XLSX Format" [ref=e323] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e324]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2016 OES Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e325] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e326]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2016 OES Research Estimates for Transportation and Warehousing XLSX Format" [ref=e327] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e328]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2016 OES Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e329] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e330]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2016 OES Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e331] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e332]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2016 OES Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e333] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e334]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2016 OES Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e335] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e336]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2016 OES Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e337] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e338]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2016 OES Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e339] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e340]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2016 OES Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e341] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e342]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) May 2016 OES Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) XLSX Format" [ref=e343] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2016_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation)"
+      - heading "May 2015" [level=3] [ref=e344]
+      - list [ref=e345]:
+        - listitem [ref=e346]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2015 OES Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e347] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e348]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2015 OES Research Estimates for Manufacturing XLSX Format" [ref=e349] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e350]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2015 OES Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e351] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e352]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2015 OES Research Estimates for Transportation and Warehousing XLSX Format" [ref=e353] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e354]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2015 OES Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e355] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e356]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2015 OES Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e357] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e358]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2015 OES Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e359] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e360]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2015 OES Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e361] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e362]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2015 OES Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e363] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e364]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2015 OES Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e365] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e366]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2015 OES Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e367] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e368]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) May 2015 OES Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) XLSX Format" [ref=e369] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2015_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation)"
+      - heading "May 2014" [level=3] [ref=e370]
+      - list [ref=e371]:
+        - listitem [ref=e372]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2014 OES Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e373] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e374]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2014 OES Research Estimates for Manufacturing XLSX Format" [ref=e375] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e376]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2014 OES Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e377] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e378]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2014 OES Research Estimates for Transportation and Warehousing XLSX Format" [ref=e379] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e380]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2014 OES Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e381] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e382]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2014 OES Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e383] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e384]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2014 OES Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e385] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e386]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2014 OES Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e387] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e388]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2014 OES Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e389] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e390]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2014 OES Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e391] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e392]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2014 OES Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e393] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e394]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) May 2014 OES Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) XLSX Format" [ref=e395] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2014_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation)"
+      - heading "May 2013" [level=3] [ref=e396]
+      - list [ref=e397]:
+        - listitem [ref=e398]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2013 OES Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e399] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e400]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2013 OES Research Estimates for Manufacturing XLSX Format" [ref=e401] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e402]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2013 OES Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e403] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e404]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2013 OES Research Estimates for Transportation and Warehousing XLSX Format" [ref=e405] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e406]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2013 OES Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e407] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e408]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2013 OES Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e409] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e410]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2013 OES Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e411] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e412]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2013 OES Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e413] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e414]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2013 OES Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e415] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e416]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2013 OES Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e417] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e418]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2013 OES Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e419] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e420]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) May 2013 OES Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) XLSX Format" [ref=e421] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2013_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation)"
+      - heading "May 2012" [level=3] [ref=e422]
+      - list [ref=e423]:
+        - listitem [ref=e424]:
+          - 'link "Sectors 21, 22, & 23: Mining, Utilities, and Construction May 2012 OES Research Estimates for Mining, Utilities, and Construction XLSX Format" [ref=e425] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_21-22-23.xlsx
+            - text: "Sectors 21, 22, & 23: Mining, Utilities, and Construction"
+        - listitem [ref=e426]:
+          - 'link "Sectors 31, 32, & 33: Manufacturing May 2012 OES Research Estimates for Manufacturing XLSX Format" [ref=e427] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_31-32-33.xlsx
+            - text: "Sectors 31, 32, & 33: Manufacturing"
+        - listitem [ref=e428]:
+          - 'link "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade May 2012 OES Research Estimates for Wholesale Trade and Retail Trade XLSX Format" [ref=e429] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_42-44-45.xlsx
+            - text: "Sectors 42, 44, & 45: Wholesale Trade and Retail Trade"
+        - listitem [ref=e430]:
+          - 'link "Sectors 48 & 49: Transportation and Warehousing May 2012 OES Research Estimates for Transportation and Warehousing XLSX Format" [ref=e431] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_48-49.xlsx
+            - text: "Sectors 48 & 49: Transportation and Warehousing"
+        - listitem [ref=e432]:
+          - 'link "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing May 2012 OES Research Estimates for Finance and Insurance and Real Estate and Rental and Leasing XLSX Format" [ref=e433] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_52-53.xlsx
+            - text: "Sectors 52 & 53: Finance and Insurance and Real Estate and Rental and Leasing"
+        - listitem [ref=e434]:
+          - 'link "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services May 2012 OES Research Estimates for Information and Professional, Scientific, and Technical Services XLSX Format" [ref=e435] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_51-54.xlsx
+            - text: "Sectors 51 & 54: Information and Professional, Scientific, and Technical Services"
+        - listitem [ref=e436]:
+          - 'link "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation May 2012 OES Research Estimates for Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation XLSX Format" [ref=e437] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_55-56.xlsx
+            - text: "Sectors 55 & 56: Management of Companies and Enterprises and Administrative and Support and Waste Management and Remediation"
+        - listitem [ref=e438]:
+          - 'link "Sector 61: Educational Services (including private, state, and local government schools) May 2012 OES Research Estimates for Educational Services (including private, state, and local government schools) XLSX Format" [ref=e439] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_61.xlsx
+            - text: "Sector 61: Educational Services (including private, state, and local government schools)"
+        - listitem [ref=e440]:
+          - 'link "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals) May 2012 OES Research Estimates for Health Care and Social Assistance (including private, state, and local government hospitals) XLSX Format" [ref=e441] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_62.xlsx
+            - text: "Sector 62: Health Care and Social Assistance (including private, state, and local government hospitals)"
+        - listitem [ref=e442]:
+          - 'link "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services May 2012 OES Research Estimates for Arts, Entertainment, and Recreation and Accommodation and Food Services XLSX Format" [ref=e443] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_71-72.xlsx
+            - text: "Sectors 71 & 72: Arts, Entertainment, and Recreation and Accommodation and Food Services"
+        - listitem [ref=e444]:
+          - 'link "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) May 2012 OES Research Estimates for Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government) XLSX Format" [ref=e445] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_11-81.xlsx
+            - text: "Sectors 11 & 81: Agriculture, Forestry, Fishing, and Hunting and Other Services (except Federal, State, and Local Government)"
+        - listitem [ref=e446]:
+          - 'link "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) May 2012 OES Research Estimates for Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation) XLSX Format" [ref=e447] [cursor=pointer]':
+            - /url: /oes/special-requests/oes_research_2012_sec_99.xlsx
+            - text: "Sector 99: Federal, State, and Local Government, excluding state and local schools and hospitals, and the U.S. Postal Service (OES Designation)"
+      - heading "Contact Information" [level=2] [ref=e448]
+      - paragraph [ref=e449]: "For additional information concerning OEWS research estimates, please contact an OEWS staff member:"
+      - list [ref=e450]:
+        - listitem [ref=e451]:
+          - text: "E-mail:"
+          - link "Contact us" [ref=e452] [cursor=pointer]:
+            - /url: https://data.bls.gov/forms/oes.htm
+        - listitem [ref=e453]: "Telephone number: 202-691-6569"
+        - listitem [ref=e454]: "Fax number: 202-691-6444"
+        - listitem [ref=e455]: "Mail address: Office of Employment and Unemployment Statistics, Occupational Employment and Wage Statistics, Suitland Federal Center, Floor 3, 4600 Silver Hill Road, Washington, DC 20212-0002"
+      - paragraph [ref=e456]
+      - paragraph [ref=e457]:
+        - strong [ref=e458]: "Last Modified Date:"
+        - text: July 23, 2025
+  - contentinfo [ref=e460]:
+    - list [ref=e462]:
+      - listitem [ref=e463]:
+        - link "Home" [ref=e464] [cursor=pointer]:
+          - /url: https://www.bls.gov/
+      - listitem [ref=e465]:
+        - link "Subjects" [ref=e466] [cursor=pointer]:
+          - /url: /bls/proghome.htm
+      - listitem [ref=e467]:
+        - link "Data Tools" [ref=e468] [cursor=pointer]:
+          - /url: /data/
+      - listitem [ref=e469]:
+        - link "Publications" [ref=e470] [cursor=pointer]:
+          - /url: /opub/
+      - listitem [ref=e471]:
+        - link "Economic Releases" [ref=e472] [cursor=pointer]:
+          - /url: /bls/newsrels.htm
+      - listitem [ref=e473]:
+        - link "Classroom" [ref=e474] [cursor=pointer]:
+          - /url: /k12/
+      - listitem [ref=e475]:
+        - link "Beta" [ref=e476] [cursor=pointer]:
+          - /url: /beta/
+    - link "Help improve this site" [ref=e477] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e478]: Help improve this site
+    - generic [ref=e481]:
+      - generic [ref=e483]:
+        - img "U.S. Bureau of Labor Statistics Logo" [ref=e485]
+        - generic [ref=e486]:
+          - generic [ref=e487]:
+            - strong [ref=e488]: U.S. Bureau of Labor Statistics
+            - generic [ref=e489]: Occupational Employment and Wage Statistics
+            - generic [ref=e490]: Office of Employment and Unemployment Statistics
+            - generic [ref=e491]: Suitland Federal Center
+            - generic [ref=e492]: Floor 3
+            - generic [ref=e493]: 4600 Silver Hill Road
+            - generic [ref=e494]: Washington, DC 20212-0002
+          - generic [ref=e495]:
+            - 'link "Telephone: 202-691-6569" [ref=e496] [cursor=pointer]':
+              - /url: tel:12026916569
+              - generic [ref=e497]: "Telephone:"
+              - generic [ref=e498]: 202-691-6569
+            - link "www.bls.gov/OES" [ref=e499] [cursor=pointer]:
+              - /url: /oes/home.htm
+            - link "Contact OEWS" [ref=e500] [cursor=pointer]:
+              - /url: https://data.bls.gov/forms/oes.htm?/oes/current/oes_research_estimates.htm
+      - generic [ref=e501]:
+        - generic [ref=e502]:
+          - strong [ref=e503]: resources
+          - text: "[+]"
+          - list [ref=e505]:
+            - listitem [ref=e506]:
+              - link "Inspector General (OIG) Office of Inspector General (OIG) website" [ref=e507] [cursor=pointer]:
+                - /url: https://www.oig.dol.gov/
+                - text: Inspector General (OIG)
+            - listitem [ref=e508]:
+              - link "Budget and Performance" [ref=e509] [cursor=pointer]:
+                - /url: /bls/bls_budget_and_performance.htm
+            - listitem [ref=e510]:
+              - link "Department of Labor Grants" [ref=e511] [cursor=pointer]:
+                - /url: https://www.dol.gov/grants
+            - listitem [ref=e512]:
+              - link "No Fear Act" [ref=e513] [cursor=pointer]:
+                - /url: /bls/no_fear_act.htm
+            - listitem [ref=e514]:
+              - link "USA.gov website" [ref=e515] [cursor=pointer]:
+                - /url: https://www.usa.gov/
+                - text: USA.gov
+        - generic [ref=e516]:
+          - strong [ref=e517]: about the site
+          - text: "[+]"
+          - list [ref=e519]:
+            - listitem [ref=e520]:
+              - link "Sitemap" [ref=e521] [cursor=pointer]:
+                - /url: /bls/sitemap.htm
+            - listitem [ref=e522]:
+              - link "Freedom of Information Act" [ref=e523] [cursor=pointer]:
+                - /url: /bls/blsfoia.htm
+            - listitem [ref=e524]:
+              - link "Privacy and Security Statement" [ref=e525] [cursor=pointer]:
+                - /url: /bls/pss.htm
+            - listitem [ref=e526]:
+              - link "Disclaimers" [ref=e527] [cursor=pointer]:
+                - /url: /bls/disclaimer.htm
+            - listitem [ref=e528]:
+              - link "Linking and Copyright Information" [ref=e529] [cursor=pointer]:
+                - /url: /bls/linksite.htm
+                - text: Linking and Copyright Info
+            - listitem [ref=e530]:
+              - link "Important Website Notices" [ref=e531] [cursor=pointer]:
+                - /url: /bls/website-policies.htm
+            - listitem [ref=e532]:
+              - link "Help and Tutorials" [ref=e533] [cursor=pointer]:
+                - /url: /help/
+            - listitem [ref=e534]:
+              - link "Accessibility Statement" [ref=e535] [cursor=pointer]:
+                - /url: /bls/ada.htm
+    - generic [ref=e538]:
+      - text: Connect With BLS
+      - generic [ref=e539]:
+        - link "Bluesky" [ref=e540] [cursor=pointer]:
+          - /url: https://bsky.app/profile/usbls.bsky.social
+          - img [ref=e541]
+          - generic [ref=e543]: Bluesky
+        - link "Instagram" [ref=e544] [cursor=pointer]:
+          - /url: https://www.instagram.com/usbls_gov/
+          - img [ref=e545]
+          - generic [ref=e547]: Instagram
+        - link "LinkedIn" [ref=e548] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/bureau-of-labor-statistics/
+          - img [ref=e549]
+          - generic [ref=e551]: LinkedIn
+        - link "Threads" [ref=e552] [cursor=pointer]:
+          - /url: https://www.threads.net/@usbls_gov
+          - img [ref=e553]
+          - generic [ref=e555]: Threads
+        - link "Visit BLS on X" [ref=e556] [cursor=pointer]:
+          - /url: https://x.com/BLS_gov
+          - img [ref=e557]
+          - generic [ref=e559]: Visit BLS on X
+        - link "Youtube" [ref=e560] [cursor=pointer]:
+          - /url: https://www.youtube.com/channel/UCijn3WBpHtx4AvSya7NER9Q
+          - img [ref=e561]
+          - generic [ref=e563]: Youtube
+        - link "Email" [ref=e564] [cursor=pointer]:
+          - /url: javascript:window.open('https://public.govdelivery.com/accounts/USDOLBLS/subscriber/new ','Popup','width=800,height=500,toolbar=no,scrollbars=yes,resizable=yes'); void('');
+          - img [ref=e565]
+          - generic [ref=e567]: Email

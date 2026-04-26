@@ -1,0 +1,478 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Skip to Content" [ref=e3] [cursor=pointer]:
+      - /url: "#main"
+    - generic [ref=e4]:
+      - navigation "ULI Global" [ref=e5]:
+        - heading "ULI Global" [level=2] [ref=e6]
+        - generic [ref=e7]:
+          - list [ref=e9]:
+            - listitem [ref=e10]:
+              - generic [ref=e11]:
+                - link "Global" [ref=e12] [cursor=pointer]:
+                  - /url: https://uli.org/#ulip=globalnav-uliglobal
+                - button "Show" [ref=e13] [cursor=pointer]:
+                  - generic [ref=e14]: Show
+                  - generic:
+                    - img
+            - listitem [ref=e15]:
+              - link "Knowledge Finder" [ref=e16] [cursor=pointer]:
+                - /url: https://knowledge.uli.org/#ulip=globalnav-kf
+            - listitem [ref=e17]:
+              - link "Member Directory" [ref=e18] [cursor=pointer]:
+                - /url: https://members.uli.org/#ulip=globalnav-memdirectory
+            - listitem [ref=e19]:
+              - link "Navigator" [ref=e20] [cursor=pointer]:
+                - /url: https://navigator.uli.org/#ulip=globalnav-navigator
+            - listitem [ref=e21]:
+              - generic [ref=e22] [cursor=pointer]: More
+              - generic:
+                - img
+          - generic [ref=e23]:
+            - list [ref=e24]:
+              - listitem [ref=e25]:
+                - link "Donate" [ref=e26] [cursor=pointer]:
+                  - /url: https://netforum.uli.org/eWeb/dynamicPage.aspx?webcode=ULIAnnualFundDonation&action=add&gft_src_key=0048c849-2c5e-4585-883a-ae4b855db1f5&donotsave=yes#ulip=globalnav-donate-notsignedin
+              - listitem [ref=e27]:
+                - link "Contact" [ref=e28] [cursor=pointer]:
+                  - /url: https://uli.org/about-uli/uli-contact-us#ulip=globalnav-contact
+              - listitem [ref=e29]:
+                - button "Sign In" [ref=e30] [cursor=pointer]
+            - link "Join ULI" [ref=e31] [cursor=pointer]:
+              - /url: https://americas.uli.org/membership/join/
+      - banner [ref=e32]:
+        - generic [ref=e34]:
+          - link "ULI Americas" [ref=e36] [cursor=pointer]:
+            - /url: https://americas.uli.org
+            - img "ULI Americas" [ref=e37]
+          - navigation "Main Menu" [ref=e38]:
+            - heading "Main Menu" [level=2] [ref=e39]
+            - list [ref=e40]:
+              - listitem [ref=e41]:
+                - link "About ULI Will open in a new window" [ref=e42] [cursor=pointer]:
+                  - /url: https://americas.uli.org/about-uli/
+                  - text: About ULI
+                  - generic [ref=e43]: Will open in a new window
+                - generic [ref=e44]:
+                  - generic [ref=e45]: Show
+                  - generic:
+                    - img
+              - listitem [ref=e46]:
+                - link "Events Will open in a new window" [ref=e47] [cursor=pointer]:
+                  - /url: https://americas.uli.org/events/
+                  - text: Events
+                  - generic [ref=e48]: Will open in a new window
+                - generic [ref=e49]:
+                  - generic [ref=e50]: Show
+                  - generic:
+                    - img
+              - listitem [ref=e51]:
+                - link "Membership Will open in a new window" [ref=e52] [cursor=pointer]:
+                  - /url: https://americas.uli.org/membership/
+                  - text: Membership
+                  - generic [ref=e53]: Will open in a new window
+                - generic [ref=e54]:
+                  - generic [ref=e55]: Show
+                  - generic:
+                    - img
+              - listitem [ref=e56]:
+                - link "Councils Will open in a new window" [ref=e57] [cursor=pointer]:
+                  - /url: https://americas.uli.org/councils/
+                  - text: Councils
+                  - generic [ref=e58]: Will open in a new window
+                - generic [ref=e59]:
+                  - generic [ref=e60]: Show
+                  - generic:
+                    - img
+              - listitem [ref=e61]:
+                - link "Programs Will open in a new window" [ref=e62] [cursor=pointer]:
+                  - /url: https://americas.uli.org/programs/
+                  - text: Programs
+                  - generic [ref=e63]: Will open in a new window
+                - generic [ref=e64]:
+                  - generic [ref=e65]: Show
+                  - generic:
+                    - img
+              - listitem [ref=e66]:
+                - link "Research Will open in a new window" [ref=e67] [cursor=pointer]:
+                  - /url: https://americas.uli.org/research/
+                  - text: Research
+                  - generic [ref=e68]: Will open in a new window
+                - generic [ref=e69]:
+                  - generic [ref=e70]: Show
+                  - generic:
+                    - img
+              - listitem [ref=e71]:
+                - link "Publications Will open in a new window" [ref=e72] [cursor=pointer]:
+                  - /url: https://americas.uli.org/publications/
+                  - text: Publications
+                  - generic [ref=e73]: Will open in a new window
+                - generic [ref=e74]:
+                  - generic [ref=e75]: Show
+                  - generic:
+                    - img
+          - button "Show search" [ref=e77] [cursor=pointer]:
+            - generic [ref=e78]: Show search
+            - generic:
+              - img
+        - navigation "Sticky Menu" [ref=e79]:
+          - generic [ref=e80]:
+            - link "ULI Americas" [ref=e83] [cursor=pointer]:
+              - /url: https://americas.uli.org
+              - img "ULI Americas" [ref=e84]
+            - generic [ref=e85]:
+              - button "Sign In" [ref=e86] [cursor=pointer]
+              - button "Show search" [ref=e88] [cursor=pointer]:
+                - generic [ref=e89]: Show search
+                - generic:
+                  - img
+              - button "Show full menu" [ref=e91] [cursor=pointer]:
+                - generic [ref=e92]: Show full menu
+    - main [ref=e94]:
+      - generic [ref=e97]:
+        - navigation "Breadcrumbs" [ref=e98]:
+          - list [ref=e99]:
+            - listitem [ref=e100]:
+              - link "Research" [ref=e101] [cursor=pointer]:
+                - /url: https://americas.uli.org/research/
+              - generic [ref=e102]:
+                - generic:
+                  - img
+            - listitem [ref=e103]:
+              - link "Impact Lab" [ref=e104] [cursor=pointer]:
+                - /url: https://americas.uli.org/research/impact-lab/
+        - heading "Terwilliger Center for Housing" [level=1] [ref=e105]
+      - generic [ref=e106]:
+        - generic [ref=e107]:
+          - complementary [ref=e108]:
+            - navigation "In This Section" [ref=e109]:
+              - generic [ref=e110]:
+                - heading "In This Section" [level=2] [ref=e111] [cursor=pointer]
+                - button "Show" [expanded] [ref=e112] [cursor=pointer]:
+                  - generic [ref=e113]: Show
+                  - generic:
+                    - img
+              - list [ref=e114]:
+                - listitem [ref=e115]:
+                  - link "Terwilliger Events" [ref=e116] [cursor=pointer]:
+                    - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/terwilliger-events/
+                  - list [ref=e117]:
+                    - listitem [ref=e118]:
+                      - link "ULI Housing Opportunity Conference" [ref=e119] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/terwilliger-events/uli-housing-opportunity-conference/
+                    - listitem [ref=e120]:
+                      - link "Webinars" [ref=e121] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/terwilliger-events/terwilliger-center-for-housing-webinars/
+                - listitem [ref=e122]:
+                  - link "Let’s Build! Initiative" [ref=e123] [cursor=pointer]:
+                    - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/lets-build-initiative/
+                  - list
+                - listitem [ref=e124]:
+                  - link "Housing Impact Awards" [ref=e125] [cursor=pointer]:
+                    - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/awards/
+                  - list [ref=e126]:
+                    - listitem [ref=e127]:
+                      - link "Housing Impact Awards Criteria" [ref=e128] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/awards/criteria-housing-impact-awards/
+                - listitem [ref=e129]:
+                  - link "Technical Assistance Program" [ref=e130] [cursor=pointer]:
+                    - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/technical-assistance-program/
+                  - list
+                - listitem [ref=e131]:
+                  - link "Research & Publications" [ref=e132] [cursor=pointer]:
+                    - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/research-publications/
+                  - list [ref=e133]:
+                    - listitem [ref=e134]:
+                      - link "Case Studies" [ref=e135] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/research-publications/case-studies/
+                    - listitem [ref=e136]:
+                      - link "Home Attainability Index" [ref=e137] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/research-publications/home-attainability-index/
+                - listitem [ref=e138]:
+                  - link "Homeless to Housed (H2H)" [ref=e139] [cursor=pointer]:
+                    - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/homeless-to-housed-initiative/
+                  - list [ref=e140]:
+                    - listitem [ref=e141]:
+                      - link "10 Principles for Addressing Homelessness" [ref=e142] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/homeless-to-housed-initiative/10-principles-for-addressing-homelessness/
+                    - listitem [ref=e143]:
+                      - link "H2H Reading List" [ref=e144] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/homeless-to-housed-initiative/the-official-uli-homeless-to-housed-reading-list/
+                    - listitem [ref=e145]:
+                      - link "H2H Education (Research + Publications)" [ref=e146] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/homeless-to-housed-initiative/h2h-research/
+                    - listitem [ref=e147]:
+                      - link "H2H District Council Engagement" [ref=e148] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/homeless-to-housed-initiative/technical-assistance/
+                    - listitem [ref=e149]:
+                      - link "H2H Awareness (Activities + Events)" [ref=e150] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/homeless-to-housed-initiative/awareness-building/
+                - listitem [ref=e151]:
+                  - link "All About the TC" [ref=e152] [cursor=pointer]:
+                    - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/all-about-the-tc/
+                  - list [ref=e153]:
+                    - listitem [ref=e154]:
+                      - link "Advisory Board" [ref=e155] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/all-about-the-tc/advisory-board/
+                    - listitem [ref=e156]:
+                      - link "Terwilliger Center Team" [ref=e157] [cursor=pointer]:
+                        - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/all-about-the-tc/terwilliger-center-team/
+          - paragraph [ref=e160]: The mission of the Terwilliger Center for Housing is to ensure that everyone has a home that meets their needs at a price they can afford. Established in 2007 with a gift from longtime member and former ULI chairman J. Ronald Terwilliger, the Center’s activities include technical assistance engagements, forums and convenings, research and publications, and an awards program. The goal is to catalyze the production and preservation of a full spectrum of housing options.
+        - generic [ref=e163]:
+          - paragraph [ref=e164]: "The Terwilliger Center for Housing is home to important initiatives such as:"
+          - list [ref=e165]:
+            - listitem [ref=e166]:
+              - text: •
+              - link "Housing Opportunity Conference" [ref=e167] [cursor=pointer]:
+                - /url: https://americas.uli.org/research/centers-initiatives/terwilliger-center-for-housing/upcoming-events-with-the-terwilliger-center/annual-uli-housing-conference/
+              - text: — The Housing Opportunity conference is one of the nation’s premier meetings of the residential development, lending, investing, and policy community, and brings together a diverse mix of private and nonprofit real estate developers, public officials, urban and regional planners, housing advocates, architects, investors, and lenders with one common goal – to expand housing opportunities in their communities.
+            - listitem [ref=e168]:
+              - text: •
+              - link "Accelerating Housing Production Grants" [ref=e169] [cursor=pointer]:
+                - /url: https://americas.uli.org/research/centers-initiatives/terwilliger-center-for-housing/attainable-housing-for-all-campaign/
+              - text: – This new initiative leverages ULI’s technical assistance panels and other forums to directly engage with local communities, bringing expertise to solve unique affordability challenges and expand the production and preservation of attainable housing.
+            - listitem [ref=e170]:
+              - text: •
+              - link "The Housing Impact Awards" [ref=e171] [cursor=pointer]:
+                - /url: https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/awards/
+              - text: – These awards recognize best practices that measurably expand housing supply and affordability, and highlight replicable development and policy models that can be adopted at scale in communities across the country.
+            - listitem [ref=e172]:
+              - text: •
+              - link "Homeless to Housed (H2H)" [ref=e173] [cursor=pointer]:
+                - /url: https://americas.uli.org/research/centers-initiatives/terwilliger-center-for-housing/homeless-to-housed-initiative/
+              - text: – Launched in 2022 and the Terwilliger Center’s newest initiative, H2H works to explore real estate solutions to the growing humanitarian and economic crisis impacting communities everywhere. Core elements of this work include conducting research, promoting cross-sector collaboration, providing
+              - link "local technical assistance" [ref=e174] [cursor=pointer]:
+                - /url: https://americas.uli.org/research/centers-initiatives/terwilliger-center-for-housing/homeless-to-housed-initiative/open-call-for-ideas-homeless-to-housed-technical-assistance-grants/
+              - text: through ULI’s network of district councils, and sharing knowledge and expertise for addressing housing challenges for individuals and families experiencing homelessness.
+        - separator [ref=e176]
+        - generic [ref=e179]:
+          - heading "Contact Us" [level=3] [ref=e180]:
+            - strong [ref=e181]: Contact Us
+          - paragraph [ref=e182]:
+            - text: Thanks for visiting the Terwilliger Center’s website! Please connect with us at
+            - link "housing@uli.org" [ref=e183] [cursor=pointer]:
+              - /url: mailto:housing@uli.org
+            - text: or by contacting any member of the team.
+        - generic [ref=e185]:
+          - paragraph [ref=e186]: "Subscribe to our newsletter to hear from the Terwilliger Center on all housing-related events, articles, research, and more. Subscribe here:"
+          - generic [ref=e187]:
+            - textbox "Enter Email Address" [ref=e188]
+            - textbox "Enter First Name" [ref=e189]
+            - textbox "Enter Last Name" [ref=e190]
+            - button "Sign Up" [ref=e191] [cursor=pointer]
+        - generic [ref=e193]:
+          - heading "More from the Terwilliger Center for Housing" [level=2] [ref=e195]
+          - generic [ref=e196]:
+            - article [ref=e197]:
+              - 'link "Terwilliger Center Guide to Housing and Homelessness: 2026 Spring Meeting April 2, 2026 Check out a full list of ULI 2026 Spring Meeting activities focused on affordable housing and homelessness." [ref=e198] [cursor=pointer]':
+                - /url: https://americas.uli.org/terwilliger-center-guide-to-housing-and-homelessness-2026-spring-meeting/
+                - 'heading "Terwilliger Center Guide to Housing and Homelessness: 2026 Spring Meeting" [level=3] [ref=e199]'
+                - paragraph [ref=e200]: April 2, 2026
+                - paragraph [ref=e201]: Check out a full list of ULI 2026 Spring Meeting activities focused on affordable housing and homelessness.
+            - article [ref=e202]:
+              - 'link "Terwilliger Center Guide to Housing and Homelessness: 2025 Fall Meeting September 22, 2025 Check out a full list of ULI 2025 Fall Meeting activities focused on affordable housing and homelessness." [ref=e203] [cursor=pointer]':
+                - /url: https://americas.uli.org/terwilliger-center-guide-to-housing-and-homelessness-2025-fall-meeting/
+                - 'heading "Terwilliger Center Guide to Housing and Homelessness: 2025 Fall Meeting" [level=3] [ref=e204]'
+                - paragraph [ref=e205]: September 22, 2025
+                - paragraph [ref=e206]: Check out a full list of ULI 2025 Fall Meeting activities focused on affordable housing and homelessness.
+            - article [ref=e207]:
+              - 'link "Terwilliger Center Award for Innovation in Attainable Housing 2025 Winner: The Aster July 15, 2025 The Aster provides 190 apartments and 19,000 square foot of commercial space in downtown Salt Lake City." [ref=e208] [cursor=pointer]':
+                - /url: https://americas.uli.org/terwilliger-center-award-for-innovation-in-attainable-housing-2025-winner-the-aster/
+                - 'heading "Terwilliger Center Award for Innovation in Attainable Housing 2025 Winner: The Aster" [level=3] [ref=e209]'
+                - paragraph [ref=e210]: July 15, 2025
+                - paragraph [ref=e211]: The Aster provides 190 apartments and 19,000 square foot of commercial space in downtown Salt Lake City.
+            - article [ref=e212]:
+              - 'link "Terwilliger Center Award for Innovation in Attainable Housing 2025 Finalist: Fourth Plain Commons July 15, 2025 Fourth Plain Commons provides 106 subsidized workforce housing units along a rapid bus transit corridor in Vancouver, Washington." [ref=e213] [cursor=pointer]':
+                - /url: https://americas.uli.org/terwilliger-center-award-for-innovation-in-attainable-housing-2025-finalist-fourth-plain-commons/
+                - 'heading "Terwilliger Center Award for Innovation in Attainable Housing 2025 Finalist: Fourth Plain Commons" [level=3] [ref=e214]'
+                - paragraph [ref=e215]: July 15, 2025
+                - paragraph [ref=e216]: Fourth Plain Commons provides 106 subsidized workforce housing units along a rapid bus transit corridor in Vancouver, Washington.
+            - article [ref=e217]:
+              - 'link "Terwilliger Center Award for Innovation in Attainable Housing 2025 Winner: Sendero Verde July 15, 2025 Sendero Verde serves 700+ families in East Harlem, and is now the world''s largest Passive House residential building." [ref=e218] [cursor=pointer]':
+                - /url: https://americas.uli.org/terwilliger-center-award-for-innovation-in-attainable-housing-2025-winner-sendero-verde/
+                - 'heading "Terwilliger Center Award for Innovation in Attainable Housing 2025 Winner: Sendero Verde" [level=3] [ref=e219]'
+                - paragraph [ref=e220]: July 15, 2025
+                - paragraph [ref=e221]: Sendero Verde serves 700+ families in East Harlem, and is now the world's largest Passive House residential building.
+            - article [ref=e222]:
+              - 'link "Terwilliger Center Award for Innovation in Attainable Housing 2025 Finalist: Flagler Station July 15, 2025 Flagler Station provides 94 affordable units as the first new affordable apartment community in downtown West Palm Beach in 30 years." [ref=e223] [cursor=pointer]':
+                - /url: https://americas.uli.org/terwilliger-center-award-for-innovation-in-attainable-housing-2025-finalist-flagler-station/
+                - 'heading "Terwilliger Center Award for Innovation in Attainable Housing 2025 Finalist: Flagler Station" [level=3] [ref=e224]'
+                - paragraph [ref=e225]: July 15, 2025
+                - paragraph [ref=e226]: Flagler Station provides 94 affordable units as the first new affordable apartment community in downtown West Palm Beach in 30 years.
+          - paragraph
+    - contentinfo [ref=e227]:
+      - generic [ref=e229]:
+        - generic [ref=e230]:
+          - link "ULI Logo" [ref=e231] [cursor=pointer]:
+            - /url: https://uli.org
+            - img "ULI Logo" [ref=e232]
+          - paragraph [ref=e233]: "The mission of the Urban Land Institute:"
+          - paragraph [ref=e234]: Shape the future of the built environment for transformative impact in communities worldwide.
+          - link "Join ULI" [ref=e235] [cursor=pointer]:
+            - /url: https://americas.uli.org/membership/join/
+        - navigation [ref=e236]:
+          - generic [ref=e237]:
+            - heading "About ULI" [level=3] [ref=e238]:
+              - link "About ULI" [ref=e239] [cursor=pointer]:
+                - /url: https://americas.uli.org/about-uli/
+            - list [ref=e240]:
+              - listitem [ref=e241]:
+                - link "Mission" [ref=e242] [cursor=pointer]:
+                  - /url: https://americas.uli.org/about-uli/uli-mission-commitment/
+              - listitem [ref=e243]:
+                - link "Foundation" [ref=e244] [cursor=pointer]:
+                  - /url: https://foundation.uli.org/
+              - listitem [ref=e245]:
+                - link "Membership" [ref=e246] [cursor=pointer]:
+                  - /url: https://americas.uli.org/membership/
+              - listitem [ref=e247]:
+                - link "Leadership & Governance" [ref=e248] [cursor=pointer]:
+                  - /url: https://americas.uli.org/about-uli/leadership-governance/
+              - listitem [ref=e249]:
+                - link "Inclusive Excellence" [ref=e250] [cursor=pointer]:
+                  - /url: https://americas.uli.org/inclusive-excellence/
+              - listitem [ref=e251]:
+                - link "Code of Ethics" [ref=e252] [cursor=pointer]:
+                  - /url: https://americas.uli.org/membership/code-of-ethics/
+              - listitem [ref=e253]:
+                - link "Press Room" [ref=e254] [cursor=pointer]:
+                  - /url: https://americas.uli.org/about-uli/press-room/
+              - listitem [ref=e255]:
+                - link "Annual Report" [ref=e256] [cursor=pointer]:
+                  - /url: https://americas.uli.org/about-uli/annual-report/
+              - listitem [ref=e257]:
+                - link "Careers" [ref=e258] [cursor=pointer]:
+                  - /url: https://uli.org/uli-careers/
+              - listitem [ref=e259]:
+                - link "Contact Us" [ref=e260] [cursor=pointer]:
+                  - /url: https://americas.uli.org/about-uli/contact-us/
+          - generic [ref=e261]:
+            - heading "Events" [level=3] [ref=e262]:
+              - link "Events" [ref=e263] [cursor=pointer]:
+                - /url: https://americas.uli.org/events/
+            - list [ref=e264]:
+              - listitem [ref=e265]:
+                - link "Upcoming Events" [ref=e266] [cursor=pointer]:
+                  - /url: https://americas.uli.org/events/
+              - listitem [ref=e267]:
+                - link "Fall Meeting" [ref=e268] [cursor=pointer]:
+                  - /url: https://americas.uli.org/events/fall-meeting/
+              - listitem [ref=e269]:
+                - link "Spring Meeting" [ref=e270] [cursor=pointer]:
+                  - /url: https://spring.uli.org/
+          - generic [ref=e271]:
+            - heading "ULI Resources" [level=3] [ref=e272]:
+              - link "ULI Resources" [ref=e273] [cursor=pointer]:
+                - /url: https://americas.uli.org/membership/benefits/#benefits
+            - list [ref=e274]:
+              - listitem [ref=e275]:
+                - link "Knowledge Finder" [ref=e276] [cursor=pointer]:
+                  - /url: https://knowledge.uli.org/en/
+              - listitem [ref=e277]:
+                - link "Member Directory" [ref=e278] [cursor=pointer]:
+                  - /url: https://members.uli.org/
+              - listitem [ref=e279]:
+                - link "Navigator" [ref=e280] [cursor=pointer]:
+                  - /url: https://navigator.uli.org/
+              - listitem [ref=e281]:
+                - link "ULI Learning" [ref=e282] [cursor=pointer]:
+                  - /url: https://learning.uli.org/
+          - generic [ref=e283]:
+            - heading "ULI Initiatives" [level=3] [ref=e284]:
+              - link "ULI Initiatives" [ref=e285] [cursor=pointer]:
+                - /url: https://americas.uli.org/programs/
+            - list [ref=e286]:
+              - listitem [ref=e287]:
+                - link "Local District Councils" [ref=e288] [cursor=pointer]:
+                  - /url: https://americas.uli.org/councils/district-councils/
+              - listitem [ref=e289]:
+                - link "Product Councils" [ref=e290] [cursor=pointer]:
+                  - /url: https://americas.uli.org/councils/product-councils/
+              - listitem [ref=e291]:
+                - link "UrbanPlan" [ref=e292] [cursor=pointer]:
+                  - /url: https://americas.uli.org/programs/urbanplan/
+              - listitem [ref=e293]:
+                - link "Advisory Services" [ref=e294] [cursor=pointer]:
+                  - /url: https://americas.uli.org/programs/advisory-services/
+              - listitem [ref=e295]:
+                - link "Awards & Competitions" [ref=e296] [cursor=pointer]:
+                  - /url: https://americas.uli.org/programs/awards-competitions/
+              - listitem [ref=e297]:
+                - link "Career Center" [ref=e298] [cursor=pointer]:
+                  - /url: https://americas.uli.org/programs/career-center/
+              - listitem [ref=e299]:
+                - link "Leadership Programs" [ref=e300] [cursor=pointer]:
+                  - /url: https://americas.uli.org/programs/leadership-network/
+          - generic [ref=e301]:
+            - heading "ULI Publications" [level=3] [ref=e302]:
+              - link "ULI Publications" [ref=e303] [cursor=pointer]:
+                - /url: https://americas.uli.org/publications/
+            - list [ref=e304]:
+              - listitem [ref=e305]:
+                - link "Urban Land Magazine" [ref=e306] [cursor=pointer]:
+                  - /url: https://americas.uli.org/publications/urban-land-magazine/
+              - listitem [ref=e307]:
+                - link "Case Studies" [ref=e308] [cursor=pointer]:
+                  - /url: https://americas.uli.org/publications/case-studies/
+              - listitem [ref=e309]:
+                - link "Bookstore" [ref=e310] [cursor=pointer]:
+                  - /url: https://americas.uli.org/publications/bookstore/
+              - listitem [ref=e311]:
+                - link "Research" [ref=e312] [cursor=pointer]:
+                  - /url: https://americas.uli.org/research/
+      - generic [ref=e315]:
+        - generic [ref=e316]:
+          - img "ULI Logo" [ref=e317]
+          - paragraph [ref=e318]:
+            - text: ©2026 Urban Land Institute. All Rights Reserved.
+            - link "Legal Notices" [ref=e319] [cursor=pointer]:
+              - /url: https://uli.org/uli-legal-notices/
+        - generic [ref=e321]:
+          - link "Visit ULI on YouTube" [ref=e322] [cursor=pointer]:
+            - /url: https://www.youtube.com/user/ULITV/
+            - generic [ref=e323]: Visit ULI on YouTube
+            - img [ref=e324]
+          - link "Visit ULI on X" [ref=e325] [cursor=pointer]:
+            - /url: https://instagram.com/urbanlandinstitute/
+            - generic [ref=e326]: Visit ULI on X
+            - img [ref=e327]
+          - link "Visit ULI on Facebook" [ref=e328] [cursor=pointer]:
+            - /url: https://www.facebook.com/uliglobal/
+            - generic [ref=e329]: Visit ULI on Facebook
+            - img [ref=e330]
+          - link [ref=e331] [cursor=pointer]:
+            - /url: https://www.linkedin.com/company/uliglobal/
+            - img [ref=e333]
+          - link "Visit ULI on X" [ref=e334] [cursor=pointer]:
+            - /url: https://twitter.com/urbanlandinst/
+            - generic [ref=e335]: Visit ULI on X
+            - img [ref=e336]
+        - generic [ref=e337]:
+          - generic [ref=e338]:
+            - heading "Urban Land Institute" [level=2] [ref=e339]
+            - generic [ref=e340]:
+              - text: URBAN LAND INSTITUTE AMERICAS
+              - text: 2001 L STREET, NW
+              - text: SUITE 200
+              - text: WASHINGTON, DC 20036-4948
+          - generic [ref=e341]:
+            - heading "Customer Service" [level=2] [ref=e342]
+            - paragraph [ref=e343]:
+              - text: "Phone:"
+              - link "1-800-321-5011" [ref=e344] [cursor=pointer]:
+                - /url: tel:18003215011
+            - paragraph [ref=e345]:
+              - text: "Email:"
+              - link "customerservice@uli.org" [ref=e346] [cursor=pointer]:
+                - /url: mailto:customerservice@uli.org
+  - generic:
+    - region "Cookie banner" [ref=e347]:
+      - dialog "Privacy" [ref=e348]:
+        - generic [ref=e350]:
+          - generic [ref=e353]: By clicking “Accept All Cookies”, you agree to the storing of cookies on your device to enhance site navigation, analyze site usage, and assist in our marketing efforts.
+          - generic [ref=e355]:
+            - button "Cookies Settings, Opens the preference center dialog" [ref=e356] [cursor=pointer]: Cookies Settings
+            - button "Reject All" [ref=e357] [cursor=pointer]
+            - button "Accept All Cookies" [ref=e358] [cursor=pointer]
+        - button "Close" [ref=e360] [cursor=pointer]
+    - text: Cookies Settings

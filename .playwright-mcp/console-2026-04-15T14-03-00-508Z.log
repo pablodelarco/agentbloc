@@ -1,0 +1,61 @@
+[    1712ms] [ERROR] Failed to load resource: the server responded with a status of 401 () @ https://hub.docker.com/auth/profile:0
+[    1718ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://faro-collector-prod-us-east-0.grafana.net/collect/81908769631e75143140d8a65b3be0d3:0
+[    1718ms] [ERROR] Faro
+ @grafana/faro-web-sdk:transport-fetch
+ Failed sending payload to the receiver
+ {meta: Object, events: Array(4), measurements: Array(2)} TypeError: Failed to fetch
+    at e.fetch (https://dockerstatic.com/hub-ui/km2t237d.js:15:6566)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:29:23758
+    at r (https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2500)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2683
+    at new Promise (<anonymous>)
+    at Object.add (https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2623)
+    at ws.<anonymous> (https://dockerstatic.com/hub-ui/k7e0iy55.js:29:23485)
+    at Generator.next (<anonymous>)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:29:22417
+    at new Promise (<anonymous>) @ https://dockerstatic.com/hub-ui/k7e0iy55.js:3
+[    1947ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://faro-collector-prod-us-east-0.grafana.net/collect/81908769631e75143140d8a65b3be0d3:0
+[    1947ms] [ERROR] Faro
+ @grafana/faro-web-sdk:transport-fetch
+ Failed sending payload to the receiver
+ {meta: Object, events: Array(13)} TypeError: Failed to fetch
+    at e.fetch (https://dockerstatic.com/hub-ui/km2t237d.js:15:6566)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:29:23758
+    at r (https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2500)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2683
+    at new Promise (<anonymous>)
+    at Object.add (https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2623)
+    at ws.<anonymous> (https://dockerstatic.com/hub-ui/k7e0iy55.js:29:23485)
+    at Generator.next (<anonymous>)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:29:22417
+    at new Promise (<anonymous>) @ https://dockerstatic.com/hub-ui/k7e0iy55.js:3
+[    2198ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://faro-collector-prod-us-east-0.grafana.net/collect/81908769631e75143140d8a65b3be0d3:0
+[    2198ms] [ERROR] Faro
+ @grafana/faro-web-sdk:transport-fetch
+ Failed sending payload to the receiver
+ {meta: Object, events: Array(2)} TypeError: Failed to fetch
+    at e.fetch (https://dockerstatic.com/hub-ui/km2t237d.js:15:6566)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:29:23758
+    at r (https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2500)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2683
+    at new Promise (<anonymous>)
+    at Object.add (https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2623)
+    at ws.<anonymous> (https://dockerstatic.com/hub-ui/k7e0iy55.js:29:23485)
+    at Generator.next (<anonymous>)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:29:22417
+    at new Promise (<anonymous>) @ https://dockerstatic.com/hub-ui/k7e0iy55.js:3
+[    3948ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://faro-collector-prod-us-east-0.grafana.net/collect/81908769631e75143140d8a65b3be0d3:0
+[    3948ms] [ERROR] Faro
+ @grafana/faro-web-sdk:transport-fetch
+ Failed sending payload to the receiver
+ {meta: Object, events: Array(1)} TypeError: Failed to fetch
+    at e.fetch (https://dockerstatic.com/hub-ui/km2t237d.js:15:6566)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:29:23758
+    at r (https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2500)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2683
+    at new Promise (<anonymous>)
+    at Object.add (https://dockerstatic.com/hub-ui/k7e0iy55.js:4:2623)
+    at ws.<anonymous> (https://dockerstatic.com/hub-ui/k7e0iy55.js:29:23485)
+    at Generator.next (<anonymous>)
+    at https://dockerstatic.com/hub-ui/k7e0iy55.js:29:22417
+    at new Promise (<anonymous>) @ https://dockerstatic.com/hub-ui/k7e0iy55.js:3

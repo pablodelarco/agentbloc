@@ -1,0 +1,34 @@
+- generic [ref=e1]:
+  - paragraph [ref=e7]:
+    - text: Powered by
+    - link "Toast" [ref=e8] [cursor=pointer]:
+      - /url: http://pos.toasttab.com/?source=footer
+    - text: • ©Toast, Inc. 2026. All Rights Reserved. •
+    - link "Privacy Statement" [ref=e9] [cursor=pointer]:
+      - /url: http://pos.toasttab.com/privacy
+    - text: •
+    - link "Terms of Service" [ref=e10] [cursor=pointer]:
+      - /url: http://pos.toasttab.com/terms-of-service
+    - text: •
+    - link "Toast Blog" [ref=e11] [cursor=pointer]:
+      - /url: http://blog.toasttab.com/?source=footer
+  - generic [ref=e12]:
+    - main [ref=e13]:
+      - generic [ref=e16]:
+        - generic [ref=e17]:
+          - img "Toast" [ref=e18]
+          - heading "Welcome" [level=1] [ref=e19]
+          - paragraph [ref=e21]: Log in to Toast to continue to web-toastweb.
+        - generic [ref=e24]:
+          - generic [ref=e25]:
+            - generic [ref=e29]:
+              - generic [ref=e30] [cursor=pointer]: Email address
+              - textbox "Email address" [active] [ref=e31]
+              - generic: Email address*
+            - button "Continue" [ref=e33] [cursor=pointer]
+          - link "Log in with SSO" [ref=e35] [cursor=pointer]:
+            - /url: https://idm.toasttab.com/sso-lookup
+            - img [ref=e36]
+            - generic [ref=e39]: Log in with SSO
+    - link "Not a Customer? Get Started Today!" [ref=e41] [cursor=pointer]:
+      - /url: https://pos.toasttab.com/request-demo?utm_source=product&utm_medium=login&utm_campaign=demo-request

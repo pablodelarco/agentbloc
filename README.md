@@ -34,7 +34,6 @@ It runs as a pure markdown Claude Code skill. No custom runtime. The deployed ag
 | **Autonomy + Monitor + Control Plane** | Per-agent autonomy levels (`full` / `semi` / `supervised`). Approvals route through a separate Telegram thread. JSONL log schema with cost + token tracking. Daily briefing-agent emits status badges (🟢 active · 🟡 idle · 🔴 error). flock-based task locking for shared resources. | `references/autonomy-controller.md` + `references/jsonl-log-schema.md` |
 | **End-to-End Validation** | Canonical Arco Rooms scenario exercises all 13 v2.0 categories. TAP harness reports 146/146 tests pass. | `tests/scenarios/arco-rooms.jsonl` |
 
-See the full [v2.0 release notes](https://github.com/pablodelarco/agentbloc/releases/tag/v2.0.0) and the [v2.0 milestone archive](.planning/milestones/v2.0-ROADMAP.md) for the complete decision log.
 
 ## Quick Start
 
@@ -94,7 +93,6 @@ This is not a prototype. v2.0 is the result of 9 phases of explicit planning, ex
 - **Em-dash gate, surgical-edit discipline, RFC 8785 canonicalization, SHA256 idempotency** across the deploy pipeline
 - **Evidence-backed heuristics**: 15 cited URLs in the anticipation map, all reachable (Playwright-verified, no broken links at v2.0.0 ship)
 
-Browse the [`.planning/`](.planning/) directory for the full phase-by-phase work product, or the [v2.0 milestone archive](.planning/milestones/v2.0-ROADMAP.md) for the abbreviated decision index.
 
 ## Examples
 

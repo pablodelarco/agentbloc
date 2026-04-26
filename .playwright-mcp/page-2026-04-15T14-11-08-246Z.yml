@@ -1,0 +1,402 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Insights on the state of AI agents from 800+ builders and leaders. Download your copy" [ref=e6] [cursor=pointer]:
+      - /url: https://www.docker.com/resources/the-state-of-agentic-ai-white-paper/
+      - text: Insights on the state of AI agents from 800+ builders and leaders. Download your copy
+      - img [ref=e7]
+    - generic [ref=e9] [cursor=pointer]: ✕
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - banner [ref=e13]:
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - link [ref=e17] [cursor=pointer]:
+              - /url: /
+              - img [ref=e19]
+            - generic:
+              - generic:
+                - tablist
+          - generic [ref=e22]:
+            - button "Search Docker Hub ⌘K" [ref=e23] [cursor=pointer]:
+              - img [ref=e24]
+              - paragraph [ref=e26]: Search Docker Hub
+              - generic [ref=e27]: ⌘K
+            - button "Help" [ref=e30] [cursor=pointer]:
+              - img [ref=e31]
+            - button "System theme" [ref=e35] [cursor=pointer]:
+              - img [ref=e38]
+            - button "open app switcher" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - generic [ref=e53]:
+              - link "Sign in" [ref=e54] [cursor=pointer]:
+                - /url: /login
+              - link "Sign up" [ref=e55] [cursor=pointer]:
+                - /url: https://app.docker.com/signup
+      - generic [ref=e57]:
+        - navigation [ref=e59]:
+          - list [ref=e60]:
+            - listitem [ref=e61]:
+              - link "Explore" [ref=e62] [cursor=pointer]:
+                - /url: /search
+            - listitem [ref=e63]: /
+            - listitem [ref=e64]:
+              - link "opennebula" [ref=e65] [cursor=pointer]:
+                - /url: /u/opennebula
+            - listitem [ref=e66]: /
+            - listitem [ref=e67]:
+              - paragraph [ref=e68]: opennebula
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - generic [ref=e73]:
+              - img [ref=e75]
+              - generic [ref=e77]:
+                - heading "opennebula/opennebula" [level=2] [ref=e79]
+                - generic [ref=e81]:
+                  - paragraph [ref=e82]:
+                    - text: By
+                    - link "opennebula" [ref=e83] [cursor=pointer]:
+                      - /url: /u/opennebula
+                  - generic [ref=e84]: •
+                  - generic [ref=e85]: Updated 23 minutes ago
+                - paragraph [ref=e86]: "OpenNebula Front-End Community Edition - All-in-one container (latest: 7.2.0)"
+                - generic [ref=e89]: Image
+                - generic [ref=e90]:
+                  - generic [ref=e91]:
+                    - img [ref=e92] [cursor=pointer]
+                    - strong [ref=e95]: "0"
+                  - generic [ref=e96]:
+                    - img [ref=e97]
+                    - paragraph [ref=e99]: 6.6K
+            - tablist [ref=e103]:
+              - tab "Overview" [selected] [ref=e104] [cursor=pointer]
+              - tab "Tags" [ref=e105] [cursor=pointer]
+          - generic [ref=e108]:
+            - heading "opennebula/opennebula repository overview" [level=1] [ref=e109]
+            - generic [ref=e110]:
+              - generic [ref=e115]:
+                - heading "OpenNebula Front-End Community Edition" [level=3] [ref=e116]:
+                  - link [ref=e117] [cursor=pointer]:
+                    - /url: /r/opennebula/opennebula#opennebula-front-end-community-edition
+                    - img [ref=e118]
+                  - text: OpenNebula Front-End Community Edition
+                - img "OpenNebula" [ref=e120]
+                - paragraph [ref=e121]:
+                  - strong [ref=e122]: "Latest Version:"
+                  - text: 7.2.0 (Community Edition)
+                - paragraph [ref=e123]:
+                  - strong [ref=e124]: "Base Image:"
+                  - text: Ubuntu 24.04 LTS |
+                  - strong [ref=e125]: "Architecture:"
+                  - text: linux/amd64
+                - heading "Overview" [level=4] [ref=e126]:
+                  - link [ref=e127] [cursor=pointer]:
+                    - /url: /r/opennebula/opennebula#overview
+                    - img [ref=e128]
+                  - text: Overview
+                - paragraph [ref=e130]:
+                  - text: Official container image for the
+                  - strong [ref=e131]: OpenNebula Front-End Community Edition
+                  - text: ". This all-in-one image packages the complete OpenNebula management plane, ready to run on:"
+                - list [ref=e132]:
+                  - listitem [ref=e133]:
+                    - strong [ref=e134]: Docker
+                    - text: (20.10+)
+                  - listitem [ref=e135]:
+                    - strong [ref=e136]: Podman
+                    - text: (2.0.5+)
+                - heading "Included Components" [level=4] [ref=e137]:
+                  - link [ref=e138] [cursor=pointer]:
+                    - /url: /r/opennebula/opennebula#included-components
+                    - img [ref=e139]
+                  - text: Included Components
+                - table [ref=e142]:
+                  - rowgroup [ref=e143]:
+                    - row "Component Description" [ref=e144]:
+                      - columnheader "Component" [ref=e145]
+                      - columnheader "Description" [ref=e146]
+                  - rowgroup [ref=e147]:
+                    - row "opennebula Core server and scheduler" [ref=e148]:
+                      - cell "opennebula" [ref=e149]
+                      - cell "Core server and scheduler" [ref=e150]
+                    - row "opennebula-fireedge Modern web UI (FireEdge)" [ref=e151]:
+                      - cell "opennebula-fireedge" [ref=e152]
+                      - cell "Modern web UI (FireEdge)" [ref=e153]
+                    - row "opennebula-flow Multi-VM application orchestration" [ref=e154]:
+                      - cell "opennebula-flow" [ref=e155]
+                      - cell "Multi-VM application orchestration" [ref=e156]
+                    - row "opennebula-gate VM contextualization gateway" [ref=e157]:
+                      - cell "opennebula-gate" [ref=e158]
+                      - cell "VM contextualization gateway" [ref=e159]
+                    - row "opennebula-tools CLI management tools" [ref=e160]:
+                      - cell "opennebula-tools" [ref=e161]
+                      - cell "CLI management tools" [ref=e162]
+                - heading "Exposed Ports" [level=4] [ref=e163]:
+                  - link [ref=e164] [cursor=pointer]:
+                    - /url: /r/opennebula/opennebula#exposed-ports
+                    - img [ref=e165]
+                  - text: Exposed Ports
+                - table [ref=e168]:
+                  - rowgroup [ref=e169]:
+                    - row "Port Service" [ref=e170]:
+                      - columnheader "Port" [ref=e171]
+                      - columnheader "Service" [ref=e172]
+                  - rowgroup [ref=e173]:
+                    - row "22 SSH" [ref=e174]:
+                      - cell "22" [ref=e175]
+                      - cell "SSH" [ref=e176]
+                    - row "2474 OneFlow" [ref=e177]:
+                      - cell "2474" [ref=e178]
+                      - cell "OneFlow" [ref=e179]
+                    - row "2616 OneGate" [ref=e180]:
+                      - cell "2616" [ref=e181]
+                      - cell "OneGate" [ref=e182]
+                    - row "2633 XML-RPC (oned)" [ref=e183]:
+                      - cell "2633" [ref=e184]
+                      - cell "XML-RPC (oned)" [ref=e185]
+                    - row "4124 Monitoring" [ref=e186]:
+                      - cell "4124" [ref=e187]
+                      - cell "Monitoring" [ref=e188]
+                    - row "5030 FireEdge" [ref=e189]:
+                      - cell "5030" [ref=e190]
+                      - cell "FireEdge" [ref=e191]
+                - heading "Quick Start" [level=4] [ref=e192]:
+                  - link [ref=e193] [cursor=pointer]:
+                    - /url: /r/opennebula/opennebula#quick-start
+                    - img [ref=e194]
+                  - text: Quick Start
+                - code [ref=e200]: docker run -d \ --name opennebula \ -p 2633:2633 \ -p 5030:5030 \ -p 2474:2474 \ -p 2616:2616 \ -p 22:22 \ opennebula/opennebula:latest
+                - paragraph [ref=e201]:
+                  - text: Access FireEdge UI at
+                  - code [ref=e202]: http://localhost:5030
+                - paragraph [ref=e203]:
+                  - text: "Default credentials:"
+                  - code [ref=e204]: oneadmin
+                  - text: / check container logs for the generated password.
+                - heading "Health Check" [level=4] [ref=e205]:
+                  - link [ref=e206] [cursor=pointer]:
+                    - /url: /r/opennebula/opennebula#health-check
+                    - img [ref=e207]
+                  - text: Health Check
+                - paragraph [ref=e209]: "The container includes a built-in health check:"
+                - code [ref=e214]: HEALTHCHECK CMD oneuser show 0 || exit 1
+                - heading "Available Tags" [level=4] [ref=e215]:
+                  - link [ref=e216] [cursor=pointer]:
+                    - /url: /r/opennebula/opennebula#available-tags
+                    - img [ref=e217]
+                  - text: Available Tags
+                - table [ref=e220]:
+                  - rowgroup [ref=e221]:
+                    - row "Tag OpenNebula Version Base OS Status" [ref=e222]:
+                      - columnheader "Tag" [ref=e223]
+                      - columnheader "OpenNebula Version" [ref=e224]
+                      - columnheader "Base OS" [ref=e225]
+                      - columnheader "Status" [ref=e226]
+                  - rowgroup [ref=e227]:
+                    - row "latest 7.2.0 Ubuntu 24.04 Current" [ref=e228]:
+                      - cell "latest" [ref=e229]:
+                        - code [ref=e230]: latest
+                      - cell "7.2.0" [ref=e231]
+                      - cell "Ubuntu 24.04" [ref=e232]
+                      - cell "Current" [ref=e233]
+                    - row "7.2.0 7.2.0 Ubuntu 24.04 Current" [ref=e234]:
+                      - cell "7.2.0" [ref=e235]:
+                        - code [ref=e236]: 7.2.0
+                      - cell "7.2.0" [ref=e237]
+                      - cell "Ubuntu 24.04" [ref=e238]
+                      - cell "Current" [ref=e239]
+                    - row "7.1.80 7.1.80 Ubuntu 24.04 Supported" [ref=e240]:
+                      - cell "7.1.80" [ref=e241]:
+                        - code [ref=e242]: 7.1.80
+                      - cell "7.1.80" [ref=e243]
+                      - cell "Ubuntu 24.04" [ref=e244]
+                      - cell "Supported" [ref=e245]
+                    - row "7.0.1 7.0.1 Ubuntu 24.04 Supported" [ref=e246]:
+                      - cell "7.0.1" [ref=e247]:
+                        - code [ref=e248]: 7.0.1
+                      - cell "7.0.1" [ref=e249]
+                      - cell "Ubuntu 24.04" [ref=e250]
+                      - cell "Supported" [ref=e251]
+                    - row "6.10.1 6.10.1 Ubuntu 24.04 Legacy" [ref=e252]:
+                      - cell "6.10.1" [ref=e253]:
+                        - code [ref=e254]: 6.10.1
+                      - cell "6.10.1" [ref=e255]
+                      - cell "Ubuntu 24.04" [ref=e256]
+                      - cell "Legacy" [ref=e257]
+                    - row "6.2 6.2.0 Ubuntu 20.04 Legacy" [ref=e258]:
+                      - cell "6.2" [ref=e259]:
+                        - code [ref=e260]: "6.2"
+                      - cell "6.2.0" [ref=e261]
+                      - cell "Ubuntu 20.04" [ref=e262]
+                      - cell "Legacy" [ref=e263]
+                    - row "6.0 6.0.0.3 Ubuntu 20.04 Legacy" [ref=e264]:
+                      - cell "6.0" [ref=e265]:
+                        - code [ref=e266]: "6.0"
+                      - cell "6.0.0.3" [ref=e267]
+                      - cell "Ubuntu 20.04" [ref=e268]
+                      - cell "Legacy" [ref=e269]
+                - heading "Documentation" [level=4] [ref=e270]:
+                  - link [ref=e271] [cursor=pointer]:
+                    - /url: /r/opennebula/opennebula#documentation
+                    - img [ref=e272]
+                  - text: Documentation
+                - list [ref=e274]:
+                  - listitem [ref=e275]:
+                    - link "OpenNebula Documentation⁠" [ref=e276] [cursor=pointer]:
+                      - /url: https://docs.opennebula.io/
+                      - text: OpenNebula Documentation
+                      - generic [ref=e277]:
+                        - text: ⁠
+                        - img [ref=e278]
+                  - listitem [ref=e280]:
+                    - link "OpenNebula GitHub⁠" [ref=e281] [cursor=pointer]:
+                      - /url: https://github.com/OpenNebula/one
+                      - text: OpenNebula GitHub
+                      - generic [ref=e282]:
+                        - text: ⁠
+                        - img [ref=e283]
+                - heading "License" [level=4] [ref=e285]:
+                  - link [ref=e286] [cursor=pointer]:
+                    - /url: /r/opennebula/opennebula#license
+                    - img [ref=e287]
+                  - text: License
+                - paragraph [ref=e289]:
+                  - text: Apache License 2.0 - See
+                  - link "OpenNebula License⁠" [ref=e290] [cursor=pointer]:
+                    - /url: https://github.com/OpenNebula/one/blob/master/LICENSE
+                    - text: OpenNebula License
+                    - generic [ref=e291]:
+                      - text: ⁠
+                      - img [ref=e292]
+              - generic [ref=e296]:
+                - heading "Tag summary" [level=3] [ref=e299]
+                - generic [ref=e301]:
+                  - generic [ref=e302]:
+                    - generic [ref=e303]: Recent tags
+                    - generic [ref=e304]:
+                      - combobox "Recent tags 7.2.0" [ref=e305] [cursor=pointer]: 7.2.0
+                      - textbox: 7.2.0
+                      - img
+                      - group:
+                        - generic: Recent tags
+                  - generic [ref=e306]:
+                    - generic [ref=e307]:
+                      - paragraph [ref=e308]:
+                        - strong [ref=e309]: Content type
+                      - paragraph [ref=e310]: Image
+                    - generic [ref=e311]:
+                      - paragraph [ref=e312]:
+                        - strong [ref=e313]: Digest
+                      - paragraph [ref=e314]:
+                        - generic [ref=e315]:
+                          - generic "sha256:7edb842dea8530cecb78b9314820d814b95843351dc079a697dcc928bc70a674" [ref=e316]: sha256:7edb842de…
+                          - button "Copy to clipboard" [ref=e317] [cursor=pointer]:
+                            - img [ref=e318]
+                    - generic [ref=e320]:
+                      - paragraph [ref=e321]:
+                        - strong [ref=e322]: Size
+                      - paragraph [ref=e323]: 291.8 MB
+                    - generic [ref=e324]:
+                      - paragraph [ref=e325]:
+                        - strong [ref=e326]: Last updated
+                      - paragraph [ref=e327]: 23 minutes ago
+                  - code [ref=e333]: docker pull opennebula/opennebula:7.2.0
+    - contentinfo [ref=e334]:
+      - generic [ref=e336]:
+        - generic [ref=e337]:
+          - img [ref=e339]
+          - generic [ref=e342]:
+            - region "Why" [ref=e343]:
+              - generic [ref=e344]: Why
+              - link "Overview" [ref=e345] [cursor=pointer]:
+                - /url: https://www.docker.com/why-docker
+              - link "What is a Container" [ref=e346] [cursor=pointer]:
+                - /url: https://www.docker.com/resources/what-container
+            - region "Products" [ref=e347]:
+              - generic [ref=e348]: Products
+              - link "Product Overview" [ref=e349] [cursor=pointer]:
+                - /url: https://www.docker.com/products
+              - generic [ref=e350]: Product Offerings
+              - link "Docker Desktop" [ref=e351] [cursor=pointer]:
+                - /url: https://www.docker.com/products/docker-desktop
+              - link "Docker Hub" [ref=e352] [cursor=pointer]:
+                - /url: https://www.docker.com/products/docker-hub
+              - generic [ref=e353]: Features
+              - link "Container Runtime" [ref=e354] [cursor=pointer]:
+                - /url: https://www.docker.com/products/container-runtime
+              - link "Developer Tools" [ref=e355] [cursor=pointer]:
+                - /url: https://www.docker.com/products/developer-tools
+              - link "Docker App" [ref=e356] [cursor=pointer]:
+                - /url: https://www.docker.com/products/docker-app
+              - link "Kubernetes" [ref=e357] [cursor=pointer]:
+                - /url: https://www.docker.com/products/kubernetes
+            - region "Developers" [ref=e358]:
+              - generic [ref=e359]: Developers
+              - link "Getting Started" [ref=e360] [cursor=pointer]:
+                - /url: https://docs.docker.com/get-started
+              - link "Play with Docker" [ref=e361] [cursor=pointer]:
+                - /url: https://www.docker.com/play-with-docker
+              - link "Community" [ref=e362] [cursor=pointer]:
+                - /url: https://www.docker.com/docker-community
+              - link "Open Source" [ref=e363] [cursor=pointer]:
+                - /url: https://www.docker.com/open-source
+              - link "Documentation" [ref=e364] [cursor=pointer]:
+                - /url: https://www.docker.com/docs
+            - region "Company" [ref=e365]:
+              - generic [ref=e366]: Company
+              - link "About Us" [ref=e367] [cursor=pointer]:
+                - /url: https://www.docker.com/company
+              - link "Resources" [ref=e368] [cursor=pointer]:
+                - /url: https://www.docker.com/resources
+              - link "Blog" [ref=e369] [cursor=pointer]:
+                - /url: https://www.docker.com/blog/
+              - link "Customers" [ref=e370] [cursor=pointer]:
+                - /url: https://www.docker.com/customers
+              - link "Partners" [ref=e371] [cursor=pointer]:
+                - /url: https://www.docker.com/partners
+              - link "Newsroom" [ref=e372] [cursor=pointer]:
+                - /url: https://www.docker.com/company/newsroom
+              - link "Events and Webinars" [ref=e373] [cursor=pointer]:
+                - /url: https://www.docker.com/events-and-webinars
+              - link "Careers" [ref=e374] [cursor=pointer]:
+                - /url: https://www.docker.com/careers
+              - link "Contact Us" [ref=e375] [cursor=pointer]:
+                - /url: https://www.docker.com/company/contact
+              - link "System Status⁠" [ref=e376] [cursor=pointer]:
+                - /url: https://www.dockerstatus.com
+                - text: System Status
+                - generic [ref=e377]:
+                  - text: ⁠
+                  - img [ref=e378]
+        - separator [ref=e380]
+        - generic [ref=e381]:
+          - paragraph [ref=e382]:
+            - generic [ref=e383]: © 2026 Docker, Inc. All rights reserved.
+            - text: "|"
+            - link "Terms of Service" [ref=e384] [cursor=pointer]:
+              - /url: https://www.docker.com/legal/docker-terms-service
+            - text: "|"
+            - link "Subscription Service Agreement" [ref=e385] [cursor=pointer]:
+              - /url: https://www.docker.com/legal/docker-subscription-service-agreement
+            - text: "|"
+            - link "Privacy" [ref=e386] [cursor=pointer]:
+              - /url: https://www.docker.com/legal/privacy
+            - text: "|"
+            - link "Legal" [ref=e387] [cursor=pointer]:
+              - /url: https://www.docker.com/legal
+          - generic [ref=e388]:
+            - link "Visit our Facebook page" [ref=e389] [cursor=pointer]:
+              - /url: https://www.facebook.com/docker.run
+              - img [ref=e390]
+            - link "Visit our X page" [ref=e392] [cursor=pointer]:
+              - /url: https://x.com/docker
+              - img [ref=e393]
+            - link "Visit our YouTube page" [ref=e395] [cursor=pointer]:
+              - /url: https://www.youtube.com/user/dockerrun
+              - img [ref=e396]
+            - link "Visit our LinkedIn page" [ref=e398] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/docker
+              - img [ref=e399]
+            - link "View our RSS feed" [ref=e401] [cursor=pointer]:
+              - /url: https://www.docker.com/feed/
+              - img [ref=e402]
+        - button "Cookies Settings" [ref=e405] [cursor=pointer]

@@ -1,0 +1,544 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - link "Insights on the state of AI agents from 800+ builders and leaders. Download your copy" [ref=e6] [cursor=pointer]:
+      - /url: https://www.docker.com/resources/the-state-of-agentic-ai-white-paper/
+      - text: Insights on the state of AI agents from 800+ builders and leaders. Download your copy
+      - img [ref=e7]
+    - generic [ref=e9] [cursor=pointer]: ✕
+  - generic [ref=e11]:
+    - generic [ref=e12]:
+      - banner [ref=e13]:
+        - generic [ref=e15]:
+          - generic [ref=e16]:
+            - link [ref=e17] [cursor=pointer]:
+              - /url: /
+              - img [ref=e19]
+            - generic:
+              - generic:
+                - tablist
+          - generic [ref=e22]:
+            - button "Search Docker Hub ⌘K" [ref=e23] [cursor=pointer]:
+              - img [ref=e24]
+              - paragraph [ref=e26]: Search Docker Hub
+              - generic [ref=e27]: ⌘K
+            - button "Help" [ref=e30] [cursor=pointer]:
+              - img [ref=e31]
+            - button "System theme" [ref=e35] [cursor=pointer]:
+              - img [ref=e38]
+            - button "open app switcher" [ref=e42] [cursor=pointer]:
+              - img [ref=e43]
+            - generic [ref=e53]:
+              - link "Sign in" [ref=e54] [cursor=pointer]:
+                - /url: /login
+              - link "Sign up" [ref=e55] [cursor=pointer]:
+                - /url: https://app.docker.com/signup
+      - generic [ref=e57]:
+        - navigation [ref=e59]:
+          - list [ref=e60]:
+            - listitem [ref=e61]:
+              - link "Explore" [ref=e62] [cursor=pointer]:
+                - /url: /search
+            - listitem [ref=e63]: /
+            - listitem [ref=e64]:
+              - link "opennebula" [ref=e65] [cursor=pointer]:
+                - /url: /u/opennebula
+            - listitem [ref=e66]: /
+            - listitem [ref=e67]:
+              - paragraph [ref=e68]: opennebula
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - generic [ref=e73]:
+              - img [ref=e75]
+              - generic [ref=e77]:
+                - heading "opennebula/opennebula" [level=2] [ref=e79]
+                - generic [ref=e81]:
+                  - paragraph [ref=e82]:
+                    - text: By
+                    - link "opennebula" [ref=e83] [cursor=pointer]:
+                      - /url: /u/opennebula
+                  - generic [ref=e84]: •
+                  - generic [ref=e85]: Updated 27 minutes ago
+                - paragraph [ref=e86]: OpenNebula Front-End Community Edition
+                - generic [ref=e89]: Image
+                - generic [ref=e90]:
+                  - generic [ref=e91]:
+                    - img [ref=e92] [cursor=pointer]
+                    - strong [ref=e95]: "0"
+                  - generic [ref=e96]:
+                    - img [ref=e97]
+                    - paragraph [ref=e99]: 6.6K
+            - tablist [ref=e103]:
+              - tab "Overview" [ref=e104] [cursor=pointer]
+              - tab "Tags" [selected] [ref=e105] [cursor=pointer]
+          - generic [ref=e108]:
+            - heading "Tags for opennebula/opennebula" [level=1] [ref=e109]
+            - generic [ref=e110]:
+              - generic [ref=e114]:
+                - paragraph [ref=e115]: Sort by
+                - generic [ref=e117]:
+                  - combobox [ref=e118] [cursor=pointer]: Newest
+                  - textbox: last_updated
+                  - img
+                  - group
+                - generic [ref=e120]:
+                  - img [ref=e122]
+                  - textbox "Filter tags" [ref=e124]
+                  - group
+              - generic [ref=e127]:
+                - generic [ref=e129]:
+                  - generic [ref=e130]:
+                    - paragraph [ref=e131]:
+                      - strong [ref=e132]: TAG
+                    - generic [ref=e133]:
+                      - generic [ref=e134]:
+                        - paragraph [ref=e136]:
+                          - link "7.2.0" [ref=e137] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/7.2.0/images/sha256-09a8b2a2b5667fd30b4ec46fc1ec773ec95505080b078b604b73cc90bbb84ba4
+                        - paragraph [ref=e138]:
+                          - text: Last pushed
+                          - strong [ref=e139]: 27 minutes
+                          - text: by
+                          - link "opennebula" [ref=e140] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e147]: docker pull opennebula/opennebula:7.2.0
+                  - table [ref=e149]:
+                    - rowgroup [ref=e150]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e151]:
+                        - columnheader "Digest" [ref=e152]
+                        - columnheader "OS/ARCH" [ref=e153]
+                        - columnheader "Compressed size" [ref=e154]:
+                          - text: Compressed size
+                          - img [ref=e155]
+                    - rowgroup [ref=e157]:
+                      - row "09a8b2a2b566 linux/amd64 291.78 MB" [ref=e158]:
+                        - cell "09a8b2a2b566" [ref=e159]:
+                          - link "09a8b2a2b566" [ref=e160] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/7.2.0/images/sha256-09a8b2a2b5667fd30b4ec46fc1ec773ec95505080b078b604b73cc90bbb84ba4
+                            - paragraph [ref=e161]: 09a8b2a2b566
+                        - cell "linux/amd64" [ref=e162]:
+                          - paragraph [ref=e163]: linux/amd64
+                        - cell "291.78 MB" [ref=e164]:
+                          - paragraph [ref=e165]: 291.78 MB
+                - generic [ref=e167]:
+                  - generic [ref=e168]:
+                    - paragraph [ref=e169]:
+                      - strong [ref=e170]: TAG
+                    - generic [ref=e171]:
+                      - generic [ref=e172]:
+                        - paragraph [ref=e174]:
+                          - link "7.1.80" [ref=e175] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/7.1.80/images/sha256-0e12e5e9961a9c0a74e46bdc8c45047e6956e91ce66deaa026114bf84b2503e4
+                        - paragraph [ref=e176]:
+                          - text: Last pushed
+                          - strong [ref=e177]: 27 minutes
+                          - text: by
+                          - link "opennebula" [ref=e178] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e185]: docker pull opennebula/opennebula:7.1.80
+                  - table [ref=e187]:
+                    - rowgroup [ref=e188]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e189]:
+                        - columnheader "Digest" [ref=e190]
+                        - columnheader "OS/ARCH" [ref=e191]
+                        - columnheader "Compressed size" [ref=e192]:
+                          - text: Compressed size
+                          - img [ref=e193]
+                    - rowgroup [ref=e195]:
+                      - row "0e12e5e9961a linux/amd64 289.69 MB" [ref=e196]:
+                        - cell "0e12e5e9961a" [ref=e197]:
+                          - link "0e12e5e9961a" [ref=e198] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/7.1.80/images/sha256-0e12e5e9961a9c0a74e46bdc8c45047e6956e91ce66deaa026114bf84b2503e4
+                            - paragraph [ref=e199]: 0e12e5e9961a
+                        - cell "linux/amd64" [ref=e200]:
+                          - paragraph [ref=e201]: linux/amd64
+                        - cell "289.69 MB" [ref=e202]:
+                          - paragraph [ref=e203]: 289.69 MB
+                - generic [ref=e205]:
+                  - generic [ref=e206]:
+                    - paragraph [ref=e207]:
+                      - strong [ref=e208]: TAG
+                    - generic [ref=e209]:
+                      - generic [ref=e210]:
+                        - paragraph [ref=e212]:
+                          - link "6.10.1" [ref=e213] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.10.1/images/sha256-176b2b85ff5d752c7ed60399476af485cf634bfd090af83e13b122a073e53a2a
+                        - paragraph [ref=e214]:
+                          - text: Last pushed
+                          - strong [ref=e215]: 28 minutes
+                          - text: by
+                          - link "opennebula" [ref=e216] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e223]: docker pull opennebula/opennebula:6.10.1
+                  - table [ref=e225]:
+                    - rowgroup [ref=e226]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e227]:
+                        - columnheader "Digest" [ref=e228]
+                        - columnheader "OS/ARCH" [ref=e229]
+                        - columnheader "Compressed size" [ref=e230]:
+                          - text: Compressed size
+                          - img [ref=e231]
+                    - rowgroup [ref=e233]:
+                      - row "176b2b85ff5d linux/amd64 289.78 MB" [ref=e234]:
+                        - cell "176b2b85ff5d" [ref=e235]:
+                          - link "176b2b85ff5d" [ref=e236] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.10.1/images/sha256-176b2b85ff5d752c7ed60399476af485cf634bfd090af83e13b122a073e53a2a
+                            - paragraph [ref=e237]: 176b2b85ff5d
+                        - cell "linux/amd64" [ref=e238]:
+                          - paragraph [ref=e239]: linux/amd64
+                        - cell "289.78 MB" [ref=e240]:
+                          - paragraph [ref=e241]: 289.78 MB
+                - generic [ref=e243]:
+                  - generic [ref=e244]:
+                    - paragraph [ref=e245]:
+                      - strong [ref=e246]: TAG
+                    - generic [ref=e247]:
+                      - generic [ref=e248]:
+                        - paragraph [ref=e250]:
+                          - link "7.0.1" [ref=e251] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/7.0.1/images/sha256-09a8b2a2b5667fd30b4ec46fc1ec773ec95505080b078b604b73cc90bbb84ba4
+                        - paragraph [ref=e252]:
+                          - text: Last pushed
+                          - strong [ref=e253]: 31 minutes
+                          - text: by
+                          - link "opennebula" [ref=e254] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e261]: docker pull opennebula/opennebula:7.0.1
+                  - table [ref=e263]:
+                    - rowgroup [ref=e264]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e265]:
+                        - columnheader "Digest" [ref=e266]
+                        - columnheader "OS/ARCH" [ref=e267]
+                        - columnheader "Compressed size" [ref=e268]:
+                          - text: Compressed size
+                          - img [ref=e269]
+                    - rowgroup [ref=e271]:
+                      - row "09a8b2a2b566 linux/amd64 291.78 MB" [ref=e272]:
+                        - cell "09a8b2a2b566" [ref=e273]:
+                          - link "09a8b2a2b566" [ref=e274] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/7.0.1/images/sha256-09a8b2a2b5667fd30b4ec46fc1ec773ec95505080b078b604b73cc90bbb84ba4
+                            - paragraph [ref=e275]: 09a8b2a2b566
+                        - cell "linux/amd64" [ref=e276]:
+                          - paragraph [ref=e277]: linux/amd64
+                        - cell "291.78 MB" [ref=e278]:
+                          - paragraph [ref=e279]: 291.78 MB
+                - generic [ref=e281]:
+                  - generic [ref=e282]:
+                    - paragraph [ref=e283]:
+                      - strong [ref=e284]: TAG
+                    - generic [ref=e285]:
+                      - generic [ref=e286]:
+                        - paragraph [ref=e288]:
+                          - link "latest" [ref=e289] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/latest/images/sha256-09a8b2a2b5667fd30b4ec46fc1ec773ec95505080b078b604b73cc90bbb84ba4
+                        - paragraph [ref=e290]:
+                          - text: Last pushed
+                          - strong [ref=e291]: 35 minutes
+                          - text: by
+                          - link "opennebula" [ref=e292] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e299]: docker pull opennebula/opennebula:latest
+                  - table [ref=e301]:
+                    - rowgroup [ref=e302]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e303]:
+                        - columnheader "Digest" [ref=e304]
+                        - columnheader "OS/ARCH" [ref=e305]
+                        - columnheader "Compressed size" [ref=e306]:
+                          - text: Compressed size
+                          - img [ref=e307]
+                    - rowgroup [ref=e309]:
+                      - row "09a8b2a2b566 linux/amd64 291.78 MB" [ref=e310]:
+                        - cell "09a8b2a2b566" [ref=e311]:
+                          - link "09a8b2a2b566" [ref=e312] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/latest/images/sha256-09a8b2a2b5667fd30b4ec46fc1ec773ec95505080b078b604b73cc90bbb84ba4
+                            - paragraph [ref=e313]: 09a8b2a2b566
+                        - cell "linux/amd64" [ref=e314]:
+                          - paragraph [ref=e315]: linux/amd64
+                        - cell "291.78 MB" [ref=e316]:
+                          - paragraph [ref=e317]: 291.78 MB
+                - generic [ref=e319]:
+                  - generic [ref=e320]:
+                    - paragraph [ref=e321]:
+                      - strong [ref=e322]: TAG
+                    - generic [ref=e323]:
+                      - generic [ref=e324]:
+                        - paragraph [ref=e326]:
+                          - link "6.0" [ref=e327] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.0/images/sha256-889a1799e9e6bdc2775fdc51123e326c7f06cea7e911b6fcf6836a7dbaf08839
+                        - paragraph [ref=e328]:
+                          - text: Last pushed
+                          - strong [ref=e329]: over 4 years
+                          - text: by
+                          - link "opennebula" [ref=e330] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e337]: docker pull opennebula/opennebula:6.0
+                  - table [ref=e339]:
+                    - rowgroup [ref=e340]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e341]:
+                        - columnheader "Digest" [ref=e342]
+                        - columnheader "OS/ARCH" [ref=e343]
+                        - columnheader "Compressed size" [ref=e344]:
+                          - text: Compressed size
+                          - img [ref=e345]
+                    - rowgroup [ref=e347]:
+                      - row "889a1799e9e6 linux/amd64 659.88 MB" [ref=e348]:
+                        - cell "889a1799e9e6" [ref=e349]:
+                          - link "889a1799e9e6" [ref=e350] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.0/images/sha256-889a1799e9e6bdc2775fdc51123e326c7f06cea7e911b6fcf6836a7dbaf08839
+                            - paragraph [ref=e351]: 889a1799e9e6
+                        - cell "linux/amd64" [ref=e352]:
+                          - paragraph [ref=e353]: linux/amd64
+                        - cell "659.88 MB" [ref=e354]:
+                          - paragraph [ref=e355]: 659.88 MB
+                - generic [ref=e357]:
+                  - generic [ref=e358]:
+                    - paragraph [ref=e359]:
+                      - strong [ref=e360]: TAG
+                    - generic [ref=e361]:
+                      - generic [ref=e362]:
+                        - paragraph [ref=e364]:
+                          - link "6.0.0.3" [ref=e365] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.0.0.3/images/sha256-889a1799e9e6bdc2775fdc51123e326c7f06cea7e911b6fcf6836a7dbaf08839
+                        - paragraph [ref=e366]:
+                          - text: Last pushed
+                          - strong [ref=e367]: over 4 years
+                          - text: by
+                          - link "opennebula" [ref=e368] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e375]: docker pull opennebula/opennebula:6.0.0.3
+                  - table [ref=e377]:
+                    - rowgroup [ref=e378]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e379]:
+                        - columnheader "Digest" [ref=e380]
+                        - columnheader "OS/ARCH" [ref=e381]
+                        - columnheader "Compressed size" [ref=e382]:
+                          - text: Compressed size
+                          - img [ref=e383]
+                    - rowgroup [ref=e385]:
+                      - row "889a1799e9e6 linux/amd64 659.88 MB" [ref=e386]:
+                        - cell "889a1799e9e6" [ref=e387]:
+                          - link "889a1799e9e6" [ref=e388] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.0.0.3/images/sha256-889a1799e9e6bdc2775fdc51123e326c7f06cea7e911b6fcf6836a7dbaf08839
+                            - paragraph [ref=e389]: 889a1799e9e6
+                        - cell "linux/amd64" [ref=e390]:
+                          - paragraph [ref=e391]: linux/amd64
+                        - cell "659.88 MB" [ref=e392]:
+                          - paragraph [ref=e393]: 659.88 MB
+                - generic [ref=e395]:
+                  - generic [ref=e396]:
+                    - paragraph [ref=e397]:
+                      - strong [ref=e398]: TAG
+                    - generic [ref=e399]:
+                      - generic [ref=e400]:
+                        - paragraph [ref=e402]:
+                          - link "6.0.0.3-1.ce-202111292014" [ref=e403] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.0.0.3-1.ce-202111292014/images/sha256-889a1799e9e6bdc2775fdc51123e326c7f06cea7e911b6fcf6836a7dbaf08839
+                        - paragraph [ref=e404]:
+                          - text: Last pushed
+                          - strong [ref=e405]: over 4 years
+                          - text: by
+                          - link "opennebula" [ref=e406] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e413]: docker pull opennebula/opennebula:6.0.0.3-1.ce-202111292014
+                  - table [ref=e415]:
+                    - rowgroup [ref=e416]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e417]:
+                        - columnheader "Digest" [ref=e418]
+                        - columnheader "OS/ARCH" [ref=e419]
+                        - columnheader "Compressed size" [ref=e420]:
+                          - text: Compressed size
+                          - img [ref=e421]
+                    - rowgroup [ref=e423]:
+                      - row "889a1799e9e6 linux/amd64 659.88 MB" [ref=e424]:
+                        - cell "889a1799e9e6" [ref=e425]:
+                          - link "889a1799e9e6" [ref=e426] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.0.0.3-1.ce-202111292014/images/sha256-889a1799e9e6bdc2775fdc51123e326c7f06cea7e911b6fcf6836a7dbaf08839
+                            - paragraph [ref=e427]: 889a1799e9e6
+                        - cell "linux/amd64" [ref=e428]:
+                          - paragraph [ref=e429]: linux/amd64
+                        - cell "659.88 MB" [ref=e430]:
+                          - paragraph [ref=e431]: 659.88 MB
+                - generic [ref=e433]:
+                  - generic [ref=e434]:
+                    - paragraph [ref=e435]:
+                      - strong [ref=e436]: TAG
+                    - generic [ref=e437]:
+                      - generic [ref=e438]:
+                        - paragraph [ref=e440]:
+                          - link "6.2" [ref=e441] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.2/images/sha256-0c65b191c3348ec09dd87805ecfbb5dab5cdd8fbbe6142f316d5d36d2f13f321
+                        - paragraph [ref=e442]:
+                          - text: Last pushed
+                          - strong [ref=e443]: over 4 years
+                          - text: by
+                          - link "opennebula" [ref=e444] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e451]: docker pull opennebula/opennebula:6.2
+                  - table [ref=e453]:
+                    - rowgroup [ref=e454]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e455]:
+                        - columnheader "Digest" [ref=e456]
+                        - columnheader "OS/ARCH" [ref=e457]
+                        - columnheader "Compressed size" [ref=e458]:
+                          - text: Compressed size
+                          - img [ref=e459]
+                    - rowgroup [ref=e461]:
+                      - row "0c65b191c334 linux/amd64 618.21 MB" [ref=e462]:
+                        - cell "0c65b191c334" [ref=e463]:
+                          - link "0c65b191c334" [ref=e464] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.2/images/sha256-0c65b191c3348ec09dd87805ecfbb5dab5cdd8fbbe6142f316d5d36d2f13f321
+                            - paragraph [ref=e465]: 0c65b191c334
+                        - cell "linux/amd64" [ref=e466]:
+                          - paragraph [ref=e467]: linux/amd64
+                        - cell "618.21 MB" [ref=e468]:
+                          - paragraph [ref=e469]: 618.21 MB
+                - generic [ref=e471]:
+                  - generic [ref=e472]:
+                    - paragraph [ref=e473]:
+                      - strong [ref=e474]: TAG
+                    - generic [ref=e475]:
+                      - generic [ref=e476]:
+                        - paragraph [ref=e478]:
+                          - link "6.2.0" [ref=e479] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.2.0/images/sha256-0c65b191c3348ec09dd87805ecfbb5dab5cdd8fbbe6142f316d5d36d2f13f321
+                        - paragraph [ref=e480]:
+                          - text: Last pushed
+                          - strong [ref=e481]: over 4 years
+                          - text: by
+                          - link "opennebula" [ref=e482] [cursor=pointer]:
+                            - /url: /u/opennebula
+                      - code [ref=e489]: docker pull opennebula/opennebula:6.2.0
+                  - table [ref=e491]:
+                    - rowgroup [ref=e492]:
+                      - row "Digest OS/ARCH Compressed size" [ref=e493]:
+                        - columnheader "Digest" [ref=e494]
+                        - columnheader "OS/ARCH" [ref=e495]
+                        - columnheader "Compressed size" [ref=e496]:
+                          - text: Compressed size
+                          - img [ref=e497]
+                    - rowgroup [ref=e499]:
+                      - row "0c65b191c334 linux/amd64 618.21 MB" [ref=e500]:
+                        - cell "0c65b191c334" [ref=e501]:
+                          - link "0c65b191c334" [ref=e502] [cursor=pointer]:
+                            - /url: /layers/opennebula/opennebula/6.2.0/images/sha256-0c65b191c3348ec09dd87805ecfbb5dab5cdd8fbbe6142f316d5d36d2f13f321
+                            - paragraph [ref=e503]: 0c65b191c334
+                        - cell "linux/amd64" [ref=e504]:
+                          - paragraph [ref=e505]: linux/amd64
+                        - cell "618.21 MB" [ref=e506]:
+                          - paragraph [ref=e507]: 618.21 MB
+            - navigation "pagination navigation" [ref=e509]:
+              - list [ref=e510]:
+                - listitem [ref=e511]:
+                  - button [disabled]:
+                    - img
+                - listitem [ref=e512]:
+                  - button [disabled]:
+                    - img
+                - listitem [ref=e513]:
+                  - generic [ref=e514]: 1 of 2
+                - listitem
+                - listitem [ref=e515]:
+                  - button [ref=e516] [cursor=pointer]:
+                    - img [ref=e517]
+                - listitem [ref=e519]:
+                  - button [ref=e520] [cursor=pointer]:
+                    - img [ref=e521]
+    - contentinfo [ref=e523]:
+      - generic [ref=e525]:
+        - generic [ref=e526]:
+          - img [ref=e528]
+          - generic [ref=e531]:
+            - region "Why" [ref=e532]:
+              - generic [ref=e533]: Why
+              - link "Overview" [ref=e534] [cursor=pointer]:
+                - /url: https://www.docker.com/why-docker
+              - link "What is a Container" [ref=e535] [cursor=pointer]:
+                - /url: https://www.docker.com/resources/what-container
+            - region "Products" [ref=e536]:
+              - generic [ref=e537]: Products
+              - link "Product Overview" [ref=e538] [cursor=pointer]:
+                - /url: https://www.docker.com/products
+              - generic [ref=e539]: Product Offerings
+              - link "Docker Desktop" [ref=e540] [cursor=pointer]:
+                - /url: https://www.docker.com/products/docker-desktop
+              - link "Docker Hub" [ref=e541] [cursor=pointer]:
+                - /url: https://www.docker.com/products/docker-hub
+              - generic [ref=e542]: Features
+              - link "Container Runtime" [ref=e543] [cursor=pointer]:
+                - /url: https://www.docker.com/products/container-runtime
+              - link "Developer Tools" [ref=e544] [cursor=pointer]:
+                - /url: https://www.docker.com/products/developer-tools
+              - link "Docker App" [ref=e545] [cursor=pointer]:
+                - /url: https://www.docker.com/products/docker-app
+              - link "Kubernetes" [ref=e546] [cursor=pointer]:
+                - /url: https://www.docker.com/products/kubernetes
+            - region "Developers" [ref=e547]:
+              - generic [ref=e548]: Developers
+              - link "Getting Started" [ref=e549] [cursor=pointer]:
+                - /url: https://docs.docker.com/get-started
+              - link "Play with Docker" [ref=e550] [cursor=pointer]:
+                - /url: https://www.docker.com/play-with-docker
+              - link "Community" [ref=e551] [cursor=pointer]:
+                - /url: https://www.docker.com/docker-community
+              - link "Open Source" [ref=e552] [cursor=pointer]:
+                - /url: https://www.docker.com/open-source
+              - link "Documentation" [ref=e553] [cursor=pointer]:
+                - /url: https://www.docker.com/docs
+            - region "Company" [ref=e554]:
+              - generic [ref=e555]: Company
+              - link "About Us" [ref=e556] [cursor=pointer]:
+                - /url: https://www.docker.com/company
+              - link "Resources" [ref=e557] [cursor=pointer]:
+                - /url: https://www.docker.com/resources
+              - link "Blog" [ref=e558] [cursor=pointer]:
+                - /url: https://www.docker.com/blog/
+              - link "Customers" [ref=e559] [cursor=pointer]:
+                - /url: https://www.docker.com/customers
+              - link "Partners" [ref=e560] [cursor=pointer]:
+                - /url: https://www.docker.com/partners
+              - link "Newsroom" [ref=e561] [cursor=pointer]:
+                - /url: https://www.docker.com/company/newsroom
+              - link "Events and Webinars" [ref=e562] [cursor=pointer]:
+                - /url: https://www.docker.com/events-and-webinars
+              - link "Careers" [ref=e563] [cursor=pointer]:
+                - /url: https://www.docker.com/careers
+              - link "Contact Us" [ref=e564] [cursor=pointer]:
+                - /url: https://www.docker.com/company/contact
+              - link "System Status⁠" [ref=e565] [cursor=pointer]:
+                - /url: https://www.dockerstatus.com
+                - text: System Status
+                - generic [ref=e566]:
+                  - text: ⁠
+                  - img [ref=e567]
+        - separator [ref=e569]
+        - generic [ref=e570]:
+          - paragraph [ref=e571]:
+            - generic [ref=e572]: © 2026 Docker, Inc. All rights reserved.
+            - text: "|"
+            - link "Terms of Service" [ref=e573] [cursor=pointer]:
+              - /url: https://www.docker.com/legal/docker-terms-service
+            - text: "|"
+            - link "Subscription Service Agreement" [ref=e574] [cursor=pointer]:
+              - /url: https://www.docker.com/legal/docker-subscription-service-agreement
+            - text: "|"
+            - link "Privacy" [ref=e575] [cursor=pointer]:
+              - /url: https://www.docker.com/legal/privacy
+            - text: "|"
+            - link "Legal" [ref=e576] [cursor=pointer]:
+              - /url: https://www.docker.com/legal
+          - generic [ref=e577]:
+            - link "Visit our Facebook page" [ref=e578] [cursor=pointer]:
+              - /url: https://www.facebook.com/docker.run
+              - img [ref=e579]
+            - link "Visit our X page" [ref=e581] [cursor=pointer]:
+              - /url: https://x.com/docker
+              - img [ref=e582]
+            - link "Visit our YouTube page" [ref=e584] [cursor=pointer]:
+              - /url: https://www.youtube.com/user/dockerrun
+              - img [ref=e585]
+            - link "Visit our LinkedIn page" [ref=e587] [cursor=pointer]:
+              - /url: https://www.linkedin.com/company/docker
+              - img [ref=e588]
+            - link "View our RSS feed" [ref=e590] [cursor=pointer]:
+              - /url: https://www.docker.com/feed/
+              - img [ref=e591]
+        - button "Cookies Settings" [ref=e594] [cursor=pointer]

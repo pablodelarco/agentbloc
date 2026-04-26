@@ -1,0 +1,268 @@
+- generic [ref=e2]:
+  - link "Skip to Content" [ref=e3] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e4]:
+    - navigation "ULI Global" [ref=e5]:
+      - heading "ULI Global" [level=2] [ref=e6]
+      - generic [ref=e7]:
+        - list [ref=e9]:
+          - listitem [ref=e10]:
+            - generic [ref=e11]:
+              - link "Global" [ref=e12] [cursor=pointer]:
+                - /url: https://uli.org/#ulip=globalnav-uliglobal
+              - button "Show" [ref=e13] [cursor=pointer]:
+                - generic [ref=e14]: Show
+                - generic:
+                  - img
+          - listitem [ref=e15]:
+            - link "Knowledge Finder" [ref=e16] [cursor=pointer]:
+              - /url: https://knowledge.uli.org/#ulip=globalnav-kf
+          - listitem [ref=e17]:
+            - link "Member Directory" [ref=e18] [cursor=pointer]:
+              - /url: https://members.uli.org/#ulip=globalnav-memdirectory
+          - listitem [ref=e19]:
+            - link "Navigator" [ref=e20] [cursor=pointer]:
+              - /url: https://navigator.uli.org/#ulip=globalnav-navigator
+          - listitem [ref=e21]:
+            - generic [ref=e22] [cursor=pointer]: More
+            - generic:
+              - img
+        - generic [ref=e23]:
+          - list [ref=e24]:
+            - listitem [ref=e25]:
+              - link "Donate" [ref=e26] [cursor=pointer]:
+                - /url: https://netforum.uli.org/eWeb/dynamicPage.aspx?webcode=ULIAnnualFundDonation&action=add&gft_src_key=0048c849-2c5e-4585-883a-ae4b855db1f5&donotsave=yes#ulip=globalnav-donate-notsignedin
+            - listitem [ref=e27]:
+              - link "Contact" [ref=e28] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/uli-contact-us#ulip=globalnav-contact
+            - listitem [ref=e29]:
+              - button "Sign In" [ref=e30] [cursor=pointer]
+          - link "Join ULI" [ref=e31] [cursor=pointer]:
+            - /url: https://uli.org/join-uli/#ulip=globalnav-joinuliuli/#ulip=emeaglobalnav-joinuli
+    - banner [ref=e32]:
+      - generic [ref=e34]:
+        - link "Urban Land Institute" [ref=e36] [cursor=pointer]:
+          - /url: http://uli.org
+          - img "Urban Land Institute" [ref=e37]
+        - navigation "Main Menu" [ref=e38]:
+          - heading "Main Menu" [level=2] [ref=e39]
+          - list [ref=e40]:
+            - listitem [ref=e41]:
+              - link "About Will open in a new window" [ref=e42] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/
+                - text: About
+                - generic [ref=e43]: Will open in a new window
+            - listitem [ref=e44]:
+              - link "ULI Events Will open in a new window" [ref=e45] [cursor=pointer]:
+                - /url: https://uli.org/events/
+                - text: ULI Events
+                - generic [ref=e46]: Will open in a new window
+            - listitem [ref=e47]:
+              - link "ULI Mission Priorities Will open in a new window" [ref=e48] [cursor=pointer]:
+                - /url: https://uli.org/mission-priorities/
+                - text: ULI Mission Priorities
+                - generic [ref=e49]: Will open in a new window
+            - listitem [ref=e50]:
+              - link "ULI Careers Will open in a new window" [ref=e51] [cursor=pointer]:
+                - /url: https://uli.org/uli-careers/
+                - text: ULI Careers
+                - generic [ref=e52]: Will open in a new window
+        - button "Show search" [ref=e54] [cursor=pointer]:
+          - generic [ref=e55]: Show search
+          - generic:
+            - img
+      - navigation "Sticky Menu" [ref=e56]:
+        - generic [ref=e57]:
+          - link "Urban Land Institute" [ref=e60] [cursor=pointer]:
+            - /url: http://uli.org
+            - img "Urban Land Institute" [ref=e61]
+          - generic [ref=e62]:
+            - button "Sign In" [ref=e63] [cursor=pointer]
+            - button "Show search" [ref=e65] [cursor=pointer]:
+              - generic [ref=e66]: Show search
+              - generic:
+                - img
+            - button "Show full menu" [ref=e68] [cursor=pointer]:
+              - generic [ref=e69]: Show full menu
+  - main [ref=e71]:
+    - generic [ref=e78]:
+      - heading "404 Page Not Found" [level=2] [ref=e79]:
+        - generic [ref=e80]: "404"
+        - generic [ref=e81]: Page Not Found
+      - paragraph [ref=e82]: Sorry about that. Perhaps you can find what you were looking for by going to the homepage or searching below.
+      - generic [ref=e85]:
+        - generic [ref=e86]:
+          - generic [ref=e87]: Search Urban Land Institute
+          - textbox "Search Urban Land Institute" [ref=e88]
+        - button "Submit" [ref=e90] [cursor=pointer]:
+          - generic [ref=e91]: Submit
+          - generic:
+            - img
+  - contentinfo [ref=e92]:
+    - generic [ref=e94]:
+      - generic [ref=e95]:
+        - link "ULI Logo" [ref=e96] [cursor=pointer]:
+          - /url: https://uli.org
+          - img "ULI Logo" [ref=e97]
+        - paragraph [ref=e98]: "The mission of the Urban Land Institute:"
+        - paragraph [ref=e99]: Shape the future of the built environment for transformative impact in communities worldwide
+        - link "Join ULI" [ref=e100] [cursor=pointer]:
+          - /url: https://uli.org/join-uli/#ulip=globalnav-joinuliuli/#ulip=emeaglobalnav-joinuli
+      - navigation [ref=e101]:
+        - generic [ref=e102]:
+          - heading "About ULI" [level=3] [ref=e103]:
+            - link "About ULI" [ref=e104] [cursor=pointer]:
+              - /url: https://uli.org/about-uli/
+          - list [ref=e105]:
+            - listitem [ref=e106]:
+              - link "ULI Mission Priorities" [ref=e107] [cursor=pointer]:
+                - /url: https://uli.org/mission-priorities/
+            - listitem [ref=e108]:
+              - link "Americas Leadership" [ref=e109] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/uli-americas-leadership/
+            - listitem [ref=e110]:
+              - link "Asia Pacific Leadership" [ref=e111] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/uli-asia-pacific-leadership/
+            - listitem [ref=e112]:
+              - link "Europe Leadership" [ref=e113] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/uli-europe-leadership/
+            - listitem [ref=e114]:
+              - link "Global Board of Directors" [ref=e115] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/uli-global-board-directors/
+            - listitem [ref=e116]:
+              - link "Global CEO" [ref=e117] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/uli-global-ceo/
+            - listitem [ref=e118]:
+              - link "Global Chair" [ref=e119] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/global-chair/
+            - listitem [ref=e120]:
+              - link "Global Governing Trustees" [ref=e121] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/global-governing-trustees/
+            - listitem [ref=e122]:
+              - link "ULI Governance" [ref=e123] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/uli-governance/
+            - listitem [ref=e124]:
+              - link "ULI Nominations" [ref=e125] [cursor=pointer]:
+                - /url: https://uli.org/about-uli/uli-nominations/
+        - generic [ref=e126]:
+          - heading "Join ULI" [level=3] [ref=e127]:
+            - link "Join ULI" [ref=e128] [cursor=pointer]:
+              - /url: https://uli.org/join-uli/
+          - list [ref=e129]:
+            - listitem [ref=e130]:
+              - link "Member Benefits" [ref=e131] [cursor=pointer]:
+                - /url: https://uli.org/member-benefits/
+            - listitem [ref=e132]:
+              - link "Get involved" [ref=e133] [cursor=pointer]:
+                - /url: https://uli.org/get-involved/
+            - listitem [ref=e134]:
+              - link "Stay Informed" [ref=e135] [cursor=pointer]:
+                - /url: https://uli.org/stay-informed/
+            - listitem [ref=e136]:
+              - link "Member Directory" [ref=e137] [cursor=pointer]:
+                - /url: https://uli.org/member-directory/
+            - listitem [ref=e138]:
+              - link "Group packages" [ref=e139] [cursor=pointer]:
+                - /url: https://uli.org/group-packages/
+        - generic [ref=e140]:
+          - heading "Discover ULI" [level=3] [ref=e141]:
+            - link "Discover ULI" [ref=e142] [cursor=pointer]:
+              - /url: https://uli.org/discover-uli/
+          - list [ref=e143]:
+            - listitem [ref=e144]:
+              - link "Urban Land Magazine" [ref=e145] [cursor=pointer]:
+                - /url: http://urbanland.uli.org
+            - listitem [ref=e146]:
+              - link "ULI Foundation" [ref=e147] [cursor=pointer]:
+                - /url: http://foundation.uli.org
+            - listitem [ref=e148]:
+              - link "ULI Careers" [ref=e149] [cursor=pointer]:
+                - /url: https://uli.org/uli-careers/
+            - listitem [ref=e150]:
+              - link "ULI Annual Report and Financials" [ref=e151] [cursor=pointer]:
+                - /url: https://uli.org/uli-annual-report-and-financials/
+        - generic [ref=e152]:
+          - heading "ULI Events" [level=3] [ref=e153]:
+            - link "ULI Events" [ref=e154] [cursor=pointer]:
+              - /url: https://uli.org/events/
+          - list [ref=e155]:
+            - listitem [ref=e156]:
+              - link "Upcoming Events" [ref=e157] [cursor=pointer]:
+                - /url: https://uli.org/events/
+            - listitem [ref=e158]:
+              - link "ULI Fall Meeting" [ref=e159] [cursor=pointer]:
+                - /url: http://fall.uli.org
+            - listitem [ref=e160]:
+              - link "ULI Spring Meeting" [ref=e161] [cursor=pointer]:
+                - /url: https://spring.uli.org
+            - listitem [ref=e162]:
+              - link "ULI Europe Conference" [ref=e163] [cursor=pointer]:
+                - /url: http://europeconference.uli.org
+            - listitem [ref=e164]:
+              - link "ULI APAC Summit" [ref=e165] [cursor=pointer]:
+                - /url: http://apacsummit.uli.org
+        - generic [ref=e166]:
+          - heading "ULI Legal Notices" [level=3] [ref=e167]:
+            - link "ULI Legal Notices" [ref=e168] [cursor=pointer]:
+              - /url: https://uli.org/uli-legal-notices/
+          - list [ref=e169]:
+            - listitem [ref=e170]:
+              - link "Terms of Use" [ref=e171] [cursor=pointer]:
+                - /url: https://uli.org/uli-legal-notices/terms-of-use/
+            - listitem [ref=e172]:
+              - link "ULI Privacy Policy" [ref=e173] [cursor=pointer]:
+                - /url: https://uli.org/uli-legal-notices/uli-privacy-policy/
+            - listitem [ref=e174]:
+              - link "Cookie Policy" [ref=e175] [cursor=pointer]:
+                - /url: https://uli.org/uli-legal-notices/cookie-policy/
+            - listitem [ref=e176]:
+              - link "GDPR Policy" [ref=e177] [cursor=pointer]:
+                - /url: https://uli.org/uli-legal-notices/gdpr-policy/
+            - listitem [ref=e178]:
+              - link "Code of Ethics" [ref=e179] [cursor=pointer]:
+                - /url: https://uli.org/code-of-ethics/
+    - generic [ref=e182]:
+      - generic [ref=e183]:
+        - img "ULI Logo" [ref=e184]
+        - paragraph [ref=e185]:
+          - text: ©2026 Urban Land Institute. All Rights Reserved.
+          - link "Legal Notices" [ref=e186] [cursor=pointer]:
+            - /url: https://uli.org/uli-legal-notices/
+      - generic [ref=e188]:
+        - link "Visit ULI on YouTube" [ref=e189] [cursor=pointer]:
+          - /url: https://www.youtube.com/user/ULITV/
+          - generic [ref=e190]: Visit ULI on YouTube
+          - img [ref=e191]
+        - link "Visit ULI on X" [ref=e192] [cursor=pointer]:
+          - /url: https://www.instagram.com/urbanlandinstitute/
+          - generic [ref=e193]: Visit ULI on X
+          - img [ref=e194]
+        - link "Visit ULI on Facebook" [ref=e195] [cursor=pointer]:
+          - /url: https://www.facebook.com/uliglobal/
+          - generic [ref=e196]: Visit ULI on Facebook
+          - img [ref=e197]
+        - link [ref=e198] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/uliglobal/
+          - img [ref=e200]
+        - link "Visit ULI on X" [ref=e201] [cursor=pointer]:
+          - /url: https://twitter.com/urbanlandinst/
+          - generic [ref=e202]: Visit ULI on X
+          - img [ref=e203]
+      - generic [ref=e204]:
+        - generic [ref=e205]:
+          - heading "Urban Land Institute" [level=2] [ref=e206]
+          - generic [ref=e207]:
+            - text: URBAN LAND INSTITUTE
+            - text: 2001 L STREET, NW
+            - text: SUITE 200
+            - text: WASHINGTON, DC 20036-4948
+        - generic [ref=e208]:
+          - heading "Customer Service" [level=2] [ref=e209]
+          - paragraph [ref=e210]:
+            - text: "Phone:"
+            - link "1-800-321-5011" [ref=e211] [cursor=pointer]:
+              - /url: tel:18003215011
+          - paragraph [ref=e212]:
+            - text: "Email:"
+            - link "customerservice@uli.org" [ref=e213] [cursor=pointer]:
+              - /url: mailto:customerservice@uli.org

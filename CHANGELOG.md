@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 v2.0 runs as a markdown skill INSIDE ClaudeClaw (TypeScript + Bun substrate providing Agent / TeamCreate / SendMessage / Jobs / Telegram primitives) with n8n as the event bus for real-time webhook triggers. AgentBloc itself remains pure markdown , no custom runtime added on AgentBloc's side. Framework patterns inherited (not adopted as dependencies) from CrewAI (role/goal/backstory) + AG2 (CaptainAgent dynamic team generation) + Google ADK (Sequential/Parallel/Loop primitives) + LangGraph (file-based state checkpointing) + Mastra (front-matter validators) + Paperclip (control plane UX patterns).
 
-Authoritative scope source: `.planning/v2.0-PROMPT.pdf`. Milestone archive: `.planning/milestones/v2.0-ROADMAP.md`.
+Authoritative scope source: `.planning/v2.0-PROMPT.pdf`.
 
 ## [1.0.0] - 2026-04-14
 
