@@ -52,6 +52,10 @@ agents:                                        # REQUIRED. Length >= 1.
       - "<other-agent-id>"                     # Must resolve to agents[] (ORCH-04).
     blast_radius: 1 | 2 | 3 | 4                # REQUIRED. Auto-scored per blast-radius.md.
     model: "opus | sonnet | haiku | null"      # OPTIONAL. Per-agent model hint.
+    anticipated: false                         # OPTIONAL. Default false. True when proposed by Phase 15 anticipation pass per D-99.
+    anticipation_rationale: "string | null"    # OPTIONAL. 1-2 sentence narrative. Required (WARN-tier Check 9) when anticipated: true.
+    anticipation_sources:                      # OPTIONAL. Array of URLs from anticipation-heuristics.md mapping. Min length 3 (WARN-tier) when anticipated: true.
+      - "string"
 
 orchestration:
   workflows:                                   # REQUIRED. Length >= 1.
@@ -72,6 +76,7 @@ orchestration:
 | REQUIRED | `schema_version`, `team.name`, `team.topology`, `agents[]` (>=1), per-agent `id` + `role` + `goal` + `tools[]` (>=1) + `triggers[]` (>=1) + `autonomy` + `blast_radius`, `orchestration.workflows[]` (>=1) with `type` + `agents[]` (>=1) + `trigger` | Designer refuses to emit. Main session re-prompts user through targeted follow-up. |
 | RECOMMENDED | `backstory`, `outputs[]`, `escalation`, `dependencies[]`, `team.topology_rationale`, `workflows[].why` | Designer emits with warnings. Phase 12 Deploy Pipeline operates with degraded output and flags gaps in DEPLOY-REPORT.md. |
 | OPTIONAL | `team.modified_at`, `team.briefing_agent_id`, `model`, `workflows[].steps`, `workflows[].flow` | Silent defaults. Phase 12 proceeds without comment. |
+| OPTIONAL | `anticipated`, `anticipation_rationale`, `anticipation_sources[]` | Designer emits anticipated agents per Phase 15 D-99; existing consumers (Phase 12 deploy-engine, Phase 14 briefing-agent) ignore (backward-compatible per D-101). |
 
 Downstream consumers refuse to proceed on an unknown major `schema_version`, the same rule as business-graph-schema.md.
 
@@ -139,6 +144,10 @@ Designer walks this ordered list before writing `.agentbloc/team/agent-profiles.
 **Check 8 (WARN, not FAIL): RECOMMENDED fields populated or explicitly marked `null`**
 - WARN: Emit with nulls; flag gaps in the rendered table so user can accept or fix.
 
+**Check 9 (WARN, not FAIL): For every agent with `anticipated: true`, both `anticipation_rationale` non-null AND `anticipation_sources` array length >= 3**
+- WARN: Emit with the gap; flag in the rendered table as `ANTICIPATED (rationale missing)` or `ANTICIPATED (only N sources, need 3)` so user can ask Designer to fill the gap.
+- Designer auto-emitting from [anticipation-heuristics.md](anticipation-heuristics.md) ALWAYS populates rationale + 3 sources (the map is the source of truth). The WARN tier covers conversational-edit additions where the user supplies a partial agent.
+
 ## Emission Protocol
 
 Emission happens when the main session's Phase 2 Design Summary gate spawns the Designer Agent subagent (D-21). The steps:
@@ -171,8 +180,20 @@ The `schema_version` field is an integer. It starts at `1`. The version bumps on
 
 Additive changes do NOT bump the version:
 
-- Adding a new OPTIONAL field (e.g., `model` hint).
+- Adding a new OPTIONAL field (e.g., `model` hint, `anticipated`, `anticipation_rationale`, `anticipation_sources`).
 - Adding a new value to a bounded enum (e.g., adding `inter-agent` to triggers).
 - Loosening a REQUIRED field to RECOMMENDED.
 
 Downstream consumers (Phase 12 Deploy, Phase 13 Runtime, Phase 14 Briefing Agent, Phase 15 Anticipation) read `schema_version` and refuse to proceed on an unknown major version.
+
+## Anticipation Fields (Phase 15)
+
+When Designer's anticipation pass emits an unrequested-but-needed agent (per Phase 15 D-99), the agent profile carries 3 additional fields:
+
+- `anticipated: true` flags the agent as a Phase 15 proposal (vs. a user-requested agent from the Business Graph processes[])
+- `anticipation_rationale` is a 1-2 sentence narrative explaining WHY this agent is suggested (sourced from [anticipation-heuristics.md](anticipation-heuristics.md) per-mapping rationale)
+- `anticipation_sources` is an array of >= 3 URLs cited as evidence (sourced from [anticipation-heuristics.md](anticipation-heuristics.md) Evidence sources block)
+
+These fields are OPTIONAL per the Schema Versioning Rules above (additive extension; schema_version unchanged at 1). Existing consumers (Phase 12 deploy-engine, Phase 14 briefing-agent) ignore them; Phase 15 anticipation-aware consumers (Designer's own conversational-edit decline path, Phase 2 rendered TABLE renderer) read them.
+
+User decisions on anticipated agents (accept / decline / defer) are handled in the Phase 2 conversational-edit path; declines append to `.agentbloc/graph/declined.json` per [declined-agents-schema.md](declined-agents-schema.md). The fixture at [`examples/arco-rooms-anticipated-profiles.yaml`](../examples/arco-rooms-anticipated-profiles.yaml) demonstrates a 5-agent team (3 requested + 2 anticipated) for the canonical Arco Rooms case.
