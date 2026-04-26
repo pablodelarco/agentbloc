@@ -1,0 +1,182 @@
+schema_version: 1
+team:
+  name: arco-rooms-team
+  topology: mesh
+  topology_rationale: "5 agents peer-call each other (Recepcionista queries Gestor Cobros for payment status before sending owner reports; Gestor Cobros depends on Gestor Documental invoice output; Analista Rentabilidad reads from both Gestor Cobros + Gestor Documental for monthly margin computation; Gestor Incidencias receives event-driven tenant messages independently); mesh matches ClaudeClaw SendMessage pattern."
+  briefing_agent_id: null
+  modified_at: "2026-04-26T18:30:00Z"
+
+agents:
+  - id: gestor-documental
+    role: "Invoice Collection Specialist"
+    goal: "Fetch, deduplicate, and persist utility invoices from 6 providers every night"
+    backstory: "Owns the daily invoice-collection pipeline. Has credentials for Endesa, Aguas de Almeria, Naturgy, Movistar, Urbaser, and Mapfre. Knows which providers deliver by email and which require portal login."
+    tools:
+      - playwright-mcp
+      - google-workspace-mcp
+      - mapfre-api
+    triggers:
+      - type: cron
+        schedule: "0 22 * * *"
+    autonomy: full
+    outputs:
+      - type: state-file
+        schema: ".agentbloc/state/invoices.json"
+    escalation: "telegram:pablo"
+    dependencies: []
+    blast_radius: 2
+    model: sonnet
+    anticipated: false
+
+  - id: gestor-cobros
+    role: "Payment Reconciliation Engine"
+    goal: "Match bank transactions to invoices with confidence scoring and enforce the overdue-7-day rule"
+    backstory: "Owns the daily payment-matching pipeline. Knows the tenant registry and confidence-score regex patterns. Applies the decision rule: if an invoice is overdue by more than 7 days, send a formal notice to the tenant."
+    tools:
+      - bank-mcp
+      - google-sheets-mcp
+    triggers:
+      - type: cron
+        schedule: "30 22 * * *"
+      - type: inter-agent
+        caller: recepcionista
+        message: payment-status-query
+    autonomy: semi
+    outputs:
+      - type: state-file
+        schema: ".agentbloc/state/matches.json"
+    escalation: "telegram:pablo"
+    dependencies:
+      - gestor-documental
+    blast_radius: 2
+    model: opus
+    anticipated: false
+
+  - id: recepcionista
+    role: "Daily Operations Reporter"
+    goal: "Send per-owner Telegram summary of invoices, payments, and unmatched items; query Gestor Cobros for payment status before composing messages"
+    backstory: "Owner-facing agent. Queries Gestor Cobros for payment status before composing messages. Sends to each owner's dedicated Telegram thread."
+    tools:
+      - telegram-mcp
+    triggers:
+      - type: cron
+        schedule: "0 23 * * *"
+    autonomy: semi
+    outputs:
+      - type: telegram-message
+        schema: per-owner-daily-summary
+    escalation: "telegram:pablo"
+    dependencies:
+      - gestor-cobros
+    blast_radius: 4
+    model: sonnet
+    anticipated: false
+
+  - id: analista-rentabilidad
+    role: "Profitability Analyst"
+    goal: "Consolidate margin per property monthly; surface owners trending toward unprofitability before they ask"
+    backstory: "Anticipated agent for rental-property-management businesses with 7+ properties. Reads invoices and matched payments per property; computes net margin month-over-month; surfaces properties trending below break-even with a 1-paragraph narrative for the monthly Telegram briefing."
+    tools:
+      - google-sheets-mcp
+      - telegram-mcp
+    triggers:
+      - type: cron
+        schedule: "0 9 1 * *"
+    autonomy: semi
+    outputs:
+      - type: state-file
+        schema: ".agentbloc/state/profitability.json"
+      - type: telegram-message
+        schema: monthly-profitability-briefing
+    escalation: "telegram:pablo"
+    dependencies:
+      - gestor-cobros
+      - gestor-documental
+    blast_radius: 2
+    model: opus
+    anticipated: true
+    anticipation_rationale: "Rental businesses with 7 properties typically lack monthly profitability views; owners ask 'which property is bleeding cash' but no agent currently consolidates the answer. NAR + ULI Terwilliger Center benchmarks set monthly cadence as the floor for 7+ unit portfolios."
+    anticipation_sources:
+      - "https://www.nar.realtor/research-and-statistics"
+      - "https://www.naahq.org/research-insights"
+      - "https://www.uli.org/research/centers-initiatives/terwilliger-center-for-housing"
+
+  - id: gestor-incidencias
+    role: "Incident Tracker"
+    goal: "Capture tenant-reported issues from Telegram and email; persist to a single ledger; remind on stale items"
+    backstory: "Anticipated agent for multi-property rentals. Watches the inbound tenant Telegram thread + the maintenance email inbox; categorizes incidents (plumbing, electrical, appliance, structural); persists to a per-property ledger; reminds Pablo at 7-day and 14-day staleness thresholds."
+    tools:
+      - telegram-mcp
+      - google-workspace-mcp
+    triggers:
+      - type: event
+        source: telegram
+        name: tenant_message
+      - type: event
+        source: gmail
+        name: maintenance_email
+    autonomy: semi
+    outputs:
+      - type: state-file
+        schema: ".agentbloc/state/incidents.json"
+    escalation: "telegram:pablo"
+    dependencies: []
+    blast_radius: 2
+    model: sonnet
+    anticipated: true
+    anticipation_rationale: "Multi-property rentals accumulate maintenance issues across 30+ tenants; reports arrive via WhatsApp, email, and in-person, with consolidated tracking rare in SMB landlords. NAA research cites maintenance ticket consolidation as the single largest unmet need for 1-50 unit operators."
+    anticipation_sources:
+      - "https://www.nar.realtor/research-and-statistics"
+      - "https://www.naahq.org/research-insights"
+      - "https://www.uli.org/research/centers-initiatives/terwilliger-center-for-housing"
+
+orchestration:
+  workflows:
+    - id: cobro-diario
+      type: sequential
+      agents:
+        - gestor-documental
+        - gestor-cobros
+        - recepcionista
+      trigger:
+        type: cron
+        schedule: "0 22 * * *"
+      why: "Sequential per orchestration-patterns.md: each agent's output feeds the next (invoices to matches to report)."
+      steps:
+        - "gestor-documental collects invoices from 6 utility providers"
+        - "gestor-cobros matches bank transactions to invoices with confidence scoring"
+        - "recepcionista sends per-owner Telegram summary"
+
+    - id: unmatched-payment-alert
+      type: event-driven
+      agents:
+        - recepcionista
+      trigger:
+        type: manual
+        description: "Invoked when gestor-cobros detects 3+ unmatched items"
+      why: "Event-driven per orchestration-patterns.md: Gestor Cobros wakes Recepcionista via inter-agent SendMessage when unmatched items exceed the 3-item threshold."
+      flow: "gestor-cobros detects unmatched >= 3 items; sends inter-agent message to recepcionista; recepcionista composes Telegram alert to Pablo; returns."
+
+    - id: rentabilidad-mensual
+      type: sequential
+      agents:
+        - analista-rentabilidad
+      trigger:
+        type: cron
+        schedule: "0 9 1 * *"
+      why: "Sequential per orchestration-patterns.md: monthly read-aggregate-report flow with no inter-agent coordination needed; runs after all daily cobro-diario runs of the prior month have completed."
+      steps:
+        - "analista-rentabilidad reads invoices.json + matches.json for the prior month"
+        - "computes per-property net margin; flags properties below break-even"
+        - "writes profitability.json + sends monthly Telegram briefing"
+
+    - id: incidencias-canal
+      type: event-driven
+      agents:
+        - gestor-incidencias
+      trigger:
+        type: event
+        source: telegram
+        name: tenant_message
+      why: "Event-driven per orchestration-patterns.md: tenant-initiated incidents arrive on demand via Telegram or email; gestor-incidencias wakes per event, not on a schedule."
+      flow: "tenant message lands in Telegram thread or maintenance email; gestor-incidencias wakes; categorizes; persists to incidents.json; replies acknowledgement."
