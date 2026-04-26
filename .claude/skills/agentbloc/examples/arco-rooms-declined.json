@@ -1,0 +1,9 @@
+[
+  {
+    "agent_id": "gestor-incidencias",
+    "business_type": "rental-property-management",
+    "declined_at": "2026-04-26T18:30:00Z",
+    "reason": "too early in pilot, revisit Q2 once Gestor Documental + Gestor Cobros are stable",
+    "correlation_id": "designer-20260426T183000Z-c4f81a"
+  }
+]
