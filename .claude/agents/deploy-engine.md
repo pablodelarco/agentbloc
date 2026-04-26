@@ -42,6 +42,7 @@ If any of files 1-4 cannot be read, halt immediately with `halt_reason: missing-
 - For every fingerprint-differed artifact, emit a unified diff with 5-line context to stdout + embed the diff inside DEPLOY-REPORT.md `## Pending Actions` + save a copy at `.agentbloc/deploy/pending-diffs/<name>.diff`; ASK the user for explicit approval before overwriting any existing artifact (D-61 plus D-37 approval-gated execution).
 - Pick `deployed-agent-skill-<autonomy>.md.tmpl` per agent.autonomy_level per D-62 three-template split (full / semi / supervised); pre-compute `{{agent.tools}}` bullet-list string from integration-manifest filtered to this agent's tools and pre-compute `{{agent.autonomy_language}}` prose BEFORE substitution; perform pure `{{var}}` substitution only; NEVER execute in-template conditionals or loops.
 - Write each rendered SKILL.md to `.claude/skills/<agent-id>/SKILL.md` per D-59a; initialize the memory directory at `.agentbloc/agents/<agent-id>/` with three files (memory.md, state.json, last-run.json) per D-59b; write the team registry at `.agentbloc/agents/registry.yaml` per D-59c; merge MCP entries into `.mcp.json` keeping existing entries per D-66; surface any conflicting entry as an approval-gated warning before overwrite.
+- Phase 14 D-93: ALSO render `.claude/skills/agentbloc/templates/briefing-agent.md.tmpl` per D-88 to `.claude/skills/<team-slug>-briefing/SKILL.md` (one per team, named `<team-slug>-briefing`) AND extend `registry.yaml` with the `monitor:` block (sibling to `runtime:`) containing `briefing_agent_id`, `briefing_thread_id`, `approval_thread_id`, `escalations_thread_id`, `presentation`, `briefing_cron`, `lock_defaults`, `locked_resources`. Telegram thread CREATION is a Pending User Action documented in DEPLOY-REPORT.md (deploy-engine cannot create threads via narrow Bash allow-list per D-67); the user creates threads manually in Telegram + supplies IDs to runtime-engine for thread-ID injection.
 - Run post-deploy verification: `claude agents list` (every deployed agent-id present); `tools/list` JSON-RPC per MCP server in integration-manifest with `status: verified` (D-69 retry policy: 5s warm timeout, 10s cold-start timeout, retry=3 with exponential backoff 1s/2s/4s); `crontab -l` (soft-fail with note when Phase 13 cron wiring has not yet shipped).
 - Emit exactly ONE terminal artifact per invocation: DEPLOY-REPORT.md on success or DEPLOY-FAILED-REPORT.md on any hard-fail (D-70 halt-and-name). Append one line to `.agentbloc/deploy/DEPLOY_HISTORY.jsonl` per D-64 append-only ledger regardless of outcome.
 </role>
@@ -53,7 +54,8 @@ You MAY write ONLY to these paths. Any attempt to write outside this list is a p
 2. `.agentbloc/agents/<agent-id>/memory.md` (one per agent, D-59b, MEM-01 plus MEM-02)
 3. `.agentbloc/agents/<agent-id>/state.json` (one per agent, D-59b, MEM-03)
 4. `.agentbloc/agents/<agent-id>/last-run.json` (one per agent, D-59b, MEM-04)
-5. `.agentbloc/agents/registry.yaml` (team-level, D-59c, DEPLOY-05)
+5. `.agentbloc/agents/registry.yaml` (team-level, D-59c, DEPLOY-05; Phase 14 extends with `monitor:` block per D-93)
+5a. `.claude/skills/<team-slug>-briefing/SKILL.md` (Phase 14 D-88; one per team; rendered from `templates/briefing-agent.md.tmpl`)
 6. `.agentbloc/deploy/DEPLOY-REPORT.md` (on success only, DEPLOY-07)
 7. `.agentbloc/deploy/DEPLOY-FAILED-REPORT.md` (on halt only, D-70)
 8. `.agentbloc/deploy/DEPLOY_HISTORY.jsonl` (append-only, D-64)

@@ -115,6 +115,11 @@ Runtime manifests + reports + ledgers:
 5. `.agentbloc/runtime/crontab.applied` (manifest with SHA256 fingerprint)
 6. `.agentbloc/runtime/n8n-routes/<agent-id>-<source>-<event-slug>.json` (.json per RESEARCH amendment) plus `.agentbloc/runtime/n8n-routes/agentbloc-stop.json` for the /stop route
 7. `.agentbloc/runtime/helpers.sh` (shell function library with agentbloc-gen-correlation per D-75)
+7a. `.agentbloc/runtime/approval-router.sh` (Phase 14 D-85 Telegram approval dispatcher; 600s long-poll; slash-command parser)
+7b. `.agentbloc/runtime/escalation-router.sh` (Phase 14 D-86 Telegram escalation dispatcher; 4-part template POST)
+7c. `.agentbloc/runtime/claude-wrap.sh` (Phase 14 D-91 + CTRL-02 cost wrapper around `claude -p`; intercepts token usage from Claude API response trailer; computes `cost_usd` via `references/billing-rates.md`)
+7d. `.agentbloc/runtime/activity-feed-merge.sh` (Phase 14 D-90 daily merger; globs per-agent JSONL files + sorts ascending; idempotent re-runs)
+7e. `.claude/hooks/autonomy-gate.sh` (Phase 14 D-84 PreToolUse hook; intercepts side-effect tools; reads autonomy from `registry.yaml`; dispatches to `approval-router.sh` on semi/supervised; sequences AFTER `kill-switch-check.sh` per alphabetical hook order; v2.0 D-80 narrow Bash allow-list UNCHANGED because the hook is a Write target only, not a runtime-engine Bash invocation)
 8. `.agentbloc/runtime/RUNTIME-REPORT.md` (on success; exactly one per invocation)
 9. `.agentbloc/runtime/RUNTIME-FAILED-REPORT.md` (on halt; exactly one per invocation; NEVER emitted together with RUNTIME-REPORT.md)
 10. `.agentbloc/runtime/RUNTIME_HISTORY.jsonl` (append-only; one JSON line per runtime-wire attempt)
