@@ -224,3 +224,33 @@ Phase 13 formalizes kill-switch behavior inside the runtime layer. Per D-77, the
 **Remote-trigger path (Telegram /stop):** Phase 13 runtime-engine emits an n8n route stub at `.agentbloc/runtime/n8n-routes/agentbloc-stop.json` that listens for `/stop` in the configured Telegram operations thread and runs `touch .agentbloc/KILL_SWITCH` via a shell node. A sibling route `agentbloc-resume.json` runs `rm .agentbloc/KILL_SWITCH` on `/resume`. Both are user-installable into the user's n8n instance. The v1.0 dual-path (file-based + Telegram /stop) remains operational; Phase 13 ships the route .json stubs so the user does not hand-author them.
 
 **Correlation-ID-scoped forensics:** Every halt event logs the correlation ID. A single grep over `.agentbloc/logs/audit.jsonl` and `.agentbloc/runtime/TEAM_SESSIONS.jsonl` reconstructs the full chain from the triggering user event through every halted agent. See [correlation-id.md](correlation-id.md) for grep recipes.
+
+## Escalation Protocol
+
+Phase 14 introduces a third Telegram thread per team: `escalations`, distinct from `approvals` (CTRL-01) and `briefing` (MONITOR-04). Escalations route agent failures + critical errors with a structured 4-part message (what tried / why failed / options / recommended next action) per AUTON-04 + AUTON-05.
+
+### Trigger
+
+An agent escalates when one of:
+1. An uncaught exception during wake.
+2. A critical-action tool returning `result: failure` (where critical = the action was the agent's primary purpose for this wake, e.g., `mcp__plaid__list_transactions` for gestor-cobros).
+3. An explicit `escalate(...)` call from agent prose when the agent assesses it cannot make progress.
+
+### Persistent Halt + /resume
+
+On escalation, the agent:
+1. Appends a JSONL log entry with `priority: critical` and `action: escalation` per `references/jsonl-log-schema.md`.
+2. Sets `last-run.json status: error` per `references/agent-memory-schema.md` (Phase 14 schema_version 2).
+3. Invokes `escalation-router.sh telegram-escalate <agent-id> <correlation_id> ...` to dispatch the 4-part Telegram message to the escalations thread.
+4. Exits the wake with `wake_outcome: escalated`.
+
+Subsequent wakes (cron / webhook / inter) check `last-run.json status` first; if `error`, the wake template section 1 (after kill-switch check) detects it and short-circuits with `wake_outcome: skipped-prior-error` UNTIL a `/resume <correlation_id> [free-text instructions]` reply lands in the escalations thread. The `/resume` reply (handled by an inbound n8n route created by deploy-engine per `registry.yaml escalations` binding) updates `last-run.json status: idle` and appends free-text instructions to `memory.md` Open Items section (D-64 location). Next cron/webhook fires resumes work.
+
+### Kill-Switch vs Escalation Sequencing
+
+Kill-switch checks ALWAYS precede escalation router invocation: an agent halted by kill-switch does NOT escalate (the halt IS the alarm). Escalations explicitly bypass the kill-switch check ONLY when the escalation IS the kill-switch firing event itself (avoids self-suppression of the alarm).
+
+### See
+
+- [references/escalation-protocol.md](escalation-protocol.md) for the full 4-part template + 3 worked examples (gmail rate-limit, plaid auth-revoked, BBVA 2FA-expired).
+- [references/approval-router.md](approval-router.md) for the shared Telegram-routing infrastructure (escalation-router.sh and approval-router.sh follow the same shell-script + long-poll pattern).
