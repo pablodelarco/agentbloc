@@ -218,6 +218,54 @@ validate_references() {
     done <<< "$refs"
 }
 
+# Category 6: v2.0 category coverage (Phase 16 D-104)
+# Verifies the scenario file mentions at least one anchor string per v2.0 category.
+# Uses case statement for portability (macOS ships Bash 3.2 which lacks `declare -A`).
+validate_v2_category_coverage() {
+    local file="$1"
+    local name
+    name="$(basename "$file")"
+
+    # Only enforce v2.0 coverage on the canonical Arco Rooms scenario per ROADMAP Phase 16 SC1.
+    # Other scenarios remain v1.0-focused; emit SKIP directives for them.
+    case "$name" in
+        arco-rooms.jsonl) ;;
+        *)
+            for category in INTV BGRAPH DSGN ORCH INTEG BROWSER DEPLOY MEM RUNTIME AUTON MONITOR CTRL ANTIC; do
+                TEST_NUM=$((TEST_NUM + 1))
+                PASS=$((PASS + 1))
+                echo "ok $TEST_NUM - $name: v2.0 category $category coverage SKIP (not canonical v2.0 scenario)"
+            done
+            return
+            ;;
+    esac
+
+    for category in INTV BGRAPH DSGN ORCH INTEG BROWSER DEPLOY MEM RUNTIME AUTON MONITOR CTRL ANTIC; do
+        local pattern
+        case "$category" in
+            INTV)    pattern="decision_patterns" ;;
+            BGRAPH)  pattern="business-graph\\.json" ;;
+            DSGN)    pattern="agent-profiles\\.yaml" ;;
+            ORCH)    pattern="(sequential|event-driven|conversational|loop|parallel)" ;;
+            INTEG)   pattern="integration-manifest\\.yaml" ;;
+            BROWSER) pattern="(DISCOVERY-LICENSE-NOTICE|Patchright)" ;;
+            DEPLOY)  pattern="DEPLOY-REPORT" ;;
+            MEM)     pattern="(memory\\.md|state\\.json|last-run\\.json)" ;;
+            RUNTIME) pattern="correlation_id" ;;
+            AUTON)   pattern="(autonomy|approval-router)" ;;
+            MONITOR) pattern="(jsonl-log-schema|briefing-agent)" ;;
+            CTRL)    pattern="(activity-feed|status badges)" ;;
+            ANTIC)   pattern="ANTICIPATED" ;;
+        esac
+
+        if grep -qE "$pattern" "$file"; then
+            tap_ok "$name: v2.0 category $category covered"
+        else
+            tap_not_ok "$name: v2.0 category $category NOT covered" "Expected anchor: $pattern"
+        fi
+    done
+}
+
 # --- Main execution ---
 
 echo "TAP version 13"
@@ -236,6 +284,7 @@ for scenario in "$SCENARIOS_DIR"/*.jsonl; do
     validate_fields "$scenario"
     validate_sequence "$scenario"
     validate_assertions "$scenario"
+    validate_v2_category_coverage "$scenario"
 done
 
 # Run SKILL.md reference validation
