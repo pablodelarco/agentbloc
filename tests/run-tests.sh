@@ -191,11 +191,19 @@ validate_assertions() {
 }
 
 # Category 5: SKILL.md reference file validation
+# v2.0 update (Phase 16): SKILL.md moved to .claude/skills/agentbloc/ per Phase 12 D-59a path namespace.
+# Falls back to repo root for v1.0-era backward compatibility.
 validate_references() {
-    local skill_file="$REPO_ROOT/SKILL.md"
-
-    if [ ! -f "$skill_file" ]; then
-        tap_not_ok "SKILL.md not found at $skill_file"
+    local skill_file
+    local skill_dir
+    if [ -f "$REPO_ROOT/.claude/skills/agentbloc/SKILL.md" ]; then
+        skill_file="$REPO_ROOT/.claude/skills/agentbloc/SKILL.md"
+        skill_dir="$REPO_ROOT/.claude/skills/agentbloc"
+    elif [ -f "$REPO_ROOT/SKILL.md" ]; then
+        skill_file="$REPO_ROOT/SKILL.md"
+        skill_dir="$REPO_ROOT"
+    else
+        tap_not_ok "SKILL.md not found at .claude/skills/agentbloc/SKILL.md or repo root"
         return
     fi
 
@@ -209,7 +217,7 @@ validate_references() {
     fi
 
     while IFS= read -r ref; do
-        local full_path="$REPO_ROOT/$ref"
+        local full_path="$skill_dir/$ref"
         if [ -f "$full_path" ]; then
             tap_ok "SKILL.md ref: $ref exists"
         else
