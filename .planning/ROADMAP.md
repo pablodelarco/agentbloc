@@ -33,7 +33,7 @@ Scope source: `.planning/v2.0-PROMPT.pdf`. 79 requirements across 13 categories.
 - [x] **Phase 12: Deploy Pipeline + Agent Memory** — Materialize `agent-profiles.yaml` into `.claude/skills/<agent-id>/SKILL.md` (D-59a Claude Code native path) + `.agentbloc/agents/<agent-id>/` memory+state (D-59b) + `.agentbloc/agents/registry.yaml` (D-59c) + `.mcp.json` merges. Idempotent re-runs via SHA256 + RFC 8785 canonicalization. (DEPLOY-01..08, MEM-01..06 = 14 reqs) [Complete 2026-04-24]
 - [x] **Phase 13: Multi-Agent Runtime** — Cron + n8n webhook trigger plumbing. Inter-agent coordination via ClaudeClaw `SendMessage` / `TeamCreate`. Correlation IDs. Kill switch + Telegram `/stop`. (RUNTIME-01..07 = 7 reqs) [Complete 2026-04-25]
 - [ ] **Phase 14: Autonomy + Monitor + Control Plane** — Per-agent autonomy levels with approval round-trip + escalation, JSONL structured logging + registry.yaml + briefing agent + hierarchical reporting, Paperclip-inspired control plane (approval queue, cost tracking, task locking, status badges, activity feed). (AUTON-01..05, MONITOR-01..06, CTRL-01..05 = 16 reqs)
-- [ ] **Phase 15: Anticipation Engine** — Designer Agent anticipation pass: reads Business Graph, proposes unrequested-but-needed agents from evidence-backed business-type heuristics, `ANTICIPATED` tag in proposal, decline-memory. The consulting-product differentiator. (ANTIC-01..05 = 5 reqs)
+- [x] **Phase 15: Anticipation Engine** — Designer Agent anticipation pass: reads Business Graph, proposes unrequested-but-needed agents from evidence-backed business-type heuristics, `ANTICIPATED` tag in proposal, decline-memory. The consulting-product differentiator. (ANTIC-01..05 = 5 reqs) [Complete 2026-04-26]
 - [ ] **Phase 16: End-to-End Validation and Release** — Canonical Arco Rooms test case (5-agent team, 3 requested + 2 anticipated) drives an end-to-end validation run from interview through deploy. TAP additions for the new categories. README + CHANGELOG update. `v2.0.0` git tag. (Cross-cutting; no new requirements)
 
 ## Phase Details
@@ -190,7 +190,11 @@ Plans:
 4. Anticipation does not trigger for business types outside the documented heuristics — the engine degrades silently rather than hallucinating agents
 5. A reviewer reading the anticipated agent presentation can understand the rationale in one scan (not just "you probably need this" — the why is visible)
 
-**Plans:** TBD (estimated 2)
+**Plans:** 2/2 complete
+
+Plans:
+- [x] 15-01-PLAN.md — anticipation-heuristics.md reference (5 mappings + 15 evidence URLs) + arco-rooms-anticipated-profiles.yaml (5-agent fixture) + arco-rooms-declined.json (ANTIC-04 fixture) (completed 2026-04-26). [SUMMARY](phases/15-anticipation-engine/15-01-SUMMARY.md)
+- [x] 15-02-PLAN.md — declined-agents-schema.md (ANTIC-04 formal contract) + agent-profile-schema.md surgical extension (3 OPTIONAL anticipation fields + Check 9) + designer-agent.md scope_exclusion -> anticipation_pass replacement + phase-2-design.md Step 8.5 + SKILL.md Phase 2 See-line + Summary Gate paragraph (completed 2026-04-26). [SUMMARY](phases/15-anticipation-engine/15-02-SUMMARY.md)
 
 ### Phase 16: End-to-End Validation and Release
 
@@ -226,7 +230,7 @@ Plans:
 | 12. Deploy Pipeline + Agent Memory | v2.0 | 3/3 | Complete | 2026-04-24 |
 | 13. Multi-Agent Runtime | v2.0 | 3/3 | Complete | 2026-04-25 |
 | 14. Autonomy + Monitor + Control Plane | v2.0 | 3/3 | Complete | 2026-04-26 |
-| 15. Anticipation Engine | v2.0 | 0/2 | Not started | — |
+| 15. Anticipation Engine | v2.0 | 2/2 | Complete | 2026-04-26 |
 | 16. End-to-End Validation and Release | v2.0 | 0/2 | Not started | — |
 
 **v2.0 totals:** 9 phases · ~25 plans estimated · 79 requirements · 13 categories

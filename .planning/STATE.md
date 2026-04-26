@@ -4,14 +4,14 @@ milestone: v2.0
 milestone_name: Designer + Deploy
 status: active
 stopped_at: null
-last_updated: "2026-04-26T18:00:00.000Z"
-last_activity: 2026-04-26 - Phase 14 shipped. 22 commits across 3 plans + verification report; 16/16 AUTON+MONITOR+CTRL requirements closed. Plan 14-01 emitted 8 references (jsonl-log-schema + autonomy-controller + approval-router + escalation-protocol + reporting-hierarchy + task-locking + activity-feed + billing-rates) + 1 Arco Rooms fixture (monitor-fixtures with 5 JSONL + activity-feed + briefing + escalation + lock + approval exchange). Plan 14-02 emitted briefing-agent.md.tmpl (D-88 default template, autonomy=full, pluggable renderer) + surgically extended agent-memory-schema.md (last-run.json schema_version=2 with cost_usd + token_count per D-98) + audit-logging.md (D-97 correlation-ID alignment with D-75). Plan 14-03 7 surgical edits: 3 deployed-skill templates (D-94 Side-effect Approval Routing paragraphs) + phase-5-deployment.md Step 7.6 + incident-response.md Escalation Protocol section + SKILL.md (4 See-lines + monitor_wired sub-gate per D-93 + Phase 6 precondition + Summary Gate update) + deploy-engine.md (briefing template emission) + runtime-engine.md (4 shell scripts + autonomy-gate hook). All architectural invariants held (D-58 + D-67 + D-80 + D-83 + D-88 + D-93 + D-94 + D-97 + D-98). Ready for Phase 15 entry.
+last_updated: "2026-04-26T20:00:00.000Z"
+last_activity: 2026-04-26 - Phase 15 shipped. 12 commits across 2 plans + verification report; 5/5 ANTIC requirements closed. Plan 15-01 emitted 1 reference (anticipation-heuristics.md , 5 H2 mappings + 15 evidence URLs across rental-property-management/ecommerce/freelance-services/restaurant/professional-services per ANTIC-02 + ANTIC-05) + 2 Arco Rooms fixtures (arco-rooms-anticipated-profiles.yaml , 5-agent superset of Phase 9 baseline + arco-rooms-declined.json , ANTIC-04 schema demonstration). Plan 15-02 emitted 1 reference (declined-agents-schema.md , ANTIC-04 formal 5-field contract per D-102) + 4 surgical extensions: agent-profile-schema.md (3 OPTIONAL anticipation fields per D-101 + Validation Check 9 WARN-tier + new Anticipation Fields H2 section + schema_version unchanged at 1) + designer-agent.md (Phase 9 scope_exclusion lock RELEASED and replaced with anticipation_pass block per D-99 + D-103 documented exception; Mandatory Initial Read extended with declined.json as 6th read) + phase-2-design.md (Step 8.5 Anticipation Pass H2 inserted between Step 8 + Conversational Editing Flow + Scope note updated + Quick Reference row added) + SKILL.md (ONE new Phase 2 See-line for anticipation-heuristics.md per D-58 + Summary Gate paragraph extension; NO new sub-gate; NO Phase 5/6 wiring changes per D-103). All architectural invariants held (D-21 + D-26 + D-30 + D-58 + D-83 + D-93 + D-98 + D-99 + D-101 + D-102 + D-103). Ready for Phase 16 entry.
 progress:
   total_phases: 9
-  completed_phases: 8
-  total_plans: 25
-  completed_plans: 24
-  percent: 89
+  completed_phases: 9
+  total_plans: 27
+  completed_plans: 26
+  percent: 96
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-04-20 after v2.0 scope realignment)
 
 **Core value:** A non-technical business owner can describe their problem and end up with a deployed, secure, proactive agent team without writing code and without improvised security scaffolding.
-**Current focus:** Phase 15 , Anticipation Engine (next). Phase 14 shipped 2026-04-26.
+**Current focus:** Phase 16 , End-to-End Validation and Release (next , v2.0 milestone close). Phase 15 shipped 2026-04-26.
 **Scope source:** `.planning/v2.0-PROMPT.pdf` (authoritative).
 
 ## Current Position
 
-Phase: 15 (next , Anticipation Engine)
+Phase: 16 (next , End-to-End Validation and Release)
 Plan: Not started
-Status: Phase 14 complete (22 commits, 16/16 AUTON+MONITOR+CTRL requirements closed, 9 net-new artifacts + 8 surgically extended files); ready for `/gsd-discuss-phase 15`
-Last activity: 2026-04-26 , Phase 14 shipped (Plan 14-01 emitted 8 references + 1 fixture; Plan 14-02 emitted briefing-agent template + surgically extended 2 schemas; Plan 14-03 7 surgical edits across 8 existing files including SKILL.md monitor_wired sub-gate per D-93; deploy-engine + runtime-engine extended with briefing-agent emission + 4 shell scripts + autonomy-gate hook)
+Status: Phase 15 complete (12 commits, 5/5 ANTIC requirements closed, 4 net-new artifacts + 4 surgically extended files); ready for `/gsd-discuss-phase 16`
+Last activity: 2026-04-26 , Phase 15 shipped (Plan 15-01 emitted anticipation-heuristics.md with 5 mappings + 15 evidence URLs + 2 Arco Rooms fixtures; Plan 15-02 emitted declined-agents-schema.md + surgically extended 4 existing files including SKILL.md ONE new See-line per D-58 context-budget; designer-agent.md scope_exclusion lock RELEASED and replaced with anticipation_pass block per D-99 + D-103)
 
-Progress: [########__] 89% (24/25 v2.0 plans complete (Phase 9 partial), 8/9 v2.0 phases complete; Phases 8 + 10 + 11 + 12 + 13 + 14 all shipped + Phase 16 pending E2E)
+Progress: [#########_] 96% (26/27 v2.0 plans complete (Phase 9 partial), 9/9 v2.0 phases substantively complete; Phases 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 all shipped + Phase 16 pending E2E + v2.0.0 release)
 
 ## v1.0 Milestone — Shipped Summary
 
@@ -138,6 +138,6 @@ Items acknowledged and deferred at v1.0 milestone close on 2026-04-18:
 
 ## Session Continuity
 
-Last session: 2026-04-21T15:00:00.000Z
-Stopped at: Phase 9 Plan 3 complete. Phase 9 (Designer Agent) structurally complete (3/3 plans shipped). SKILL.md + phase-2-design.md now wire the Designer subagent end-to-end: Phase 2 Summary Gate spawns Designer (context=fork), Phase 3 precondition gates on .agentbloc/team/agent-profiles.yaml existence + validation, agent_profiles_validated sub-gate vocabulary locked in State Transitions. Commits 3b312ba + 783b538. All 5 ROADMAP Phase 9 success criteria wired across Plans 09-01/02/03. Phase 9 SUMMARY trilogy complete (09-01, 09-02, 09-03).
-Next: `/gsd-verify-phase 9` to run the phase verification. After Phase 9 is certified, proceed to `/gsd-discuss-phase 10` (Integration Discovery — MCP Path, INTEG-01..06). Phase 10 reads agent-profiles.yaml tools[] arrays as input for the four-step integration search.
+Last session: 2026-04-26T20:00:00.000Z
+Stopped at: Phase 15 Plan 2 complete. Phase 15 (Anticipation Engine) structurally complete (2/2 plans shipped). 5/5 ANTIC-01..05 requirements closed across 4 net-new artifacts (anticipation-heuristics.md + arco-rooms-anticipated-profiles.yaml + arco-rooms-declined.json + declined-agents-schema.md) + 4 surgically extended files (agent-profile-schema.md + designer-agent.md + phase-2-design.md + SKILL.md). Designer's Phase 9 D-30 scope-exclusion lock RELEASED and replaced with D-99 anticipation_pass block; Arco Rooms canonical team now 5 agents (3 requested + 2 anticipated: analista-rentabilidad + gestor-incidencias). All architectural invariants held (D-21 + D-26 + D-30 + D-58 + D-83 + D-93 + D-98 + D-99 + D-101 + D-102 + D-103). v2.0 milestone now at 96% (26/27 plans).
+Next: `/gsd-discuss-phase 16` (End-to-End Validation and Release, cross-cutting) to run the canonical Arco Rooms scenario from /agentbloc invocation through deployed + triggered + reporting team. Phase 16 plans: TAP additions for new categories (INTV/BGRAPH/DSGN/ORCH/INTEG/BROWSER/DEPLOY/MEM/RUNTIME/AUTON/MONITOR/CTRL/ANTIC) + README + CHANGELOG + v2.0.0 git tag. Phase 16 closes v2.0 milestone.
