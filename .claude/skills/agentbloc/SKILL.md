@@ -42,6 +42,7 @@ The state bar contains three fields: Phase (1-6 + name), Gate (`pending` / `appr
 - Phase 3 specific: Gate transition to `approved` requires BOTH user confirmation of the rendered integrations table AND the `mcp_integrations_verified` sub-gate (all REQUIRED checks from [references/integration-manifest-schema.md](references/integration-manifest-schema.md) Validation Checklist have passed, every tool entry has `status: verified` with a `healthcheck_at` timestamp, and the file at `.agentbloc/integrations/integration-manifest.yaml` has been written).
 - Phase 5 specific: Gate transition to `approved` requires the `deployment_artifacts_emitted` sub-gate (DEPLOY-REPORT.md successfully written by the deploy-engine subagent per [references/deploy-protocol.md](references/deploy-protocol.md)). If DEPLOY-FAILED-REPORT.md is emitted instead, `deployment_artifacts_emitted` is false; Phase 6 entry halts and surfaces the DEPLOY-FAILED-REPORT.md for user resolution.
 - Phase 5 specific: `runtime_wired` must be true before Phase 6 Evolution entry AND must be ANDed with `deployment_artifacts_emitted`. Set true after RUNTIME-REPORT.md is written by the runtime-engine subagent (Phase 13) per [references/deploy-protocol.md](references/deploy-protocol.md) Step 9 Runtime Wiring; set false if RUNTIME-FAILED-REPORT.md is emitted instead. Per D-81, Phase 5 -> Phase 6 transition requires BOTH sub-gates true; if `runtime_wired` is false, Phase 6 entry halts and surfaces the RUNTIME-FAILED-REPORT.md for user resolution.
+- Phase 5 specific: `monitor_wired` must be true before Phase 6 Evolution entry AND must be ANDed with `deployment_artifacts_emitted` AND `runtime_wired` per Phase 14 D-93. Set true after BRIEFING-FIRST-RUN.md is emitted by the deployed briefing-agent's first wake (Phase 14 D-88) AND `registry.yaml monitor.briefing_agent_id` is non-null AND `monitor.approval_thread_id` is non-null. Phase 5 -> Phase 6 transition now requires ALL THREE sub-gates true.
 
 ### Compaction Recovery
 
@@ -143,20 +144,24 @@ Generate all artifacts needed to run the agent team: team.yaml, agent configs, s
 
 **Precondition:** Verify `.agentbloc/team/agent-profiles.yaml` AND `.agentbloc/integrations/integration-manifest.yaml` BOTH exist and validate against their respective schemas (Phase 4 outputs). If either is missing or fails any REQUIRED check, return the state bar to Phase 4 with gate `pending` and re-run the Summary gate before attempting Phase 5 again.
 
-**Summary Gate:** After walking the deployment protocol, the deploy-engine subagent emits DEPLOY-REPORT.md (closing the `deployment_artifacts_emitted` sub-gate) and then runtime-engine emits RUNTIME-REPORT.md (closing the `runtime_wired` sub-gate per D-81). Phase 5 -> Phase 6 transition requires BOTH sub-gates true.
+**Summary Gate:** After walking the deployment protocol, the deploy-engine subagent emits DEPLOY-REPORT.md (closing the `deployment_artifacts_emitted` sub-gate), runtime-engine emits RUNTIME-REPORT.md (closing the `runtime_wired` sub-gate per D-81), and the briefing-agent first-run emits BRIEFING-FIRST-RUN.md (closing the `monitor_wired` sub-gate per D-93). Phase 5 -> Phase 6 transition requires ALL THREE sub-gates true.
 
-You MUST read the complete deployment protocol AND the canonical deploy 8-step flow AND the Phase 13 runtime contract before generating any artifacts:
+You MUST read the complete deployment protocol AND the canonical deploy 8-step flow AND the Phase 13 runtime contract AND the Phase 14 monitor contract before generating any artifacts:
 See [references/phase-5-deployment.md](references/phase-5-deployment.md)
 See [references/deploy-protocol.md](references/deploy-protocol.md)
 See [references/n8n-integration.md](references/n8n-integration.md)
 See [references/runtime-coordination.md](references/runtime-coordination.md)
 See [references/correlation-id.md](references/correlation-id.md)
+See [references/jsonl-log-schema.md](references/jsonl-log-schema.md)
+See [references/autonomy-controller.md](references/autonomy-controller.md)
+See [references/approval-router.md](references/approval-router.md)
+See [references/reporting-hierarchy.md](references/reporting-hierarchy.md)
 
 ### Phase 6: Evolution
 
 Post-deploy lifecycle management. Monitor agent performance, collect failure patterns, propose improvements, and iterate. Every change goes through a human approval gate before deployment.
 
-**Precondition:** Verify `.agentbloc/agents/registry.yaml` has `runtime.cron_registered_at` set to a non-null ISO-8601 timestamp OR `runtime.webhook_endpoints` is a non-empty array (at least one trigger path wired per D-81); if neither, return Phase 5 with gate `pending` and re-run deploy-protocol Step 9 (Runtime Wiring) via the runtime-engine subagent.
+**Precondition:** Verify `.agentbloc/agents/registry.yaml` has `runtime.cron_registered_at` set to a non-null ISO-8601 timestamp OR `runtime.webhook_endpoints` is a non-empty array (at least one trigger path wired per D-81); AND `monitor.briefing_agent_id` non-null (briefing agent deployed per Phase 14 D-93) AND `monitor.approval_thread_id` non-null (Telegram approvals thread created per CTRL-01); if any unmet, return Phase 5 with gate `pending` and re-run deploy-protocol Step 9 (Runtime Wiring) AND Step 7.6 (Monitor Wiring Hand-off) via the deploy-engine + runtime-engine subagents.
 
 The Phase 6 entry presupposes that the deployed team is reachable through at least one trigger path: cron-fired wakes for scheduled agents, webhook-fired wakes for event-driven agents, or inter-agent SendMessage paths for team-coordinated workflows. Without at least one wired path, Evolution scans have nothing live to monitor and cannot generate meaningful improvement proposals.
 
