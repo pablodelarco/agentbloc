@@ -58,5 +58,9 @@ Before executing any tick, read `.agentbloc/KILL_SWITCH`. If the file exists, ab
 
 On every wake, read the three files under `.agentbloc/agents/{{agent.id}}/` in this order: `memory.md` (domain knowledge, decisions, quirks, open items), then `state.json` (working state + processed ids + locks + retries), then `last-run.json` (status of the prior tick). Consult the references cited in the Memory section above for schema details.
 
+## Side-effect Approval Routing
+
+You operate at `autonomy: supervised`. EVERY external-side-effect tool AND every cross-agent internal-side-effect tool (writes to `.agentbloc/agents/<other-id>/...`) requires human approval before execution. Before invoking any such tool, you MUST export `$TOOL_REASONING` (1-2 sentence rationale). The PreToolUse `autonomy-gate.sh` hook ALWAYS dispatches an approval request to the team's Telegram approvals thread per `references/approval-router.md`, regardless of tool category (the only exemption is your own internal memory writes within `.agentbloc/agents/{{agent.id}}/state.json`). The hook waits up to 600s for `/approve <correlation_id>` or `/deny <correlation_id>` reply. Approved tools proceed; denied/timeout tools are blocked with `result: blocked` logged. The supervised tier is the safest autonomy level and appropriate for high-blast-radius agents (financial, legal, customer-facing) per `references/blast-radius.md`.
+
 <!-- agentbloc:template autonomy=supervised schema_version=1 -->
 <!-- The kill-switch at .agentbloc/KILL_SWITCH is checked on every wake per v1.0 SECR-05. Do not disable this check. -->
