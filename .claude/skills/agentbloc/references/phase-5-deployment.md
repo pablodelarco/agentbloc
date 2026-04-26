@@ -854,6 +854,27 @@ See:
 
 **Closes requirements:** RUNTIME-01 (cron registration), RUNTIME-02 (n8n route emission), RUNTIME-03 (webhook-to-agent mapping), RUNTIME-04 (TeamCreate/SendMessage), RUNTIME-05 (single-agent bypass), RUNTIME-06 (correlation-ID propagation), RUNTIME-07 (kill-switch three-point enforcement).
 
+### Step 7.6: Monitor Wiring Hand-off (Phase 14)
+
+After runtime-engine emits crontab + n8n routes (Step 7.5), the Phase 14 monitor wiring activates. deploy-engine emits the briefing-agent SKILL.md using `templates/briefing-agent.md.tmpl` per D-88 (one per team, named `<team-slug>-briefing`). runtime-engine emits 4 shell scripts to `.agentbloc/runtime/`: `approval-router.sh` (per D-85), `escalation-router.sh` (per D-86), `claude-wrap.sh` (per D-91), `activity-feed-merge.sh` (per D-90). The user creates 3 Telegram threads (approvals, briefing, escalations) per CTRL-01; the IDs are persisted in `registry.yaml monitor` block by deploy-engine.
+
+(This step slots between the Phase 13 Step 7.5 Runtime Wiring Hand-off above and the existing Step 8 Job Definition Template below; it is conceptually Step 7.6 of the deployment chain.)
+
+See:
+- [references/jsonl-log-schema.md](jsonl-log-schema.md) for the canonical 12-field log entry schema (D-87) consumed by every deployed agent.
+- [references/autonomy-controller.md](autonomy-controller.md) for the D-84 two-layer enforcement contract + tool-classification table.
+- [references/approval-router.md](approval-router.md) for the D-85 approval-router.sh shell contract + Telegram dispatch + slash-command syntax.
+- [references/escalation-protocol.md](escalation-protocol.md) for the D-86 4-part escalation template + persistent-halt + /resume slash-command.
+- [references/reporting-hierarchy.md](reporting-hierarchy.md) for the MONITOR-05 hierarchy chain + v2.0 flat / v2.5 team-lead split.
+- [references/task-locking.md](task-locking.md) for the D-89 file+flock locking contract.
+- [references/activity-feed.md](activity-feed.md) for the D-90 daily merge + activity-feed-merge.sh shell contract.
+- [references/billing-rates.md](billing-rates.md) for the CTRL-02 cost-rate table consumed by claude-wrap.sh.
+- [templates/briefing-agent.md.tmpl](../templates/briefing-agent.md.tmpl) for the D-88 default briefing agent template.
+
+**Closes requirements:** AUTON-01 (per-agent autonomy levels), AUTON-02 (external-side-effect approval routing), AUTON-03 (append-only approval log), AUTON-04 (escalation with full context), AUTON-05 (4-part escalation message), MONITOR-01 (canonical JSONL log schema), MONITOR-02 (per-agent per-day log path), MONITOR-03 (registry monitor block), MONITOR-04 (default briefing agent), MONITOR-05 (hierarchical reporting chain), MONITOR-06 (pluggable presentation layer), CTRL-01 (separate Telegram approval thread), CTRL-02 (per-log-line cost tracking), CTRL-03 (file+flock task locking), CTRL-04 (status badges), CTRL-05 (daily activity feed merge).
+
+**`monitor_wired` sub-gate (per D-93):** This step closes the third sub-gate of Phase 5 -> Phase 6 transition. The sub-gate is set true when (1) deploy-engine has emitted the briefing-agent SKILL.md + persisted `briefing_agent_id` non-null in `registry.yaml monitor` block, (2) runtime-engine has emitted all 4 shell scripts to `.agentbloc/runtime/`, AND (3) the user has created the 3 Telegram threads with `approval_thread_id` + `briefing_thread_id` + `escalations_thread_id` all non-null. If any condition is unmet, Phase 6 entry halts.
+
 ## Step 9: SUMMARY.md Deployment Guide Template
 
 The SUMMARY.md is the user's complete instruction manual. Write it at the user's technical level (detected during Phase 1 interview).
