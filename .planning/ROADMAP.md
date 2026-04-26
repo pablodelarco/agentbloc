@@ -3,7 +3,7 @@
 ## Milestones
 
 - ✅ **v1.0 Initial Release** — Phases 1-7 (shipped 2026-04-18) — [archive](milestones/v1.0-ROADMAP.md)
-- 🚧 **v2.0 Designer + Deploy** — Phases 8-16 (In Progress, scope realigned 2026-04-20 per `.planning/v2.0-PROMPT.pdf`)
+- ✅ **v2.0 Designer + Deploy** — Phases 8-16 (shipped 2026-04-26, scope per `.planning/v2.0-PROMPT.pdf`) — [archive](milestones/v2.0-ROADMAP.md)
 
 ## Phases
 
@@ -34,7 +34,7 @@ Scope source: `.planning/v2.0-PROMPT.pdf`. 79 requirements across 13 categories.
 - [x] **Phase 13: Multi-Agent Runtime** — Cron + n8n webhook trigger plumbing. Inter-agent coordination via ClaudeClaw `SendMessage` / `TeamCreate`. Correlation IDs. Kill switch + Telegram `/stop`. (RUNTIME-01..07 = 7 reqs) [Complete 2026-04-25]
 - [ ] **Phase 14: Autonomy + Monitor + Control Plane** — Per-agent autonomy levels with approval round-trip + escalation, JSONL structured logging + registry.yaml + briefing agent + hierarchical reporting, Paperclip-inspired control plane (approval queue, cost tracking, task locking, status badges, activity feed). (AUTON-01..05, MONITOR-01..06, CTRL-01..05 = 16 reqs)
 - [x] **Phase 15: Anticipation Engine** — Designer Agent anticipation pass: reads Business Graph, proposes unrequested-but-needed agents from evidence-backed business-type heuristics, `ANTICIPATED` tag in proposal, decline-memory. The consulting-product differentiator. (ANTIC-01..05 = 5 reqs) [Complete 2026-04-26]
-- [ ] **Phase 16: End-to-End Validation and Release** — Canonical Arco Rooms test case (5-agent team, 3 requested + 2 anticipated) drives an end-to-end validation run from interview through deploy. TAP additions for the new categories. README + CHANGELOG update. `v2.0.0` git tag. (Cross-cutting; no new requirements)
+- [x] **Phase 16: End-to-End Validation and Release** — Canonical Arco Rooms test case (5-agent team, 3 requested + 2 anticipated) drives an end-to-end validation run from interview through deploy. TAP additions for the new categories. README + CHANGELOG update. `v2.0.0` LOCAL git tag (remote push deferred to user per D-107). (Cross-cutting; no new requirements; 5/5 Success Criteria closed) [Complete 2026-04-26]
 
 ## Phase Details
 
@@ -231,7 +231,7 @@ Plans:
 | 13. Multi-Agent Runtime | v2.0 | 3/3 | Complete | 2026-04-25 |
 | 14. Autonomy + Monitor + Control Plane | v2.0 | 3/3 | Complete | 2026-04-26 |
 | 15. Anticipation Engine | v2.0 | 2/2 | Complete | 2026-04-26 |
-| 16. End-to-End Validation and Release | v2.0 | 0/2 | Not started | — |
+| 16. End-to-End Validation and Release | v2.0 | 2/2 | Complete | 2026-04-26 |
 
 **v2.0 totals:** 9 phases · ~25 plans estimated · 79 requirements · 13 categories
 

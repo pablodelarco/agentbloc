@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v2.0
 milestone_name: Designer + Deploy
-status: active
+status: complete
 stopped_at: null
-last_updated: "2026-04-26T20:00:00.000Z"
-last_activity: 2026-04-26 - Phase 15 shipped. 12 commits across 2 plans + verification report; 5/5 ANTIC requirements closed. Plan 15-01 emitted 1 reference (anticipation-heuristics.md , 5 H2 mappings + 15 evidence URLs across rental-property-management/ecommerce/freelance-services/restaurant/professional-services per ANTIC-02 + ANTIC-05) + 2 Arco Rooms fixtures (arco-rooms-anticipated-profiles.yaml , 5-agent superset of Phase 9 baseline + arco-rooms-declined.json , ANTIC-04 schema demonstration). Plan 15-02 emitted 1 reference (declined-agents-schema.md , ANTIC-04 formal 5-field contract per D-102) + 4 surgical extensions: agent-profile-schema.md (3 OPTIONAL anticipation fields per D-101 + Validation Check 9 WARN-tier + new Anticipation Fields H2 section + schema_version unchanged at 1) + designer-agent.md (Phase 9 scope_exclusion lock RELEASED and replaced with anticipation_pass block per D-99 + D-103 documented exception; Mandatory Initial Read extended with declined.json as 6th read) + phase-2-design.md (Step 8.5 Anticipation Pass H2 inserted between Step 8 + Conversational Editing Flow + Scope note updated + Quick Reference row added) + SKILL.md (ONE new Phase 2 See-line for anticipation-heuristics.md per D-58 + Summary Gate paragraph extension; NO new sub-gate; NO Phase 5/6 wiring changes per D-103). All architectural invariants held (D-21 + D-26 + D-30 + D-58 + D-83 + D-93 + D-98 + D-99 + D-101 + D-102 + D-103). Ready for Phase 16 entry.
+last_updated: "2026-04-26T22:00:00.000Z"
+last_activity: 2026-04-26 - v2.0 milestone SHIPPED. Phase 16 closed in 9 commits across 2 plans + verification report; 5/5 cross-cutting Success Criteria satisfied. Plan 16-01 extended tests/scenarios/arco-rooms.jsonl (50 -> 81 lines) with v2.0 walkthrough covering all 13 categories (BGRAPH/INTV/DSGN/ORCH/ANTIC/DEPLOY/MEM/RUNTIME/AUTON/MONITOR/CTRL/INTEG/BROWSER) + 13 v2.0 assertions interleaved at correct slots + extended tests/run-tests.sh (254 -> 311 lines) with Category 6 v2.0-coverage validator (portable case statement for macOS Bash 3.2 compat) + incidentally fixed v1.0-era latent SKILL.md path bug (Phase 12 D-59a moved canonical SKILL.md to .claude/skills/agentbloc/ but validate_references still checked repo root). TAP harness now reports 146/146 tests pass with exit 0. Plan 16-02 extended README.md (84 -> 96 lines) with v2.0 What's New section + version badge bump 1.0.0 -> 2.0.0 + extended CHANGELOG.md (35 -> 63 lines) with [2.0.0] entry mirroring [1.0.0] format + created .planning/milestones/v2.0-ROADMAP.md milestone archive (108 lines) + created LOCAL annotated git tag v2.0.0 (remote push deferred to user per D-107). All architectural invariants held (D-83 + D-104 + D-105 + D-106 + D-107). v2.0 milestone is 100% complete with 79/79 requirements closed across 13 categories.
 progress:
   total_phases: 9
   completed_phases: 9
   total_plans: 27
-  completed_plans: 26
-  percent: 96
+  completed_plans: 27
+  percent: 100
 ---
 
 # Project State
@@ -21,17 +21,17 @@ progress:
 See: `.planning/PROJECT.md` (updated 2026-04-20 after v2.0 scope realignment)
 
 **Core value:** A non-technical business owner can describe their problem and end up with a deployed, secure, proactive agent team without writing code and without improvised security scaffolding.
-**Current focus:** Phase 16 , End-to-End Validation and Release (next , v2.0 milestone close). Phase 15 shipped 2026-04-26.
-**Scope source:** `.planning/v2.0-PROMPT.pdf` (authoritative).
+**Current focus:** v2.0 milestone SHIPPED 2026-04-26. v2.5 milestone scope TBD (Pablo to define). Pending user actions: `git push origin v2.0.0` + `gh release create v2.0.0 --notes-from-tag` + `git push origin master` when ready to publish v2.0.0 on GitHub.
+**Scope source:** `.planning/v2.0-PROMPT.pdf` (authoritative for v2.0; archived in `.planning/milestones/v2.0-ROADMAP.md`).
 
 ## Current Position
 
-Phase: 16 (next , End-to-End Validation and Release)
-Plan: Not started
-Status: Phase 15 complete (12 commits, 5/5 ANTIC requirements closed, 4 net-new artifacts + 4 surgically extended files); ready for `/gsd-discuss-phase 16`
-Last activity: 2026-04-26 , Phase 15 shipped (Plan 15-01 emitted anticipation-heuristics.md with 5 mappings + 15 evidence URLs + 2 Arco Rooms fixtures; Plan 15-02 emitted declined-agents-schema.md + surgically extended 4 existing files including SKILL.md ONE new See-line per D-58 context-budget; designer-agent.md scope_exclusion lock RELEASED and replaced with anticipation_pass block per D-99 + D-103)
+Phase: v2.0 SHIPPED; v2.5 milestone awaiting scope definition
+Plan: N/A (between milestones)
+Status: All 9 v2.0 phases (Phase 8-16) complete with 27/27 plans shipped, 79/79 requirements closed; LOCAL v2.0.0 tag created (commit 46594fe), remote push deferred to user
+Last activity: 2026-04-26 , v2.0 milestone SHIPPED. Phase 16 closed in 9 commits + LOCAL annotated tag v2.0.0; all 5 Success Criteria satisfied; TAP harness 146/146 pass; README v2.0 + CHANGELOG [2.0.0] + .planning/milestones/v2.0-ROADMAP.md archive emitted.
 
-Progress: [#########_] 96% (26/27 v2.0 plans complete (Phase 9 partial), 9/9 v2.0 phases substantively complete; Phases 8 + 9 + 10 + 11 + 12 + 13 + 14 + 15 all shipped + Phase 16 pending E2E + v2.0.0 release)
+Progress: [##########] 100% (27/27 v2.0 plans complete; 9/9 v2.0 phases shipped; 79/79 requirements closed across 13 categories)
 
 ## v1.0 Milestone — Shipped Summary
 
