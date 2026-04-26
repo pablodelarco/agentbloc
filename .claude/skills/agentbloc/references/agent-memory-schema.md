@@ -101,27 +101,33 @@ Matching hash on re-deploy = skip (no re-write). Differing hash = the state has 
 
 ```json
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "agent_id": "<agent-id>",
   "action": "<action-name>",
   "result": "<result-summary>",
   "timestamp": "<ISO-8601 UTC with Z suffix>",
   "status": "active | idle | error",
   "correlation_id": "<uuid-v4>",
+  "cost_usd": 0.0,
+  "token_count": { "input": 0, "output": 0, "cached_input": 0 },
   "_agentbloc_fingerprint": { "sha256": "<64-hex>", "generated_at": "<ISO-8601 UTC with Z suffix>" }
 }
 ```
 
 Field semantics:
 
-- `schema_version`: integer. Currently `1`.
+- `schema_version`: integer. Phase 14 bumps to `2`. v1 deployments remain readable (consumers parse `cost_usd` + `token_count` as null when absent); consumers refuse on `schema_version > 2` only.
 - `agent_id`: the slug matching `state.json` `agent_id`.
 - `action`: the action-name string Phase 13 assigns to the tick (e.g., `"collect-invoices"`, `"match-transactions"`, `"send-daily-report"`).
 - `result`: one-line result summary. On status `active` this is the in-progress description; on `idle` the prior completion summary; on `error` the truncated exception message (the full error body lives in the audit log, not this file).
 - `timestamp`: ISO-8601 UTC set by Phase 13 on every rewrite.
 - `status`: one of the three-value bounded enum below.
 - `correlation_id`: UUID-v4 that ties this entry to the per-tick audit log line for cross-reference.
+- `cost_usd`: Phase 14 D-98 + CTRL-02. Optional. Today's running total USD cost for this agent (incremented after each wake by `claude-wrap.sh` per `references/billing-rates.md`). Reset to 0.0 at UTC midnight by the briefing-agent. Omit on v1 deployments.
+- `token_count`: Phase 14 D-98 + CTRL-02. Optional object. Today's running token totals for this agent: `{input: number, output: number, cached_input: number}`. Same reset semantics as `cost_usd`.
 - `_agentbloc_fingerprint`: D-60 fingerprint block, same rules as state.json.
+
+See `references/billing-rates.md` for the rate table `claude-wrap.sh` consults; `references/jsonl-log-schema.md` for the per-call `cost_usd` source-of-truth that aggregates into this rolling total.
 
 **RFC 8785 Canonicalization Rules (D-60):** Identical to state.json. Strip `_agentbloc_fingerprint`, mask `timestamp` and the `generated_at` inside the fingerprint block to `<TIMESTAMP>`, re-serialize per RFC 8785, compute SHA256.
 
