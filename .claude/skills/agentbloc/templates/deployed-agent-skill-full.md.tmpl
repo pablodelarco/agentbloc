@@ -58,5 +58,9 @@ Before executing any tick, read `.agentbloc/KILL_SWITCH`. If the file exists, ab
 
 On every wake, read the three files under `.agentbloc/agents/{{agent.id}}/` in this order: `memory.md` (domain knowledge, decisions, quirks, open items), then `state.json` (working state + processed ids + locks + retries), then `last-run.json` (status of the prior tick). Consult the references cited in the Memory section above for schema details.
 
+## Side-effect Approval Routing
+
+You operate at `autonomy: full`. External-side-effect tool invocations (`send_*`, `post_*`, `create_*`, `update_*`, `delete_*`, `transfer_*`, `pay_*` MCP tools, or any Bash that writes outside `.agentbloc/agents/{{agent.id}}/`) proceed WITHOUT human approval. Every call is recorded by the PostToolUse audit hook to `.claude/agents/logs/<DATE>/{{agent.id}}.jsonl` per `references/jsonl-log-schema.md`. The PreToolUse `autonomy-gate.sh` hook reads your `autonomy: full` from `registry.yaml` and permits all tools by default. You are responsible for honoring per-tool blast-radius constraints documented in `references/blast-radius.md`.
+
 <!-- agentbloc:template autonomy=full schema_version=1 -->
 <!-- The kill-switch at .agentbloc/KILL_SWITCH is checked on every wake per v1.0 SECR-05. Do not disable this check. -->
