@@ -224,8 +224,8 @@ Plans:
 | 10. Integration Discovery — MCP Path | v2.0 | 3/3 | Complete    | 2026-04-21 |
 | 11. Integration Discovery — Browser Fallback | v2.0 | 4/4 | Complete | 2026-04-24 |
 | 12. Deploy Pipeline + Agent Memory | v2.0 | 3/3 | Complete | 2026-04-24 |
-| 13. Multi-Agent Runtime | v2.0 | 0/3 | Not started | — |
-| 14. Autonomy + Monitor + Control Plane | v2.0 | 0/4 | Not started | — |
+| 13. Multi-Agent Runtime | v2.0 | 3/3 | Complete | 2026-04-25 |
+| 14. Autonomy + Monitor + Control Plane | v2.0 | 3/3 | Complete | 2026-04-26 |
 | 15. Anticipation Engine | v2.0 | 0/2 | Not started | — |
 | 16. End-to-End Validation and Release | v2.0 | 0/2 | Not started | — |
 
