@@ -106,12 +106,13 @@ Translate the interview into a high-level agent team design. Identify agents (on
 
 **Precondition:** Verify `.agentbloc/graph/business-graph.json` exists and validates against the Validation Checklist in [references/business-graph-schema.md](references/business-graph-schema.md). If the file is missing or fails any REQUIRED check, return the state bar to Phase 1 with gate `pending` and re-run the Summary gate before attempting Phase 2 again.
 
-**Summary Gate:** After walking the design protocol, spawn the Designer Agent subagent at `.claude/agents/designer-agent.md` (`context: fork`) to emit `.agentbloc/team/agent-profiles.yaml`. The subagent writes silently; the rendered team table + per-agent cards + ASCII topology diagram are what the user reviews and confirms. See [references/phase-2-design.md](references/phase-2-design.md) Step 8 for the invocation protocol.
+**Summary Gate:** After walking the design protocol, spawn the Designer Agent subagent at `.claude/agents/designer-agent.md` (`context: fork`) to emit `.agentbloc/team/agent-profiles.yaml`. The subagent writes silently; the rendered team table + per-agent cards + ASCII topology diagram are what the user reviews and confirms. See [references/phase-2-design.md](references/phase-2-design.md) Step 8 for the invocation protocol AND Step 8.5 for the Phase 15 anticipation pass that surfaces ANTICIPATED-tagged agents the user can accept / decline / defer.
 
-You MUST read the complete design protocol AND the orchestration patterns reference AND the agent profile schema before starting this phase:
+You MUST read the complete design protocol AND the orchestration patterns reference AND the agent profile schema AND the anticipation heuristics map before starting this phase:
 See [references/phase-2-design.md](references/phase-2-design.md)
 See [references/orchestration-patterns.md](references/orchestration-patterns.md)
 See [references/agent-profile-schema.md](references/agent-profile-schema.md)
+See [references/anticipation-heuristics.md](references/anticipation-heuristics.md)
 
 ### Phase 3: Deep Integration Analysis
 
