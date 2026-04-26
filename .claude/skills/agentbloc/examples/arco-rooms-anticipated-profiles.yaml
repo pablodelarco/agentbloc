@@ -98,8 +98,8 @@ agents:
     anticipation_rationale: "Rental businesses with 7 properties typically lack monthly profitability views; owners ask 'which property is bleeding cash' but no agent currently consolidates the answer. NAR + ULI Terwilliger Center benchmarks set monthly cadence as the floor for 7+ unit portfolios."
     anticipation_sources:
       - "https://www.nar.realtor/research-and-statistics"
-      - "https://www.naahq.org/research-insights"
-      - "https://www.uli.org/research/centers-initiatives/terwilliger-center-for-housing"
+      - "https://naahq.org/research"
+      - "https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/"
 
   - id: gestor-incidencias
     role: "Incident Tracker"
@@ -127,8 +127,8 @@ agents:
     anticipation_rationale: "Multi-property rentals accumulate maintenance issues across 30+ tenants; reports arrive via WhatsApp, email, and in-person, with consolidated tracking rare in SMB landlords. NAA research cites maintenance ticket consolidation as the single largest unmet need for 1-50 unit operators."
     anticipation_sources:
       - "https://www.nar.realtor/research-and-statistics"
-      - "https://www.naahq.org/research-insights"
-      - "https://www.uli.org/research/centers-initiatives/terwilliger-center-for-housing"
+      - "https://naahq.org/research"
+      - "https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/"
 
 orchestration:
   workflows:

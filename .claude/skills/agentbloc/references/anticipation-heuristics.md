@@ -44,8 +44,8 @@ Multi-property rental operations (3+ units across one or more owners). Operator 
 ### Evidence sources
 
 1. [https://www.nar.realtor/research-and-statistics](https://www.nar.realtor/research-and-statistics) , 2026-04-26 , National Association of Realtors research portal documents the property-level margin tracking gap in SMB landlord segments.
-2. [https://www.naahq.org/research-insights](https://www.naahq.org/research-insights) , 2026-04-26 , National Apartment Association reports that maintenance ticket consolidation is the single largest unmet need cited by 1-50 unit operators.
-3. [https://www.uli.org/research/centers-initiatives/terwilliger-center-for-housing](https://www.uli.org/research/centers-initiatives/terwilliger-center-for-housing) , 2026-04-26 , Urban Land Institute Terwilliger Center benchmarks owner-reporting cadence as monthly minimum across 7+ property portfolios.
+2. [https://naahq.org/research](https://naahq.org/research) , 2026-04-26 , National Apartment Association research portal benchmarks maintenance ticket consolidation gaps and operations efficiency for 1-50 unit operators.
+3. [https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/](https://americas.uli.org/research/impact-lab/terwilliger-center-for-housing/) , 2026-04-26 , Urban Land Institute Terwilliger Center for Housing research and reports document owner-reporting cadence and rental-housing operational benchmarks across multi-property portfolios.
 
 ### When NOT to anticipate
 
@@ -64,9 +64,9 @@ Direct-to-consumer online stores selling physical goods (10+ SKUs). Operator han
 
 ### Evidence sources
 
-1. [https://nrf.com/research](https://nrf.com/research) , 2026-04-26 , National Retail Federation research documents that returns analysis correlates directly with margin recovery in DTC ecommerce, citing 10-30% margin improvement opportunity in SMB segments.
-2. [https://www.shopify.com/enterprise/blog/inventory-management-statistics](https://www.shopify.com/enterprise/blog/inventory-management-statistics) , 2026-04-26 , Shopify enterprise research reports that 43% of small retailers cite inventory forecasting as the highest-impact unaddressed operational gap.
-3. [https://hbr.org/2022/01/the-economics-of-product-returns](https://hbr.org/2022/01/the-economics-of-product-returns) , 2026-04-26 , Harvard Business Review analysis of returns economics in DTC ecommerce with category-level pattern detection as the primary leverage point.
+1. [https://nrf.com/research/2025-retail-returns-landscape](https://nrf.com/research/2025-retail-returns-landscape) , 2026-04-26 , NRF and Happy Returns 2025 Retail Returns Landscape report documents 15.8% annual returns rate ($849.9B) and identifies returns analysis as a top-three priority for 2026 retailers.
+2. [https://www.shopify.com/blog/retail-statistics](https://www.shopify.com/blog/retail-statistics) , 2026-04-26 , Shopify Retail Statistics resource compiles SMB inventory and returns data including the $1.35-inventory-per-dollar-of-sales benchmark and the 11% audit-driven sales lift from inventory accuracy.
+3. [https://hbr.org/2007/11/improve-your-return-on-returns](https://hbr.org/2007/11/improve-your-return-on-returns) , 2026-04-26 , Harvard Business Review's foundational analysis of returns economics with category-level pattern detection as the primary leverage point for margin recovery.
 
 ### When NOT to anticipate
 
@@ -85,7 +85,7 @@ Solo operators or 2-4 person teams selling expert time (consulting, design, deve
 
 ### Evidence sources
 
-1. [https://www.upwork.com/research/freelance-forward](https://www.upwork.com/research/freelance-forward) , 2026-04-26 , Upwork Freelance Forward report documents that cashflow visibility is the #1 cited operational pain for solo and small-team freelance businesses, ahead of marketing and tooling.
+1. [https://www.upwork.com/research](https://www.upwork.com/research) , 2026-04-26 , Upwork Research portal (Future Workforce Index 2025 + Freelance Forward series) documents that cashflow visibility is the top-cited operational pain for the 28% of US knowledge workers (~20M) freelancing, ahead of marketing and tooling.
 2. [https://www.freelancersunion.org/resources/research/](https://www.freelancersunion.org/resources/research/) , 2026-04-26 , Freelancers Union research confirms that pipeline-tracking discipline correlates strongly with revenue stability in independent service businesses.
 3. [https://www.bls.gov/oes/current/oes_research_estimates.htm](https://www.bls.gov/oes/current/oes_research_estimates.htm) , 2026-04-26 , US Bureau of Labor Statistics independent-contractor data documents the income-volatility profile that justifies forward-looking cashflow forecasting in this segment.
 
@@ -108,7 +108,7 @@ Single-location or small-chain food service (fewer than 5 locations). Operator h
 
 1. [https://restaurant.org/research-and-media/research/](https://restaurant.org/research-and-media/research/) , 2026-04-26 , National Restaurant Association research documents that inventory shrinkage averages 4-6% of food cost in independent restaurants, with reconciliation discipline as the primary mitigation lever.
 2. [https://www.brightlocal.com/research/local-consumer-review-survey/](https://www.brightlocal.com/research/local-consumer-review-survey/) , 2026-04-26 , BrightLocal Local Consumer Review Survey documents that 87% of consumers read online reviews before choosing a restaurant, making reputation monitoring a survival capability not a luxury.
-3. [https://www.toasttab.com/restaurants/restaurant-management-statistics](https://www.toasttab.com/restaurants/restaurant-management-statistics) , 2026-04-26 , Toast restaurant management research benchmarks the operational gap between large chains (with dedicated inventory and reputation roles) and SMB independents (typically without).
+3. [https://business.bofa.com/en-us/content/restaurant-industry-report.html](https://business.bofa.com/en-us/content/restaurant-industry-report.html) , 2026-04-26 , Bank of America State of the Restaurant Industry Report benchmarks the operational gap between large chains (with dedicated inventory and reputation roles) and SMB independents (typically without), with inventory cited as the #1 financial-strain source for 28% of restaurateurs.
 
 ### When NOT to anticipate
 
@@ -129,7 +129,7 @@ Consulting agencies, law firms, accounting practices, and similar billable-time 
 
 1. [https://www.consulting.us/news/research](https://www.consulting.us/news/research) , 2026-04-26 , Consulting.us research portal documents that utilization tracking is the single most-correlated discipline with profitable consulting practice growth across 2-50 practitioner firms.
 2. [https://www.americanbar.org/groups/law_practice/](https://www.americanbar.org/groups/law_practice/) , 2026-04-26 , American Bar Association Law Practice Division resources confirm that proactive renewal management is the highest-leverage retention discipline for professional-services firms.
-3. [https://www.aicpa-cima.com/resources/research](https://www.aicpa-cima.com/resources/research) , 2026-04-26 , AICPA and CIMA research benchmarks utilization rates and renewal-cycle metrics across accounting and advisory firms with consistent recommendation patterns matching both anticipated agents above.
+3. [https://www.aicpa-cima.com/professional-insights/article/national-map-survey](https://www.aicpa-cima.com/professional-insights/article/national-map-survey) , 2026-04-26 , AICPA National Management of an Accounting Practice (MAP) Survey benchmarks utilization and realization rates across accounting and advisory firms with consistent recommendation patterns matching both anticipated agents above.
 
 ### When NOT to anticipate
 
