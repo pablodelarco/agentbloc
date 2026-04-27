@@ -17,3 +17,11 @@ https://github.com/anthropics/claude-claw.*
 
 # American Bar Association (bot-walled in CI but real in browser per Phase 15 audit)
 https://www.americanbar.org/.*
+
+# All Mapfre subdomains (synthetic API endpoints in browser-fallback fixtures)
+https://.*\.mapfre\.es/.*
+
+# Bot-walled but verified-real institutional sites (per Phase 15 URL audit)
+https://americas\.uli\.org/.*
+https://www\.bls\.gov/.*
+https://www\.upwork\.com/.*
