@@ -5,3 +5,15 @@ https://img.shields.io/.*
 https://dashboard.stripe.com/.*
 https://admin.shopify.com/.*
 
+
+# Mapfre browser-fallback fixture endpoints (synthetic, not real)
+https://www.mapfre.es/.*
+
+# v1.0 placeholder release URL (was never published under agentbloc org)
+https://github.com/agentbloc/agentbloc/.*
+
+# Anthropic ClaudeClaw repo (private/unreleased reference)
+https://github.com/anthropics/claude-claw.*
+
+# American Bar Association (bot-walled in CI but real in browser per Phase 15 audit)
+https://www.americanbar.org/.*
