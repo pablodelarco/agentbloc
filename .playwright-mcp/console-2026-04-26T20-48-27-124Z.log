@@ -1,3 +1,0 @@
-[     789ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://dap.digitalgov.gov/Universal-Federated-Analytics-Min.js?agency=DOL&subagency=BLS&yt=true:0
-[     972ms] [LOG] JQMIGRATE: Migrate is installed, version 1.4.1 @ https://www.bls.gov/javascripts/jquery-migrate-1.2.1.min.js:1
-[    1100ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://siteimproveanalytics.com/js/siteanalyze_6032860.js:0

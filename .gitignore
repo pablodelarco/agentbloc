@@ -4,3 +4,8 @@
 
 # Internal planning artifacts (CONTEXT, PLAN, SUMMARY, VERIFICATION per phase, milestone archives)
 .planning/
+
+# Local development artifacts (screenshots, browser logs, scope PDFs)
+*.png
+*.pdf
+.playwright-mcp/

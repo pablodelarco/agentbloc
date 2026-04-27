@@ -1,5 +1,0 @@
-[    1918ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://browser.sentry-cdn.com/5.19.2/bundle.min.js:0
-[    2306ms] [LOG] JQMIGRATE: Migrate is installed, version 3.3.1 @ https://cdn.toasttab.com/static/42fd6cabe2aa1dc8ad50e0d66f30ce9e3de4aa36/projects/mu-login/js/jquery-migrate-3.3.1.min.js:1
-[    2452ms] ReferenceError: Sentry is not defined
-    at https://auth.toasttab.com/u/login/identifier?state=hKFo2SBhSUNfZjUwRUlJZHRjaXhtYUpwaHU2SG9yTW1TdmhRZaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIDZMMGtCSm03cVotd2RNYzNaOHJYWXhPZkplOUE0cVhto2NpZNkgVUd2eWtZdzh3U1VwNWptbUhqVk5pcUtWcGswYjU2SWU:277:7
-[    2562ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ https://ssl.google-analytics.com/ga.js:0
