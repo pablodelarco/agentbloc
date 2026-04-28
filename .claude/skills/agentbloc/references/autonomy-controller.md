@@ -1,6 +1,21 @@
-# Autonomy Controller (Phase 14)
+# Autonomy Controller
 
-> Phase 14 reference. Two-layer enforcement of per-agent autonomy: SKILL.md prose informs reasoning; PreToolUse hook (`autonomy-gate.sh`) provides deterministic enforcement. Defense-in-depth pattern matching Phase 12 narrow-Bash + Phase 13 three-point kill-switch.
+> **v3.0 reframe:** This file describes a PATTERN that ships INSIDE the
+> emitted spec folder (as agent prose in `agents/<id>/blast-radius.md`
+> and as the optional `runtime/reference-impl/hooks/autonomy-gate.sh`
+> primitive). AgentBloc itself does NOT install hooks — Phase 5 emits
+> the spec, the build session implements the runtime. References to
+> "deploy-engine", "Phase 12", "Phase 14", and PreToolUse-hook
+> installation describe what the build session may choose to wire if
+> using the bash + cron reference impl; none of it is AgentBloc-side
+> work in v3.0.
+>
+> Loaded at Phase 5 entry to inform the prose `spec-engine` writes
+> into the emitted spec folder's agent + governance files.
+
+## Original content (recontextualized)
+
+Two-layer enforcement of per-agent autonomy: agent prose informs reasoning; PreToolUse hook (`autonomy-gate.sh`) provides deterministic enforcement. Defense-in-depth pattern.
 
 ## Table of Contents
 
