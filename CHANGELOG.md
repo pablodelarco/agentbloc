@@ -5,6 +5,52 @@ All notable changes to AgentBloc are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2026-04-28
+
+### BREAKING
+
+- **Architectural pivot — AgentBloc is now the architect, not the builder.** v3.0 emits a portable build-ready spec folder (markdown + YAML + JSON) instead of running scripts. The output is consumed by a separate AI coding session (Claude Code, Codex, Gemini, Cursor, OpenClaw) that does the implementation. v2.0/v2.5 emitted `.claude/skills/<agent-id>/SKILL.md` per agent + `.agentbloc/agents/registry.yaml` + cron lines + n8n webhook wiring; v3.0 emits a project folder under `.agentbloc/spec/` (or user-specified path) with the canonical structure in `references/spec-folder-structure.md`.
+- **`runtime-engine` subagent removed.** Its work folds into the `spec-engine` output as advisory `runtime/reference-impl/` content. The v2.5-runtime substrate (helpers.sh, wake.sh, claude-wrap.sh, telegram-send.sh, telegram-poll.sh, approval-router.sh, escalation-router.sh, cron-generator.sh, loop.sh, activity-feed-merge.sh, hooks/autonomy-gate.sh, .env.example) ships inside every emitted spec folder as reference implementation, NOT as live runtime.
+- **`deploy-engine` subagent renamed to `spec-engine`** and rewritten. Bash narrowed to `shasum:*` only (no `crontab`, no `claude` CLI). Inputs unchanged (business-graph.json, agent-profiles.yaml, inventory.yaml). Outputs canonicalized via `references/spec-folder-structure.md`.
+- **`briefing-agent` removed.** The Phase 14 monitor + monitor_wired sub-gate are out of scope for v3.0 (no live runtime to monitor). Documented in spec output as a thing the build session can implement later if desired.
+- **Phase 5 sub-gates collapsed from 3 to 1.** v2.5 had `deployment_artifacts_emitted` + `runtime_wired` + `monitor_wired`. v3.0 has only `spec_folder_emitted`. The `RUNTIME-FAILED-REPORT.md` and `BRIEFING-FIRST-RUN.md` cascade is removed.
+- **ClaudeClaw runtime contract removed entirely.** v2.0 references to `TeamCreate`, `SendMessage`, transient session ledgers, and 600s long-poll approval-router are gone. Replaced by file-based inbox handoff in `runtime/reference-impl/helpers.sh` (atomic_write_inbox + read_next_inbox primitives).
+- **`integration-manifest.yaml` renamed to `inventory.yaml`** and extended with the 5-tier `readiness` field.
+
+### Added
+
+- **Phase 3 extended to "Deep Tool Discovery"** with the 5-tier readiness ranking. Every tool gets exactly one tier:
+  - `EXISTS-MCP` — public MCP server exists; install instructions known
+  - `NEEDS-MCP-WRAPPER` — vendor API exists, no public MCP; wrapper buildable via `mcp-builder` skill
+  - `NEEDS-N8N-FLOW` — visual / branching / multi-service logic; n8n is the right tool
+  - `NEEDS-WEBHOOK` — vendor pushes events; receiver must be built and exposed
+  - `MANUAL` — no automation path appropriate (compliance, frequency, cost, complexity)
+- **New reference: `inventory-protocol.md`** — the 5-tier decision tree, evidence requirements, effort estimates per tier, edge cases.
+- **New reference: `spec-folder-structure.md`** — canonical output shape with per-file contracts + validation checklist.
+- **New reference: `spec-emission-protocol.md`** (replaces `deploy-protocol.md`) — 6-step canonical flow for the `spec-engine` subagent.
+- **New reference: `phase-5-spec-emission.md`** (replaces `phase-5-deployment.md`) — Phase 5 orchestration with single sub-gate.
+- **New reference: `spec-emission-report-schema.md`** (replaces `deploy-report-schema.md`) — dual-artifact contract for SPEC-EMISSION-REPORT.md / SPEC-EMISSION-FAILED-REPORT.md.
+- **Phase 4 reframed to "Spec Review"** — walkthrough + sign-off ritual instead of dry run (nothing executes in v3.0). New sub-gate: `spec_review_signed_off`.
+- **Phase 6 reframed to "Spec Evolution"** — rerun AgentBloc on the existing spec folder when requirements change. Drops runtime audit-log forensics, scan-detect-propose-approve, runtime-history ledgers.
+- **Architecture documentation:** `docs/v3.0-architecture.md` (canonical design lock) + `docs/v3.0-simplification-plan.md` (full repo audit + simplification buckets).
+- **References reorganized into `runtime-impl/` subfolders** — references that describe runtime mechanics (`runtime-coordination.md`, `scheduling.md`, `task-locking.md`, `correlation-id.md`, `jsonl-log-schema.md`, `agent-memory-schema.md`, `activity-feed.md`, `deployed-agent-skill-schema.md`) are now under `references/runtime-impl/`. Same for `templates/runtime-impl/` (wake-job templates) and `examples/runtime-impl/` (correlation-flow + runtime-artifacts).
+
+### Removed
+
+- 19 files: 14 PNG branding-iteration screenshots from repo root + 4 dead-concept tracked files (`runtime-engine.md` subagent, `briefing-agent.md.tmpl` template, `arco-rooms-monitor-fixtures.md` + `arco-rooms-registry.yaml` examples) + AGENTBLOC_V2_PROMPT.pdf untracked clutter.
+
+### Migration Notes
+
+- v2.0 deployments continue to work — but new emissions use the v3.0 spec folder model.
+- The runtime substrate from v2.5-runtime branch is preserved locally for forensic reference; the same files ship inside every emitted spec folder under `runtime/reference-impl/`.
+- v3.0 stops at the spec folder. Build sessions in any AI coding tool consume the folder and implement the running team. The reference impl shows one bash + cron path; `runtime/alternatives.md` lists others (n8n, Temporal, Pipedream, Inngest, custom Python).
+
+### Stack Context
+
+v3.0 runs as a pure markdown Claude Code skill. The conversation engine uses Claude Code's skills + subagents + (light) hook integration. The output spec folder is markdown + YAML + JSON only — tool-portable. ClaudeClaw is gone (was private + nonexistent on user machines). n8n is now a first-class output path (Tier 3) instead of "v3.0-deferred."
+
+Authoritative scope source: `docs/v3.0-architecture.md`.
+
 ## [2.0.0] - 2026-04-26
 
 ### Added
