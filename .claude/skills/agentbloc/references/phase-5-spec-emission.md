@@ -1,7 +1,6 @@
 # Phase 5: Spec Emission
 
-> Loaded by SKILL.md when Phase 5 begins. Replaces v2.0 phase-5-deployment.md
-> entirely — this phase no longer emits running scripts. It writes a portable
+> Loaded by SKILL.md when Phase 5 begins. This phase writes a portable
 > build-ready spec folder that any AI coding agent (Claude Code, Codex, Gemini,
 > Cursor, OpenClaw) can execute.
 
@@ -32,9 +31,7 @@ the resulting folder and the SPEC-EMISSION-REPORT.md.
 
 `spec_folder_emitted`
 
-This is the **only** sub-gate in Phase 5 (v3.0 simplification — v2.5 had three:
-`deployment_artifacts_emitted`, `runtime_wired`, `monitor_wired`). It closes
-when:
+This is the **only** sub-gate in Phase 5. It closes when:
 
 1. The canonical folder structure exists at the target path
 2. Every required file is present and validates against
@@ -156,8 +153,7 @@ This is the high-leverage part. Read `inventory.yaml` and write:
 
 ### Step 5 — Emit governance + runtime references
 
-Write `governance/` with five files (sourced from the v2.0 references that
-KEEP-AS-IS):
+Write `governance/` with five files:
 - `blast-radius.md` (lifted from references/blast-radius.md, contextualized
   to this team's specific agents)
 - `audit-trail.md` (what gets logged; schema reference)

@@ -70,6 +70,6 @@ whatever stack you choose:
 
 ## Provenance
 
-Spec emitted by AgentBloc v3.0.0 on 2026-04-28. Inputs SHA256-pinned in
+Spec emitted by AgentBloc v1.0.0 on 2026-04-28. Inputs SHA256-pinned in
 `SPEC-EMISSION-REPORT.md` for forensics + drift detection on
 re-emission.

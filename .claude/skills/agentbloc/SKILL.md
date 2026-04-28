@@ -1,6 +1,6 @@
 ---
 name: agentbloc
-version: 3.0.0
+version: 1.0.0
 description: >
   Interviews users about a manual business workflow, deeply researches which
   tools (existing MCPs, raw APIs, n8n flows, custom integrations) can do each
@@ -174,7 +174,7 @@ For each agent action, find the BEST integration path and assign a
 | NEEDS-WEBHOOK | Event-driven; receiver must be built |
 | MANUAL | No automation path possible / advisable |
 
-This is the highest-leverage phase in v3.0. The 4-step protocol:
+This is the highest-leverage phase. The 4-step protocol:
 
 1. **MCP Search** — `.mcp.json` → ecosystem registry → community repos
 2. **API Investigation** — if no MCP, find OpenAPI / REST docs; assess wrap-ability
@@ -217,8 +217,8 @@ yet). Confirm:
 - Build session has everything it needs (CLAUDE.md context, ROADMAP.md
   with effort, all per-tool BUILD.md instructions)
 
-There is no "dry run" in v3.0 because nothing executes here. Spec Review
-replaces it with a walkthrough + sign-off ritual.
+There is no "dry run" — nothing executes here. Spec Review is a
+walkthrough + sign-off ritual.
 
 **Precondition:** Verify `.agentbloc/integrations/inventory.yaml` exists
 AND every tool entry has a tier assignment with evidence per
@@ -261,8 +261,8 @@ the existing spec folder** to surface what needs updating. Reads the
 existing `spec/` as ground truth, re-interviews where needed, emits an
 updated spec folder via the same `spec-engine`.
 
-This is dramatically simpler than runtime monitoring (which v3.0 does not
-do). There is no audit-log forensics, no live agent telemetry. The user's
+This is dramatically simpler than runtime monitoring (out of scope).
+There is no audit-log forensics, no live agent telemetry. The user's
 build session — wherever it lives — owns runtime monitoring; AgentBloc
 owns spec evolution.
 
@@ -334,9 +334,9 @@ and ships a working agent team without re-asking AgentBloc-level questions.
 ## Reference Implementation
 
 A complete reference implementation (Arco Rooms property management)
-demonstrating all v3.0 patterns is available at
-[examples/arco-rooms.md](examples/arco-rooms.md). The example walks
-through the full conversation and shows the resulting spec folder shape.
+is available at [examples/arco-rooms.md](examples/arco-rooms.md). The
+example walks through the full conversation and shows the resulting
+spec folder shape.
 
 ## Related Skills
 
