@@ -191,8 +191,7 @@ validate_assertions() {
 }
 
 # Category 5: SKILL.md reference file validation
-# v2.0 update (Phase 16): SKILL.md moved to .claude/skills/agentbloc/ per Phase 12 D-59a path namespace.
-# Falls back to repo root for v1.0-era backward compatibility.
+# Resolves SKILL.md at .claude/skills/agentbloc/, with a repo-root fallback.
 validate_references() {
     local skill_file
     local skill_dir
@@ -226,23 +225,17 @@ validate_references() {
     done <<< "$refs"
 }
 
-# Category 6: v3.0 category coverage
-# Verifies the scenario file mentions at least one anchor string per v3.0 category.
+# Category 6: scenario coverage by anchor string
+# Verifies the canonical scenario mentions at least one anchor string per category.
+# Categories cover the full 6-phase artifact set: INTV / BGRAPH / DSGN / ORCH / INTEG / BROWSER /
+# DEPLOY / GATE / TIER / MEM / RUNTIME / AUTON / MONITOR / CTRL / ANTIC / EVOLVE.
 # Uses case statement for portability (macOS ships Bash 3.2 which lacks `declare -A`).
-#
-# v3.0 changes from v2.x:
-# - INTEG anchor: integration-manifest.yaml -> inventory.yaml (Phase 3 schema rename + tier field)
-# - DEPLOY anchor: DEPLOY-REPORT + deploy-engine -> SPEC-EMISSION-REPORT + spec-engine (Phase 5 rewrite)
-# - TIER (new): 5-tier readiness ranking (EXISTS-MCP / NEEDS-MCP-WRAPPER / NEEDS-N8N-FLOW / NEEDS-WEBHOOK / MANUAL)
-# - GATE (new): single spec_folder_emitted sub-gate (collapsed from runtime_wired + monitor_wired + deployment_artifacts_emitted)
-# - MONITOR anchor: briefing-agent removed; jsonl-log-schema and audit-trail.md remain as governance contracts
-# - EVOLVE (new): Spec Evolution + Revision History (replaces v2.x Evolution scan + patch proposal flow)
-validate_v2_category_coverage() {
+validate_category_coverage() {
     local file="$1"
     local name
     name="$(basename "$file")"
 
-    # Only enforce v3.0 coverage on the canonical Arco Rooms scenario.
+    # Only enforce full coverage on the canonical Arco Rooms scenario.
     # Other scenarios remain partial-coverage; emit SKIP directives for them.
     case "$name" in
         arco-rooms.jsonl) ;;
@@ -250,7 +243,7 @@ validate_v2_category_coverage() {
             for category in INTV BGRAPH DSGN ORCH INTEG BROWSER DEPLOY GATE TIER MEM RUNTIME AUTON MONITOR CTRL ANTIC EVOLVE; do
                 TEST_NUM=$((TEST_NUM + 1))
                 PASS=$((PASS + 1))
-                echo "ok $TEST_NUM - $name: v3.0 category $category coverage SKIP (not canonical v3.0 scenario)"
+                echo "ok $TEST_NUM - $name: category $category coverage SKIP (not canonical scenario)"
             done
             return
             ;;
@@ -278,9 +271,9 @@ validate_v2_category_coverage() {
         esac
 
         if grep -qE "$pattern" "$file"; then
-            tap_ok "$name: v3.0 category $category covered"
+            tap_ok "$name: category $category covered"
         else
-            tap_not_ok "$name: v3.0 category $category NOT covered" "Expected anchor: $pattern"
+            tap_not_ok "$name: category $category NOT covered" "Expected anchor: $pattern"
         fi
     done
 }
@@ -303,7 +296,7 @@ for scenario in "$SCENARIOS_DIR"/*.jsonl; do
     validate_fields "$scenario"
     validate_sequence "$scenario"
     validate_assertions "$scenario"
-    validate_v2_category_coverage "$scenario"
+    validate_category_coverage "$scenario"
 done
 
 # Run SKILL.md reference validation
