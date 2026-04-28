@@ -2,11 +2,9 @@ schema_version: 2
 generated_at: "2026-04-28T14:00:00Z"
 modified_at: "2026-04-28T14:00:00Z"
 
-# v3.0 inventory.yaml fixture migrated from arco-rooms-integration-manifest.yaml (schema v1).
-# Migration rules per references/inventory-schema.md "Migrating from v2.x integration-manifest.yaml":
-#   - resolution_method=existing|ecosystem -> tier: EXISTS-MCP (mcp_server sub-tree retained)
-#   - resolution_method=wrapper -> tier: NEEDS-MCP-WRAPPER (fields move into wrapper sub-tree)
-# All 8 tools from v1 manifest preserved; estimated_effort_cc_hours added per tier band.
+# inventory.yaml fixture for the arco-rooms example team.
+# Tier assignments per references/inventory-protocol.md (5-tier ranking).
+# All 8 tools cover the EXISTS-MCP and NEEDS-MCP-WRAPPER tiers; estimated_effort_cc_hours per tier band.
 
 tools:
   - tool_id: playwright-mcp

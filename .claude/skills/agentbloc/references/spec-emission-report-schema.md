@@ -36,7 +36,7 @@ Downstream consumers:
 
 ```yaml
 ---
-agentbloc_version: "3.0.0"
+agentbloc_version: "1.0.0"
 emitted_at: "<ISO-8601 UTC timestamp>"
 destination: "<absolute path>"
 team_name: "<from agent-profiles.yaml team.name>"
@@ -124,7 +124,7 @@ advance to Phase 6.
 
 ```yaml
 ---
-agentbloc_version: "3.0.0"
+agentbloc_version: "1.0.0"
 failed_at: "<ISO-8601 UTC timestamp>"
 destination: "<absolute path>"
 team_name: "<from agent-profiles.yaml team.name OR 'unknown' if Step 1 failed>"

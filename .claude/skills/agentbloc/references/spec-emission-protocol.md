@@ -1,8 +1,7 @@
 # Spec Emission Protocol
 
 > Loaded by SKILL.md and the `spec-engine` subagent at Phase 5 entry.
-> Replaces v2.0 deploy-protocol.md entirely. The 8-step deploy flow is
-> collapsed into a 6-step spec-folder emission flow per
+> Defines the 6-step spec-folder emission flow per
 > [v3.0-architecture.md](../../../docs/v3.0-architecture.md).
 
 ## Table of Contents

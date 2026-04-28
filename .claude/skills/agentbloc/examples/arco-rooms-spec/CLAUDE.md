@@ -129,7 +129,7 @@ audit implementation must match — assert on shape in tests.
 
 ## Provenance
 
-Spec emitted by AgentBloc v3.0.0 on 2026-04-28. Input SHA256s in
+Spec emitted by AgentBloc v1.0.0 on 2026-04-28. Input SHA256s in
 `SPEC-EMISSION-REPORT.md`.
 
 If you need to evolve this spec (requirements changed, tool

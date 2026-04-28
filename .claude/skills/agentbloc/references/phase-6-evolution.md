@@ -1,9 +1,8 @@
 # Phase 6: Spec Evolution
 
-> Loaded by SKILL.md when Phase 6 begins. Replaces v2.0 phase-6-evolution.md
-> entirely — there is no live runtime to monitor in v3.0, so audit-log
-> forensics, scan-detect-propose-approve loops, and runtime-history ledgers
-> are all out of scope.
+> Loaded by SKILL.md when Phase 6 begins. There is no live runtime to monitor;
+> audit-log forensics, scan-detect-propose-approve loops, and runtime-history
+> ledgers are all out of scope.
 
 ## Table of Contents
 
@@ -22,7 +21,7 @@ changed: new business requirement, new tool became available, security
 posture shifted, the build session learned something the spec didn't
 anticipate.
 
-This is a SHORT phase. AgentBloc v3.0 is not a live monitor. The user's
+This is a SHORT phase. AgentBloc is not a live monitor. The user's
 build session — wherever it lives — owns runtime monitoring. AgentBloc
 owns spec evolution.
 

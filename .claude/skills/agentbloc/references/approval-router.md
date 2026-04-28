@@ -1,20 +1,15 @@
 # Approval Router
 
-> **v3.0 reframe:** This file describes a PATTERN that ships INSIDE the
-> emitted spec folder (as `governance/approval-protocol.md` prose plus
-> the optional `runtime/reference-impl/approval-router.sh` primitive).
-> AgentBloc itself does NOT execute approvals — Phase 5 emits the spec,
-> the build session wires the actual approval loop. References to
-> "runtime-engine", "Phase 14", and the bash long-poll loop describe
-> the reference implementation the spec folder ships, not AgentBloc-
-> side runtime mechanism in v3.0.
+> Pattern for routing side-effect tool approvals through a Telegram
+> thread. Ships INSIDE the emitted spec folder as
+> `governance/approval-protocol.md` prose plus the optional
+> `runtime/reference-impl/approval-router.sh` primitive. AgentBloc
+> emits the spec; the build session wires the actual approval loop.
 >
 > Loaded at Phase 5 entry to inform the approval-protocol prose
 > `spec-engine` writes into `governance/approval-protocol.md` plus the
 > approval-routing prose injected per agent autonomy in
 > `agents/<id>/blast-radius.md`.
-
-## Original content (recontextualized)
 
 Routes side-effect tool approvals through a dedicated Telegram thread (CTRL-01). Single shell script `approval-router.sh` invoked by `autonomy-gate.sh` PreToolUse hook in the bash + cron reference impl.
 

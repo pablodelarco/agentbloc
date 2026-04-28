@@ -8,13 +8,12 @@
 > discovery protocol and tier ranking complete, plus the validation
 > checklist Claude walks before writing the file.
 >
-> v3.0 rename: this file was `integration-manifest-schema.md` in v2.x.
-> The substance is extended with the **`tier`** top-level field — the
-> 5-tier readiness ranking per
+> The schema's highest-leverage element is the **`tier`** top-level
+> field — the 5-tier readiness ranking per
 > [inventory-protocol.md](inventory-protocol.md) — which becomes the
-> highest-leverage decision in Phase 3. The Phase 5 `spec-engine`
-> reads `inventory.yaml` to decide which spec-folder template to write
-> per tool (`integrations/existing/`, `integrations/needs-mcp-wrapper/`,
+> primary decision in Phase 3. The Phase 5 `spec-engine` reads
+> `inventory.yaml` to decide which spec-folder template to write per
+> tool (`integrations/existing/`, `integrations/needs-mcp-wrapper/`,
 > etc.).
 
 ## Table of Contents
@@ -49,7 +48,7 @@ spec per entry plus the master `integrations/INVENTORY.md` matrix.
 ## Schema Definition
 
 ```yaml
-schema_version: 2                              # REQUIRED. Integer. Bumped to 2 in v3.0 to add `tier` field.
+schema_version: 2                              # REQUIRED. Integer. Schema version. Currently 2.
 generated_at: "ISO-8601 timestamp"             # REQUIRED. When first written by Phase 3.
 modified_at: "ISO-8601 timestamp"              # RECOMMENDED. Bumped on every re-discovery run.
 
@@ -143,7 +142,7 @@ is informational only; it doesn't gate emission.
 |---|---|
 | `.mcp.json existing` | Tool already in local `.mcp.json` before Phase 3 ran |
 | `npx -y <package>` | Resolved via ecosystem registry; user approved auto-install |
-| `wrapper` | (Reserved for backward compat with v2.x; v3.0 uses tier=NEEDS-MCP-WRAPPER instead) |
+| `wrapper` | (Legacy synonym; prefer tier=NEEDS-MCP-WRAPPER) |
 | `null` | Not specified |
 
 ## Trust Tier Bounded Enum
@@ -279,27 +278,9 @@ If it does not, refuse re-verify and emit `action_required:
 schema_version_mismatch` to the conversation so the user knows a
 manual migration is needed.
 
-### Migrating from v2.x `integration-manifest.yaml`
-
-If the file on disk is named `integration-manifest.yaml` and has
-`schema_version: 1`, Claude offers a one-time migration:
-
-1. Read the v1 manifest.
-2. For each tool entry, infer the v2 `tier`:
-   - `resolution_method=existing` or `ecosystem` → `tier: EXISTS-MCP`
-   - `resolution_method=wrapper` → `tier: NEEDS-MCP-WRAPPER` (move
-     fields into the new `wrapper` sub-tree)
-   - `resolution_method=browser-fallback` → flag for user; ask whether
-     this should be `NEEDS-MCP-WRAPPER` or `MANUAL`
-3. Set `schema_version: 2`, `generated_at` to original,
-   `modified_at` to now.
-4. Write to `.agentbloc/integrations/inventory.yaml`.
-5. Leave `integration-manifest.yaml` in place unmodified for one
-   release cycle; v3.1 prompts user to delete.
-
 ## Schema Versioning Rules
 
-The `schema_version` field is an integer. Currently `2` (v3.0). The
+The `schema_version` field is an integer. Currently `2`. The
 version bumps only on breaking changes:
 
 - A REQUIRED field is removed or renamed.
@@ -311,11 +292,6 @@ Additive changes do NOT bump the version:
 - Adding a new OPTIONAL field.
 - Adding a new value to a bounded enum.
 - Loosening a REQUIRED field to RECOMMENDED.
-
-Version 1 → 2 transition (v2.x → v3.0): added `tier` REQUIRED field;
-restructured per-tool sub-fields into tier-specific sub-trees
-(`mcp_server` / `wrapper` / `n8n_flow` / `webhook` / `manual`);
-schema_version bumps from 1 to 2. Migration path documented above.
 
 Downstream consumers (Phase 5 spec-engine, Phase 6 Spec Evolution,
 Phase 16 TAP tests) read `schema_version` and refuse to proceed on
