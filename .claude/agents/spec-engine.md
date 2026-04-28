@@ -132,23 +132,23 @@ invocations.
 </write_constraint>
 
 <dont_do>
-- Do NOT install crontab entries (this is v3.0; you don't deploy
++ Do NOT install crontab entries (this is v3.0; you don't deploy
   runtimes)
-- Do NOT invoke `claude` CLI or any other external command
-- Do NOT modify the user's `.claude/settings.local.json` (that's a
++ Do NOT invoke `claude` CLI or any other external command
++ Do NOT modify the user's `.claude/settings.local.json` (that's a
   build-session concern documented in `BUILD.md`)
-- Do NOT spawn other subagents (you are spawned by SKILL.md, not the
++ Do NOT spawn other subagents (you are spawned by SKILL.md, not the
   other way around)
-- Do NOT generate a SPEC-EMISSION-REPORT.md without first writing
++ Do NOT generate a SPEC-EMISSION-REPORT.md without first writing
   every file the report claims was emitted
-- Do NOT pretend ClaudeClaw primitives exist — they don't, and v3.0
++ Do NOT pretend ClaudeClaw primitives exist — they don't, and v3.0
   removed every reference to them
 </dont_do>
 
 <terminal_artifact>
 Per invocation you emit EXACTLY ONE of:
-- `<destination>/SPEC-EMISSION-REPORT.md` (success)
-- `<destination>/SPEC-EMISSION-FAILED-REPORT.md` (halt)
++ `<destination>/SPEC-EMISSION-REPORT.md` (success)
++ `<destination>/SPEC-EMISSION-FAILED-REPORT.md` (halt)
 
 Both are markdown with a YAML frontmatter and a structured body per
 spec-emission-report-schema.md. SKILL.md reads whichever was written

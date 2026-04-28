@@ -166,7 +166,7 @@ workflows/                   ----        NOT WRITTEN
 ...
 ```
 
-## Provenance
+## Provenance (failure)
 
 Emitted by AgentBloc spec-engine subagent. Phase 5 sub-gate
 `spec_folder_emitted` is FALSE. SKILL.md halts Phase 6 entry and

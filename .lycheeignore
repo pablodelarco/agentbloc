@@ -25,3 +25,20 @@ https://.*\.mapfre\.es/.*
 https://americas\.uli\.org/.*
 https://www\.bls\.gov/.*
 https://www\.upwork\.com/.*
+
+# Spanish bank developer portals (referenced as evidence in arco-rooms-spec
+# bank-mcp/BUILD.md; reachable from EU browsers but block GitHub Actions runners)
+https://api\.unicajabanco\.es/.*
+https://developer\.santander\.com/.*
+https://www\.bbva\.com/api_market/.*
+https://www\.caixabankdevelopers\.com/.*
+
+# Placeholder MCP repo URLs in arco-rooms-spec worked example (illustrative
+# only; the real Gmail/Notion MCPs the build session resolves at scaffold time
+# may live at different URLs)
+https://github\.com/smithery-ai/gmail-mcp
+https://github\.com/community/notion-mcp
+
+# Pre-release self-references (the v1.0.0 release tag is created on publish,
+# not at merge time; CI runs before the GitHub release exists)
+https://github\.com/pablodelarco/agentbloc/releases/tag/v1\.0\.0
