@@ -1,0 +1,43 @@
+# Agent: {{agent_id}}
+
+## Role (CrewAI-shaped)
+
+**Role:** {{role}}
+
+**Goal:** {{goal}}
+
+**Backstory:** {{backstory}}
+
+## Identity at a glance
+
+| Property | Value |
+|---|---|
+| Autonomy | {{autonomy}}  (`full` / `semi` / `supervised`) |
+| Blast radius | L{{blast_radius}}  (1=read-only, 2=write-scoped, 3=write-unrestricted, 4=send-external) |
+| Trigger | {{trigger_summary}} |
+| Model hint | {{model}}  (opus / sonnet / haiku / null) |
+| Anticipated | {{anticipated}}  (true if surfaced by Phase 15 anticipation) |
+
+## Inputs
+
+{{inputs_list}}
+
+## Outputs
+
+{{outputs_list}}
+
+## Dependencies
+
+{{dependencies_list — other agents this one calls or depends on}}
+
+## Anticipation rationale
+
+{{anticipation_rationale_or_NA}}
+
+## Cross-references
+
+- Prompts: see `prompts.md`
+- Tools: see `tools.md`
+- Risk envelope: see `blast-radius.md`
+- Failure handling: see `escalation.md`
+- Workflows this agent participates in: {{workflow_links}}
