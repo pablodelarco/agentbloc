@@ -226,50 +226,61 @@ validate_references() {
     done <<< "$refs"
 }
 
-# Category 6: v2.0 category coverage (Phase 16 D-104)
-# Verifies the scenario file mentions at least one anchor string per v2.0 category.
+# Category 6: v3.0 category coverage
+# Verifies the scenario file mentions at least one anchor string per v3.0 category.
 # Uses case statement for portability (macOS ships Bash 3.2 which lacks `declare -A`).
+#
+# v3.0 changes from v2.x:
+# - INTEG anchor: integration-manifest.yaml -> inventory.yaml (Phase 3 schema rename + tier field)
+# - DEPLOY anchor: DEPLOY-REPORT + deploy-engine -> SPEC-EMISSION-REPORT + spec-engine (Phase 5 rewrite)
+# - TIER (new): 5-tier readiness ranking (EXISTS-MCP / NEEDS-MCP-WRAPPER / NEEDS-N8N-FLOW / NEEDS-WEBHOOK / MANUAL)
+# - GATE (new): single spec_folder_emitted sub-gate (collapsed from runtime_wired + monitor_wired + deployment_artifacts_emitted)
+# - MONITOR anchor: briefing-agent removed; jsonl-log-schema and audit-trail.md remain as governance contracts
+# - EVOLVE (new): Spec Evolution + Revision History (replaces v2.x Evolution scan + patch proposal flow)
 validate_v2_category_coverage() {
     local file="$1"
     local name
     name="$(basename "$file")"
 
-    # Only enforce v2.0 coverage on the canonical Arco Rooms scenario per ROADMAP Phase 16 SC1.
-    # Other scenarios remain v1.0-focused; emit SKIP directives for them.
+    # Only enforce v3.0 coverage on the canonical Arco Rooms scenario.
+    # Other scenarios remain partial-coverage; emit SKIP directives for them.
     case "$name" in
         arco-rooms.jsonl) ;;
         *)
-            for category in INTV BGRAPH DSGN ORCH INTEG BROWSER DEPLOY MEM RUNTIME AUTON MONITOR CTRL ANTIC; do
+            for category in INTV BGRAPH DSGN ORCH INTEG BROWSER DEPLOY GATE TIER MEM RUNTIME AUTON MONITOR CTRL ANTIC EVOLVE; do
                 TEST_NUM=$((TEST_NUM + 1))
                 PASS=$((PASS + 1))
-                echo "ok $TEST_NUM - $name: v2.0 category $category coverage SKIP (not canonical v2.0 scenario)"
+                echo "ok $TEST_NUM - $name: v3.0 category $category coverage SKIP (not canonical v3.0 scenario)"
             done
             return
             ;;
     esac
 
-    for category in INTV BGRAPH DSGN ORCH INTEG BROWSER DEPLOY MEM RUNTIME AUTON MONITOR CTRL ANTIC; do
+    for category in INTV BGRAPH DSGN ORCH INTEG BROWSER DEPLOY GATE TIER MEM RUNTIME AUTON MONITOR CTRL ANTIC EVOLVE; do
         local pattern
         case "$category" in
             INTV)    pattern="decision_patterns" ;;
             BGRAPH)  pattern="business-graph\\.json" ;;
             DSGN)    pattern="agent-profiles\\.yaml" ;;
             ORCH)    pattern="(sequential|event-driven|conversational|loop|parallel)" ;;
-            INTEG)   pattern="integration-manifest\\.yaml" ;;
-            BROWSER) pattern="(DISCOVERY-LICENSE-NOTICE|Patchright)" ;;
-            DEPLOY)  pattern="DEPLOY-REPORT" ;;
+            INTEG)   pattern="inventory\\.yaml" ;;
+            BROWSER) pattern="(DISCOVERY-LICENSE-NOTICE|Patchright|browser-discovery)" ;;
+            DEPLOY)  pattern="(SPEC-EMISSION-REPORT|spec-engine)" ;;
+            GATE)    pattern="spec_folder_emitted" ;;
+            TIER)    pattern="(EXISTS-MCP|NEEDS-MCP-WRAPPER|NEEDS-N8N-FLOW|NEEDS-WEBHOOK|MANUAL)" ;;
             MEM)     pattern="(memory\\.md|state\\.json|last-run\\.json)" ;;
             RUNTIME) pattern="correlation_id" ;;
             AUTON)   pattern="(autonomy|approval-router)" ;;
-            MONITOR) pattern="(jsonl-log-schema|briefing-agent)" ;;
-            CTRL)    pattern="(activity-feed|status badges)" ;;
+            MONITOR) pattern="(jsonl-log-schema|audit-trail\\.md)" ;;
+            CTRL)    pattern="activity-feed" ;;
             ANTIC)   pattern="ANTICIPATED" ;;
+            EVOLVE)  pattern="(Spec Evolution|Revision History)" ;;
         esac
 
         if grep -qE "$pattern" "$file"; then
-            tap_ok "$name: v2.0 category $category covered"
+            tap_ok "$name: v3.0 category $category covered"
         else
-            tap_not_ok "$name: v2.0 category $category NOT covered" "Expected anchor: $pattern"
+            tap_not_ok "$name: v3.0 category $category NOT covered" "Expected anchor: $pattern"
         fi
     done
 }
