@@ -1,0 +1,50 @@
+# Tool Inventory — {{team_name}}
+
+> Master tier-ranked matrix. Every tool the team's agents use appears
+> exactly once with a tier assignment + evidence URL + effort estimate.
+
+## Tier breakdown
+
+| Tier | Count | Total effort (CC-hours) |
+|---|---|---|
+| EXISTS-MCP | {{n}} | {{n}} |
+| NEEDS-MCP-WRAPPER | {{n}} | {{n}} |
+| NEEDS-N8N-FLOW | {{n}} | {{n}} |
+| NEEDS-WEBHOOK | {{n}} | {{n}} |
+| MANUAL | {{n}} | n/a |
+
+## Full inventory
+
+| Tool | Tier | Used by | Effort (CC-h) | Evidence URL | Spec link |
+|---|---|---|---|---|---|
+| {{tool_1}} | {{tier_1}} | {{agents_1}} | {{effort_1}} | {{evidence_1}} | `{{tier_dir_1}}/{{tool_1}}` |
+| ... | ... | ... | ... | ... | ... |
+
+## Tier definitions
+
+- **EXISTS-MCP** — public MCP server exists; install + auth instructions
+  in `existing/<tool>.md`. Build effort: hours.
+- **NEEDS-MCP-WRAPPER** — vendor API exists, no public MCP. Wrapper
+  buildable via `mcp-builder` skill. Build effort: days.
+  See `needs-mcp-wrapper/<tool>/BUILD.md`.
+- **NEEDS-N8N-FLOW** — visual / branching / multi-service logic; n8n is
+  the right tool. Stub flow JSON in `needs-n8n-flow/`.
+- **NEEDS-WEBHOOK** — vendor pushes events; receiver must be built and
+  exposed. Spec in `needs-webhook/<tool>-receiver.md`.
+- **MANUAL** — no automation path appropriate. Runbook in
+  `manual/<tool>.md`.
+
+## Build order (per ROADMAP.md)
+
+1. EXISTS-MCP first (lowest risk, fastest wins)
+2. NEEDS-MCP-WRAPPER second (build sessions can parallelize)
+3. NEEDS-N8N-FLOW + NEEDS-WEBHOOK in parallel (different runtimes)
+4. MANUAL last (or skip; no build action, document runbook)
+
+## Cross-references
+
+- Phase 3 protocol: `references/phase-3-integration.md`
+- 5-tier decision tree: `references/inventory-protocol.md`
+- Wrapper synthesis: `references/mcp-synthesis.md`
+- n8n flow design: `references/n8n-flow-design.md`
+- Webhook receiver: `references/webhook-receiver-spec.md`
