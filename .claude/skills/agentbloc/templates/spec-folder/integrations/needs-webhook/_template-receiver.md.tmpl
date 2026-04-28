@@ -1,0 +1,129 @@
+# Webhook Receiver — {{tool_name}}
+
+> Tier 4: vendor pushes events; receiver must be built and exposed at
+> a stable URL. The build session implements an HTTP endpoint that
+> verifies signatures, deduplicates events, and feeds them into the
+> agent's inbox.
+
+## Tool identity
+
+| Property | Value |
+|---|---|
+| Tool ID | `{{tool_id}}` |
+| Vendor | {{vendor}} |
+| Used by agents | {{used_by_agents}} |
+| Tier | **NEEDS-WEBHOOK** |
+| Effort | {{effort_cc_hours}} CC-hours |
+| Vendor webhook docs | {{vendor_webhook_docs_url}} |
+
+## Subscribed events
+
+| Event name | Used by agent | Action on receipt |
+|---|---|---|
+| `{{event_1}}` | {{agent_1}} | {{action_1}} |
+| `{{event_2}}` | {{agent_2}} | {{action_2}} |
+
+### Excluded events (least-privilege)
+
+The vendor emits more event types than this team needs. NOT subscribed:
+
+| Event name | Reason for exclusion |
+|---|---|
+| `{{excluded_event_1}}` | {{rationale_1}} |
+| `{{excluded_event_2}}` | {{rationale_2}} |
+
+Subscribing to fewer events reduces blast radius — fewer triggers,
+fewer surprises, fewer audit lines.
+
+## Endpoint
+
+| Property | Value |
+|---|---|
+| Method | POST |
+| Path | `/webhooks/{{tool_id}}` |
+| Authentication | `{{signature_header}}` HMAC-SHA256 of body with `{{ENV_WEBHOOK_SECRET}}` |
+| Expected ack | 200 OK within 5 seconds; 4xx/5xx triggers vendor retry |
+| Public URL | {{public_url_pattern}}  (production: VPS endpoint; demo: ngrok / Cloudflare Tunnel) |
+
+## Signature verification
+
+```python
+# pseudocode — adapt to runtime
+sig = request.headers.get('{{signature_header}}')
+expected = hmac.new(WEBHOOK_SECRET, request.body, sha256).hexdigest()
+if not hmac.compare_digest(sig, expected):
+    return 401
+```
+
+The reference impl bash path uses `openssl dgst -sha256 -hmac
+"$WEBHOOK_SECRET" -binary | xxd -p` and `cmp` for constant-time
+comparison.
+
+## Idempotency
+
+Vendor's `{{event_id_field}}` is the dedup key. Receiver:
+
+1. Check if `event_id` is in `.agentbloc/state/{{tool_id}}-webhook-seen.jsonl`
+2. If seen → 200 OK immediately, no work
+3. If new → append to seen.jsonl, atomic_write_inbox, then 200 OK
+
+Append-only seen.jsonl is naturally race-safe; reading is grep-based.
+Rotate weekly to keep file size bounded.
+
+## Inbox handoff
+
+For every accepted event:
+
+```bash
+# pseudocode using reference-impl primitives
+cid="$(gen_correlation_id "webhook-{{tool_id}}")"
+echo "$EVENT_PAYLOAD" > /tmp/payload.$$.json
+atomic_write_inbox "{{used_by_agent}}" "webhook-{{tool_id}}" "$cid" /tmp/payload.$$.json
+rm /tmp/payload.$$.json
+```
+
+The agent's next wake reads the inbox and processes the event.
+
+If the build session uses a non-bash runtime (n8n, Python, Node), adapt
+the contract: write a JSON envelope with the agent's expected schema
+into the agent's inbox sink (could be a queue, a folder, a DB row).
+
+## Subscription registration
+
+Run once at install time (build session does this):
+
+1. **Generate a stable URL.**
+   - Production: VPS endpoint with TLS (Caddy, nginx, Cloudflare Tunnel)
+   - Demo: `ngrok http <port>` and use the ngrok URL
+2. **Register URL with vendor.** Use vendor's API or admin UI; subscribe
+   to the events listed above. Documentation:
+   {{vendor_subscription_docs_url}}.
+3. **Store the signing secret** in `.env` as `{{ENV_WEBHOOK_SECRET}}`.
+4. **Verify** with vendor's test-event mechanism (Stripe CLI / Shopify
+   webhook tester / GitHub webhook redelivery / Slack Events API
+   challenge).
+
+## Failure modes
+
+| Mode | Detection | Handling |
+|---|---|---|
+| Signature failure | HMAC mismatch | Log to `.agentbloc/state/{{tool_id}}-webhook-rejected.jsonl`; respond 401 |
+| Missing event_id | No `{{event_id_field}}` in payload | Log; respond 400 (vendor SDK should always include one) |
+| Inbox write fails | atomic_write returned non-zero | Log; respond 500 (vendor will retry) |
+| Replay storm after vendor outage | Burst of seen events | Idempotency on event_id makes this safe; emit a metric on burst |
+| Receiver down | No 200 response | Vendor retries per its policy; on extended downtime, expect partial backlog drain when restored |
+
+## Reference implementations
+
+- Stripe: https://stripe.com/docs/webhooks/signatures
+- Shopify: https://shopify.dev/docs/apps/webhooks/configuration/https
+- GitHub: https://docs.github.com/en/webhooks/using-webhooks/validating-webhook-deliveries
+- Slack Events API: https://api.slack.com/apis/events-api
+
+## Cross-references
+
+- Inventory: `../INVENTORY.md`
+- Phase 3 webhook spec protocol: `references/webhook-receiver-spec.md`
+- Reference impl primitive: `runtime/reference-impl/helpers.sh`
+  (`atomic_write_inbox`)
+- Audit trail: `governance/audit-trail.md`

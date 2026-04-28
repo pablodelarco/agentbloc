@@ -1,6 +1,6 @@
 # Browser Automation Stack
 
-> Loaded unconditionally at SKILL.md Phase 3 entry alongside [phase-3-integration.md](phase-3-integration.md), [mcp-integration-protocol.md](mcp-integration-protocol.md), [mcp-ecosystem-registry.md](mcp-ecosystem-registry.md), [integration-manifest-schema.md](integration-manifest-schema.md), and [browser-fallback.md](browser-fallback.md). Declares the six-row pinned stack, the nine-package anti-bot deny-list, the Patchright usage boundary, and the Ralph retry protocol for browser-fallback Step 4. CI enforces the deny-list via [scripts/anti-bot-lint.sh](../../../../scripts/anti-bot-lint.sh) on every push and pull_request to main.
+> Loaded unconditionally at SKILL.md Phase 3 entry alongside [phase-3-integration.md](phase-3-integration.md), [mcp-integration-protocol.md](mcp-integration-protocol.md), [mcp-ecosystem-registry.md](mcp-ecosystem-registry.md), [inventory-schema.md](inventory-schema.md), and [browser-fallback.md](browser-fallback.md). Declares the six-row pinned stack, the nine-package anti-bot deny-list, the Patchright usage boundary, and the Ralph retry protocol for browser-fallback Step 4. CI enforces the deny-list via [scripts/anti-bot-lint.sh](../../../../scripts/anti-bot-lint.sh) on every push and pull_request to main.
 
 ## Table of Contents
 

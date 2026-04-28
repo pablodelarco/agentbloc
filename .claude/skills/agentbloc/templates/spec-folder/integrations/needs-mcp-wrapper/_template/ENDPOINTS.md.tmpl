@@ -1,0 +1,94 @@
+# Minimum-Viable Endpoints — {{tool_name}}
+
+> This subset is the only API surface the wrapper exposes. Agents that
+> need additional endpoints must amend this file and re-run
+> `/mcp-build`. Excluded endpoints stay excluded — that's the
+> least-privilege boundary.
+
+## Included
+
+| Endpoint | Method | Used by | Purpose | Blast |
+|---|---|---|---|---|
+| `{{endpoint_1}}` | {{method_1}} | {{agent_1}} | {{purpose_1}} | L{{blast_1}} |
+| `{{endpoint_2}}` | {{method_2}} | {{agent_2}} | {{purpose_2}} | L{{blast_2}} |
+| `{{endpoint_3}}` | {{method_3}} | {{agent_3}} | {{purpose_3}} | L{{blast_3}} |
+
+Blast levels: L1 read-only / L2 write-scoped / L3 write-unrestricted /
+L4 send-external per `governance/blast-radius.md`. Approval gating
+required for L3+ on `semi`/`supervised` agents.
+
+## Excluded (least-privilege)
+
+These endpoints exist in the vendor's API but are NOT in this wrapper:
+
+| Endpoint | Method | Reason for exclusion |
+|---|---|---|
+| `{{excluded_endpoint_1}}` | {{method}} | {{rationale_1}} |
+| `{{excluded_endpoint_2}}` | {{method}} | {{rationale_2}} |
+| `/v1/admin/*` | * | No agent needs admin scope; concentrating risk |
+| `* DELETE` | DELETE | No agent needs delete; high blast radius |
+
+If a future agent needs an excluded endpoint, the team revisits Phase 3
+inventory protocol and either expands this subset or declines the
+agent's blast-radius escalation.
+
+## Authentication
+
+| Property | Value |
+|---|---|
+| Pattern | {{auth_pattern}}  (api-key / oauth / service-account / bearer-token) |
+| Header / parameter | {{auth_header_name}} |
+| Required scope(s) | {{required_scopes}} |
+| Refresh policy | {{refresh_policy_or_NA}} |
+
+{{IF auth_pattern == 'oauth'}}
+**OAuth dance** — the build session completes this once per install:
+
+1. {{oauth_step_1}}
+2. {{oauth_step_2}}
+3. {{oauth_step_3 — typically: store refresh token in .env}}
+{{END}}
+
+{{IF auth_pattern == 'service-account'}}
+**Service account** — the build session creates this once:
+
+1. {{sa_step_1 — vendor admin portal URL}}
+2. {{sa_step_2 — assign role with required scopes}}
+3. {{sa_step_3 — download credentials JSON; store path in .env}}
+{{END}}
+
+## Rate limits
+
+| Limit | Value | Wrapper response |
+|---|---|---|
+| Per-second | {{rate_per_second}} | Honor `Retry-After`; backoff |
+| Per-day | {{rate_per_day}} | Surface to operator at 80% threshold |
+| Burst | {{burst_limit}} | Queue + drain |
+
+Document the limits in `governance/audit-trail.md` so the build session
+implements appropriate retry-after handling.
+
+## Pagination
+
+| Property | Value |
+|---|---|
+| Pattern | {{pagination_pattern}}  (cursor / offset / page / link-header) |
+| Default page size | {{default_page_size}} |
+| Max page size | {{max_page_size}} |
+
+Wrapper hides pagination behind a single `list_*` operation that pages
+under the hood when `limit` exceeds page size.
+
+## Webhook hand-off (if applicable)
+
+If the vendor pushes events for some operations, the wrapper does NOT
+handle inbound webhooks — that's a separate `NEEDS-WEBHOOK` tier
+artifact. See `integrations/needs-webhook/` for the receiver spec.
+
+## Cross-references
+
+- `README.md` (this folder) — tier rationale
+- `BUILD.md` (this folder) — build steps
+- `references/mcp-synthesis.md` — synthesis protocol + the excluded-endpoints rule
+- `governance/blast-radius.md` — L3+ approval gating
+- `governance/audit-trail.md` — rate-limit + auth-failure logging

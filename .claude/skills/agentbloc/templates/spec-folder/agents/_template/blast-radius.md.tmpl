@@ -1,0 +1,76 @@
+# Blast Radius — {{agent_id}}
+
+> Per-agent risk envelope + autonomy posture. Build session enforces
+> via cooperative agent prose AND deterministic hook
+> (`hooks/autonomy-gate.sh` if using bash impl).
+
+## Assignment
+
+| Property | Value |
+|---|---|
+| Blast radius | **L{{blast_radius}}** |
+| Autonomy | **{{autonomy}}**  (full / semi / supervised) |
+
+## What L{{blast_radius}} means
+
+{{IF blast == 1}}
+**L1 — read-only.** Reads state files; reads external APIs. No writes,
+no external sends. No approval gate.
+{{ELIF blast == 2}}
+**L2 — write-scoped.** Writes only to designated paths
+(`.agentbloc/agents/{{agent_id}}/` for own state,
+`.agentbloc/agents/<recipient>/inbox/` for inter-agent handoff). No
+external sends. No approval gate.
+{{ELIF blast == 3}}
+**L3 — write-unrestricted.** Writes to arbitrary paths or runs
+unrestricted Bash. Approval gate required for `semi` and `supervised`
+autonomy.
+{{ELIF blast == 4}}
+**L4 — send-external.** Sends Telegram messages, emails, API calls
+to third parties. Approval gate required for `semi` and `supervised`
+autonomy. Highest risk; concentrate in 1-2 agents per team.
+{{END}}
+
+## Why this level
+
+{{rationale_paragraph}}
+
+## Cooperative enforcement (agent prose)
+
+The agent's `prompts.md` system prompt instructs: "Before invoking any
+{{threshold_tool}}, send a Telegram approval request and wait."
+Compliance relies on the model following instructions.
+
+## Deterministic enforcement (hook)
+
+If the build session uses the bash + cron reference impl,
+`hooks/autonomy-gate.sh` registered in `.claude/settings.local.json`
+PreToolUse will:
+
+1. Read `CLAUDE_AGENT_ID` from env (set by `wake.sh`).
+2. Look up this agent's autonomy ({{autonomy}}).
+3. Classify the tool's blast level.
+4. Check `.agentbloc/state/approvals.jsonl` for a matching
+   `correlation_id` with `decision == "approve"`.
+5. exit 2 (block) if blast > permitted-threshold AND no approval found.
+
+## Permission boundaries
+
+| Permitted | Forbidden |
+|---|---|
+| {{permitted_action_1}} | {{forbidden_action_1}} |
+| {{permitted_action_2}} | {{forbidden_action_2}} |
+
+Forbidden actions trigger hook-side BLOCK (exit 2) AND prose-side
+self-decline.
+
+## Escalation
+
+Failures and approval-timeout cases route per `escalation.md`.
+
+## Cross-references
+
+- Tools: `tools.md`
+- Approval protocol: `../../governance/approval-protocol.md`
+- Audit trail: `../../governance/audit-trail.md`
+- Kill-switch: `../../governance/kill-switch.md`

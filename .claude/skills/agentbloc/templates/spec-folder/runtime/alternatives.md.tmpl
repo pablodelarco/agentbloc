@@ -1,0 +1,142 @@
+# Runtime Alternatives — {{team_name}}
+
+> The reference impl ships a bash + cron + Telegram substrate (see
+> `reference-impl/` and `BUILD.md`). This file documents alternatives
+> the build session may pick instead, with tradeoffs.
+
+## Decision frame
+
+The runtime layer has six responsibilities:
+
+1. **Wake** — fire each agent on its trigger
+2. **State** — persist memory, inbox, last-run across wakes
+3. **Reason** — invoke the agent's reasoning loop
+4. **Gate** — enforce kill-switch + blast-radius approvals
+5. **Log** — append-only audit trail
+6. **Notify** — send approval requests + escalations + briefings
+
+The contracts in `governance/` define what each must do. The runtime
+chooses HOW.
+
+## Option matrix
+
+| Runtime | Best fit | Strengths | Weaknesses |
+|---|---|---|---|
+| **bash + cron + Telegram (reference-impl)** | Self-hosted VPS / SMB pilots | Zero new deps; debuggable; works offline | Single-machine; no horizontal scaling; bash-shaped error handling |
+| **n8n self-hosted (Docker)** | Visual flows + non-technical operators | First-class branching; 600+ node integrations; visual debug | Adds Docker dep; flows are JSON in DB, harder to version-control |
+| **n8n cloud** | Demos + non-technical pilots | No infra; same flows as self-hosted | Recurring cost; data residency questions |
+| **Pipedream** | Event-driven heavy + serverless | Free tier generous; webhook-native; per-step debugging | Vendor lock-in; cold starts; pricing past free tier |
+| **Temporal** | Durable, long-running, retry-heavy workflows | Workflow durability + retries are first-class; battle-tested | Steep learning curve; needs Temporal cluster; overkill for SMB |
+| **Inngest** | Durable workflows, simpler than Temporal | Hosted + self-hosted; declarative; great DX | Newer; smaller ecosystem |
+| **Custom Python (APScheduler + FastAPI)** | Python-native team; data science integration | Full control; ecosystem rich for data work | Build it yourself; you own ops |
+| **Claude Code Scheduled Tasks** | Demo / personal / Mac-Desktop only | Native Claude Code | Tasks expire after 7 days; needs Desktop app open |
+
+## When each wins
+
+### Reference-impl (bash + cron) wins when:
+
+- The team runs on a VPS or self-hosted Linux box
+- Cost is a primary constraint (zero new deps)
+- The team is comfortable in bash (or willing to learn the small subset)
+- Debuggability matters more than ergonomics
+- The team is < 10 agents and < 1000 wake/day total
+
+### n8n (self-hosted or cloud) wins when:
+
+- The user / operator will hand-edit flows visually
+- Most agents already have tier 3 NEEDS-N8N-FLOW integrations
+- Branching logic dominates the workflow shape
+- The team wants a UI for monitoring without building one
+- Audit + RBAC need a UI that the operator uses (n8n has both)
+
+Tradeoff: n8n hosts the flows in its own DB. Spec-folder generation +
+the inventory's `.json` flow stubs work, but version-controlling a
+mature n8n DB is a separate problem.
+
+### Pipedream wins when:
+
+- The team is primarily event-driven (webhooks dominate)
+- The team needs serverless (no VPS)
+- The free tier is sufficient for the scale
+- Vendor lock-in is acceptable
+
+### Temporal / Inngest wins when:
+
+- Workflows run for hours/days with retries
+- Agent failures must be exactly-once recoverable
+- The deployer has Temporal/Inngest experience
+- The team has scale that justifies the operational complexity
+
+### Custom Python wins when:
+
+- The team has Python DNA
+- Integration with pandas, numpy, scikit, etc. is part of the work
+- Custom RBAC / audit / metrics infrastructure is required
+- The team can fund + maintain its own runtime
+
+## Migration paths
+
+If the team starts on reference-impl and outgrows it:
+
+| Outgrowing | Migrate to | Migration effort |
+|---|---|---|
+| Single machine, can't scale horizontally | Custom Python (Celery / Dramatiq) | Days |
+| Visual flow ergonomics | n8n self-hosted | Days |
+| Need durable retries | Inngest (hosted) or Temporal | Weeks |
+| Compliance / RBAC requirements | Custom Python + IAM integration | Weeks |
+
+The CONTRACTS in `governance/` stay constant — only the implementations
+change. That's the point of separating spec from runtime.
+
+## Migration paths IN
+
+If the team starts on a hosted runtime and wants to bring it in-house:
+
+| From | To | Migration effort |
+|---|---|---|
+| n8n cloud → n8n self-hosted | Same flows, different infra | Hours |
+| Pipedream → custom Python | Reimplement event handlers | Days |
+| Claude Code Scheduled Tasks → reference-impl | Same prompts, swap scheduler | Hours |
+
+## Cost comparison (rough order of magnitude)
+
+| Runtime | Monthly cost (this team's scale) |
+|---|---|
+| reference-impl on $5/mo VPS | $5 + Anthropic API |
+| n8n self-hosted on $5/mo VPS | $5 + Anthropic API |
+| n8n cloud (starter) | $20 + Anthropic API |
+| Pipedream (basic) | $0-19 + Anthropic API |
+| Temporal Cloud (starter) | $200 + Anthropic API |
+| Inngest (free tier) | $0 + Anthropic API (until cap) |
+
+The Anthropic API cost is the same regardless of runtime — it's the
+agents' reasoning, not the orchestration.
+
+## What NOT to use
+
+| Avoid | Why |
+|---|---|
+| **Bare AWS Lambda + EventBridge** without a framework | You'll rebuild the contracts; pick Inngest or Pipedream instead |
+| **Airflow** | Built for batch ETL, not multi-agent reactive workflows |
+| **Generic CI runners** (Jenkins, GitHub Actions) | Not designed for long-lived state + Telegram I/O |
+| **Cron alone** without the helpers | You'll reinvent `gen_correlation_id`, `audit_log`, etc. |
+
+## Recommendation per team profile
+
+| Profile | Recommended runtime |
+|---|---|
+| Solo founder / SMB / Spain pilot | reference-impl on $5/mo VPS |
+| Non-technical operator team | n8n self-hosted |
+| Event-driven heavy | Pipedream or n8n |
+| Enterprise + compliance | Custom Python OR Temporal Cloud |
+| Hackathon / demo | Claude Code Scheduled Tasks |
+
+When in doubt, default to reference-impl. It's the lowest-risk path
+to a working team. Migrate later if you outgrow it.
+
+## Cross-references
+
+- Default impl: `reference-impl/`
+- Build steps: `BUILD.md`
+- Governance contracts: `../governance/`
+- AgentBloc reference: `references/runtime-impl/runtime-coordination.md`

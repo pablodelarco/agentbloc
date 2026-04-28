@@ -1,6 +1,20 @@
-# Escalation Protocol (Phase 14)
+# Escalation Protocol
 
-> Phase 14 reference. Routes agent failures + critical errors through a dedicated `escalations` Telegram thread (distinct from `approvals` per CTRL-01 and `briefing` per MONITOR-04). Persistent-halt semantics until /resume reply. 4-part message template per AUTON-05.
+> **v3.0 reframe:** This file describes a PATTERN that ships INSIDE the
+> emitted spec folder (as `agents/<id>/escalation.md` per-agent prose
+> plus the optional `runtime/reference-impl/escalation-router.sh`
+> primitive). AgentBloc itself does NOT execute escalations — Phase 5
+> emits the spec, the build session wires the actual escalation loop.
+> References to "Phase 14" and persistent-halt semantics describe the
+> reference implementation the spec folder ships, not AgentBloc-side
+> runtime mechanism in v3.0.
+>
+> Loaded at Phase 5 entry to inform the escalation prose `spec-engine`
+> writes per agent into `agents/<id>/escalation.md`.
+
+## Original content (recontextualized)
+
+Routes agent failures + critical errors through a dedicated `escalations` Telegram thread (distinct from `approvals` and `briefing`). Persistent-halt semantics until /resume reply. 4-part message template.
 
 ## Table of Contents
 

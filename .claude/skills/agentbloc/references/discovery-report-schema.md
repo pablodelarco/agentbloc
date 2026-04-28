@@ -83,7 +83,7 @@ Body sections (markdown, follow the YAML frontmatter):
 | RECOMMENDED | `used_by[]`; per-endpoint `sample_call`; per-endpoint `response_schema`; `ui_selectors` | Emit with warnings. Missing any flags the entry `[DISCOVERED]` with the `[UNVERIFIED]` subordinate flag per v1.0 INTG-06. |
 | OPTIONAL | per-endpoint `rate_limit` | Silent defaults. No warning surfaced. |
 
-Downstream consumers (Phase 12 Deploy, v3.0 Builder) refuse to proceed on an unknown major `schema_version`, the same rule as [integration-manifest-schema.md](integration-manifest-schema.md) and [agent-profile-schema.md](agent-profile-schema.md).
+Downstream consumers (Phase 12 Deploy, v3.0 Builder) refuse to proceed on an unknown major `schema_version`, the same rule as [inventory-schema.md](inventory-schema.md) and [agent-profile-schema.md](agent-profile-schema.md).
 
 ## Posture Bounded Enum
 
@@ -213,4 +213,4 @@ Additive changes do NOT bump the version:
 - Adding a new value to a bounded enum (a future v2.5+ `posture: D` for manual session-cookie handoff would NOT bump).
 - Loosening a REQUIRED field to RECOMMENDED.
 
-Downstream consumers (Phase 12 Deploy Pipeline, v3.0 Builder Agent, Phase 16 TAP tests) read `schema_version` and refuse to proceed on an unknown major version. This is the same rule as [integration-manifest-schema.md](integration-manifest-schema.md) and [agent-profile-schema.md](agent-profile-schema.md) carry forward.
+Downstream consumers (Phase 12 Deploy Pipeline, v3.0 Builder Agent, Phase 16 TAP tests) read `schema_version` and refuse to proceed on an unknown major version. This is the same rule as [inventory-schema.md](inventory-schema.md) and [agent-profile-schema.md](agent-profile-schema.md) carry forward.

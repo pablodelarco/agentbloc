@@ -1,0 +1,45 @@
+# Workflow: {{workflow_id}}
+
+> {{workflow_one_line_description}}
+
+## Trigger
+
+| Type | Detail |
+|---|---|
+| {{trigger_type}} | {{trigger_detail}} |
+
+Trigger types: `cron` (schedule string) / `event` (source + name) / `manual` (free-text) / `inter-agent` (caller + message).
+
+## Inputs
+
+{{inputs_table — name, type, source}}
+
+## Outputs
+
+{{outputs_table — name, type, sink}}
+
+## Agents involved
+
+{{agents_in_workflow_with_role_summary}}
+
+## Success criteria (falsifiable)
+
+{{success_criteria_bullet_list — each must be testable. "fast" doesn't count; "p95 under 30s end-to-end" counts}}
+
+## Failure modes
+
+| Mode | Detection | Handling |
+|---|---|---|
+| {{failure_mode_1}} | {{detection}} | {{handling}} |
+
+## Topology
+
+```
+{{ascii_topology_diagram}}
+```
+
+## Cross-references
+
+- Agents: {{agent_links}}
+- Tools used: {{tool_links}} (see `../integrations/INVENTORY.md`)
+- Governance: blast-radius, escalation, audit-trail (see `../governance/`)

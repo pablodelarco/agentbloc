@@ -1,11 +1,13 @@
 <!-- GSD:project-start source:PROJECT.md -->
 ## Project
 
-**AgentBloc**
+**AgentBloc** (v3.0)
 
-An open-source Claude Code skill that guides users from "I have a manual business process" to "I have a secure, auditable AI agent team running in production" through a structured 6-phase conversational flow. The skill handles the entire journey: deep interviewing, agent team design, integration discovery, step-by-step confirmation, mandatory dry run, and deployment artifact generation. The generated artifacts run natively on Claude Code + cron + MCP servers + Telegram with zero custom runtime.
+An open-source Claude Code skill that guides users from "I have a manual business workflow" to "I have a portable build-ready spec folder" through a structured 6-phase conversational flow. The skill handles deep interviewing, agent team design, **deep tool discovery (5-tier readiness ranking: EXISTS-MCP / NEEDS-MCP-WRAPPER / NEEDS-N8N-FLOW / NEEDS-WEBHOOK / MANUAL)**, spec review walkthrough, and **spec folder emission**. The output folder works as input to any AI coding agent — Claude Code, Codex, Gemini, Cursor, OpenClaw — which builds the running team from the spec.
 
-**Core Value:** A non-technical business owner can describe their problem and end up with a deployed, secure agent team without writing code and without improvised security scaffolding.
+**Core Value:** AgentBloc is the architect, not the builder. A non-technical business owner can describe their workflow and end up with a comprehensive, deeply-researched project spec that any AI coding session can execute without re-asking AgentBloc-level questions.
+
+**v3.0 pivot (2026-04-28):** Was "ships running scripts via deploy-engine + runtime-engine + cron." Now "emits a portable spec folder via spec-engine." See [docs/v3.0-architecture.md](docs/v3.0-architecture.md). The v2.5-runtime substrate (helpers.sh + cron + Telegram bridge) is preserved as advisory `runtime/reference-impl/` content inside every emitted spec folder.
 
 ### Constraints
 

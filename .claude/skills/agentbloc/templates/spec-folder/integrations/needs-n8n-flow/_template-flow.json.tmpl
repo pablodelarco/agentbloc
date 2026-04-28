@@ -1,0 +1,76 @@
+{
+  "_template_note": "Tier 3 NEEDS-N8N-FLOW stub. This file is a valid n8n flow JSON. Build session imports it via n8n UI -> Workflows -> New -> Import. Then fills in credentials per Sticky Note nodes, tests with sample payload, wires the Inbox Callback to the agent's inbox. See references/n8n-flow-design.md.",
+  "name": "{{flow_id}}",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "path": "{{webhook_path}}",
+        "options": {}
+      },
+      "name": "Webhook (in)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [200, 300],
+      "webhookId": "{{webhook_id_placeholder}}"
+    },
+    {
+      "parameters": {
+        "content": "TODO: configure {{tool_name}} credential.\n\nIn n8n UI: Credentials -> New -> {{tool_name}}.\n\nNever paste credentials into this flow JSON; use n8n's credential store."
+      },
+      "name": "Sticky Note - {{tool_name}} Auth",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [200, 100]
+    },
+    {
+      "parameters": {
+        "url": "{{primary_endpoint_url}}",
+        "method": "{{primary_endpoint_method}}",
+        "options": {}
+      },
+      "name": "{{primary_node_name}}",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "content": "TODO: transform incoming payload to agent's inbox envelope shape.\n\nExpected envelope:\n{\n  \"correlation_id\": \"...\",\n  \"trigger\": \"{{trigger_name}}\",\n  \"data\": { ... }\n}"
+      },
+      "name": "Sticky Note - Transform",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [600, 100]
+    },
+    {
+      "parameters": {
+        "url": "={{$env.AGENTBLOC_INBOX_WEBHOOK}}",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({correlation_id: $json.correlation_id, trigger: '{{trigger_name}}', data: $json}) }}",
+        "options": {}
+      },
+      "name": "Inbox Callback",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4,
+      "position": [800, 300]
+    }
+  ],
+  "connections": {
+    "Webhook (in)": {
+      "main": [[{ "node": "{{primary_node_name}}", "type": "main", "index": 0 }]]
+    },
+    "{{primary_node_name}}": {
+      "main": [[{ "node": "Inbox Callback", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    { "name": "agentbloc" },
+    { "name": "{{tool_id}}" }
+  ]
+}

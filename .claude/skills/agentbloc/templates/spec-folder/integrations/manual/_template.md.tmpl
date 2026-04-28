@@ -1,0 +1,99 @@
+# {{tool_name}} — MANUAL
+
+> Tier 5: no automation path is appropriate for this tool. The build
+> session does NOT implement an integration. Instead, this file
+> documents the runbook for the human who handles the step.
+
+## Tool identity
+
+| Property | Value |
+|---|---|
+| Tool ID | `{{tool_id}}` |
+| Vendor | {{vendor}} |
+| Used by agents | {{used_by_agents_or_NA}} |
+| Tier | **MANUAL** |
+| Effort to automate | n/a (intentionally not automated) |
+| Effort to write runbook | {{runbook_effort_human_hours}} human-hours |
+
+## Why MANUAL (rationale)
+
+{{rationale_paragraph — pick from + extend:
+- Compliance forbids automation (notarized signing, regulatory body
+  requires human attestation, etc.)
+- Frequency is so low that a runbook beats a script (1-2x per year)
+- Human judgment is irreducibly part of the step
+- Cost of getting it wrong is higher than the cost of doing it by hand
+- Vendor explicitly forbids automation (TOS / API absent / browser
+  automation flagged)
+}}
+
+## Evidence cited
+
+| Source | URL | Date |
+|---|---|---|
+| {{evidence_source_1}} | {{evidence_url_1}} | {{date_1}} |
+
+Phase 3's inventory protocol requires evidence for MANUAL tier just
+like every other tier. This protects against laziness ("I don't want
+to research this so let's call it MANUAL").
+
+## When the human runs this
+
+{{trigger_description — what event in the workflow surfaces this manual
+step. The agents' workflows reference this runbook by linking to it; an
+agent that hits the trigger MUST surface a notification + halt its own
+work until the human signals completion.}}
+
+## Notification pattern
+
+The agent does not invoke this tool itself. Instead, the agent:
+
+1. Detects the trigger condition
+2. Emits a Telegram notification: "Manual step required: {{tool_name}}.
+   Runbook: see `manual/{{tool_id}}.md`. Reply `/done <correlation-id>`
+   when finished."
+3. Sets `last-run.json status: awaiting-manual` (or runtime-equivalent)
+4. Subsequent wakes short-circuit until `/done` lands
+
+This pattern keeps the agent loop intact while gracefully handling
+the human-in-the-loop.
+
+## Runbook
+
+{{runbook_steps — numbered list of what the human does, in plain
+language. Include URLs to vendor portals, screenshots if helpful (in
+this folder), and a checklist of expected outcomes.}}
+
+1. {{step_1}}
+2. {{step_2}}
+3. {{step_3}}
+
+## Verification
+
+How the human confirms the step succeeded:
+
+- {{verification_1}}
+- {{verification_2}}
+
+When verified, the human replies in Telegram: `/done <correlation-id>
+[optional notes]`. The notes are appended to the agent's open-items
+memory.
+
+## What NOT to do
+
+{{what_not_to_do — common mistakes the runbook prevents. Things like:
+"Don't reuse last quarter's signed PDF; the date stamp matters." or
+"Don't skip the secondary approver step; legal requires two signatures."}}
+
+## Frequency
+
+{{frequency — how often this manual step fires. 1x/year, 1x/quarter,
+on-demand, etc. Used by ROADMAP.md to decide whether the runbook is
+worth deeper documentation.}}
+
+## Cross-references
+
+- Inventory: `../INVENTORY.md`
+- Phase 3 inventory protocol: `references/inventory-protocol.md` (Q5)
+- Approval protocol: `governance/approval-protocol.md`
+- Triggering workflow(s): {{workflow_links}}

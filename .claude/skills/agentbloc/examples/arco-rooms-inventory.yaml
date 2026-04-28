@@ -1,0 +1,200 @@
+schema_version: 2
+generated_at: "2026-04-28T14:00:00Z"
+modified_at: "2026-04-28T14:00:00Z"
+
+# v3.0 inventory.yaml fixture migrated from arco-rooms-integration-manifest.yaml (schema v1).
+# Migration rules per references/inventory-schema.md "Migrating from v2.x integration-manifest.yaml":
+#   - resolution_method=existing|ecosystem -> tier: EXISTS-MCP (mcp_server sub-tree retained)
+#   - resolution_method=wrapper -> tier: NEEDS-MCP-WRAPPER (fields move into wrapper sub-tree)
+# All 8 tools from v1 manifest preserved; estimated_effort_cc_hours added per tier band.
+
+tools:
+  - tool_id: playwright-mcp
+    tier: EXISTS-MCP
+    used_by:
+      - gestor-documental
+    estimated_effort_cc_hours: 2
+    evidence:
+      url: "https://github.com/microsoft/playwright-mcp"
+      cited_at: "2026-04-28T14:00:00Z"
+      last_commit: "2026-04-02"
+      publisher: "microsoft"
+      trust_tier: HIGH
+    mcp_server:
+      package: "@playwright/mcp"
+      version: "0.0.28"
+      installed_via: ".mcp.json existing"
+      tools_declared:
+        - browser_navigate
+        - browser_snapshot
+        - browser_click
+        - browser_type
+      required_scopes: []
+      healthcheck_at: "2026-04-28T14:00:00Z"
+    status: verified
+    failure_reason: null
+
+  - tool_id: google-workspace-mcp
+    tier: EXISTS-MCP
+    used_by:
+      - gestor-documental
+    estimated_effort_cc_hours: 2
+    evidence:
+      url: "https://github.com/taylorwilsdon/google_workspace_mcp"
+      cited_at: "2026-04-28T14:00:00Z"
+      last_commit: "2026-03-14"
+      publisher: "taylorwilsdon"
+      trust_tier: MEDIUM
+    mcp_server:
+      package: "google_workspace_mcp"
+      version: "1.4.2"
+      installed_via: ".mcp.json existing"
+      tools_declared:
+        - gmail_list_messages
+        - gmail_get_message
+        - drive_list_files
+        - drive_download_file
+      required_scopes:
+        - "gmail.readonly"
+        - "drive.file"
+      healthcheck_at: "2026-04-28T14:00:00Z"
+    status: verified
+    failure_reason: null
+
+  - tool_id: telegram-mcp
+    tier: EXISTS-MCP
+    used_by:
+      - recepcionista
+    estimated_effort_cc_hours: 2
+    evidence:
+      url: "https://github.com/guangxiangdebizi/telegram-mcp"
+      cited_at: "2026-04-28T14:00:00Z"
+      last_commit: "2026-01-20"
+      publisher: "guangxiangdebizi"
+      trust_tier: MEDIUM
+    mcp_server:
+      package: "telegram-mcp"
+      version: "0.3.8"
+      installed_via: ".mcp.json existing"
+      tools_declared:
+        - send_message
+        - send_voice
+        - create_thread
+      required_scopes:
+        - "TELEGRAM_BOT_TOKEN"
+      healthcheck_at: "2026-04-28T14:00:00Z"
+    status: verified
+    failure_reason: null
+
+  - tool_id: gmail-mcp
+    tier: EXISTS-MCP
+    used_by:
+      - gestor-documental
+    estimated_effort_cc_hours: 2
+    evidence:
+      url: "https://github.com/smithery-ai/gmail-mcp"
+      cited_at: "2026-04-28T14:00:00Z"
+      last_commit: "2026-02-18"
+      publisher: "smithery-ai"
+      trust_tier: MEDIUM
+    mcp_server:
+      package: "@smithery-ai/gmail-mcp"
+      version: "0.2.5"
+      installed_via: "npx -y @smithery-ai/gmail-mcp"
+      tools_declared:
+        - list_unread
+        - get_message
+        - mark_read
+      required_scopes:
+        - "gmail.readonly"
+      healthcheck_at: "2026-04-28T14:00:00Z"
+    status: verified
+    failure_reason: null
+
+  - tool_id: google-sheets-mcp
+    tier: EXISTS-MCP
+    used_by:
+      - gestor-cobros
+    estimated_effort_cc_hours: 2
+    evidence:
+      url: "https://github.com/xing5/mcp-google-sheets"
+      cited_at: "2026-04-28T14:00:00Z"
+      last_commit: "2026-01-30"
+      publisher: "xing5"
+      trust_tier: MEDIUM
+    mcp_server:
+      package: "mcp-google-sheets"
+      version: "0.4.1"
+      installed_via: "npx -y mcp-google-sheets"
+      tools_declared:
+        - read_range
+        - write_range
+        - append_row
+      required_scopes:
+        - "spreadsheets"
+      healthcheck_at: "2026-04-28T14:00:00Z"
+    status: verified
+    failure_reason: null
+
+  - tool_id: notion-mcp
+    tier: EXISTS-MCP
+    used_by:
+      - recepcionista
+    estimated_effort_cc_hours: 2
+    evidence:
+      url: "https://github.com/community/notion-mcp"
+      cited_at: "2026-04-28T14:00:00Z"
+      last_commit: "2026-03-05"
+      publisher: "community"
+      trust_tier: MEDIUM
+    mcp_server:
+      package: "notion-mcp"
+      version: "0.5.3"
+      installed_via: "npx -y notion-mcp"
+      tools_declared:
+        - create_page
+        - update_page
+        - search
+      required_scopes:
+        - "NOTION_API_TOKEN"
+      healthcheck_at: "2026-04-28T14:00:00Z"
+    status: verified
+    failure_reason: null
+
+  - tool_id: bank-mcp
+    tier: NEEDS-MCP-WRAPPER
+    used_by:
+      - gestor-cobros
+    estimated_effort_cc_hours: 6
+    evidence:
+      url: "https://www.bbva.es/clientes/particulares/banca-electronica/api-de-datos.html"
+      cited_at: "2026-04-28T14:00:00Z"
+    wrapper:
+      openapi_url: null
+      vendor_docs_url: "https://www.bbva.es/clientes/particulares/banca-electronica/api-de-datos.html"
+      auth_pattern: oauth
+      endpoint_subset:
+        - "GET /v1/transactions"
+        - "GET /v1/balance"
+      output_path: ".mcp/generated/bank-mcp/"
+    status: verified
+    failure_reason: null
+
+  - tool_id: mapfre-api
+    tier: NEEDS-MCP-WRAPPER
+    used_by:
+      - gestor-documental
+    estimated_effort_cc_hours: 5
+    evidence:
+      url: "https://www.mapfre.es/empresas/oficina-directa/api/"
+      cited_at: "2026-04-28T14:00:00Z"
+    wrapper:
+      openapi_url: null
+      vendor_docs_url: "https://www.mapfre.es/empresas/oficina-directa/api/"
+      auth_pattern: api-key
+      endpoint_subset:
+        - "GET /v1/policies/{id}"
+        - "GET /v1/claims"
+      output_path: ".mcp/generated/mapfre-api/"
+    status: verified
+    failure_reason: null

@@ -1,0 +1,47 @@
+# Tools — {{agent_id}}
+
+> Tools this agent uses, with cross-links to integrations and blast
+> levels. Build session wires each tool from the corresponding
+> `integrations/<tier>/<tool>` folder.
+
+## Tool table
+
+| Tool | Tier | Blast | Operations | Integration link |
+|---|---|---|---|---|
+| {{tool_1}} | {{tier_1}} | L{{blast_1}} | {{ops}} | `../../integrations/{{tier_dir_1}}/{{tool_1}}` |
+| {{tool_2}} | {{tier_2}} | L{{blast_2}} | {{ops}} | `../../integrations/{{tier_dir_2}}/{{tool_2}}` |
+
+Tier values: `EXISTS-MCP` / `NEEDS-MCP-WRAPPER` / `NEEDS-N8N-FLOW` /
+`NEEDS-WEBHOOK` / `MANUAL` per `references/inventory-protocol.md`.
+
+Blast levels: L1 read-only / L2 write-scoped / L3 write-unrestricted /
+L4 send-external per `governance/blast-radius.md`.
+
+## Per-tool invocation pattern
+
+### {{tool_1}}
+
+{{tool_1_invocation_pseudocode_or_actual_invocation_for_runtime}}
+
+Operations the agent calls:
+- {{operation}} — {{purpose}} — blast L{{level}}
+
+Approval gating (semi/supervised): {{which_operations_require_approval}}
+
+### {{tool_2}}
+
+(same pattern)
+
+## Excluded tools (least-privilege boundary)
+
+{{excluded_tools_with_rationale}} — tools the agent could conceivably
+need but does not have access to. Listing these explicitly forces the
+build session to confirm the boundary holds; if a future requirement
+needs an excluded tool, AgentBloc Phase 6 (spec evolution) revisits
+the agent's blast-radius assignment.
+
+## Cross-references
+
+- Inventory: `../../integrations/INVENTORY.md`
+- Blast-radius envelope: `blast-radius.md`
+- Approval protocol: `../../governance/approval-protocol.md`

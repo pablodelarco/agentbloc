@@ -1,0 +1,83 @@
+# Escalation — {{agent_id}}
+
+> What happens when this agent encounters an uncaught exception, a
+> critical-action failure, or an approval timeout.
+
+## Escalation triggers
+
+The agent escalates when ANY of:
+
+1. **Uncaught exception during wake** — runtime error, network failure,
+   unparseable input
+2. **Critical-action tool returns failure** — the action was the
+   agent's primary purpose for this wake (NOT every L1 fetch failure)
+3. **Approval timeout** — agent sent an approval request and operator
+   didn't reply within `{{approval_timeout_sec}}` seconds (handled by
+   `escalation-router.sh` watchdog in the bash reference impl)
+4. **Explicit `escalate(...)` call from agent prose** — agent decides
+   on its own that the situation needs human judgment
+
+## Escalation message format (agent-prose path)
+
+When the agent itself escalates (paths 1, 2, 4 above), it composes a
+4-part message via `scripts/telegram-send.sh`:
+
+```
+ESCALATION — {{agent_id}}
+Correlation: <correlation-id>
+
+What I tried: <one-paragraph description of the action>
+
+Why it failed: <root cause if known; "unknown" otherwise>
+
+Options:
+1. <option 1>
+2. <option 2>
+3. <option 3>
+
+Recommended: <option N> — <one-line rationale>
+
+Reply: /resume <correlation-id> <free-text instructions>
+   OR  /halt   <correlation-id>
+```
+
+## Approval-timeout escalation (router path)
+
+For path 3, `escalation-router.sh` automatically re-pings the
+operator:
+- Tier 1 ping after `{{approval_timeout_sec}}` seconds
+- Tier 2 ping after another `{{approval_timeout_sec}}` seconds
+- Tier 3 final ping (ceiling, then silent)
+
+Each tier uses a derived child correlation-id (`<orig>-esc1`, etc.)
+to bypass the dedup in `telegram-send.sh`.
+
+## Persistent halt
+
+After an escalation fires, the agent's `last-run.json status` (or
+equivalent state file in your runtime) is set to `error`. Subsequent
+wakes short-circuit with `wake_outcome: skipped-prior-error` until
+`/resume <correlation-id>` lands.
+
+Rationale: avoids repeated cost spend on a known-broken state.
+
+## /resume + /halt grammar
+
+| Reply | Effect |
+|---|---|
+| `/resume <correlation-id>` | Set `last-run.json status: idle`. Next wake resumes work. |
+| `/resume <correlation-id> <text>` | Same + append text to agent's open-items memory |
+| `/halt <correlation-id>` | Confirm persistent halt. Escalates one tier higher (if configured) |
+
+## Escalation target
+
+| Channel | Who receives |
+|---|---|
+| `escalation_chat_id` (env) | {{escalation_target_description}} |
+| Fallback to `TELEGRAM_CHAT_ID` | If escalation channel not configured |
+
+## Cross-references
+
+- Approval protocol: `../../governance/approval-protocol.md`
+- Kill-switch: `../../governance/kill-switch.md`
+- Reference impl escalation router: `../../runtime/reference-impl/escalation-router.sh`

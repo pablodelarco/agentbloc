@@ -1,0 +1,142 @@
+# Approval Protocol — {{team_name}}
+
+> When + how the team requests human approval. The contract every
+> `semi`/`supervised` agent honors before any L3+ tool call.
+
+## When approval is required
+
+Per agent autonomy + tool blast level (see `blast-radius.md`):
+
+| Autonomy | L1 | L2 | L3 | L4 |
+|---|---|---|---|---|
+| `full` | proceed | proceed | proceed | proceed |
+| `semi` | proceed | proceed | proceed | **approval required** |
+| `supervised` | proceed | proceed | **approval required** | **approval required** |
+
+Approval is NOT required for L1 (read-only) or L2 (write-scoped to own
+or designated sibling state) regardless of autonomy.
+
+## Approval channel
+
+| Property | Value |
+|---|---|
+| Medium | Telegram |
+| Thread | `approval_thread_id` (per `runtime/reference-impl/.env.example`) |
+| Bot user | the team's bot, configured at `.env` `TELEGRAM_BOT_TOKEN` |
+| Authorized approvers | per `.env` `TELEGRAM_AUTHORIZED_USERS` (comma-separated user IDs) |
+
+Approval messages live in a DIFFERENT Telegram thread from briefings
+and from escalations. Rationale: approvals are time-sensitive
+decisions that must not be buried.
+
+## Request message format
+
+```
+[APPROVE/DENY] {{agent_id}}
+Correlation: {{correlation_id}}
+Action: {{tool_name}}({{args_summary_redacted}})
+Reversibility: {{reversibility_tag}}
+Reasoning: {{tool_reasoning}}
+
+Reply: /approve {{correlation_id}}
+   OR  /deny    {{correlation_id}}
+```
+
+| Field | Source | Notes |
+|---|---|---|
+| `agent_id` | env `CLAUDE_AGENT_ID` | Set by `wake.sh` |
+| `correlation_id` | env `CLAUDE_CORRELATION_ID` | Flows through entire wake |
+| `tool_name` | runtime hook | The MCP tool about to fire |
+| `args_summary_redacted` | hook | PII-redacted single-line summary |
+| `reversibility_tag` | derived from blast | `reversible` / `hard-to-reverse` / `irreversible` |
+| `tool_reasoning` | env `TOOL_REASONING` | 1-2 sentence rationale set by agent before invoking |
+
+`semi`/`supervised` agents that fail to set `TOOL_REASONING` have the
+tool BLOCKED with `result: blocked, reason: missing-tool-reasoning`.
+
+## Approval response
+
+The operator replies in the approval thread:
+
+| Reply | Effect |
+|---|---|
+| `/approve <correlation-id>` | Append to `approvals.jsonl` with `decision: approve`; agent unblocks |
+| `/approve <correlation-id> <reasoning>` | Same + reasoning captured |
+| `/deny <correlation-id>` | Append with `decision: deny`; agent skips action |
+| `/deny <correlation-id> <reasoning>` | Same + reasoning captured |
+
+The `<correlation-id>` arg disambiguates concurrent pending approvals.
+Multiple agents may have pending approvals simultaneously.
+
+## Timeout behavior
+
+If no approval lands within `{{approval_timeout_sec}}` seconds (default
+600 = 10 minutes), the request escalates per
+`../agents/<id>/escalation.md`:
+
+- Tier 1 ping: re-send approval message tagged `[ESC1]`
+- Tier 2 ping: re-send tagged `[ESC2]`
+- Tier 3 final: escalate to `escalations_thread_id`; agent sets
+  `last-run.json status: error`; subsequent wakes short-circuit
+
+Each tier uses a derived child correlation-id (`<orig>-esc1`, etc.) to
+bypass dedup in `telegram-send.sh`.
+
+## Authorized users
+
+Only Telegram user IDs in `.env` `TELEGRAM_AUTHORIZED_USERS` can
+approve. Replies from other users are logged + ignored. Authorization
+is enforced in `approval-router.sh` (or runtime equivalent), not by
+Telegram itself.
+
+For multi-approver setups (e.g., bank transfers > €X require two
+approvers), extend the protocol: require two distinct authorized
+approver IDs both posting `/approve <correlation-id>` within the
+timeout window. Document the threshold per L4 tool.
+
+## State persistence
+
+```
+.agentbloc/state/approvals.jsonl
+```
+
+Append-only. Two lines per round-trip:
+
+1. `action: approval_request` — set when agent posts the message
+2. `action: approval_response` — set when operator replies (or timeout)
+
+Schema lives in `audit-trail.md`. `details.outcome` enum:
+`approved` / `denied` / `timeout`.
+
+## What "reversibility" means
+
+The `reversibility_tag` in the request message helps the operator
+decide quickly:
+
+| Tag | Examples | Default response time |
+|---|---|---|
+| `reversible` | Send a draft email, create a calendar tentative | 30 min |
+| `hard-to-reverse` | Send a customer email, create a calendar event with invitees | 5 min |
+| `irreversible` | Bank transfer, payment, delete record | 1 min |
+
+Phase 3 inventory protocol assigns reversibility per tool (in
+`integrations/<tier>/<tool>` files). Operators triage by tag.
+
+## Build-session responsibilities
+
+1. Implement the request poster (Telegram MCP `sendMessage` to thread)
+2. Implement the response listener (Telegram `getUpdates` long-poll)
+3. Implement the timeout watchdog (re-pings + escalation tier ladder)
+4. Implement the authorization check (sender ID matches authorized list)
+5. Wire to PreToolUse hook so tool calls block until decision lands
+6. Append to approvals.jsonl per `audit-trail.md` schema
+7. Write tests (request fires; approve unblocks; deny blocks; timeout
+   escalates; unauthorized reply ignored)
+
+## Cross-references
+
+- Blast radius: `blast-radius.md`
+- Audit trail: `audit-trail.md` (approvals.jsonl schema)
+- Per-agent escalation: `../agents/<id>/escalation.md`
+- Reference impl: `../runtime/reference-impl/approval-router.sh`
+- AgentBloc reference: `references/approval-router.md`

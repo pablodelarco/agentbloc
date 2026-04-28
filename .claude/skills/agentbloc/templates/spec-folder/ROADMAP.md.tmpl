@@ -1,0 +1,135 @@
+# Build Roadmap — {{team_name}}
+
+> Phased build plan with effort estimates. Follow this order to avoid
+> circular blockers — integrations before workflows, workflows before
+> runtime, runtime before ship.
+
+## Total estimated effort
+
+| Phase | CC-hours | Human-days |
+|---|---|---|
+| Phase 1: Tier 1 integrations (existing MCPs) | {{n}} | {{n}} |
+| Phase 2: Tier 2 integrations (MCP wrappers) | {{n}} | {{n}} |
+| Phase 3: Tier 3+4 integrations (n8n + webhooks) | {{n}} | {{n}} |
+| Phase 4: Workflows + agents | {{n}} | {{n}} |
+| Phase 5: Runtime substrate | {{n}} | {{n}} |
+| Phase 6: Test + ship | {{n}} | {{n}} |
+| **Total** | **{{n}}** | **{{n}}** |
+
+These estimates are conservative. Real-world effort scales with team
+familiarity (more familiar = closer to estimate; less familiar = 1.5-2x).
+
+## Phase 1: Tier 1 integrations (existing MCPs)
+
+Install and configure each MCP server listed in
+`integrations/existing/`. Verify each smoke-tests successfully.
+
+For each tool:
+- [ ] Read `integrations/existing/<tool>.md`
+- [ ] Install per the file's instructions
+- [ ] Configure auth (API key / OAuth) per `governance/credentials.md`
+- [ ] Add to `.mcp.json` (Claude Code) or equivalent registry in your tool
+- [ ] Smoke test: invoke a read-only operation
+- [ ] Document any deviations in this checklist
+
+{{tier_1_tool_checklist}}
+
+## Phase 2: Tier 2 integrations (custom MCP wrappers)
+
+For each tool in `integrations/needs-mcp-wrapper/`, run the
+`mcp-builder` skill (Claude Code) per the tool's `BUILD.md`.
+
+For each tool:
+- [ ] Read `integrations/needs-mcp-wrapper/<tool>/BUILD.md`
+- [ ] Verify `openapi.yaml` validates: `swagger-cli validate openapi.yaml`
+- [ ] Run `mcp-builder` with the endpoint subset in `ENDPOINTS.md`
+- [ ] Smoke test the generated wrapper
+- [ ] Add to `.mcp.json`
+
+{{tier_2_tool_checklist}}
+
+## Phase 3: Tier 3+4 integrations (n8n flows + webhook receivers)
+
+Tier 3 (n8n flows) and Tier 4 (webhook receivers) can run in parallel.
+
+n8n flows — for each in `integrations/needs-n8n-flow/`:
+- [ ] Install n8n (self-hosted Docker or n8n.cloud) if not already
+- [ ] Import `<flow-id>-flow.json`
+- [ ] Fill in credentials per the sticky notes
+- [ ] Wire to AgentBloc inbox (HTTP Request node → wake.sh webhook)
+- [ ] Test + activate
+
+Webhook receivers — for each in `integrations/needs-webhook/`:
+- [ ] Read `<tool>-receiver.md` design spec
+- [ ] Implement the HTTP endpoint (bash + nc, Python, Node, etc.)
+- [ ] Implement signature verification per the spec
+- [ ] Implement idempotency per the spec
+- [ ] Register the URL with the vendor + verify with their test mechanism
+
+{{tier_3_4_tool_checklist}}
+
+## Phase 4: Workflows + agents
+
+Now wire the agent prompts to the integrations.
+
+For each agent in `agents/`:
+- [ ] Read `agents/<id>/role.md` (CrewAI-shaped role + goal)
+- [ ] Read `agents/<id>/prompts.md` (system + wake prompt reference)
+- [ ] Read `agents/<id>/tools.md` (tool list with cross-links)
+- [ ] Read `agents/<id>/blast-radius.md` (autonomy + risk envelope)
+- [ ] Implement the wake.md (the reference impl shows how)
+- [ ] Wire tools from `tools.md` to integrations from earlier phases
+
+For each workflow in `workflows/`:
+- [ ] Verify all referenced agents exist in `agents/`
+- [ ] Verify the trigger source is implemented (cron / webhook / event /
+      inter-agent)
+- [ ] Implement the success-criteria assertions as integration tests
+
+{{workflow_checklist}}
+
+## Phase 5: Runtime substrate
+
+Pick the runtime per `runtime/BUILD.md` + `runtime/alternatives.md`.
+
+If using the bash + cron reference impl:
+- [ ] `cp runtime/reference-impl/.env.example .env` and fill in
+- [ ] `./runtime/reference-impl/cron-generator.sh apply` (or set
+      `AGENTBLOC_NO_CRON=1` for foreground)
+- [ ] Verify cron lines installed: `crontab -l`
+- [ ] Wire hooks: copy `runtime/reference-impl/hooks/` to `hooks/` and
+      register in `.claude/settings.local.json`
+- [ ] Smoke test: trigger one wake manually and verify it completes
+
+If using a different runtime:
+- [ ] See `runtime/alternatives.md` for the chosen option
+- [ ] Implement the equivalent of: cron / inbox handoff / approval
+      check / audit emission / cost capture
+
+## Phase 6: Test + ship
+
+- [ ] Each workflow's success criteria pass as automated tests
+- [ ] `governance/blast-radius.md` enforcement verified (try invoking
+      a forbidden tool and confirm it's blocked)
+- [ ] `governance/audit-trail.md` schema validated against real audit
+      output
+- [ ] `governance/pii-redaction.md` sample inputs redact correctly
+- [ ] `governance/kill-switch.md` halt mechanism tested end-to-end
+- [ ] `governance/approval-protocol.md` round-trip tested with real
+      operator
+- [ ] One full happy-path workflow run completes end-to-end
+- [ ] One failure-mode run produces correct escalation
+- [ ] Documentation updated (any deviations from this spec are noted)
+
+## After shipping
+
+When requirements change, rerun AgentBloc on this spec folder:
+
+```bash
+cd <this-folder>
+claude  # Trigger AgentBloc; it will re-emit affected files via diff mode
+```
+
+AgentBloc Phase 6 (Spec Evolution) handles this — see
+[phase-6-evolution.md](../../.claude/skills/agentbloc/references/phase-6-evolution.md)
+in the AgentBloc repo.

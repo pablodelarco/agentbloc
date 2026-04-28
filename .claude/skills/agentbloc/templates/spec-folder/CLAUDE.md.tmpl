@@ -1,0 +1,110 @@
+# Claude Code Project Context — {{team_name}}
+
+> Claude-Code-specific entry point. For other AI coding tools, see
+> `AGENTS.md` (universal). This file uses Claude Code vocabulary
+> (skills, subagents, hooks) and references the v2.5-runtime
+> reference impl directly.
+
+## Project
+
+{{team_name}} — {{one_line_workflow_summary}}.
+
+This project is the implementation of an AgentBloc-emitted spec folder.
+You are the build session. AgentBloc was the architect. The spec
+folder you're in tells you everything to build; you decide HOW to
+implement it.
+
+## Build approach
+
+Read these in order:
+1. `ROADMAP.md` — phased build plan
+2. `workflows/<id>.md` — what each workflow does (one file per workflow)
+3. `agents/<id>/` — CrewAI-shaped agent designs (one folder per agent)
+4. `integrations/INVENTORY.md` — tier-ranked tools
+5. `governance/` — safety contracts
+6. `runtime/BUILD.md` — build plan for the runtime substrate
+
+## Conventions
+
+### Subagents
+
+Each agent in `agents/<id>/` may be implemented as a Claude Code subagent
+in `.claude/agents/<id>.md` (recommended for `full` autonomy agents) or
+as a `claude -p` invocation pattern (recommended for `semi`/`supervised`
+agents that need approval gating). The reference impl's `wake.sh` does
+the latter.
+
+### Skills
+
+If your team has cross-cutting capabilities, package them as Claude Code
+skills under `.claude/skills/<skill-name>/SKILL.md`. The `mcp-builder`
+skill (for `NEEDS-MCP-WRAPPER` integrations) is one example you'll
+likely need.
+
+### Hooks
+
+The reference impl ships `hooks/autonomy-gate.sh` (PreToolUse blast-radius
+blocker). Register via `.claude/settings.local.json`:
+
+```json
+{
+  "hooks": {
+    "PreToolUse": [
+      {"matcher": ".*", "hooks": [{"type": "command", "command": "$REPO_ROOT/hooks/autonomy-gate.sh"}]}
+    ]
+  }
+}
+```
+
+This hook blocks side-effect tools (L3+) when the agent's autonomy is
+`semi`/`supervised` and there's no matching `/approve` record in
+`.agentbloc/state/approvals.jsonl`.
+
+### MCP servers
+
+`integrations/existing/<tool>.md` lists already-deployed MCPs. Install
+each + add to `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "<tool>": { "command": "...", "args": [...] }
+  }
+}
+```
+
+For `NEEDS-MCP-WRAPPER` tools, run `/mcp-build` per
+`integrations/needs-mcp-wrapper/<tool>/BUILD.md`.
+
+## Runtime — bash + cron + Telegram (default)
+
+If you use the reference impl in `runtime/reference-impl/`:
+
+1. `cp runtime/reference-impl/.env.example .env` and fill in
+   `TELEGRAM_BOT_TOKEN`, `ANTHROPIC_API_KEY`
+2. `./runtime/reference-impl/cron-generator.sh apply` to install crontab
+   (or set `AGENTBLOC_NO_CRON=1` and use `./runtime/reference-impl/loop.sh`
+   for foreground operation)
+3. The cron lines fire `wake.sh <agent-id>` per agent's schedule;
+   `claude-wrap.sh` invokes `claude -p` with the agent's `wake.md`
+
+If you pick a different runtime (n8n, Temporal, Pipedream, Inngest,
+custom Python), see `runtime/alternatives.md` for tradeoffs and adapt
+the contract from the bash impl.
+
+## Testing
+
+Each workflow in `workflows/<id>.md` ships falsifiable success criteria.
+Implement them as integration tests against your runtime of choice.
+
+`governance/audit-trail.md` defines the JSONL schema your audit
+implementation must match — assert on shape in tests.
+
+## Provenance
+
+Spec emitted by AgentBloc {{agentbloc_version}} on {{emitted_at}}.
+Inputs SHA256 in `SPEC-EMISSION-REPORT.md`.
+
+If you need to evolve this spec (requirements changed, tool deprecated,
+new agent role), rerun AgentBloc on this folder. It reads existing
+spec as ground truth and emits a diff.

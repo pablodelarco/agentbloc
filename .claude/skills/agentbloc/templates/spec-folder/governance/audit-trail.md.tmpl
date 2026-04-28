@@ -1,0 +1,122 @@
+# Audit Trail — {{team_name}}
+
+> What gets logged + the JSONL schema + retention policy. The build
+> session implements this contract; tests assert on log shape.
+
+## Scope
+
+Every tool call by every agent gets one log line. Plus key lifecycle
+events (wake start, wake end, escalation, approval request, approval
+response, kill-switch fire). Append-only. PII redacted before emission.
+
+This contract supports compliance posture (GDPR Article 30 record of
+processing) and forensic debugging when the team misbehaves.
+
+## Schema (12-field JSONL)
+
+Every line is a single JSON object with these fields:
+
+```json
+{
+  "timestamp": "2026-04-28T14:32:11.123Z",
+  "correlation_id": "cron-20260428T143000Z-a3f21b",
+  "agent_id": "{{example_agent_id}}",
+  "wake_id": "wake-20260428T143000Z-a3f21b",
+  "action": "tool_call",
+  "tool": "mcp__gmail__search_messages",
+  "args_summary": "query=is:unread label:invoices",
+  "result": "success",
+  "duration_ms": 420,
+  "details": { "matched_count": 7 },
+  "trace_parent": "cron-20260428T143000Z-a3f21b",
+  "log_version": 1
+}
+```
+
+| Field | Type | Required | Notes |
+|---|---|---|---|
+| `timestamp` | ISO-8601 UTC | yes | RFC 3339 with millisecond precision |
+| `correlation_id` | string | yes | Set by `gen_correlation_id` at trigger time; flows through entire wake |
+| `agent_id` | string | yes | kebab-case; matches `agents/<id>/` folder |
+| `wake_id` | string | yes | One per wake invocation |
+| `action` | enum | yes | `tool_call` / `wake_start` / `wake_end` / `approval_request` / `approval_response` / `escalation` / `kill_switch_fire` |
+| `tool` | string | conditional | Required when `action == "tool_call"` |
+| `args_summary` | string | conditional | Single-line redacted summary of tool args; NEVER full args |
+| `result` | enum | yes | `success` / `failure` / `blocked` / `pending` / `denied` / `timeout` |
+| `duration_ms` | int | yes | Wall-clock duration of the action |
+| `details` | object | optional | Action-specific structured payload |
+| `trace_parent` | string | yes | For nested calls; usually equals `correlation_id` at top level |
+| `log_version` | int | yes | Currently `1`; bump on schema change |
+
+## File layout
+
+```
+.agentbloc/logs/
+└── <YYYY-MM-DD>/
+    ├── audit.jsonl           # All tool calls
+    ├── approvals.jsonl       # action=approval_request|approval_response only
+    ├── escalations.jsonl     # action=escalation only
+    └── kill-switch.jsonl     # action=kill_switch_fire only
+```
+
+Per-day rotation. Logs older than `{{retention_days}}` days are
+pruned by `runtime/reference-impl/log-rotate.sh` (run nightly).
+
+## PII redaction
+
+Before emitting any log line, run the args / details through
+`scripts/pii-redact.sh` (or runtime equivalent). The redactor:
+
+1. Strips email addresses → `<email-redacted>`
+2. Strips phone numbers (E.164 + national formats) → `<phone-redacted>`
+3. Strips IBAN / credit-card / national-ID patterns → `<pii-redacted>`
+4. Strips long alphanumeric strings (likely tokens) → `<token-redacted>`
+5. Redacts free-text fields > 200 chars → first-100-chars + `[truncated]`
+
+If a domain has additional PII patterns (medical record numbers,
+SSN-equivalents), extend the redactor. The build session adds team-
+specific patterns to `governance/pii-redaction.md`.
+
+## What NEVER appears in logs
+
+- Full email bodies (only metadata: sender, subject hash, date)
+- Bank account numbers (only last 4 digits)
+- Authentication tokens or API keys (redacted to `<token-redacted>`)
+- File contents over 200 chars (truncated)
+- Approval reasoning that contains user PII (redacted before append)
+
+## Retention + rotation
+
+| Log type | Retention | Rotation |
+|---|---|---|
+| audit.jsonl | {{retention_days}} days | Daily |
+| approvals.jsonl | {{approval_retention_days}} days | Daily |
+| escalations.jsonl | {{escalation_retention_days}} days | Daily |
+| kill-switch.jsonl | indefinite | Daily |
+
+Compliance posture (GDPR Article 30): retain for the period required
+by the user's regulatory regime; longer retention requires legal review
+because logs (even redacted) can constitute "processing".
+
+## Tests the build session writes
+
+Assert on log shape AT MINIMUM:
+
+1. Every tool call produces exactly one `tool_call` line
+2. Every wake produces exactly one `wake_start` and one `wake_end`
+3. `correlation_id` is non-empty + matches `gen_correlation_id` format
+4. `args_summary` contains no email / IBAN / token patterns
+5. `log_version` matches the current schema version
+6. JSON parses (one object per line, newline-delimited)
+
+Reference impl's `tests/` directory has fixtures for these.
+
+## Cross-references
+
+- PII redaction patterns: `pii-redaction.md`
+- Approval entries: `approval-protocol.md`
+- Escalation entries: `../agents/<id>/escalation.md`
+- AgentBloc reference: `references/audit-logging.md` +
+  `references/runtime-impl/jsonl-log-schema.md`
+- Reference impl: `../runtime/reference-impl/helpers.sh`
+  (`audit_log` primitive)

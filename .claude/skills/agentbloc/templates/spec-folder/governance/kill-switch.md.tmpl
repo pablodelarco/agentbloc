@@ -1,0 +1,144 @@
+# Kill Switch — {{team_name}}
+
+> Emergency stop mechanism. Three independent triggers; any of them
+> halts the entire team within one cron tick. Build session implements
+> all three.
+
+## What "kill switch" means
+
+A persistent signal that, once set, causes EVERY agent's wake to
+short-circuit before doing any work. Agents check the signal at the
+start of every wake (after env load, before any tool calls).
+
+This protects against runaway loops, leaked credentials, compromised
+state, and "I'm panicking, just stop everything" moments. Recovery
+requires explicit human action — the team does not self-resume.
+
+## Three triggers
+
+The team is halted if ANY of these conditions hold:
+
+### 1. File flag
+
+```
+.agentbloc/KILL_SWITCH
+```
+
+If this file exists, the team is halted. Create with:
+
+```bash
+touch .agentbloc/KILL_SWITCH
+```
+
+Remove with:
+
+```bash
+rm .agentbloc/KILL_SWITCH
+```
+
+The file's contents are ignored; existence is the signal.
+
+### 2. Environment variable
+
+```
+AGENTBLOC_KILL=1
+```
+
+If this env var is set to `1`, the team is halted. Use this when the
+file flag is impractical (e.g., team is in a remote container and you
+can't shell in). Set in `.env` and the next cron tick honors it.
+
+### 3. Telegram slash-command
+
+```
+/halt-all <reason>
+```
+
+In the team's escalations Telegram thread, this command from an
+authorized user (per `.env`'s `TELEGRAM_AUTHORIZED_USERS`) creates
+the file flag. Reverse with `/resume-all`.
+
+This is the most ergonomic kill switch for non-technical operators —
+they don't need shell access, just Telegram.
+
+## How agents check
+
+Every agent's wake (or the runtime's wake wrapper) executes this
+contract before any other work:
+
+```bash
+# pseudocode — adapt to runtime
+if [ -f ".agentbloc/KILL_SWITCH" ] || [ "$AGENTBLOC_KILL" = "1" ]; then
+  audit_log "kill_switch_fire" "agent=$AGENT_ID reason=flag-set"
+  exit 0   # silent exit; no telegram noise (the kill IS the alarm)
+fi
+```
+
+The reference impl `runtime/reference-impl/wake.sh` does this in its
+preamble. Hook order: kill-switch ALWAYS precedes any other PreToolUse
+hook (alphabetical naming `00-kill-switch-check.sh` ensures this).
+
+## Why "silent exit"
+
+When the kill switch fires, the team is broken or under attack. Sending
+hundreds of Telegram alarms compounds the problem. The kill switch
+itself IS the alarm — the operator who set it knows. Subsequent silence
+confirms agents stopped.
+
+The ONE exception: if the kill switch fires due to detection logic
+(e.g., audit-log pattern detection), the detector that fires it sends
+ONE Telegram alarm before silencing further notifications.
+
+## Recovery
+
+To resume:
+
+1. Investigate why the kill switch fired (read recent audit log,
+   approvals.jsonl, and escalations.jsonl)
+2. Fix the underlying issue
+3. Remove the file flag: `rm .agentbloc/KILL_SWITCH`
+4. Or unset the env var, or send `/resume-all`
+5. Manually trigger one wake of one agent to verify the team is healthy
+6. Let cron resume normal operation
+
+The team does NOT self-recover. Operator-driven recovery is the point.
+
+## Detection-driven kills (optional, v3.0+)
+
+The build session may add automated kill triggers based on patterns:
+
+| Trigger | Detector | Why |
+|---|---|---|
+| Cost spike | Cost > threshold per cron interval | Runaway agent burning $ |
+| Audit-log anomaly | Same correlation_id appearing > N times | Loop detected |
+| External error rate | Tool failures > X% in window | Vendor outage cascade |
+| Approval timeout cascade | More than N pending approvals | Operator unresponsive |
+
+Each detector lives as an optional cron job that touches
+`.agentbloc/KILL_SWITCH` on detection. Out-of-the-box: none of these
+are enabled. Build session enables per team risk profile.
+
+## Tests
+
+Build session writes tests asserting:
+
+1. With file flag set, every agent's wake exits 0 immediately
+2. With env var set, same
+3. Removing the flag + waking an agent succeeds
+4. The kill-switch hook runs BEFORE other PreToolUse hooks
+5. Kill-switch fire emits exactly one audit log line, no Telegram
+
+## What NOT to do
+
+- Don't auto-resume after a timeout — defeats the purpose
+- Don't skip the kill check to "save a cycle" — the check is cheap
+- Don't tie the kill to a single trigger — defense in depth requires
+  three independent triggers
+
+## Cross-references
+
+- Audit trail: `audit-trail.md` (logs kill-switch events)
+- Escalation protocol: `../agents/<id>/escalation.md` (kill-switch
+  precedence over escalation)
+- Reference impl: `../runtime/reference-impl/hooks/00-kill-switch.sh`
+- AgentBloc reference: `references/incident-response.md`

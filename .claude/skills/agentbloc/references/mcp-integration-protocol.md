@@ -1,6 +1,6 @@
 # MCP Integration Protocol
 
-> Loaded by SKILL.md at Phase 3 entry alongside [phase-3-integration.md](phase-3-integration.md), [mcp-ecosystem-registry.md](mcp-ecosystem-registry.md), and [integration-manifest-schema.md](integration-manifest-schema.md). Defines the 4-step MCP search (existing `.mcp.json` -> ecosystem registry -> wrapper generation -> browser fallback) that Phase 3 walks for every tool entry in `.agentbloc/team/agent-profiles.yaml`, plus the three-check verification loop and halt-and-name protocol. Per v2.0 positioning (PROJECT.md Constraints), every external integration goes through an MCP server. Official-API direct calls are a fallback in [phase-3-integration.md](phase-3-integration.md), not the primary path.
+> Loaded by SKILL.md at Phase 3 entry alongside [phase-3-integration.md](phase-3-integration.md), [mcp-ecosystem-registry.md](mcp-ecosystem-registry.md), and [inventory-schema.md](inventory-schema.md). Defines the 4-step MCP search (existing `.mcp.json` -> ecosystem registry -> wrapper generation -> browser fallback) that Phase 3 walks for every tool entry in `.agentbloc/team/agent-profiles.yaml`, plus the three-check verification loop and halt-and-name protocol. Per v2.0 positioning (PROJECT.md Constraints), every external integration goes through an MCP server. Official-API direct calls are a fallback in [phase-3-integration.md](phase-3-integration.md), not the primary path.
 
 ## Table of Contents
 
@@ -16,13 +16,13 @@
 
 ## When This Applies
 
-Claude loads this file at Phase 3 entry (see SKILL.md Phase 3). For each tool declared in an agent's `tools[]` array in `.agentbloc/team/agent-profiles.yaml`, Claude walks Steps 1 through 4 in order, stops on the first method that resolves, and then runs the Verification Loop. The output is one entry per tool in `.agentbloc/integrations/integration-manifest.yaml` (schema in [integration-manifest-schema.md](integration-manifest-schema.md)). Specific sections are referenced based on the tool's resolution state:
+Claude loads this file at Phase 3 entry (see SKILL.md Phase 3). For each tool declared in an agent's `tools[]` array in `.agentbloc/team/agent-profiles.yaml`, Claude walks Steps 1 through 4 in order, stops on the first method that resolves, and then runs the Verification Loop. The output is one entry per tool in `.agentbloc/integrations/inventory.yaml` (schema in [inventory-schema.md](inventory-schema.md)). Specific sections are referenced based on the tool's resolution state:
 
 - **Fresh tool (first Phase 3 run):** walk Steps 1-4 in order; stop at first method that resolves.
 - **Re-verification:** read existing manifest; re-run Verification Loop on every entry with `status != verified`.
 - **Failed verification:** apply the Halt-and-Name Protocol; write `.agentbloc/integrations/<tool-id>/VERIFICATION-FAILED.md` per D-35; block Phase 3 gate until user resolves.
 
-This file is imperative (step-by-step flow Claude follows); the registry ([mcp-ecosystem-registry.md](mcp-ecosystem-registry.md)) is declarative (lookup table Claude consults in Step 2); the schema ([integration-manifest-schema.md](integration-manifest-schema.md)) is the output contract. The three files together cover Phase 3 top to bottom.
+This file is imperative (step-by-step flow Claude follows); the registry ([mcp-ecosystem-registry.md](mcp-ecosystem-registry.md)) is declarative (lookup table Claude consults in Step 2); the schema ([inventory-schema.md](inventory-schema.md)) is the output contract. The three files together cover Phase 3 top to bottom.
 
 ## Flow Diagram
 
@@ -61,7 +61,7 @@ This file is imperative (step-by-step flow Claude follows); the registry ([mcp-e
           └────────────────────────────────────────────────────┘
                                              │
                                              ▼
-                  .agentbloc/integrations/integration-manifest.yaml
+                  .agentbloc/integrations/inventory.yaml
                                              │
                                              ▼
                         Phase 4 Precondition: every entry verified
@@ -76,7 +76,7 @@ Note on emission: use ASCII box characters (`┌ ┐ └ ┘ │ ─ ► ▼`) n
 **Input:** `tools[].entry` from `.agentbloc/team/agent-profiles.yaml` (e.g., `playwright-mcp`, `google-workspace-mcp`).
 
 **If found:**
-- Write the manifest entry with `resolution_method: existing` per [integration-manifest-schema.md](integration-manifest-schema.md) Resolution Method Bounded Enum.
+- Write the manifest entry with `resolution_method: existing` per [inventory-schema.md](inventory-schema.md) Resolution Method Bounded Enum.
 - Populate `mcp_server.package` from the `.mcp.json` entry's `command` or `args`; `installed_via: ".mcp.json existing"`.
 - Skip directly to the Verification Loop below. Do NOT re-query the ecosystem registry or generate a wrapper.
 
@@ -133,7 +133,7 @@ Note on emission: use ASCII box characters (`┌ ┐ └ ┘ │ ─ ► ▼`) n
 
 ## Step 4: Browser Fallback (Phase 11 Scope)
 
-**Action:** STUB - the browser-fallback subagent at `.claude/agents/browser-discovery.md` is Phase 11 (BROWSER-01..12) work. Phase 10 records the resolution_method enum value `browser-fallback` in [integration-manifest-schema.md](integration-manifest-schema.md) for forward compatibility, but the actual Playwright + Patchright + HAR capture + injection detector + PII redaction flow is NOT implemented here.
+**Action:** STUB - the browser-fallback subagent at `.claude/agents/browser-discovery.md` is Phase 11 (BROWSER-01..12) work. Phase 10 records the resolution_method enum value `browser-fallback` in [inventory-schema.md](inventory-schema.md) for forward compatibility, but the actual Playwright + Patchright + HAR capture + injection detector + PII redaction flow is NOT implemented here.
 
 **If Steps 1-3 all failed:**
 - Phase 10 treats this as a halt condition (no browser fallback yet).
@@ -228,4 +228,4 @@ Every manifest entry must carry the v1.0 evidence record (INTG-03) plus four v2.
 - **Evidence (D-39 extending INTG-03):** URL + version + last_commit + publisher + trust_tier + tools_declared + required_scopes + healthcheck_at. Missing any = `[UNVERIFIED]`.
 - **Default on ambiguity:** `ecosystem` (Step 2). Ecosystem lookup is cheaper than wrapper generation.
 - **Rule:** MCP-first (PROJECT.md Constraints). Every external integration goes through an MCP server; official-API direct calls are a fallback in [phase-3-integration.md](phase-3-integration.md), not the primary path.
-- **Cross-reference:** Downstream consumers of `.agentbloc/integrations/integration-manifest.yaml` are the Phase 12 Deploy Pipeline (renders the manifest into `.mcp.json` merges + ClaudeClaw job configs) and the Phase 16 TAP end-to-end tests (replays the Arco Rooms fixture). Both read from the same schema defined in [integration-manifest-schema.md](integration-manifest-schema.md).
+- **Cross-reference:** Downstream consumers of `.agentbloc/integrations/inventory.yaml` are the Phase 12 Deploy Pipeline (renders the manifest into `.mcp.json` merges + ClaudeClaw job configs) and the Phase 16 TAP end-to-end tests (replays the Arco Rooms fixture). Both read from the same schema defined in [inventory-schema.md](inventory-schema.md).

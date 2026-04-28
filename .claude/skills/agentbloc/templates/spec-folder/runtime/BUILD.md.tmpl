@@ -1,0 +1,138 @@
+# Build Plan — Runtime Substrate for {{team_name}}
+
+> Tool-agnostic build plan for the runtime layer. The build session
+> picks one of the runtimes documented in `alternatives.md` (or
+> defaults to the bash + cron + Telegram reference impl shipping
+> alongside this file in `reference-impl/`).
+
+## What the runtime does
+
+The runtime is the substrate that:
+
+1. Wakes each agent on its trigger (cron schedule, webhook, inter-agent
+   handoff, or manual)
+2. Loads agent state, env, and prompt
+3. Invokes the agent's reasoning loop (typically `claude -p` with the
+   wake prompt)
+4. Enforces governance gates (kill switch, blast-radius approvals)
+5. Logs all activity to the audit trail
+6. Persists agent state across wakes
+
+These responsibilities are CONTRACTS, not implementations. Any runtime
+that honors the contracts works.
+
+## Default: bash + cron + Telegram (reference-impl/)
+
+The folder `reference-impl/` ships a complete bash implementation. The
+build session can use it as-is (recommended for fastest path to
+working) or reference it while building a different runtime.
+
+### Reference-impl files
+
+| File | Role |
+|---|---|
+| `helpers.sh` | Shared primitives: `gen_correlation_id`, `audit_log`, `atomic_write_inbox`, etc. |
+| `wake.sh` | Per-agent wake wrapper invoked by cron / webhook / inter |
+| `claude-wrap.sh` | Wrapper around `claude -p` that captures cost + duration |
+| `cron-generator.sh` | Renders crontab lines from registry.yaml; `apply` installs |
+| `telegram-send.sh` | Outbound Telegram with dedup + thread routing |
+| `telegram-poll.sh` | Long-poll `getUpdates` consumer for slash-command replies |
+| `approval-router.sh` | Approval request → response loop |
+| `escalation-router.sh` | Escalation message + tier ladder |
+| `loop.sh` | Foreground operation alternative when cron is unavailable |
+| `activity-feed-merge.sh` | Daily aggregation of audit logs into briefing-ready form |
+| `hooks/autonomy-gate.sh` | PreToolUse blast-radius gate |
+| `.env.example` | Schema for `.env` |
+
+### Build steps (default path)
+
+1. **Copy `.env.example` to `.env`** and populate:
+   - `TELEGRAM_BOT_TOKEN` — create a bot via @BotFather
+   - `TELEGRAM_CHAT_ID` — the chat the bot reports to
+   - `TELEGRAM_APPROVAL_THREAD_ID` — the approvals thread ID
+   - `TELEGRAM_BRIEFING_THREAD_ID` — the briefings thread ID
+   - `TELEGRAM_ESCALATIONS_THREAD_ID` — the escalations thread ID
+   - `TELEGRAM_AUTHORIZED_USERS` — comma-separated IDs allowed to /approve
+   - `ANTHROPIC_API_KEY` — for the agents' `claude -p` invocations
+   - All `<TOOL>_API_KEY` per `integrations/INVENTORY.md`
+2. **Install MCP servers** per `integrations/existing/<tool>.md` files.
+3. **Build wrappers** per `integrations/needs-mcp-wrapper/<tool>/BUILD.md`
+   files. Each invokes `/mcp-build` once.
+4. **Build n8n flows** per `integrations/needs-n8n-flow/` if applicable.
+5. **Build webhook receivers** per `integrations/needs-webhook/` if
+   applicable.
+6. **Initialize agent state directories:**
+   ```bash
+   for agent in $(yq '.agents[].id' agents/registry.yaml); do
+     mkdir -p ".agentbloc/agents/$agent"
+     mkdir -p ".agentbloc/agents/$agent/inbox"
+   done
+   ```
+7. **Smoke test each agent** by manual wake:
+   ```bash
+   AGENTBLOC_NO_CRON=1 ./reference-impl/wake.sh <agent-id> manual-test
+   ```
+   Verify audit log entries appear in `.agentbloc/logs/<today>/`.
+8. **Install crontab:**
+   ```bash
+   ./reference-impl/cron-generator.sh apply
+   ```
+9. **Verify** by waiting one cron interval and inspecting logs.
+10. **Wire kill switch** per `governance/kill-switch.md` (touch + remove
+    test).
+
+## Effort estimate
+
+| Component | Effort |
+|---|---|
+| Env + secrets setup | 1-2 CC-hours |
+| EXISTS-MCP installs | 1-2 CC-hours per tool |
+| NEEDS-MCP-WRAPPER builds | 4-8 CC-hours per wrapper |
+| NEEDS-N8N-FLOW configurations | 2-4 CC-hours per flow |
+| NEEDS-WEBHOOK receivers | 6-10 CC-hours per receiver |
+| Cron + smoke tests | 1-2 CC-hours |
+| **Total** | **{{estimated_total_cc_hours}} CC-hours** |
+
+Per `ROADMAP.md` for the phased breakdown.
+
+## When to deviate from reference-impl
+
+The reference impl is a working substrate, not a prescription. Use
+`alternatives.md` to pick a different runtime if any of these apply:
+
+- The team needs a hosted runtime (no VPS / cron access) → n8n.cloud
+  or Pipedream
+- The team needs durable workflows with retry semantics → Temporal
+  or Inngest
+- The team's deployer prefers Python → custom Python runner
+- The team is enterprise + needs RBAC → custom Python or n8n self-hosted
+  with auth
+- The team's audit + compliance posture needs centralized logging
+  (CloudWatch, Datadog, etc.) → adapt the audit-log emission
+
+The CONTRACTS (kill switch, approval, audit shape) stay constant
+regardless of runtime.
+
+## Verification checklist
+
+The team is "built" when ALL of these pass:
+
+- [ ] Every agent wakes on its trigger, exits cleanly
+- [ ] Every L3+ tool call from a `semi`/`supervised` agent triggers
+      Telegram approval
+- [ ] `/approve` unblocks; `/deny` blocks
+- [ ] Approval timeout escalates per tier ladder
+- [ ] Kill switch (file flag, env var, `/halt-all`) all halt the team
+      within one cron tick
+- [ ] Audit logs are append-only, redacted, schema-conformant
+- [ ] PII redaction passes the test fixtures in `governance/pii-redaction.md`
+- [ ] Each workflow's success criteria (per `workflows/<id>.md`) is
+      met by an end-to-end run
+
+## Cross-references
+
+- Reference impl files: `reference-impl/`
+- Other runtime options: `alternatives.md`
+- Per-agent designs: `../agents/`
+- Tool inventory: `../integrations/INVENTORY.md`
+- Governance contracts: `../governance/`
