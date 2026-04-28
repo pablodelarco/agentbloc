@@ -1,6 +1,6 @@
 # Browser Fallback Protocol
 
-> Loaded by SKILL.md at Phase 3 entry alongside [phase-3-integration.md](phase-3-integration.md), [mcp-integration-protocol.md](mcp-integration-protocol.md), [mcp-ecosystem-registry.md](mcp-ecosystem-registry.md), [integration-manifest-schema.md](integration-manifest-schema.md), and [browser-stack.md](browser-stack.md). Defines Step 4 of the 4-step MCP search: when Steps 1-3 (existing `.mcp.json`, ecosystem registry, wrapper generation) exhaust without resolution, Phase 3 spawns the `browser-discovery` subagent to reverse-engineer the target service via Playwright MCP and emit a schema-locked, SHA256-signed DISCOVERY-REPORT.md. Detect-and-degrade posture only (no fingerprint evasion, no CAPTCHA solving). Posture C (hardened anti-bot) halts cleanly via DISCOVERY-BLOCKED-REPORT.md.
+> Loaded by SKILL.md at Phase 3 entry alongside [phase-3-integration.md](phase-3-integration.md), [mcp-integration-protocol.md](mcp-integration-protocol.md), [mcp-ecosystem-registry.md](mcp-ecosystem-registry.md), [inventory-schema.md](inventory-schema.md), and [browser-stack.md](browser-stack.md). Defines Step 4 of the 4-step MCP search: when Steps 1-3 (existing `.mcp.json`, ecosystem registry, wrapper generation) exhaust without resolution, Phase 3 spawns the `browser-discovery` subagent to reverse-engineer the target service via Playwright MCP and emit a schema-locked, SHA256-signed DISCOVERY-REPORT.md. Detect-and-degrade posture only (no fingerprint evasion, no CAPTCHA solving). Posture C (hardened anti-bot) halts cleanly via DISCOVERY-BLOCKED-REPORT.md.
 
 ## Table of Contents
 
@@ -19,7 +19,7 @@
 
 ## When This Applies
 
-Claude loads this file at Phase 3 entry (see SKILL.md Phase 3). The `browser-discovery` subagent is spawned ONLY after Steps 1-3 of [mcp-integration-protocol.md](mcp-integration-protocol.md) exhaust for a given tool (no existing `.mcp.json` entry, no ecosystem registry match, no viable wrapper generation). Output is written to `.agentbloc/discovery/<service-slug>/DISCOVERY-REPORT.md` per the schema defined in [discovery-report-schema.md](discovery-report-schema.md); the corresponding manifest entry carries `resolution_method: browser-fallback` (bounded enum value from [integration-manifest-schema.md](integration-manifest-schema.md)).
+Claude loads this file at Phase 3 entry (see SKILL.md Phase 3). The `browser-discovery` subagent is spawned ONLY after Steps 1-3 of [mcp-integration-protocol.md](mcp-integration-protocol.md) exhaust for a given tool (no existing `.mcp.json` entry, no ecosystem registry match, no viable wrapper generation). Output is written to `.agentbloc/discovery/<service-slug>/DISCOVERY-REPORT.md` per the schema defined in [discovery-report-schema.md](discovery-report-schema.md); the corresponding manifest entry carries `resolution_method: browser-fallback` (bounded enum value from [inventory-schema.md](inventory-schema.md)).
 
 Three resume states apply per D-50:
 

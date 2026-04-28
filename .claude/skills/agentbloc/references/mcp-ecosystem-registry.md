@@ -1,6 +1,6 @@
 # MCP Ecosystem Registry
 
-> Loaded by SKILL.md at Phase 3 entry alongside [mcp-integration-protocol.md](mcp-integration-protocol.md) and [integration-manifest-schema.md](integration-manifest-schema.md). Curated registry of known MCP servers seeded from CLAUDE.md Technology Stack "MCP Server Ecosystem: Verified Available" tables. Consulted by Step 2 of the 4-step search - if the user's tool has an entry here, Claude proposes `npx -y <package>` to the user for approval per D-37. Trust tiers pre-computed per v1.0 INTG-04.
+> Loaded by SKILL.md at Phase 3 entry alongside [mcp-integration-protocol.md](mcp-integration-protocol.md) and [inventory-schema.md](inventory-schema.md). Curated registry of known MCP servers seeded from CLAUDE.md Technology Stack "MCP Server Ecosystem: Verified Available" tables. Consulted by Step 2 of the 4-step search - if the user's tool has an entry here, Claude proposes `npx -y <package>` to the user for approval per D-37. Trust tiers pre-computed per v1.0 INTG-04.
 
 ## Table of Contents
 

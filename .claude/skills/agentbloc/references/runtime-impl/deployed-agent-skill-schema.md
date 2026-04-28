@@ -58,7 +58,7 @@ Path literals used by `{{agent.memory_refs}}`: the rendered block cites `.agentb
 | RECOMMENDED | `agent.backstory`, `agent.escalation`, `agent.dependencies`, `agent.blast_radius`, `agent.model`, `team.name` | Render with warnings. Phase 12 DEPLOY-REPORT.md surfaces each gap in `## Pending User Actions`. |
 | OPTIONAL | `team.briefing_agent_id` | Render with literal `null`. Phase 15 Anticipation fills in the briefing-agent id during its own wave; Phase 12 does not block. |
 
-Downstream consumers (Phase 13 Runtime, Phase 14 Monitor, Phase 16 Validation) refuse to proceed on an unknown major `schema_version`, matching the rule in [agent-profile-schema.md](agent-profile-schema.md) and [integration-manifest-schema.md](integration-manifest-schema.md).
+Downstream consumers (Phase 13 Runtime, Phase 14 Monitor, Phase 16 Validation) refuse to proceed on an unknown major `schema_version`, matching the rule in [agent-profile-schema.md](agent-profile-schema.md) and [inventory-schema.md](inventory-schema.md).
 
 ## Bounded Enum: autonomy_level
 
@@ -166,7 +166,7 @@ The `schema_version` field on `agent-profiles.yaml` currently equals `1`. Any br
 
 **Re-run compare:** On re-deploy, the deploy-engine reads the existing `.claude/skills/<agent-id>/SKILL.md`, strips the fingerprint block, canonicalizes (timestamp masking per D-60; RFC 8785 not applicable to markdown), and computes SHA256. Matching hash = skip (no re-write). Differing hash = present unified diff via Step 3 of [deploy-protocol.md](deploy-protocol.md) and wait for user approval before overwriting.
 
-Downstream consumers (Phase 13 Runtime, Phase 14 Monitor, Phase 15 Anticipation, Phase 16 Validation) read `schema_version` from the frontmatter marker and refuse to proceed on an unknown major version. This matches the rule in [agent-profile-schema.md](agent-profile-schema.md), [integration-manifest-schema.md](integration-manifest-schema.md), and [discovery-report-schema.md](discovery-report-schema.md).
+Downstream consumers (Phase 13 Runtime, Phase 14 Monitor, Phase 15 Anticipation, Phase 16 Validation) read `schema_version` from the frontmatter marker and refuse to proceed on an unknown major version. This matches the rule in [agent-profile-schema.md](agent-profile-schema.md), [inventory-schema.md](inventory-schema.md), and [discovery-report-schema.md](discovery-report-schema.md).
 
 **Coordinated update discipline:** When `schema_version` bumps from 1 to 2, the deploy-engine refuses to proceed until all three template files and this schema file have been updated together and committed in the same changeset. A single-file bump that drifts the templates out of sync with the allow-list is a schema violation caught by Validation Checklist Check 8 (loop / conditional syntax detection) or Check 9 (autonomy marker mismatch). Phase 16 golden-file tests catch drift at CI time by regenerating the Arco Rooms fixture and diffing against the checked-in version.
 
@@ -180,6 +180,6 @@ Downstream consumers (Phase 13 Runtime, Phase 14 Monitor, Phase 15 Anticipation,
 - [agent-memory-schema.md](agent-memory-schema.md) , sibling contract for the three per-agent runtime files (memory.md + state.json + last-run.json) that `{{agent.memory_refs}}` points at
 - [deploy-report-schema.md](deploy-report-schema.md) , emission contract for DEPLOY-REPORT.md + DEPLOY-FAILED-REPORT.md (the latter is the halt target when any of the 9 validation checks fail)
 - [agent-profile-schema.md](agent-profile-schema.md) , upstream Phase 9 contract whose field set is the source for the 13 anchor points in this allow-list
-- [integration-manifest-schema.md](integration-manifest-schema.md) , upstream Phase 10 contract consumed by the `{{agent.tools}}` pre-computation step
+- [inventory-schema.md](inventory-schema.md) , upstream Phase 10 contract consumed by the `{{agent.tools}}` pre-computation step
 - [prompt-injection.md](prompt-injection.md) , v1.0 cross-cutting defense cited by every rendered SKILL.md in the autonomy-language block
 - [blast-radius.md](blast-radius.md) , v1.0 taxonomy that the `blast_radius` bounded enum inherits
