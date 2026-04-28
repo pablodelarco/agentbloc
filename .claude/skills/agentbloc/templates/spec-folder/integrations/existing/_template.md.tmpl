@@ -1,0 +1,110 @@
+# {{tool_name}} — EXISTS-MCP
+
+> Tier 1: a public MCP server already exists for this tool. The build
+> session installs + configures it. No code synthesis needed.
+
+## Tool identity
+
+| Property | Value |
+|---|---|
+| Tool ID | `{{tool_id}}` |
+| Vendor | {{vendor}} |
+| Used by agents | {{used_by_agents}} |
+| Tier | **EXISTS-MCP** |
+| Effort | {{effort_cc_hours}} CC-hours |
+
+## MCP server
+
+| Property | Value |
+|---|---|
+| Repo | {{repo_url}} |
+| Publisher | {{publisher}} |
+| Last commit | {{last_commit_date}} |
+| Stars | {{star_count}} |
+| Trust tier | {{trust_tier}}  (HIGH / MEDIUM / LOW) |
+| Install command | `{{install_command}}` |
+
+## Why this MCP (vs. wrapper synthesis)
+
+{{rationale_paragraph — why this server is reliable enough to use vs.
+building a wrapper. Cite last-commit recency + maintainer + scope match
+to agent needs.}}
+
+## Install
+
+1. **Add to `.mcp.json`:**
+
+```json
+{
+  "mcpServers": {
+    "{{tool_id}}": {
+      "command": "{{mcp_command}}",
+      "args": {{mcp_args_json}},
+      "env": {{mcp_env_json}}
+    }
+  }
+}
+```
+
+2. **Set environment variables** (from `.env`):
+
+| Variable | Purpose | How to obtain |
+|---|---|---|
+| `{{ENV_VAR_1}}` | {{purpose_1}} | {{how_to_obtain_1}} |
+| `{{ENV_VAR_2}}` | {{purpose_2}} | {{how_to_obtain_2}} |
+
+Never commit `.env` to git. Use `.env.example` as the schema.
+
+3. **Smoke test** the server:
+
+```
+{{smoke_test_command}}
+```
+
+Expected: server responds to `tools/list` with at least
+`{{expected_tool_name}}` in the response.
+
+## Tools the agents use
+
+{{tool_invocation_subset — which of this MCP's tools the team's agents
+actually invoke. Listing these explicitly forces a least-privilege
+review.}}
+
+| MCP tool | Used by agent | Operation | Blast |
+|---|---|---|---|
+| `{{mcp_tool_1}}` | {{agent_id}} | {{operation_1}} | L{{blast_1}} |
+| `{{mcp_tool_2}}` | {{agent_id}} | {{operation_2}} | L{{blast_2}} |
+
+## Authentication
+
+{{auth_pattern — api-key | oauth | service-account | bearer-token}}
+
+{{auth_setup_steps — vendor portal URL, scope to grant, how the env
+var maps to the MCP's auth header.}}
+
+## Rate limits
+
+| Limit | Value | Build-session response |
+|---|---|---|
+| {{limit_1}} | {{value_1}} | {{response_1}} |
+
+## Known issues
+
+{{known_issues_or_NA — server bugs, vendor quirks, scope gotchas. If
+the trust tier is MEDIUM/LOW, list the specific reasons here so the
+build session knows what to watch for.}}
+
+## Failure modes
+
+| Mode | Detection | Handling |
+|---|---|---|
+| Auth expired | 401 from MCP | Refresh token; surface to operator if refresh fails |
+| Rate limit hit | 429 from MCP | Retry-after honor; queue retries |
+| MCP server crashed | Tool call hangs | Restart server; log to audit trail |
+
+## Cross-references
+
+- Inventory: `../INVENTORY.md`
+- Phase 3 protocol: `references/mcp-integration-protocol.md`
+- Trust tiers: `references/mcp-ecosystem-registry.md`
+- Credentials: `governance/audit-trail.md` + `.env.example`

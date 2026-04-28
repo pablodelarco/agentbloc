@@ -1,0 +1,110 @@
+# Build Instructions — {{tool_name}} MCP Wrapper
+
+> This wrapper was specified by AgentBloc Phase 3. The build session
+> (Claude Code, Codex, Gemini, Cursor, OpenClaw) executes these steps
+> to produce a runnable MCP server.
+
+## Prerequisites
+
+- `mcp-builder` skill installed (Claude Code) OR equivalent generator
+  in your AI coding tool
+- Bun ≥ 1.1 OR Node ≥ 20
+- An API key / OAuth token for {{tool_name}} — the user provides this;
+  never commit it to git
+
+## Steps
+
+### 1. Invoke mcp-builder
+
+From a Claude Code session in the spec folder root:
+
+```
+/mcp-build
+```
+
+Pass:
+- Tool ID: `{{tool_id}}`
+- Source: `./integrations/needs-mcp-wrapper/{{tool_id}}/openapi.yaml`
+- Endpoint subset: see `ENDPOINTS.md` (Included section)
+- Output: `.mcp/generated/{{tool_id}}/`
+
+The skill produces `index.ts` + `package.json` + `README.md` under
+`.mcp/generated/{{tool_id}}/`.
+
+### 2. Set environment variables
+
+The wrapper reads these from `.env`:
+
+| Variable | Purpose | How to obtain |
+|---|---|---|
+| `{{ENV_VAR_API_KEY}}` | Primary credential | {{how_to_obtain_api_key}} |
+| `{{ENV_VAR_API_BASE}}` | API base URL override | Default: `{{default_api_base}}` |
+{{additional_env_vars}}
+
+Add the names to `.env.example` (no values) so future build sessions
+know what to populate.
+
+### 3. Smoke test the server
+
+```bash
+bun run .mcp/generated/{{tool_id}}/index.ts
+```
+
+Send a `tools/list` request via the MCP test harness. Expected: server
+declares tools matching the Included subset in `ENDPOINTS.md`.
+
+### 4. Register with Claude Code (or your AI coding tool)
+
+Add to `.mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "{{tool_id}}": {
+      "command": "bun",
+      "args": ["run", ".mcp/generated/{{tool_id}}/index.ts"],
+      "env": {
+        "{{ENV_VAR_API_KEY}}": "${env:{{ENV_VAR_API_KEY}}}"
+      }
+    }
+  }
+}
+```
+
+Restart Claude Code so the MCP picks up.
+
+### 5. Verify from your agent's wake.md
+
+Reference the MCP tools by their generated names in
+`agents/{{used_by_agent}}/tools.md`. Tool names follow the convention
+`mcp__{{tool_id}}__<endpoint_op>`.
+
+### 6. Add the integration to `INVENTORY.md` evidence
+
+Once the smoke test passes, edit `integrations/INVENTORY.md` to record
+the build outcome: install path, generated tools count, smoke-test
+date.
+
+## Failure modes
+
+| Mode | Likely cause | Fix |
+|---|---|---|
+| `mcp-builder` rejects spec | OpenAPI invalid | `swagger-cli validate openapi.yaml`; fix and re-run |
+| Auth failure (401) | Token scope insufficient | Verify scope per `ENDPOINTS.md` Authentication section; regenerate token |
+| Rate limit (429) | Vendor cap hit | Honor `Retry-After`; document rate limit in `governance/audit-trail.md` |
+| Wrapper missing endpoint | Subset too narrow | Amend `ENDPOINTS.md` Included; re-run `/mcp-build` |
+| Wrapper exposes too much | Subset too broad | Trim `ENDPOINTS.md` Included; re-run; tighten agent's `tools.md` |
+
+## Effort estimate
+
+{{effort_cc_hours}} CC-hours for this wrapper, per
+`integrations/INVENTORY.md`. Conservative — overestimating builds
+trust, underestimating burns it.
+
+## Cross-references
+
+- `README.md` (this folder) — tier rationale
+- `ENDPOINTS.md` (this folder) — endpoint subset
+- `references/mcp-synthesis.md` — synthesis protocol
+- `references/credentials.md` — env-var conventions
+- `governance/blast-radius.md` — write-endpoint approval gating

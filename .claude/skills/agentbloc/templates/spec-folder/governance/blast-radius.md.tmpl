@@ -1,0 +1,102 @@
+# Blast Radius — {{team_name}}
+
+> Team-wide risk envelope. Defines the 4-level taxonomy and which
+> agents sit at each level. Per-agent specifics live in
+> `agents/<agent-id>/blast-radius.md`; this file is the index + the
+> shared definitions.
+
+## The 4 levels
+
+| Level | Definition | Approval gate |
+|---|---|---|
+| **L1 — read-only** | Reads state files; reads external APIs. No writes, no external sends. | Never |
+| **L2 — write-scoped** | Writes only to designated paths (own state directory + designated inboxes). No external sends. | Never |
+| **L3 — write-unrestricted** | Writes to arbitrary paths or runs unrestricted Bash. | Required for `semi` and `supervised` |
+| **L4 — send-external** | Sends Telegram, emails, third-party API calls. | Required for `semi` and `supervised` |
+
+L4 is the highest-blast tier. The team should concentrate L4 in 1-2
+dedicated agents (a "reporter" or "communicator" role) rather than
+spreading external sends across many agents.
+
+## Agent assignment
+
+| Agent | Level | Autonomy | Approval gate active |
+|---|---|---|---|
+| {{agent_1}} | L{{level_1}} | {{autonomy_1}} | {{gate_1}} |
+| {{agent_2}} | L{{level_2}} | {{autonomy_2}} | {{gate_2}} |
+| {{agent_3}} | L{{level_3}} | {{autonomy_3}} | {{gate_3}} |
+
+Per-agent envelope detail: `agents/<agent-id>/blast-radius.md`.
+
+## Why these assignments
+
+{{rationale_paragraph_per_agent — for each agent, one sentence on why
+its assigned level is correct. The reviewer checks: does the agent
+need every operation at this level? Could it do its job at one level
+lower? Phase 4 Spec Review walks this with the user.}}
+
+## Tool classification (deterministic)
+
+A tool's blast level is derived, not assigned arbitrarily:
+
+| Pattern | Level |
+|---|---|
+| MCP tool name starts with `read_`, `list_`, `search_`, `fetch_`, `get_` | L1 |
+| Writes to `.agentbloc/agents/<self>/` (own state) | L2 |
+| Writes to `.agentbloc/agents/<other>/inbox/` (designated handoff) | L2 |
+| Bash that writes outside designated dirs OR MCP tool name starts with `create_`, `update_`, `delete_` | L3 |
+| MCP tool name starts with `send_`, `post_`, `transfer_`, `pay_`, `dispatch_` | L4 |
+| Telegram MCP `sendMessage` to anything except internal logging thread | L4 |
+
+The `agents/<id>/tools.md` file applies this classification per tool.
+The hook `runtime/reference-impl/hooks/autonomy-gate.sh` enforces it.
+
+## Cooperative enforcement (agent prose)
+
+Each agent's `prompts.md` system prompt instructs:
+
+> "Before invoking any L3+ tool, send a Telegram approval request and
+> wait for `/approve <correlation-id>`."
+
+Compliance relies on the model following instructions. This is the
+first layer of defense.
+
+## Deterministic enforcement (PreToolUse hook)
+
+If the build session uses the bash + cron reference impl,
+`hooks/autonomy-gate.sh` PreToolUse will:
+
+1. Read `CLAUDE_AGENT_ID` from env (set by `wake.sh`)
+2. Look up the agent's autonomy level
+3. Classify the tool's blast level per the patterns above
+4. Check `.agentbloc/state/approvals.jsonl` for a matching
+   `correlation_id` with `decision == "approve"`
+5. Exit 2 (block) if blast > permitted-threshold AND no approval found
+
+This is the second layer. Defense in depth.
+
+If the build session picks a different runtime, implement the
+equivalent PreToolUse-style gate. The contract is: tool calls outside
+the agent's permitted level MUST be either approved or blocked, and
+the result MUST be logged.
+
+## Autonomy levels (refresher)
+
+| Autonomy | L1 | L2 | L3 | L4 |
+|---|---|---|---|---|
+| `full` | proceed | proceed | proceed | proceed |
+| `semi` | proceed | proceed | proceed | **approval** |
+| `supervised` | proceed | proceed | **approval** | **approval** |
+
+`full` agents are reserved for low-risk, high-frequency work (data
+collection, classification, summarization). `semi` is the default for
+mixed work. `supervised` is for high-blast or learning-phase agents
+where every L3+ action is human-reviewed.
+
+## Cross-references
+
+- Per-agent envelopes: `../agents/<id>/blast-radius.md`
+- Approval protocol: `approval-protocol.md`
+- Audit trail: `audit-trail.md`
+- Kill switch: `kill-switch.md`
+- AgentBloc reference: `references/blast-radius.md`

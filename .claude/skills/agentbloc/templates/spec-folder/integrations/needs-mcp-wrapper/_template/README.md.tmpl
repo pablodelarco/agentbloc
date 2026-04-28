@@ -1,0 +1,64 @@
+# {{tool_name}} — NEEDS-MCP-WRAPPER
+
+> Tier 2: vendor publishes a public API; no public MCP exists (or the
+> existing one is stale). Wrapper buildable via `mcp-builder` skill.
+> Build session synthesizes a single-file TypeScript MCP server from
+> the OpenAPI spec.
+
+## Tool identity
+
+| Property | Value |
+|---|---|
+| Tool ID | `{{tool_id}}` |
+| Vendor | {{vendor}} |
+| Used by agents | {{used_by_agents}} |
+| Tier | **NEEDS-MCP-WRAPPER** |
+| Effort | {{effort_cc_hours}} CC-hours |
+
+## API source
+
+| Property | Value |
+|---|---|
+| Vendor docs | {{vendor_docs_url}} |
+| OpenAPI spec | {{openapi_url}}  (or `openapi.yaml` in this folder) |
+| Auth pattern | {{auth_pattern}}  (api-key / oauth / service-account) |
+| Public MCP search | {{search_evidence_url}}  ({{search_outcome}}) |
+
+## Why a wrapper (vs. existing MCP)
+
+{{rationale_paragraph — why no existing MCP is acceptable. Cite the
+search outcome (no public MCP found / stale unmaintained / scope
+mismatch / trust-tier LOW). The wrapper is the right tier when the
+vendor's API is well-documented but the MCP ecosystem hasn't caught up
+yet.}}
+
+## Wrapper scope (least-privilege)
+
+The wrapper exposes ONLY the endpoints {{used_by_agents}} need. Full
+endpoint subset documented in `ENDPOINTS.md`. Excluded surface listed
+in the same file under "Excluded (least-privilege)".
+
+Why this matters: an agent that reads pages should not be wired to an
+MCP that can also delete pages. Wrapper-as-permission-boundary makes
+governance simpler than relying on agent prose alone.
+
+## Build steps
+
+See `BUILD.md` in this folder for the step-by-step `/mcp-build`
+invocation, env vars, smoke test, and `.mcp.json` registration.
+
+## Files in this folder
+
+| File | Purpose |
+|---|---|
+| `README.md` | This file — orientation + tier rationale |
+| `BUILD.md` | Step-by-step build instructions for the build session |
+| `ENDPOINTS.md` | Minimum-viable endpoint subset + excluded surface |
+| `openapi.yaml` | OpenAPI source (if available) — input to `mcp-builder` |
+
+## Cross-references
+
+- Inventory: `../../INVENTORY.md`
+- Phase 3 synthesis protocol: `references/mcp-synthesis.md`
+- `mcp-builder` skill: separate Claude Code skill (read its SKILL.md)
+- Credentials: `governance/audit-trail.md` + `.env.example`
