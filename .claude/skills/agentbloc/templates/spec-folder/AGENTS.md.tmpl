@@ -1,0 +1,69 @@
+# Build Context — {{team_name}}
+
+> Universal AI-tool entry point. This file works in Codex, Cursor, Gemini
+> Code Assist, OpenClaw, and any other AI coding agent that reads
+> AGENTS.md as project context. Claude Code users should also see
+> `CLAUDE.md` for Claude-Code-specific guidance.
+
+## What you're building
+
+{{one_paragraph_human_overview_of_what_the_team_does_AND_what_runtime_substrate_to_use}}
+
+## Where to start
+
+1. Read `ROADMAP.md` — phased build plan with effort estimates per phase
+2. Read `workflows/` — one file per workflow with falsifiable success criteria
+3. Read `agents/` — one folder per agent with role + prompts + tools + blast-radius
+4. Read `integrations/INVENTORY.md` — tier-ranked tool list; start work in tier order
+5. Read `governance/` — cross-cutting safety contracts (PII, audit, kill-switch, approval)
+6. Read `runtime/BUILD.md` — tool-agnostic build plan for the runtime substrate
+
+## Build order
+
+Per `ROADMAP.md`, work tier-first within integrations:
+
+1. **Tier 1 (EXISTS-MCP)** — install + configure existing MCP servers (hours)
+2. **Tier 2 (NEEDS-MCP-WRAPPER)** — synthesize wrappers via mcp-builder (days)
+3. **Tier 3 (NEEDS-N8N-FLOW)** — import + activate n8n flows (hours-days)
+4. **Tier 4 (NEEDS-WEBHOOK)** — implement webhook receivers (days)
+5. **Wire workflows** — agent prompts + inbox handoff
+6. **Pick + build runtime** — bash + cron reference impl OR alternative
+7. **Test + harden** — governance contracts as gating tests
+
+## Conventions
+
+- **Markdown + YAML + JSON only.** This spec doesn't ship runnable code; you
+  write the runnable code based on the spec.
+- **Inbox-handoff** is the default agent-to-agent communication primitive.
+  See `runtime/reference-impl/helpers.sh` for `atomic_write_inbox` /
+  `read_next_inbox` patterns.
+- **Correlation IDs** thread through every action. Format:
+  `<source>-<UTC-Z-compact>-<nonce6>`.
+- **Audit trail** is append-only JSONL. Schema is in
+  `governance/audit-trail.md`.
+- **Blast radius** is enforced cooperatively (agent prose) AND
+  deterministically (`hooks/autonomy-gate.sh` if you use bash impl). Levels
+  L1-L4 per `governance/blast-radius.md`.
+
+## Hand-off contract from AgentBloc
+
+This spec was produced by AgentBloc (the architect). You (the builder) own:
+
+- Implementation of every file referenced in `ROADMAP.md`
+- Choice of runtime (this spec defaults to bash + cron + Telegram in
+  `runtime/reference-impl/`; `runtime/alternatives.md` lists others)
+- Test strategy (governance/ files prescribe what; you choose how)
+- Deployment + monitoring (out of AgentBloc scope)
+
+If a requirement is ambiguous, do NOT guess. Note the ambiguity, ship a
+reasonable implementation, and surface it in your output. AgentBloc Phase 6
+(Spec Evolution) can re-run on this folder to clarify.
+
+## Provenance
+
+| Property | Value |
+|---|---|
+| AgentBloc version | {{agentbloc_version}} |
+| Emitted | {{emitted_at}} |
+| Team name | {{team_name}} |
+| Inputs SHA256 | see `SPEC-EMISSION-REPORT.md` |
