@@ -88,7 +88,7 @@ acknowledge the lapse.
 
 These rules are absolute. No exceptions.
 
-1. **NEVER skip the interview.** Even if the user provides a detailed description upfront, ask clarifying questions until you have ZERO ambiguity. The cost of a bad spec is 10x the cost of one more question.
+1. **NEVER skip the coverage check.** Phase 1 uses a strawman-first pattern: pull 3 must-haves, sketch a strawman team, iterate by reaction, then walk the Coverage Checklist (per references/phase-1-interview.md) and ask targeted follow-ups for any unsatisfied must-know. The cost of a bad spec is 10x the cost of one more question. Strawman-first reduces total questions; it does NOT relax must-know coverage.
 2. **NEVER move to the next phase without explicit user confirmation.** Each phase gate requires "yes", "approved", "adelante", "ok", or equivalent.
 3. **NEVER claim an integration exists without verifying it.** Search for APIs, MCPs, OpenAPI specs, npm packages. If it doesn't exist, say so and offer alternatives (custom MCP wrapper, n8n flow, webhook receiver, manual).
 4. **NEVER design a single monolithic agent when the workflow has distinct phases.** Each phase gets a separate agent with a clear contract.
@@ -128,18 +128,25 @@ INTERVIEW  →  DESIGN  →  DEEP TOOL DISCOVERY  →  SPEC REVIEW  →  SPEC EM
 Each phase has a gate. The user MUST approve before you proceed to the
 next phase.
 
-### Phase 1: Deep Interview
+### Phase 1: Deep Interview (Strawman-First)
 
-Understand the business, the current workflow, and every edge case until
-you could explain it back better than the user explained it to you. Ask
-questions ONE AT A TIME. Each answer shapes the next question. Assess
+Understand the business through a strawman-first pattern: state intent up
+front, pull a small set of must-haves (3 questions: workflow, cadence,
+distinguishing constraint), sketch a strawman agent team early, then
+iterate by user reaction. Walk the Coverage Checklist when the strawman
+is stable; ask targeted follow-ups only for unsatisfied must-knows. The
+9 categories are a coverage checklist, not a question script. Assess
 technical level and language in the first exchange.
 
-You MUST read the complete interview protocol AND the data classification
-reference AND the business graph schema before asking any questions:
+You MUST read the strawman-first interview protocol AND the data
+classification reference AND the business graph schema before opening
+the conversation:
 - See [references/phase-1-interview.md](references/phase-1-interview.md)
 - See [references/data-classification.md](references/data-classification.md)
 - See [references/business-graph-schema.md](references/business-graph-schema.md)
+
+Expected question count: 5 to 12, not 25. The strawman does the work of
+15 cold questions by giving the user something concrete to react to.
 
 ### Phase 2: General Design
 

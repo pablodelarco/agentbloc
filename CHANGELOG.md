@@ -5,6 +5,17 @@ All notable changes to AgentBloc are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- **Phase 1 interview pivots to strawman-first pattern.** Open with intent, pull 3 must-haves (workflow, cadence, distinguishing constraint), render a strawman agent team early, iterate by user reaction. The 9 must-know categories survive as a coverage checklist and a targeted-follow-up reference, no longer as a sequential question script. Expected total questions per session drops from ~25 to 5-12. See `references/phase-1-interview.md`.
+- **Public-facing positioning.** README, SKILL.md description, GitHub repo About, and CLAUDE.md project section lead with "AgentBloc designs the AI team." Paperclip referenced as canonical runtime example, not headline coupling.
+
+### Added
+
+- **v3.1 Paperclip emission target design.** `docs/v3.1-paperclip-target.md` proposes a second emission target so `spec-engine` can emit a Paperclip-importable `agentcompanies/v1` package alongside the portable spec folder. Same canonical inputs, new templates, target selection at Phase 5 entry. Worked example at `.claude/skills/agentbloc/examples/arco-rooms-paperclip/`. Templates and `spec-engine` branching not yet built.
+
 ## [1.0.0] - 2026-04-28
 
 Initial public release.
