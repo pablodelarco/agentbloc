@@ -1,8 +1,30 @@
 # AgentBloc
 
-> Describe a workflow you do by hand. Get a build-ready spec folder. Hand it to any AI coding session — Claude Code, Codex, Gemini, Cursor, OpenClaw — and the spec gets built. **AgentBloc is the architect, not the builder.**
+> **Describe your business. AgentBloc designs the AI team.**
+>
+> _The architect for your AI workforce._
 
 [![version: 1.0.0](https://img.shields.io/badge/version-1.0.0-blue)](https://github.com/pablodelarco/agentbloc/releases) [![license: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE) [![Claude Code: v2.1+](https://img.shields.io/badge/Claude%20Code-v2.1%2B-blueviolet)](https://claude.ai/code) [![CI](https://github.com/pablodelarco/agentbloc/actions/workflows/ci.yml/badge.svg)](https://github.com/pablodelarco/agentbloc/actions/workflows/ci.yml)
+
+## What it does
+
+Most people who try to automate their business with AI stall at the same place: they don't know which agents to build, how those agents should hand off to each other, or which integrations are actually possible. AgentBloc is the conversation that figures that out.
+
+You describe your workflow. AgentBloc interviews you, designs the agent team you need, researches every integration (MCPs that already exist, APIs that need wrapping, services that need a webhook receiver, things that have to stay manual), and emits a build-ready spec.
+
+Once you have the spec, hand it to whatever orchestrator fits. [Paperclip](https://github.com/paperclipai/paperclip) is a natural fit because it's purpose-built for running AI agent teams (heartbeats, approvals, costs, org chart out of the box). The same spec works with any AI coding agent (Claude Code, Codex, Cursor, Gemini, OpenClaw) that can build it for your runtime of choice.
+
+## In three steps
+
+1. **Tell it your workflow.** Bilingual interview (English / Spanish), no technical jargon required.
+2. **Watch it design your team.** Every agent gets a role, goal, tools, autonomy level, and blast-radius envelope. Every integration gets a readiness rank: install today, build first, or keep manual.
+3. **Run it anywhere.** Drop the spec into Paperclip for a turn-key path, or hand it to any AI coding agent to build for a different runtime.
+
+## The split (architect / runtime)
+
+- **AgentBloc** is the architect. It thinks, interviews, researches, designs. Never runs anything.
+- **Your runtime** is the builder. Paperclip is the canonical example because it's purpose-built for running AI agent teams. Other runtimes work too; they just need a build session to wire the spec.
+- **You** are the client. Describe the business. Sign off at every gate. Stay in control.
 
 ## What you get
 

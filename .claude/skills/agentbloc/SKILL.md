@@ -2,15 +2,19 @@
 name: agentbloc
 version: 1.0.0
 description: >
-  Interviews users about a manual business workflow, deeply researches which
-  tools (existing MCPs, raw APIs, n8n flows, custom integrations) can do each
-  step, and emits a portable build-ready spec folder that any AI coding agent
-  -- Claude Code, Codex, Gemini, Cursor, OpenClaw -- can execute without
-  ambiguity. AgentBloc is the architect, not the builder. Activates when users
-  want to design AI agent teams, scope automation projects, or hand off a
-  workflow to an AI coding session for implementation. Triggers: /agentbloc,
-  "design agents", "scope an automation", "automate my business", "automatizar
-  mi negocio", "crear agentes", "agent team", "tool discovery", "MCP discovery".
+  Designs the AI agent team your business needs. Interviews users about a
+  manual workflow, researches every integration path (existing MCPs, APIs
+  that need wrapping, n8n flows, webhook receivers), and emits a build-ready
+  spec that any AI coding agent (Claude Code, Codex, Cursor, Gemini,
+  OpenClaw) can implement. Once built, the team runs on whatever
+  orchestrator fits. Paperclip is a natural example because it's
+  purpose-built for running AI agent teams. AgentBloc is the architect, not
+  the builder. Activates when users want to design AI agent teams, scope
+  automation projects, or hand off a workflow to an AI coding session for
+  implementation. Triggers: /agentbloc, "design agents", "scope an
+  automation", "automate my business", "automatizar mi negocio", "crear
+  agentes", "agent team", "tool discovery", "MCP discovery", "AI workforce",
+  "AI employees".
 allowed-tools: Read Grep Glob WebSearch WebFetch Bash
 ---
 

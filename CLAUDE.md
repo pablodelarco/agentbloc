@@ -3,11 +3,17 @@
 
 **AgentBloc** (v3.0)
 
-An open-source Claude Code skill that guides users from "I have a manual business workflow" to "I have a portable build-ready spec folder" through a structured 6-phase conversational flow. The skill handles deep interviewing, agent team design, **deep tool discovery (5-tier readiness ranking: EXISTS-MCP / NEEDS-MCP-WRAPPER / NEEDS-N8N-FLOW / NEEDS-WEBHOOK / MANUAL)**, spec review walkthrough, and **spec folder emission**. The output folder works as input to any AI coding agent — Claude Code, Codex, Gemini, Cursor, OpenClaw — which builds the running team from the spec.
+**AgentBloc designs the AI team your business needs.** Through a deep interview, it figures out which agents you need, researches every integration (existing MCPs, APIs that need wrapping, n8n flows, webhook receivers), and emits a build-ready spec that any AI coding agent (Claude Code, Codex, Cursor, Gemini, OpenClaw) can implement. Once built, the team runs on whatever orchestrator fits. [Paperclip](https://github.com/paperclipai/paperclip) is a natural example because it's purpose-built for running AI agent teams.
 
-**Core Value:** AgentBloc is the architect, not the builder. A non-technical business owner can describe their workflow and end up with a comprehensive, deeply-researched project spec that any AI coding session can execute without re-asking AgentBloc-level questions.
+**The split (architect / runtime / you):**
 
-**v3.0 pivot (2026-04-28):** Was "ships running scripts via deploy-engine + runtime-engine + cron." Now "emits a portable spec folder via spec-engine." See [docs/v3.0-architecture.md](docs/v3.0-architecture.md). The v2.5-runtime substrate (helpers.sh + cron + Telegram bridge) is preserved as advisory `runtime/reference-impl/` content inside every emitted spec folder.
+- **AgentBloc** is the architect. It thinks, interviews, researches, designs. Never runs anything.
+- **Your runtime** is the builder. Paperclip is the canonical example because it's purpose-built for AI agent teams (heartbeats, approvals, costs, org chart). Other runtimes work too; they just need a build session to wire the spec.
+- **You** are the client. Describe the business. Sign off at every gate. Stay in control.
+
+**6-phase conversational flow:** Deep Interview → General Design → Deep Tool Discovery (5-tier readiness ranking: EXISTS-MCP / NEEDS-MCP-WRAPPER / NEEDS-N8N-FLOW / NEEDS-WEBHOOK / MANUAL) → Spec Review → Spec Emission → Spec Evolution.
+
+**v3.0 pivot (2026-04-28):** Was "ships running scripts via deploy-engine + runtime-engine + cron." Now "emits a portable spec folder via spec-engine." See [docs/architecture.md](docs/architecture.md). The v2.5-runtime substrate (helpers.sh + cron + Telegram bridge) is preserved as advisory `runtime/reference-impl/` content inside every emitted spec folder.
 
 ### Constraints
 
