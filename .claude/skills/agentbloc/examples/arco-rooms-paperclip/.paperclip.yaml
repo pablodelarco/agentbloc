@@ -1,0 +1,91 @@
+schema: paperclip/v1
+
+# Per-agent runtime configuration. Paperclip's heartbeat invokes each agent
+# via the configured adapter on the cron schedule defined in routines below.
+agents:
+  gestor-documental:
+    adapter:
+      type: claude_local
+      model: claude-sonnet-4-6
+    inputs:
+      env:
+        GOOGLE_WORKSPACE_REFRESH_TOKEN:
+          kind: secret
+          requirement: required
+        GMAIL_OAUTH_REFRESH_TOKEN:
+          kind: secret
+          requirement: required
+        MAPFRE_API_KEY:
+          kind: secret
+          requirement: required
+        ENDESA_USERNAME:
+          kind: secret
+          requirement: optional
+        ENDESA_PASSWORD:
+          kind: secret
+          requirement: optional
+
+  gestor-cobros:
+    adapter:
+      type: claude_local
+      model: claude-opus-4-7
+    inputs:
+      env:
+        BBVA_PSD2_CLIENT_ID:
+          kind: secret
+          requirement: required
+        BBVA_PSD2_CLIENT_SECRET:
+          kind: secret
+          requirement: required
+        SANTANDER_PSD2_CLIENT_ID:
+          kind: secret
+          requirement: required
+        SANTANDER_PSD2_CLIENT_SECRET:
+          kind: secret
+          requirement: required
+        CAIXABANK_PSD2_CLIENT_ID:
+          kind: secret
+          requirement: required
+        CAIXABANK_PSD2_CLIENT_SECRET:
+          kind: secret
+          requirement: required
+        UNICAJA_PSD2_CLIENT_ID:
+          kind: secret
+          requirement: required
+        UNICAJA_PSD2_CLIENT_SECRET:
+          kind: secret
+          requirement: required
+
+  recepcionista:
+    adapter:
+      type: claude_local
+      model: claude-sonnet-4-6
+    inputs:
+      env:
+        TELEGRAM_BOT_TOKEN:
+          kind: secret
+          requirement: required
+        TELEGRAM_APPROVAL_THREAD_ID:
+          kind: secret
+          requirement: required
+        TELEGRAM_BRIEFING_THREAD_ID:
+          kind: secret
+          requirement: required
+        TELEGRAM_ESCALATIONS_THREAD_ID:
+          kind: secret
+          requirement: required
+
+# Cron-driven workflows. Each routine's trigger fires the project's tasks
+# in the order documented in projects/<slug>/PROJECT.md.
+routines:
+  cobro-diario:
+    triggers:
+      - kind: schedule
+        cronExpression: "0 22 * * *"
+        timezone: Europe/Madrid
+
+  unmatched-payment-alert:
+    # Event-driven, not cron. Wakes recepcionista when gestor-cobros writes
+    # an inter-agent inbox envelope with type=unmatched-alert. Paperclip's
+    # runtime handles the inter-agent invocation; no schedule trigger.
+    triggers: []
