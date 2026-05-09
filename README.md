@@ -1,4 +1,4 @@
-# AgentBloc
+# AgentBloc 🧱
 
 > **Describe your business. AgentBloc designs the AI team.**
 >
